@@ -5874,11 +5874,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.Test\\PerfiEvaluation.Test.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Projects\\PerfiEvaluation.Test\\PerfiEvaluation.Test.csproj",
       "projectName": "PerfiEvaluation.Test",
-      "projectPath": "D:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.Test\\PerfiEvaluation.Test.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Projects\\PerfiEvaluation.Test\\PerfiEvaluation.Test.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.Test\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Projects\\PerfiEvaluation.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"

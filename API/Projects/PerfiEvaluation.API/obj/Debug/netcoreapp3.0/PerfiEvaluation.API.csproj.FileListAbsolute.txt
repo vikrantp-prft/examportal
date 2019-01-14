@@ -28,3 +28,18 @@ d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.API\obj\Debu
 d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorTargetAssemblyInfo.cache
 d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.dll
 d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.exe
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.deps.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.runtimeconfig.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.runtimeconfig.dev.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorAssemblyInfo.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorAssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorTargetAssemblyInfo.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.pdb

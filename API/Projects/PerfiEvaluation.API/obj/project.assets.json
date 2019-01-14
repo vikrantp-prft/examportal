@@ -2208,11 +2208,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.API\\PerfiEvaluation.API.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Projects\\PerfiEvaluation.API\\PerfiEvaluation.API.csproj",
       "projectName": "PerfiEvaluation.API",
-      "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.API\\PerfiEvaluation.API.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Projects\\PerfiEvaluation.API\\PerfiEvaluation.API.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.API\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Projects\\PerfiEvaluation.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -15,3 +15,11 @@ d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.Busine
 d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.AssemblyInfo.cs
 d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.dll
 d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.deps.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.pdb

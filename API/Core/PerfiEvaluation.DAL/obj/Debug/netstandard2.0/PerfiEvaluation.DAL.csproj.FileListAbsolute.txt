@@ -16,3 +16,11 @@ d:\Projects\PerfiEvaluation\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\ne
 d:\Projects\PerfiEvaluation\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.AssemblyInfo.cs
 d:\Projects\PerfiEvaluation\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.dll
 d:\Projects\PerfiEvaluation\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\bin\Debug\netstandard2.0\PerfiEvaluation.DAL.deps.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\bin\Debug\netstandard2.0\PerfiEvaluation.DAL.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\bin\Debug\netstandard2.0\PerfiEvaluation.DAL.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.DAL\obj\Debug\netstandard2.0\PerfiEvaluation.DAL.pdb

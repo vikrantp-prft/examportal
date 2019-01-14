@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
       "projectName": "PerfiEvaluation.BusinessEntities",
-      "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"

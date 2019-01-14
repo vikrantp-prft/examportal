@@ -4990,11 +4990,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BAL\\PerfiEvaluation.BAL.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BAL\\PerfiEvaluation.BAL.csproj",
       "projectName": "PerfiEvaluation.BAL",
-      "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BAL\\PerfiEvaluation.BAL.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BAL\\PerfiEvaluation.BAL.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BAL\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -5010,11 +5010,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj": {
-              "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj"
+            "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj": {
+              "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj"
             },
-            "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj": {
-              "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj"
+            "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj": {
+              "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj"
             }
           }
         }

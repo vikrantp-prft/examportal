@@ -1,0 +1,9 @@
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\bin\Debug\netstandard2.0\PerfiEvaluation.Helper.deps.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\bin\Debug\netstandard2.0\PerfiEvaluation.Helper.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\bin\Debug\netstandard2.0\PerfiEvaluation.Helper.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\obj\Debug\netstandard2.0\PerfiEvaluation.Helper.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\obj\Debug\netstandard2.0\PerfiEvaluation.Helper.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\obj\Debug\netstandard2.0\PerfiEvaluation.Helper.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\obj\Debug\netstandard2.0\PerfiEvaluation.Helper.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\obj\Debug\netstandard2.0\PerfiEvaluation.Helper.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Infrastructure\PerfiEvaluation.Helper\obj\Debug\netstandard2.0\PerfiEvaluation.Helper.pdb

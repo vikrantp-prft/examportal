@@ -1,0 +1,9 @@
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\bin\Debug\netstandard2.0\PerfiEvaluation.Entities.deps.json
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\bin\Debug\netstandard2.0\PerfiEvaluation.Entities.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\bin\Debug\netstandard2.0\PerfiEvaluation.Entities.pdb
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\obj\Debug\netstandard2.0\PerfiEvaluation.Entities.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\obj\Debug\netstandard2.0\PerfiEvaluation.Entities.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\obj\Debug\netstandard2.0\PerfiEvaluation.Entities.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\obj\Debug\netstandard2.0\PerfiEvaluation.Entities.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\obj\Debug\netstandard2.0\PerfiEvaluation.Entities.dll
+d:\Projects\ExamPortal-Git Develop\examportal\API\Core\PerfiEvaluation.Entities\obj\Debug\netstandard2.0\PerfiEvaluation.Entities.pdb

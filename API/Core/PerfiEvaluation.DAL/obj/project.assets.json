@@ -4954,11 +4954,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj",
       "projectName": "PerfiEvaluation.DAL",
-      "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Core\\PerfiEvaluation.DAL\\PerfiEvaluation.DAL.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Core\\PerfiEvaluation.DAL\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop\\examportal\\API\\Core\\PerfiEvaluation.DAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
