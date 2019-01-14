@@ -1,0 +1,14 @@
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\xunit.runner.reporters.netcoreapp10.dll
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\xunit.runner.utility.netcoreapp10.dll
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\PerfiEvaluation.Test.deps.json
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\PerfiEvaluation.Test.runtimeconfig.json
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\PerfiEvaluation.Test.runtimeconfig.dev.json
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\PerfiEvaluation.Test.dll
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\bin\Debug\netcoreapp2.2\PerfiEvaluation.Test.pdb
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\obj\Debug\netcoreapp2.2\PerfiEvaluation.Test.csprojAssemblyReference.cache
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\obj\Debug\netcoreapp2.2\PerfiEvaluation.Test.csproj.CoreCompileInputs.cache
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\obj\Debug\netcoreapp2.2\PerfiEvaluation.Test.AssemblyInfoInputs.cache
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\obj\Debug\netcoreapp2.2\PerfiEvaluation.Test.AssemblyInfo.cs
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\obj\Debug\netcoreapp2.2\PerfiEvaluation.Test.dll
+d:\Projects\PerfiEvaluation\examportal\API\Projects\PerfiEvaluation.Test\obj\Debug\netcoreapp2.2\PerfiEvaluation.Test.pdb

@@ -6,3 +6,17 @@ d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation
 d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.AssemblyInfo.cs
 d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.dll
 d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.pdb
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BAL.deps.json
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BAL.dll
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BAL.pdb
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.dll
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.DAL.dll
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.pdb
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.DAL.pdb
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.csprojAssemblyReference.cache
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.csproj.CoreCompileInputs.cache
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.AssemblyInfoInputs.cache
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.AssemblyInfo.cs
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.csproj.CopyComplete
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.dll
+d:\Projects\PerfiEvaluation\examportal\API\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.pdb

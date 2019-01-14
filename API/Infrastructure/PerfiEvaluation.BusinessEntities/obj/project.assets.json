@@ -180,25 +180,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pallavi.koramkar\\.nuget\\packages\\": {}
+    "C:\\Users\\sumit.salpekar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Working Folder\\Sample Projects\\PerfiEvaluation\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
+      "projectUniqueName": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
       "projectName": "PerfiEvaluation.BusinessEntities",
-      "projectPath": "D:\\Working Folder\\Sample Projects\\PerfiEvaluation\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
-      "packagesPath": "C:\\Users\\pallavi.koramkar\\.nuget\\packages\\",
-      "outputPath": "D:\\Working Folder\\Sample Projects\\PerfiEvaluation\\Infrastructure\\PerfiEvaluation.BusinessEntities\\obj\\",
+      "projectPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\PerfiEvaluation.BusinessEntities.csproj",
+      "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
+      "outputPath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Infrastructure\\PerfiEvaluation.BusinessEntities\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pallavi.koramkar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
-        "D:\\Working Folder\\Sample Projects\\TAC\\Sitecore NuGet": {},
+        "D:\\Projects\\SitecoreAssign\\SitecoreAssign\\lib": {},
         "https://api.nuget.org/v3/index.json": {},
         "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {}
       },

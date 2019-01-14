@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "d:\\Projects\\PerfiEvaluation\\examportal\\API\\Projects\\PerfiEvaluation.Test\\PerfiEvaluation.Test.csproj",
+  "TargetFramework": "netcoreapp2.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}
