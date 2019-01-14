@@ -1,0 +1,15 @@
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.exe
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.deps.json
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.runtimeconfig.json
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.runtimeconfig.dev.json
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.dll
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\bin\Debug\netcoreapp3.0\PerfiEvaluation.API.pdb
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.csprojAssemblyReference.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.csproj.CoreCompileInputs.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorAssemblyInfo.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorAssemblyInfo.cs
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.AssemblyInfoInputs.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.AssemblyInfo.cs
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.RazorTargetAssemblyInfo.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.dll
+d:\Working Folder\Sample Projects\PerfiEvaluation\Projects\PerfiEvaluation.API\obj\Debug\netcoreapp3.0\PerfiEvaluation.API.pdb

@@ -1,0 +1,9 @@
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.deps.json
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.dll
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\bin\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.pdb
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.csproj.CoreCompileInputs.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.AssemblyInfoInputs.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.AssemblyInfo.cs
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.dll
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.pdb
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BusinessEntities\obj\Debug\netstandard2.0\PerfiEvaluation.BusinessEntities.csprojAssemblyReference.cache

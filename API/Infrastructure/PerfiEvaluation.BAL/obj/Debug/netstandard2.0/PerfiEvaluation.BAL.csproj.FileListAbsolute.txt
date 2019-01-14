@@ -1,0 +1,8 @@
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BAL.deps.json
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BAL.dll
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\bin\Debug\netstandard2.0\PerfiEvaluation.BAL.pdb
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.csproj.CoreCompileInputs.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.AssemblyInfoInputs.cache
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.AssemblyInfo.cs
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.dll
+d:\Working Folder\Sample Projects\PerfiEvaluation\Infrastructure\PerfiEvaluation.BAL\obj\Debug\netstandard2.0\PerfiEvaluation.BAL.pdb
