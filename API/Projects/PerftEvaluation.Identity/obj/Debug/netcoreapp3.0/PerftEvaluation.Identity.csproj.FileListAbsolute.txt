@@ -1,0 +1,14 @@
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.exe
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.deps.json
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.runtimeconfig.json
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.runtimeconfig.dev.json
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.pdb
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorAssemblyInfo.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorAssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorTargetAssemblyInfo.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.pdb

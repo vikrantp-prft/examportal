@@ -1,0 +1,8 @@
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\bin\Debug\netstandard2.0\PerftEvaluation.Helper.deps.json
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\bin\Debug\netstandard2.0\PerftEvaluation.Helper.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\bin\Debug\netstandard2.0\PerftEvaluation.Helper.pdb
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.pdb

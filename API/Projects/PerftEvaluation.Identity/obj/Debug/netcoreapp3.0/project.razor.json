@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+  "TargetFramework": "netcoreapp3.0",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "MVC-2.1",
+    "LanguageVersion": "2.1",
+    "Extensions": [
+      {
+        "ExtensionName": "MVC-2.1"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.deps.json
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.pdb
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\bin\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\bin\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.csproj.CopyComplete
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerftEvaluation.DAL\obj\Debug\netstandard2.0\PerftEvaluation.DAL.pdb

@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Test\\PerftEvaluation.Test\\PerftEvaluation.Test.csproj",
+  "TargetFramework": "netcoreapp2.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\bin\Debug\netstandard2.0\PerftEvaluation.Entities.deps.json
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\bin\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\bin\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+D:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.csprojAssemblyReference.cache
