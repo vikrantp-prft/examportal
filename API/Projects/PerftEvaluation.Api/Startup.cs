@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PerftEvaluation.Api.DI;
 using PerftEvaluation.BAL.Utilities;
 using Swashbuckle.AspNetCore.Swagger;
-using PerftEvaluation.Api.DI;
 
 namespace PerftEvaluation.Api {
     public class Startup {
@@ -41,7 +41,10 @@ namespace PerftEvaluation.Api {
             services.AddSingleton (mapper);
 
             //Dependency Injection Declaration
-            services.RegisterServices();
+            services.RegisterServices ();
+
+            //CORS Declaration
+            services.AddCors ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +66,11 @@ namespace PerftEvaluation.Api {
             app.UseSwaggerUI (c => {
                 c.SwaggerEndpoint ("/swagger/V1.0.0/swagger.json", "PerftEvaluation API V1.0.0");
             });
+
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors (builder =>{
+                builder.WithOrigins ("*").AllowAnyMethod().AllowAnyHeader();
+                });
 
             app.UseMvc ();
         }

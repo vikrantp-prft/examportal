@@ -15,3 +15,12 @@ d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Inf
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.AssemblyInfo.cs
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.dll
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\bin\Debug\netstandard2.0\PerftEvaluation.Helper.deps.json
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\bin\Debug\netstandard2.0\PerftEvaluation.Helper.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\bin\Debug\netstandard2.0\PerftEvaluation.Helper.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Infrastructure\PerftEvaluation.Helper\obj\Debug\netstandard2.0\PerftEvaluation.Helper.pdb

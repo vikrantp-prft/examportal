@@ -38,3 +38,17 @@ d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Tes
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.AssemblyInfo.cs
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.dll
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\xunit.runner.reporters.netcoreapp10.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\xunit.runner.utility.netcoreapp10.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\PerftEvaluation.Test.deps.json
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\PerftEvaluation.Test.runtimeconfig.json
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\PerftEvaluation.Test.runtimeconfig.dev.json
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\PerftEvaluation.Test.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\bin\Debug\netcoreapp2.2\PerftEvaluation.Test.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Test\PerftEvaluation.Test\obj\Debug\netcoreapp2.2\PerftEvaluation.Test.pdb

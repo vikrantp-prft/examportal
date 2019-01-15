@@ -26,3 +26,17 @@ d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Cor
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csproj.CopyComplete
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.dll
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.BAL.deps.json
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.BAL.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.BAL.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csprojAssemblyReference.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csproj.CoreCompileInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.AssemblyInfoInputs.cache
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.AssemblyInfo.cs
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csproj.CopyComplete
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.dll
+d:\Projects\ExamPortal-Git Develop V1.3\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.pdb

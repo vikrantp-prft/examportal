@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "ProjectFilePath": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+=======
+  "ProjectFilePath": "d:\\Projects\\ExamPortal-Git Develop V1.3\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+>>>>>>> b5f3793f8b20a395d6e955136e84835452a90785
   "TargetFramework": "netcoreapp3.0",
   "TagHelpers": [],
   "Configuration": {
