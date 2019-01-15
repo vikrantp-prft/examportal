@@ -1,8 +1,0 @@
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\bin\Debug\netstandard2.0\PerfiEvaluation.Utility.deps.json
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\bin\Debug\netstandard2.0\PerfiEvaluation.Utility.dll
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\bin\Debug\netstandard2.0\PerfiEvaluation.Utility.pdb
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\obj\Debug\netstandard2.0\PerfiEvaluation.Utility.csproj.CoreCompileInputs.cache
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\obj\Debug\netstandard2.0\PerfiEvaluation.Utility.AssemblyInfoInputs.cache
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\obj\Debug\netstandard2.0\PerfiEvaluation.Utility.AssemblyInfo.cs
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\obj\Debug\netstandard2.0\PerfiEvaluation.Utility.dll
-d:\Projects\ExamPortal-Git Develop V1.0\Infrastructure\PerfiEvaluation.Utility\obj\Debug\netstandard2.0\PerfiEvaluation.Utility.pdb
