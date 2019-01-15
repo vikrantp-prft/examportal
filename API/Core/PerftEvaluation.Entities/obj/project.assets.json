@@ -4956,11 +4956,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj",
       "projectName": "PerftEvaluation.Entities",
-      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.Entities\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.Entities\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"

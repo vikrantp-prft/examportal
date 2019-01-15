@@ -2208,11 +2208,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
       "projectName": "PerftEvaluation.Identity",
-      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Projects\\PerftEvaluation.Identity\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Projects\\PerftEvaluation.Identity\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -5210,11 +5210,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.BAL\\PerftEvaluation.BAL.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.BAL\\PerftEvaluation.BAL.csproj",
       "projectName": "PerftEvaluation.BAL",
-      "projectPath": "D:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.BAL\\PerftEvaluation.BAL.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.BAL\\PerftEvaluation.BAL.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.BAL\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.BAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -5229,11 +5229,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj": {
-              "projectPath": "D:\\Projects\\ExamPortal-Git Develop V1.0\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj"
+            "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj": {
+              "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Core\\PerftEvaluation.Entities\\PerftEvaluation.Entities.csproj"
             },
-            "D:\\Projects\\ExamPortal-Git Develop V1.0\\Infrastructure\\PerftEvaluation.DAL\\PerftEvaluation.DAL.csproj": {
-              "projectPath": "D:\\Projects\\ExamPortal-Git Develop V1.0\\Infrastructure\\PerftEvaluation.DAL\\PerftEvaluation.DAL.csproj"
+            "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Infrastructure\\PerftEvaluation.DAL\\PerftEvaluation.DAL.csproj": {
+              "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Infrastructure\\PerftEvaluation.DAL\\PerftEvaluation.DAL.csproj"
             }
           }
         }

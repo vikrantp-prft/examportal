@@ -5874,11 +5874,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Test\\PerftEvaluation.Test\\PerftEvaluation.Test.csproj",
+      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Test\\PerftEvaluation.Test\\PerftEvaluation.Test.csproj",
       "projectName": "PerftEvaluation.Test",
-      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Test\\PerftEvaluation.Test\\PerftEvaluation.Test.csproj",
+      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Test\\PerftEvaluation.Test\\PerftEvaluation.Test.csproj",
       "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.0\\Test\\PerftEvaluation.Test\\obj\\",
+      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Test\\PerftEvaluation.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
