@@ -2151,7 +2151,7 @@
       ]
     },
     "runtime.win-x64.Microsoft.NETCore.DotNetAppHost/3.0.0-preview-27122-01": {
-      "sha512": "t+o9SLZDRN3Txez1KaRzoaK54LYaFKoVJtYslaEOUbJBuBuSc7CfBH/iBQENrE8PR9tGrY1i6ILzn0/P7qe7uQ==",
+      "sha512": "GAkqUluYwS1T3FshCVFVmNh0wivXCaM/ssDpbo+C7aCa52J+qa5wAkz8TOgcK5ICNBu3Z4KosVY/LxNTIOwAXQ==",
       "type": "package",
       "path": "runtime.win-x64.microsoft.netcore.dotnetapphost/3.0.0-preview-27122-01",
       "files": [
@@ -2166,7 +2166,7 @@
       ]
     },
     "runtime.win-x64.Microsoft.NETCore.DotNetHostPolicy/3.0.0-preview-27122-01": {
-      "sha512": "qCWPxmK4RMDQLkjVZcU2SaMJnpfaJKT/JLY6eq+HQhi5d2p3D8Wml/NGoXci9tw4gafVQd0IIjXEPliwfAA3EQ==",
+      "sha512": "iSvbGAIy4r803TXbc4DZOYdZGfXn+G7aKTnBnULZtnQgZVN0A13j7300reZzSjkTeLRnGH7OcsbPM57kfVBHHQ==",
       "type": "package",
       "path": "runtime.win-x64.microsoft.netcore.dotnethostpolicy/3.0.0-preview-27122-01",
       "files": [
@@ -2203,26 +2203,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sumit.salpekar\\.nuget\\packages\\": {}
+    "C:\\Users\\pallavi.koramkar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+      "projectUniqueName": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
       "projectName": "PerftEvaluation.Identity",
-      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
-      "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Projects\\PerftEvaluation.Identity\\obj\\",
+      "projectPath": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Projects\\PerftEvaluation.Identity\\PerftEvaluation.Identity.csproj",
+      "packagesPath": "C:\\Users\\pallavi.koramkar\\.nuget\\packages\\",
+      "outputPath": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Projects\\PerftEvaluation.Identity\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\pallavi.koramkar\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
+        "D:\\Working Folder\\Sample Projects\\TAC\\Sitecore NuGet": {},
         "https://api.nuget.org/v3/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {}
+        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
+        "https://www.myget.org/F/insitecommerce/auth/03271664-aec1-4f21-b755-5f2d456d92b1/api/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.0": {

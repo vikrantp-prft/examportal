@@ -180,26 +180,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sumit.salpekar\\.nuget\\packages\\": {}
+    "C:\\Users\\pallavi.koramkar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Infrastructure\\PerftEvaluation.Helper\\PerftEvaluation.Helper.csproj",
+      "projectUniqueName": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Infrastructure\\PerftEvaluation.Helper\\PerftEvaluation.Helper.csproj",
       "projectName": "PerftEvaluation.Helper",
-      "projectPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Infrastructure\\PerftEvaluation.Helper\\PerftEvaluation.Helper.csproj",
-      "packagesPath": "C:\\Users\\sumit.salpekar\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects\\ExamPortal-Git Develop V1.1\\examportal\\API\\Infrastructure\\PerftEvaluation.Helper\\obj\\",
+      "projectPath": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Infrastructure\\PerftEvaluation.Helper\\PerftEvaluation.Helper.csproj",
+      "packagesPath": "C:\\Users\\pallavi.koramkar\\.nuget\\packages\\",
+      "outputPath": "d:\\Working Folder\\Projects\\ExamPortal\\Code\\ExamPortal-Develop\\examportal\\API\\Infrastructure\\PerftEvaluation.Helper\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sumit.salpekar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\pallavi.koramkar\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
+        "D:\\Working Folder\\Sample Projects\\TAC\\Sitecore NuGet": {},
         "https://api.nuget.org/v3/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {}
+        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
+        "https://www.myget.org/F/insitecommerce/auth/03271664-aec1-4f21-b755-5f2d456d92b1/api/v3/index.json": {}
       },
       "frameworks": {
         "netstandard2.0": {

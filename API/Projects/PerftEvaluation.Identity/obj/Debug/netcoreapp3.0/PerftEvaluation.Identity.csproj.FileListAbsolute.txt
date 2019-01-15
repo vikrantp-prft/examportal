@@ -12,3 +12,17 @@ d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\De
 d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorTargetAssemblyInfo.cache
 d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.dll
 d:\Projects\ExamPortal-Git Develop V1.0\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.exe
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.deps.json
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.runtimeconfig.json
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.runtimeconfig.dev.json
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.csproj.CoreCompileInputs.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorAssemblyInfo.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorAssemblyInfo.cs
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.AssemblyInfoInputs.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.AssemblyInfo.cs
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorTargetAssemblyInfo.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.pdb

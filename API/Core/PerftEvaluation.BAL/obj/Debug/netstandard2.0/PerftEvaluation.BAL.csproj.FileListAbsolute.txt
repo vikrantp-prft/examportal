@@ -12,3 +12,17 @@ d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.BAL\obj\Debug\netst
 d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csproj.CopyComplete
 d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.dll
 d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.BAL.deps.json
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.BAL.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.BAL.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.DAL.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\bin\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csprojAssemblyReference.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csproj.CoreCompileInputs.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.AssemblyInfoInputs.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.AssemblyInfo.cs
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.csproj.CopyComplete
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.BAL\obj\Debug\netstandard2.0\PerftEvaluation.BAL.pdb

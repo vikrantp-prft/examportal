@@ -7,3 +7,12 @@ d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\
 d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.dll
 d:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
 D:\Projects\ExamPortal-Git Develop V1.0\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.csprojAssemblyReference.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\bin\Debug\netstandard2.0\PerftEvaluation.Entities.deps.json
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\bin\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\bin\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.csproj.CoreCompileInputs.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.AssemblyInfoInputs.cache
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.AssemblyInfo.cs
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.dll
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Core\PerftEvaluation.Entities\obj\Debug\netstandard2.0\PerftEvaluation.Entities.csprojAssemblyReference.cache
