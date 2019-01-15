@@ -18,6 +18,7 @@ d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Pro
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.runtimeconfig.dev.json
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.dll
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\bin\Debug\netcoreapp3.0\PerftEvaluation.Identity.pdb
+d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.csprojAssemblyReference.cache
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.csproj.CoreCompileInputs.cache
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorAssemblyInfo.cache
 d:\Working Folder\Projects\ExamPortal\Code\ExamPortal-Develop\examportal\API\Projects\PerftEvaluation.Identity\obj\Debug\netcoreapp3.0\PerftEvaluation.Identity.RazorAssemblyInfo.cs
