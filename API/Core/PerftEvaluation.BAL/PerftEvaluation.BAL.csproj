@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DAL\PerftEvaluation.DAL.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj" />
-    <ProjectReference Include="..\PerftEvaluation.Entities\PerftEvaluation.Entities.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DAL\PerftEvaluation.DAL.csproj"/>
+    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj"/>
+    <ProjectReference Include="..\PerftEvaluation.Entities\PerftEvaluation.Entities.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0"/>
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
