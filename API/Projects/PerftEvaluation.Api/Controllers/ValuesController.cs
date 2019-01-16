@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PerftEvaluation.BAL.Interfaces;
-using PerftEvaluation.Entities.POCOEntities;
 using PerftEvaluation.DTO.Dtos;
+using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.Api.Controllers {
     [Route ("api/[controller]")]

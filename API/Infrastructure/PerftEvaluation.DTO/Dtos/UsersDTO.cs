@@ -1,7 +1,6 @@
 using System;
 
-namespace PerftEvaluation.DTO.Dtos
-{
+namespace PerftEvaluation.DTO.Dtos {
     /// <summary>
     /// User DTO
     /// </summary>

@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PerftEvaluation.BAL.Utilities;
 using PerftEvaluation.Helper.DI;
+using PerftEvaluation.Helper.Mapper;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PerftEvaluation.Api {

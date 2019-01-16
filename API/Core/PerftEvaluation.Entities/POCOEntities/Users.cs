@@ -3,8 +3,6 @@ using MongoDB.Bson.Serialization.Attributes;
 using PerftEvaluation.Entities.BaseEntities;
 
 namespace PerftEvaluation.Entities.POCOEntities {
-    /// <CreatedBy>Sumit S</CreatedBy>
-    /// <CreatedDate>15 Jan 2019</CreatedDate>
     /// <summary>
     /// User POCO Entity
     /// </summary>

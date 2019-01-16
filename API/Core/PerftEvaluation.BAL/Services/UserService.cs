@@ -11,6 +11,7 @@ namespace PerftEvaluation.BAL.Services {
     /// Service for Users
     /// </summary>
     public class UserService : IUserService {
+
         #region Declaration
         protected readonly IUserRepository _userRepository;
 
