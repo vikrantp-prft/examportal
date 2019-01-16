@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/PerftEvaluation.Api/PerftEvaluation.Api.csproj"
+                "${workspaceFolder}/Projects/PerftEvaluation.Api/PerftEvaluation.Api.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
