@@ -7,7 +7,10 @@ namespace PerftEvaluation.Helper
             //TO DO VAISHALI
             public enum Masters
             {
-                
+                group,
+                team,
+                designation
+
             }
     }
 }
