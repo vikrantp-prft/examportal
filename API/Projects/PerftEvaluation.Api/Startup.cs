@@ -11,18 +11,26 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PerftEvaluation.Api.DI;
 using PerftEvaluation.BAL.Utilities;
+using PerftEvaluation.Helper.DI;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PerftEvaluation.Api {
+    /// <summary>
+    /// Startup for API project
+    /// </summary>
     public class Startup {
+
+        #region Declaration
         public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
 
+        //Configuration Object
         public IConfiguration Configuration { get; }
+        #endregion
 
+        #region Configuration Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
@@ -46,7 +54,9 @@ namespace PerftEvaluation.Api {
             //CORS Declaration
             services.AddCors ();
         }
+        #endregion
 
+        #region Configure
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
             if (env.IsDevelopment ()) {
@@ -68,11 +78,12 @@ namespace PerftEvaluation.Api {
             });
 
             // Shows UseCors with CorsPolicyBuilder.
-            app.UseCors (builder =>{
-                builder.WithOrigins ("*").AllowAnyMethod().AllowAnyHeader();
-                });
+            app.UseCors (builder => {
+                builder.WithOrigins ("*").AllowAnyMethod ().AllowAnyHeader ();
+            });
 
             app.UseMvc ();
         }
+        #endregion
     }
 }

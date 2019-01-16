@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DAL.Interface;
-using PerftEvaluation.Entities.Dtos;
+using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.BAL.Services {

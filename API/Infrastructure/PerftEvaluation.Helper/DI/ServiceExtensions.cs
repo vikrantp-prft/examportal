@@ -5,7 +5,7 @@ using PerftEvaluation.BAL.Services;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DAL.Repositories;
 
-namespace PerftEvaluation.Api.DI {
+namespace PerftEvaluation.Helper.DI {
     /// <summary>
     /// Dependency Injection Extension Class
     /// </summary>

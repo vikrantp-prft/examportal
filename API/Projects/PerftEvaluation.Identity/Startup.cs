@@ -13,13 +13,21 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PerftEvaluation.Identity {
+    /// <summary>
+    /// Project Startup file
+    /// </summary>
     public class Startup {
+
+        #region Declaration 
         public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
 
+        //Configuration object
         public IConfiguration Configuration { get; }
+        #endregion
 
+        #region Configuration Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
@@ -29,7 +37,9 @@ namespace PerftEvaluation.Identity {
                 c.SwaggerDoc ("V1.0.0", new Info { Title = "PerftEvaluation API", Version = "V1.0.0" });
             });
         }
+        #endregion
 
+        #region Configure
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
             if (env.IsDevelopment ()) {
@@ -39,7 +49,7 @@ namespace PerftEvaluation.Identity {
                 app.UseHsts ();
             }
 
-            app.UseHttpsRedirection ();
+            //app.UseHttpsRedirection ();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger ();
@@ -52,5 +62,6 @@ namespace PerftEvaluation.Identity {
 
             app.UseMvc ();
         }
+        #endregion
     }
 }

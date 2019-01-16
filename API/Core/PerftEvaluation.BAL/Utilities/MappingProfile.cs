@@ -1,6 +1,6 @@
 using System;
 using AutoMapper;
-using PerftEvaluation.Entities.Dtos;
+using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.BAL.Utilities
