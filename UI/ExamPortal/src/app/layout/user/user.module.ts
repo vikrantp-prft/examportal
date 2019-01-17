@@ -8,6 +8,7 @@ import { AddEmployeeComponent } from './employee/exployee-add-update/employeeadd
 import { QuickAddEmployeeComponent } from './employee/exployee-add-update/quickemployeeaddupdate.component';
 import {AdminUserListComponent} from './admin-user/admin-user-list/adminuserlist.component';
 import { AddAdminUserComponent } from './admin-user/admin-user-add-update/adminuseraddupdate.component';
+import { TraineeListComponent } from './trainee/trainee-list/traineelist.component';
 
 @NgModule({
     imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot() ],
@@ -16,7 +17,8 @@ import { AddAdminUserComponent } from './admin-user/admin-user-add-update/adminu
          AddEmployeeComponent,
          QuickAddEmployeeComponent,
          AdminUserListComponent,
-         AddAdminUserComponent
+         AddAdminUserComponent,
+         TraineeListComponent
     ]
 })
 export class UserModule {}
