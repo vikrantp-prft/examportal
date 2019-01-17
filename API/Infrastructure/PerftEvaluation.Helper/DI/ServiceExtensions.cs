@@ -19,6 +19,7 @@ namespace PerftEvaluation.Helper.DI {
             this IServiceCollection services) {
             //Projects Services 
             services.AddTransient<IUserService, UserService> ();
+            services.AddTransient<IMasterService, MasterService> ();
 
             //Projects Repositories
             services.AddTransient<IUserRepository, UserRepository> ();
