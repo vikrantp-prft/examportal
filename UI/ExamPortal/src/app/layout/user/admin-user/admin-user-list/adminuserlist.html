@@ -1,0 +1,81 @@
+<div>
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h1>Users</h1>
+        </div>
+        <div class="col-md-12 col-xs-12 col-lg-12 datatable-header emp-list">
+          <div class="add-users-toolbar">
+
+            <div class="add-users">
+              <button [routerLink]="['/user/addadminuser']" class="btn-primary">Add New</button>
+            </div>
+            <!-- [(ngModel)]="params.searchString" -->
+            <!-- <div class=""> -->
+            <div class="input-group custom-search-form col-md-4 add-users-search">
+              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
+            </div>
+            <!-- </div>    -->
+
+            <div class="dataTables_length_code add-users">
+              <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select> entries</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>SR. NO.</th>
+                <th>Name</th>
+                <th>User Name</th>
+                <th>User Group</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>abc</td>
+                <td>a</td>
+                <td>SuperAdmin</td>
+                <td>abc@gmail.com</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addadminuser']" class="btn-primary">Update</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>xyz</td>
+                <td>x</td>
+                <td>SuperAdmin</td>
+                <td>abc@gmail.com</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addadminuser']" class="btn-primary">Delete</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- [(ngModel)]="params.currentPage" -->
+        <!-- [totalItems]="params.totalItems" -->
+        <pagination class="pull-right" [totalItems]="100" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+          lastText="LAST"></pagination>
+      </div>
+    </div>
+  </div>
+</div>
