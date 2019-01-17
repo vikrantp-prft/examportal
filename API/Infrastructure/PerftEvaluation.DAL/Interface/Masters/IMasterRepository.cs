@@ -26,5 +26,26 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="masterType"></param>
         /// <returns></returns>
         IEnumerable<Masters> GetMastersByType (string masterType);
+
+        /// <summary>
+        /// Inactivate master
+        /// </summary>
+        /// <param name="masterType"></param>
+        /// <returns></returns>
+        bool InactivateMaster (string masterId);
+
+        /// <summary>
+        /// Activate master
+        /// </summary>
+        /// <param name="masterType"></param>
+        /// <returns></returns>
+        bool ActivateMaster (string masterId);
+
+        /// <summary>
+        /// Update master detail
+        /// </summary>
+        /// <param name="masters"></param>
+        /// <returns></returns>
+        bool UpdateMaster (Masters masters);
     }
 }

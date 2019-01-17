@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DAL.Interface;
-using PerftEvaluation.Entities.POCOEntities;
 using PerftEvaluation.DTO.Dtos;
+using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.BAL.Services {
     /// <summary>
@@ -44,10 +44,7 @@ namespace PerftEvaluation.BAL.Services {
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
         public bool SaveMaster (MastersDTO mastersDTO) {
-            Masters masters = new Masters ();
-
-            masters = this._mapper.Map<Masters> (mastersDTO);
-            return this._masterRepository.SaveMaster (masters);
+            return this._masterRepository.SaveMaster (this._mapper.Map<Masters> (mastersDTO));
         }
 
         /// <summary>
@@ -57,6 +54,33 @@ namespace PerftEvaluation.BAL.Services {
         /// <returns></returns>
         public IEnumerable<MastersDTO> GetMasterByType (string masterType) {
             return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetMastersByType (masterType));
+        }
+
+        /// <summary>
+        /// Update master detail
+        /// </summary>
+        /// <param name="mastersDTO"></param>
+        /// <returns></returns>
+        public bool UpdateMaster (MastersDTO mastersDTO) {
+            return this._masterRepository.UpdateMaster (this._mapper.Map<Masters> (mastersDTO));
+        }
+
+        /// <summary>
+        /// Activated master record
+        /// </summary>
+        /// <param name="mastersDTO"></param>
+        /// <returns></returns>
+        public bool ActivateMaster (string masterId) {
+            return this._masterRepository.ActivateMaster (masterId);
+        }
+
+        /// <summary>
+        /// Deactivate master record
+        /// </summary>
+        /// <param name="mastersDTO"></param>
+        /// <returns></returns>
+        public bool InactivateMaster (string masterId) {
+            return this._masterRepository.InactivateMaster (masterId);
         }
         #endregion
     }

@@ -22,7 +22,7 @@ namespace PerftEvaluation.Api.Controllers {
         #endregion
 
         #region Class Methods
-        //api/masters
+        // GET api/masters
         /// <summary>
         /// Get list of all the masters
         /// </summary>
@@ -39,7 +39,7 @@ namespace PerftEvaluation.Api.Controllers {
             }
         }
 
-        // POST api/values
+        // POST api/master
         /// <summary>
         /// Save master details
         /// </summary>
@@ -54,7 +54,22 @@ namespace PerftEvaluation.Api.Controllers {
             }
         }
 
-        //api/master/getmasterbytype
+        // POST api/Master/Update
+        /// <summary>
+        /// Update master details
+        /// </summary>
+        /// <param name="mastersDTO"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("Update")]
+        public IActionResult UpdateMaster (MastersDTO mastersDTO) {
+            try {
+                return Ok (this._masterService.UpdateMaster (mastersDTO));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/master/getmasterbytype
         /// <summary>
         /// Get master by type
         /// </summary>
@@ -67,6 +82,36 @@ namespace PerftEvaluation.Api.Controllers {
                 responseModel.Data = this._masterService.GetMasterByType (requestModel.Filter);
 
                 return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/master/ActivateMaster
+        /// <summary>
+        /// Activate master
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("ActivateMaster")]
+        public IActionResult ActivateMaster (RequestModel requestModel) {
+            try {
+                return Ok (this._masterService.ActivateMaster (requestModel.Id));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/master/InactivateMaster
+        /// <summary>
+        /// Deactivate master
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("InactivateMaster")]
+        public IActionResult InactivateMaster (RequestModel requestModel) {
+            try {
+                return Ok (this._masterService.InactivateMaster (requestModel.Id));
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }

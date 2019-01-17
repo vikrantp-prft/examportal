@@ -1,0 +1,15 @@
+.emp-list{
+    .add-users{
+        display: inline-block;
+        margin-right: 20px;
+
+        &.dataTables_length_code{
+            float: right;
+            width: initial;
+        }
+    }
+    .add-users-search{
+        display: inline-flex;
+        margin-right: 20px;
+    }
+}

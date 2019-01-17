@@ -20,7 +20,7 @@
             <i class="fa fa-fw fa-edit"></i>&nbsp;
             <span>{{ 'Forms' | translate }}</span>
         </a> -->
-       
+
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <i class="fa fa-user"></i>&nbsp;
@@ -29,7 +29,7 @@
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
+                        <a routerLink="/user/adminuserlist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Admin Users' | translate }}</span>
                         </a>
@@ -42,10 +42,10 @@
                         <a routerLink="/user/employeelist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Employees' | translate }}</span>
-                        </a> 
+                        </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a routerLink="/user/traineelist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Trainee Users' | translate }}</span>
                         </a>
@@ -112,7 +112,7 @@
                 </ul>
             </li>
         </div>
-          
+
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
