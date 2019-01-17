@@ -26,13 +26,38 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Users List</returns>
         public IEnumerable<Users> GetUsers () {
             try {
-                var test = _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Select (x => x).ToList ();
-                return test;
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Select (x => x).ToList ();
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Save the users record
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns>bool</returns>
+        public bool SaveUser (Users users) {
+            try {
+                _db.Save<Users> (users, Users.CollectionName);
+                return true;
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get the user detail by its id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Users</returns>
+        public Users GetUserById (string Id) {
+            try {
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.Id == Id).FirstOrDefault ();
             } catch (Exception ex) {
                 throw ex;
             }
         }
         #endregion
-
     }
 }
