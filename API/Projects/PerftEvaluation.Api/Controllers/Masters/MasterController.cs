@@ -7,6 +7,9 @@ using PerftEvaluation.DTO.Dtos;
 namespace PerftEvaluation.Api.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
+    /// <summary>
+    /// Master API Controller
+    /// </summary>
     public class MasterController : ControllerBase {
         #region Declaration
         protected readonly IMasterService _masterService;
