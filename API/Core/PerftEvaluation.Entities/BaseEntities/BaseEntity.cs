@@ -14,5 +14,11 @@ namespace PerftEvaluation.Entities.BaseEntities {
         [BsonDefaultValue (true)]
         [BsonElement ("isActive")]
         public bool IsActive { get; set; }
+
+        [BsonElement ("createdDate")]
+        public DateTime CreatedDate { get; set; }
+
+        [BsonElement ("modifiedDate")]
+        public DateTime ModifiedDate { get; set; }
     }
 }
