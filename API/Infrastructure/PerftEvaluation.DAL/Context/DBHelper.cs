@@ -1,8 +1,8 @@
 using System;
+using System.Linq;
 using MongoDbGenericRepository;
 using MongoDB.Driver;
 using PerftEvaluation.Entities.POCOEntities;
-using System.Linq;
 
 namespace PerftEvaluation.DAL.Context {
     /// <summary>
@@ -45,6 +45,22 @@ namespace PerftEvaluation.DAL.Context {
         /// <typeparam name="T">Void</typeparam>
         public void Save<T> (T TEntity, string strCollectionName) {
             _db.GetCollection<T> (strCollectionName).InsertOneAsync (TEntity);
+        }
+
+        /// <summary>
+        /// Update Entities
+        /// </summary>
+        /// <param name="filterDefinition"></param>
+        /// <param name="updateDefinition"></param>
+        /// <param name="strCollectionName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public  bool  UpdateOne<T> (FilterDefinition<T> filterDefinition,  UpdateDefinition<T> updateDefinition,  string  strCollectionName) {
+            var  updateResult  =  _db.GetCollection<T> (strCollectionName).UpdateOne (filterDefinition, updateDefinition,  new  UpdateOptions { IsUpsert  =  false });
+            if (updateResult.ModifiedCount  >  0  ||  updateResult.IsAcknowledged) {
+                return  true;
+            }
+            return  false;
         }
         #endregion
     }
