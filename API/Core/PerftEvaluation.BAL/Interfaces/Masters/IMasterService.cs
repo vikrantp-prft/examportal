@@ -26,5 +26,26 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="masterType"></param>
         /// <returns></returns>
         IEnumerable<MastersDTO> GetMasterByType (string masterType);
+
+        /// <summary>
+        /// Update master details
+        /// </summary>
+        /// <param name="mastersDTO"></param>
+        /// <returns></returns>
+        bool UpdateMaster (MastersDTO mastersDTO);
+
+        /// <summary>
+        /// Deavtivate Masters
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        bool InactivateMaster (string masterId);
+
+        /// <summary>
+        /// Activate Masters
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        bool ActivateMaster (string masterId);
     }
 }

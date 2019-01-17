@@ -46,6 +46,50 @@ namespace PerftEvaluation.DAL.Repositories {
         public IEnumerable<Masters> GetMastersByType (string masterType) {
             return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType).ToList ();
         }
+
+        /// <summary>
+        /// Update master details
+        /// </summary>
+        /// <param name="masters"></param>
+        /// <returns></returns>
+        public bool UpdateMaster (Masters masters) {
+            var filter = Builders<Masters>.Filter;
+            var filterDef = filter.Eq (c => c.MasterType, masters.MasterType);
+
+            var updateQuery = Builders<Masters>.Update
+                .Set (c => c.Description, masters.Description)
+                .Set (c => c.Name, masters.Name);
+
+            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
+
+        /// <summary>
+        /// Activate masters
+        /// </summary>
+        /// <param name="masterType"></param>
+        /// <returns></returns>
+        public bool InactivateMaster (string masterId) {
+            var filter = Builders<Masters>.Filter;
+            var filterDef = filter.Eq (c => c.Id, masterId);
+            var updateQuery = Builders<Masters>.Update
+                .Set (c => c.IsActive, false);
+
+            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
+
+        /// <summary>
+        /// Activate Masters 
+        /// </summary>
+        /// <param name="masterType"></param>
+        /// <returns></returns>
+        public bool ActivateMaster (string masterId) {
+            var filter = Builders<Masters>.Filter;
+            var filterDef = filter.Eq (c => c.Id, masterId);
+            var updateQuery = Builders<Masters>.Update
+                .Set (c => c.IsActive, true);
+
+            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
         #endregion
     }
 }
