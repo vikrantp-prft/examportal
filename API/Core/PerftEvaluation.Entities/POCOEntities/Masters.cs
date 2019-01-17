@@ -8,18 +8,18 @@ namespace PerftEvaluation.Entities.POCOEntities
     /// Master POCO Entity
     /// </summary>         
     [BsonIgnoreExtraElements]
-    public class Masters:BaseEntity
-    { 
+    public class Masters : BaseEntity
+    {
         [BsonExtraElements]
         public static string CollectionName { get { return "masters"; } }
 
-        [BsonElement ("name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
-        [BsonElement ("description")]
+        [BsonElement("description")]
         public string Description { get; set; }
 
-        [BsonElement ("masterType")]
+        [BsonElement("masterType")]
         public string MasterType { get; set; }
 
     }

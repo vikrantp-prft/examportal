@@ -2,58 +2,60 @@ using System;
 using MongoDB.Bson.Serialization.Attributes;
 using PerftEvaluation.Entities.BaseEntities;
 
-namespace PerftEvaluation.Entities.POCOEntities {
+namespace PerftEvaluation.Entities.POCOEntities
+{
     /// <summary>
     /// User POCO Entity
     /// </summary>
     [BsonIgnoreExtraElements]
-    public class Users : BaseEntity {
+    public class Users : BaseEntity
+    {
         [BsonExtraElements]
         public static string CollectionName { get { return "users"; } }
 
-        [BsonElement ("firstName")]
+        [BsonElement("firstName")]
         public string FirstName { get; set; }
 
-        [BsonElement ("lastName")]
+        [BsonElement("lastName")]
         public string LastName { get; set; }
 
-        [BsonElement ("password")]
+        [BsonElement("password")]
         public string Password { get; set; }
 
-        [BsonElement ("dob")]
+        [BsonElement("dob")]
         public DateTime? DOB { get; set; }
 
-        [BsonElement ("address1")]
+        [BsonElement("address1")]
         public string Address1 { get; set; }
 
-        [BsonElement ("address2")]
+        [BsonElement("address2")]
         public int Address2 { get; set; }
 
-        [BsonElement ("city")]
+        [BsonElement("city")]
         public string City { get; set; }
 
-        [BsonElement ("state")]
+        [BsonElement("state")]
         public string State { get; set; }
 
-        [BsonElement ("pincode")]
-        public string Pincode  { get; set; }
+        [BsonElement("pincode")]
+        public string Pincode { get; set; }
 
-        [BsonElement ("email")]
+        [BsonElement("email")]
         public string Email { get; set; }
 
-        [BsonElement ("mobile")]
+        [BsonElement("mobile")]
         public string Mobile { get; set; }
 
-        [BsonElement ("group")]
+        [BsonElement("group")]
         public string Group { get; set; }
 
-        [BsonElement ("designation")]
+        [BsonElement("designation")]
         public string Designation { get; set; }
 
-        [BsonElement ("team")]
+        [BsonElement("team")]
         public string Team { get; set; }
 
-        [BsonElement ("note")]
+        [BsonElement("note")]
         public string Note { get; set; }
     }
 }
