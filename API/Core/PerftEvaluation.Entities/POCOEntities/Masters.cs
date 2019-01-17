@@ -19,12 +19,6 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement ("description")]
         public string Description { get; set; }
 
-        [BsonElement ("createdDate")]
-        public DateTime? CreatedDate { get; set; }
-
-        [BsonElement ("modifiedDate")]
-        public DateTime? ModifiedDate { get; set; }
-
         [BsonElement ("masterType")]
         public string MasterType { get; set; }
 
