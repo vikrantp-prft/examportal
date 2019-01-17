@@ -34,7 +34,7 @@ namespace PerftEvaluation.DTO.Dtos.Users
 
     public class EducationDetails
     {
-        public string Cource { get; set; }
+        public string Course { get; set; }
         public int YearOfPassing { get; set; }
         public string Institution { get; set; }
         public double Percentage { get; set; }
