@@ -79,7 +79,7 @@ namespace PerftEvaluation.Api {
 
             // Shows UseCors with CorsPolicyBuilder.
             app.UseCors (builder => {
-                builder.WithOrigins ("*").AllowAnyMethod ().AllowAnyHeader ();
+                builder.WithOrigins ("http://localhost:4200").AllowAnyMethod ().AllowAnyHeader ();
             });
 
             app.UseMvc ();

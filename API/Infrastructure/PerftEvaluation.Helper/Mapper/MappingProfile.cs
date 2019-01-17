@@ -13,6 +13,7 @@ namespace PerftEvaluation.Helper.Mapper {
         /// </summary>
         public MappingProfile () {
             CreateMap<Users, UsersDTO> ().ReverseMap();
+            CreateMap<Masters, MastersDTO> ().ReverseMap();
         }
     }
 }

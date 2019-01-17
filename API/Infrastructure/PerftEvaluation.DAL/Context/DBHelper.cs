@@ -2,6 +2,7 @@ using System;
 using MongoDbGenericRepository;
 using MongoDB.Driver;
 using PerftEvaluation.Entities.POCOEntities;
+using System.Linq;
 
 namespace PerftEvaluation.DAL.Context {
     /// <summary>
@@ -34,6 +35,16 @@ namespace PerftEvaluation.DAL.Context {
         /// <returns>list</returns>
         public IMongoCollection<T> GetCollection<T> (string strCollectionName) {
             return _db.GetCollection<T> (strCollectionName);
+        }
+
+        /// <summary>
+        /// Save Entity
+        /// </summary>
+        /// <param name="TEntity">Entity Object</param>
+        /// <param name="strCollectionName"></param>
+        /// <typeparam name="T">Void</typeparam>
+        public void Save<T> (T TEntity, string strCollectionName) {
+            _db.GetCollection<T> (strCollectionName).InsertOneAsync (TEntity);
         }
         #endregion
     }
