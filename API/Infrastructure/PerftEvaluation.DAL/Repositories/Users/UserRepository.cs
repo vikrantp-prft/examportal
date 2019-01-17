@@ -21,12 +21,12 @@ namespace PerftEvaluation.DAL.Repositories {
 
         #region Class Methods 
         /// <summary>
-        /// Get the list of all the active users
+        /// Get the list of all the actived users
         /// </summary>
         /// <returns>Users List</returns>
         public IEnumerable<Users> GetUsers () {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Select (x => x).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -44,6 +44,66 @@ namespace PerftEvaluation.DAL.Repositories {
             } catch (Exception ex) {
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// Update the user details
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
+        public bool UpdateUser (Users users) {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq (c => c.Id, users.Id);
+
+            var updateQuery = Builders<Users>.Update
+                .Set (c => c.IsActive, users.IsActive)
+                .Set (c => c.LastName, users.LastName)
+                .Set (c => c.Mobile, users.Mobile)
+                .Set (c => c.ModifiedDate, users.ModifiedDate)
+                .Set (c => c.Note, users.Note)
+                .Set (c => c.Password, users.Password)
+                .Set (c => c.Pincode, users.Pincode)
+                .Set (c => c.StateId, users.StateId)
+                .Set (c => c.Team, users.Team)
+                .Set (c => c.Address1, users.Address1)
+                .Set (c => c.Address2, users.Address2)
+                .Set (c => c.City, users.City)
+                .Set (c => c.CreatedDate, users.CreatedDate)
+                .Set (c => c.DOB, users.DOB)
+                .Set (c => c.Designation, users.Designation)
+                .Set (c => c.Email, users.Email)
+                .Set (c => c.FirstName, users.FirstName)
+                .Set (c => c.Group, users.Group);
+
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+        }
+
+        /// <summary>
+        /// Inactive users
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool InactivateUsers (string userId) {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq (c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set (c => c.IsActive, false);
+
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+        }
+
+        /// <summary>
+        /// Active users
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool ActiveUsers (string userId) {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq (c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set (c => c.IsActive, true);
+
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
         }
 
         /// <summary>

@@ -12,9 +12,9 @@ namespace PerftEvaluation.DTO.Dtos {
         public string Password { get; set; }
         public DateTime? DOB { get; set; }
         public string Address1 { get; set; }
-        public int Address2 { get; set; }
+        public string Address2 { get; set; }
         public string City { get; set; }
-        public string State { get; set; }
+        public string StateId { get; set; }
         public string Pincode { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }

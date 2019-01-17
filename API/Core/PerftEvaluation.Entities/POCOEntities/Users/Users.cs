@@ -1,4 +1,5 @@
 using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using PerftEvaluation.Entities.BaseEntities;
 
@@ -29,13 +30,13 @@ namespace PerftEvaluation.Entities.POCOEntities
         public string Address1 { get; set; }
 
         [BsonElement("address2")]
-        public int Address2 { get; set; }
+        public string Address2 { get; set; }
 
         [BsonElement("city")]
         public string City { get; set; }
 
-        [BsonElement("state")]
-        public string State { get; set; }
+        [BsonElement("stateId"), BsonRepresentation(BsonType.ObjectId)]
+        public string StateId { get; set; }
 
         [BsonElement("pincode")]
         public string Pincode { get; set; }
