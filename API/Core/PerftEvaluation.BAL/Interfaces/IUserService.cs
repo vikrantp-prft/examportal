@@ -13,5 +13,19 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// </summary>
         /// <value>List of User in DTO</value>
         IEnumerable<UsersDTO> GetUsers { get; }
+
+        /// <summary>
+        /// Save User Details
+        /// </summary>
+        /// <param name="usersDTO"></param>
+        /// <returns></returns>
+        bool SaveUsers (UsersDTO usersDTO);
+
+        /// <summary>
+        /// Ger User Detail by Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        UsersDTO GetUserById (string Id);
     }
 }
