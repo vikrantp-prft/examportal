@@ -31,8 +31,8 @@ namespace PerftEvaluation.Api.Controllers {
                 responseModel.Data = this._masterService.GetMasters;
 
                 return Ok (responseModel);
-            } catch (Exception ex) {
-                return BadRequest (CommonResponse.ExceptionResponse (ex));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -43,8 +43,30 @@ namespace PerftEvaluation.Api.Controllers {
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool Post (MastersDTO mastersDTO) {
-            return this._masterService.SaveMaster (mastersDTO);
+        public IActionResult Post (MastersDTO mastersDTO) {
+            try {
+                return Ok (this._masterService.SaveMaster (mastersDTO));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        //api/master/getmasterbytype
+        /// <summary>
+        /// Get master by type
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("GetMasterByType")]
+        public IActionResult GetMasterByType (RequestModel requestModel) {
+            try {
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.GetMasterByType (requestModel.filter);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
         }
         #endregion
     }

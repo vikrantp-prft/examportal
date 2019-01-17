@@ -25,7 +25,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Masters> GetAllMasters () {
-            return _db.GetCollection<Masters> (Users.CollectionName).AsQueryable ().Select (x => x).ToList ();
+            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Select (x => x).ToList ();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <param name="masters"></param>
         /// <returns></returns>
         public bool SaveMaster (Masters masters) {
-            _db.Save<Masters> (masters, Users.CollectionName);
+            _db.Save<Masters> (masters, Masters.CollectionName);
             return true;
         }
 
@@ -44,7 +44,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <param name="masterType"></param>
         /// <returns></returns>
         public IEnumerable<Masters> GetMastersByType (string masterType) {
-            return _db.GetCollection<Masters> (Users.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType).ToList ();
+            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType).ToList ();
         }
         #endregion
     }
