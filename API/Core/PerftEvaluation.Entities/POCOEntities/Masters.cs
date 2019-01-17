@@ -28,8 +28,6 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement ("masterType")]
         public string MasterType { get; set; }
 
-        [BsonElement ("isActive")]
-        public bool IsActive { get; set; }
 
     }
 }
