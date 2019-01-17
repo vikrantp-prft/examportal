@@ -27,5 +27,26 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="Id"></param>
         /// <returns></returns>
         UsersDTO GetUserById (string Id);
+
+        /// <summary>
+        /// Update user detail
+        /// </summary>
+        /// <param name="usersDTO"></param>
+        /// <returns></returns>
+        bool UpdateUser (UsersDTO usersDTO);
+
+        /// <summary>
+        /// Activate user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool ActivateUser (string userId);
+
+        /// <summary>
+        /// Inactive user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool InactivateUser (string userId);
     }
 }

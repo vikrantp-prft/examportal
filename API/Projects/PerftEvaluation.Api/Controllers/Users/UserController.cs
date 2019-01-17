@@ -48,7 +48,70 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost]
         public IActionResult Post (UsersDTO usersDTO) {
             try {
-                return Ok(this._userService.SaveUsers (usersDTO));
+                return Ok (this._userService.SaveUsers (usersDTO));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/users/Update
+        /// <summary>
+        /// Update users details
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("Update")]
+        public IActionResult UpdateUser (UsersDTO userDTO) {
+            try {
+                return Ok (this._userService.UpdateUser (userDTO));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/user/ActivateMaster
+        /// <summary>
+        /// Activate user
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("ActivateUser")]
+        public IActionResult ActivateUser (RequestModel requestModel) {
+            try {
+                return Ok (this._userService.ActivateUser (requestModel.Id));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/user/InactivateMaster
+        /// <summary>
+        /// Deactivate uset
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("InactivateUser")]
+        public IActionResult InactivateUser (RequestModel requestModel) {
+            try {
+                return Ok (this._userService.InactivateUser (requestModel.Id));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/user/GetUserById
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("GetUserById")]
+        public IActionResult GetUserById (RequestModel requestModel) {
+            try {
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.GetUserById (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
