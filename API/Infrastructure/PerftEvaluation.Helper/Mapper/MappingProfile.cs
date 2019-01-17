@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
@@ -14,6 +15,7 @@ namespace PerftEvaluation.Helper.Mapper {
         public MappingProfile () {
             CreateMap<Users, UsersDTO> ().ReverseMap();
             CreateMap<Masters, MastersDTO> ().ReverseMap();
+            CreateMap<Masters, DropdownsDTO> ().ReverseMap();
         }
     }
 }
