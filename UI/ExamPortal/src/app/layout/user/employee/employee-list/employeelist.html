@@ -1,99 +1,110 @@
 <div>
-    <div class="row">
-      <div class="col col-xl-12 col-lg-12">
-        <div class="card mb-3">
-          <div class="card-header">Employee List</div>
-          <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
-                <div class="col-md-3">
-                        <div class="dataTables_length_code">
-                            <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select> entries</label>
-                        </div>
-                    </div>
-                    <!-- [(ngModel)]="params.searchString" -->
-                    <!-- <div class=""> -->
-                        <div class="input-group custom-search-form col-md-4" style="display: inline-flex;">
-                            <input type="text" class="form-control search-field" placeholder="search" 
-                            (keyup)="searchRecord($event)">
-                        </div>
-                    <!-- </div>    -->
-                    <div class="col-md-2" style="display: inline-block;">
-                        <button  [routerLink]="['/user/addemployee']" class="btn-primary">Add Employee
-                        
-                        </button>
-
-                 
-                    </div>
-          </div>
-          <div class="card-body table-responsive">
-            <table class="table table-hover table-striped">
-              <thead>
-                <tr>
-                  <th>Page</th>
-                  <th>Visits</th>
-                  <th>% New Visits</th>
-                  <th>Revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>/index.html</td>
-                  <td>1265</td>
-                  <td>32.3%</td>
-                  <td>$321.33</td>
-                </tr>
-                <tr>
-                  <td>/about.html</td>
-                  <td>261</td>
-                  <td>33.3%</td>
-                  <td>$234.12</td>
-                </tr>
-                <tr>
-                  <td>/sales.html</td>
-                  <td>665</td>
-                  <td>21.3%</td>
-                  <td>$16.34</td>
-                </tr>
-                <tr>
-                  <td>/blog.html</td>
-                  <td>9516</td>
-                  <td>89.3%</td>
-                  <td>$1644.43</td>
-                </tr>
-                <tr>
-                  <td>/404.html</td>
-                  <td>23</td>
-                  <td>34.3%</td>
-                  <td>$23.52</td>
-                </tr>
-                <tr>
-                  <td>/services.html</td>
-                  <td>421</td>
-                  <td>60.3%</td>
-                  <td>$724.32</td>
-                </tr>
-                <tr>
-                  <td>/blog/post.html</td>
-                  <td>1233</td>
-                  <td>93.2%</td>
-                  <td>$126.34</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- [(ngModel)]="params.currentPage" -->
-          <!-- [totalItems]="params.totalItems" -->
-     
-
-          <pagination class="pull-right" [totalItems]="100" [itemsPerPage]="params.pageSize"  (pageChanged)="pageChanged($event)"
-          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT"
-          firstText="FIRST" lastText="LAST"></pagination>
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h1>Employee List</h1>
         </div>
+        <div class="col-md-12 col-xs-12 col-lg-12 datatable-header emp-list">
+          <div class="add-users-toolbar">
+
+            <div class="add-users">
+              <button [routerLink]="['/user/addemployee']" class="btn-primary">Add New</button>
+            </div>
+
+            <div class="add-users">
+              <button [routerLink]="['/user/quickaddemployee']" class="btn-primary">Quick Add</button>
+            </div>
+
+            <!-- [(ngModel)]="params.searchString" -->
+            <!-- <div class=""> -->
+            <div class="input-group custom-search-form col-md-4 add-users-search">
+              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
+            </div>
+            <!-- </div>    -->
+
+            <div class="dataTables_length_code add-users">
+              <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select> entries</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>SR. NO.</th>
+                <th>Name</th>
+                <th>User Name</th>
+                <th>Mobile</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>abc</td>
+                <td>a</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addemployee']" class="btn-primary">Update</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>xyz</td>
+                <td>x</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addemployee']" class="btn-primary">Update</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>pqr</td>
+                <td>p</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addemployee']" class="btn-primary">Update</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>jai.bidkar</td>
+                <td>jb</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addemployee']" class="btn-primary">Update</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>pc</td>
+                <td>p</td>
+                <td>1234567890</td>
+                <td>
+                  <span><button [routerLink]="['/user/addemployee']" class="btn-primary">Update</button></span>
+                  <span><button class="btn-primary">Delete</button></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- [(ngModel)]="params.currentPage" -->
+        <!-- [totalItems]="params.totalItems" -->
+        <pagination class="pull-right" [totalItems]="100" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+          lastText="LAST"></pagination>
       </div>
     </div>
   </div>
-  
+</div>
