@@ -6,6 +6,9 @@ namespace PerftEvaluation.DTO {
     /// </summary>
     public class RequestModel {
         public string Id { get; set; }
-        public string filter { get; set; }
+        public string Filter { get; set; }
+        public int PageNo {get;set;}
+        public int PageSize {get;set;}
+
     }
 }
