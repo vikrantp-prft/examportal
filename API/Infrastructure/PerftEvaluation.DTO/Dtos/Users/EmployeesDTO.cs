@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace PerftEvaluation.DTO.Dtos.Users
 {
@@ -25,9 +26,17 @@ namespace PerftEvaluation.DTO.Dtos.Users
         public string Mobile { get; set; }
         public string Team { get; set; }
         public string Note { get; set; }
-        public string Intrest { get; set; }
+        public string Interest { get; set; }
+        public List<EducationDetails> EducationDetails;
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+    }
 
+    public class EducationDetails
+    {
+        public string Cource { get; set; }
+        public int YearOfPassing { get; set; }
+        public string Institution { get; set; }
+        public double Percentage { get; set; }
     }
 }
