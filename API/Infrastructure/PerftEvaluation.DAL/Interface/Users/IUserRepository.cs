@@ -26,5 +26,26 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="Id"></param>
         /// <returns></returns>
         Users GetUserById (string Id);
+
+        /// <summary>
+        /// Update users details
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
+        bool UpdateUser (Users users);
+
+        /// <summary>
+        /// Inactivate the users detail
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool InactivateUsers (string userId);
+
+        /// <summary>
+        /// Active the user detail
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool ActiveUsers (string userId);
     }
 }

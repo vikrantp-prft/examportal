@@ -59,6 +59,33 @@ namespace PerftEvaluation.BAL.Services {
         public UsersDTO GetUserById (string Id) {
             return this._mapper.Map<UsersDTO> (this._userRepository.GetUserById (Id));
         }
+
+        /// <summary>
+        /// Update user detail
+        /// </summary>
+        /// <param name="usersDTO"></param>
+        /// <returns></returns>
+        public bool UpdateUser (UsersDTO usersDTO) {
+            return this._userRepository.UpdateUser (this._mapper.Map<Users> (usersDTO));
+        }
+
+        /// <summary>
+        /// Activated user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool ActivateUser (string userId) {
+            return this._userRepository.ActiveUsers (userId);
+        }
+
+        /// <summary>
+        /// Deactivate user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool InactivateUser (string userId) {
+            return this._userRepository.InactivateUsers (userId);
+        }
         #endregion
 
     }

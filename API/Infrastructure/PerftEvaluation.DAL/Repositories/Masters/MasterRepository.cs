@@ -21,11 +21,11 @@ namespace PerftEvaluation.DAL.Repositories {
 
         #region Class Methods 
         /// <summary>
-        /// Get all master details
+        /// Get all activated master details
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Masters> GetAllMasters () {
-            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Select (x => x).ToList ();
+            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns></returns>
         public bool UpdateMaster (Masters masters) {
             var filter = Builders<Masters>.Filter;
-            var filterDef = filter.Eq (c => c.MasterType, masters.MasterType);
+            var filterDef = filter.Eq (c => c.Id, masters.Id);
 
             var updateQuery = Builders<Masters>.Update
                 .Set (c => c.Description, masters.Description)
@@ -64,9 +64,9 @@ namespace PerftEvaluation.DAL.Repositories {
         }
 
         /// <summary>
-        /// Activate masters
+        /// Inactive masters
         /// </summary>
-        /// <param name="masterType"></param>
+        /// <param name="masterId"></param>
         /// <returns></returns>
         public bool InactivateMaster (string masterId) {
             var filter = Builders<Masters>.Filter;
@@ -80,7 +80,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <summary>
         /// Activate Masters 
         /// </summary>
-        /// <param name="masterType"></param>
+        /// <param name="masterId"></param>
         /// <returns></returns>
         public bool ActivateMaster (string masterId) {
             var filter = Builders<Masters>.Filter;

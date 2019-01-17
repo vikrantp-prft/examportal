@@ -68,7 +68,7 @@ namespace PerftEvaluation.BAL.Services {
         /// <summary>
         /// Activated master record
         /// </summary>
-        /// <param name="mastersDTO"></param>
+        /// <param name="masterId"></param>
         /// <returns></returns>
         public bool ActivateMaster (string masterId) {
             return this._masterRepository.ActivateMaster (masterId);
@@ -77,7 +77,7 @@ namespace PerftEvaluation.BAL.Services {
         /// <summary>
         /// Deactivate master record
         /// </summary>
-        /// <param name="mastersDTO"></param>
+        /// <param name="masterId"></param>
         /// <returns></returns>
         public bool InactivateMaster (string masterId) {
             return this._masterRepository.InactivateMaster (masterId);
