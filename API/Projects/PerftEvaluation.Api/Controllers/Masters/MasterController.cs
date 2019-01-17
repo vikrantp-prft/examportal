@@ -7,6 +7,9 @@ using PerftEvaluation.DTO.Dtos;
 namespace PerftEvaluation.Api.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
+    /// <summary>
+    /// Master API Controller
+    /// </summary>
     public class MasterController : ControllerBase {
         #region Declaration
         protected readonly IMasterService _masterService;
@@ -61,7 +64,7 @@ namespace PerftEvaluation.Api.Controllers {
         public IActionResult GetMasterByType (RequestModel requestModel) {
             try {
                 responseModel.Message = "Success";
-                responseModel.Data = this._masterService.GetMasterByType (requestModel.filter);
+                responseModel.Data = this._masterService.GetMasterByType (requestModel.Filter);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
