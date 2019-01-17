@@ -10,7 +10,8 @@ namespace PerftEvaluation.Helper.Common
             Team,
             Designation,
             Department,
-            State
+            State,
+            Degree
 
         }
     }
