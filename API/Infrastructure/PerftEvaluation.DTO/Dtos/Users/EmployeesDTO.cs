@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace PerftEvaluation.DTO.Dtos.Users
-{
-    public class EmployeesDTO
-    {
+namespace PerftEvaluation.DTO.Dtos {
+    /// <summary>
+    /// Employee DTO class
+    /// </summary>
+    public class EmployeesDTO {
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -32,8 +33,7 @@ namespace PerftEvaluation.DTO.Dtos.Users
         public DateTime ModifiedDate { get; set; }
     }
 
-    public class EducationDetails
-    {
+    public class EducationDetails {
         public string Cource { get; set; }
         public int YearOfPassing { get; set; }
         public string Institution { get; set; }
