@@ -18,6 +18,10 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("firstName")]
         public string FirstName { get; set; }
 
+        [BsonElement("middleName")]
+        public string MiddleName { get; set; }
+
+
         [BsonElement("lastName")]
         public string LastName { get; set; }
 
@@ -60,45 +64,45 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("note")]
         public string Note { get; set; }
         
-    //     [BsonElement("userName")]
-    //     public string UserName { get; set; }
+        [BsonElement("userName")]
+        public string UserName { get; set; }
 
-    //     [BsonElement("state")]    
-    //     public string State { get; set; }
+        [BsonElement("currentAddress1")]
+        public string CurrentAddress1 { get; set; }
 
-    //     [BsonElement("currentAddress1")]
-    //     public string CurrentAddress1 { get; set; }
+        [BsonElement("currentAddress2")]
+        public string CurrentAddress2 { get; set; }
 
-    //     [BsonElement("currentAddress2")]
-    //     public string CurrentAddress2 { get; set; }
+        [BsonElement("currentCity")]
+        public string CurrentCity { get; set; }
 
-    //     [BsonElement("currentCity")]
-    //     public string CurrentCity { get; set; }
+        [BsonElement("currentStateId")]
+        public string CurrentStateId { get; set; }
 
-    //     [BsonElement("currentState")]
-    //     public string CurrentState { get; set; }
+        [BsonElement("currentPincode")]
+        public string CurrentPincode { get; set; }
 
-    //     [BsonElement("currentPincode")]
-    //     public string CurrentPincode { get; set; }
+        [BsonElement("interest")]       
+        public string Interest { get; set; }
 
-    //     [BsonElement("interest")]       
-    //     public string Interest { get; set; }
-    //     public List<EducationDetails> EducationDetails{get;set;}
+        [BsonElement("isEmployee")]  
+        public bool IsEmployee { get; set; }
+        public List<EducationDetails> EducationDetails {get;set;}
           
-    // }
+    }
 
-    // public class EducationDetails
-    // {
-    //     [BsonElement("course")] 
-    //     public string Course { get; set; }
+    public class EducationDetails
+    {
+        [BsonElement("course")] 
+        public string Course { get; set; }
 
-    //     [BsonElement("yearOfPassing")] 
-    //     public int YearOfPassing { get; set; }
+        [BsonElement("yearOfPassing")] 
+        public int YearOfPassing { get; set; }
 
-    //     [BsonElement("institution")] 
-    //     public string Institution { get; set; }
+        [BsonElement("institution")] 
+        public string Institution { get; set; }
 
-    //     [BsonElement("percentage")] 
-    //     public double Percentage { get; set; }
+        [BsonElement("percentage")] 
+        public double Percentage { get; set; }
      }
 }

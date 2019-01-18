@@ -26,11 +26,12 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterService, MasterService>();
             services.AddTransient<IDropdown, Dropdown>();
+            services.AddTransient<IEmployeeService,EmployeeService>();
 
             //Projects Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IMasterRepository, MasterRepository>();
-
+            services.AddTransient<IEmployeeRepository,EmployeeRepository>();
             // Add all other services here.
             return services;
         }
