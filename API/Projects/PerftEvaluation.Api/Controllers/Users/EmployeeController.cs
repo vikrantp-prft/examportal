@@ -9,7 +9,7 @@ namespace PerftEvaluation.Api.Controllers.Users
     [Route("api/[controller]")]
     [ApiController]
     /// <summary>
-    /// User API Controller
+    /// Employee API Controller
     /// </summary>
     public class EmployeeController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace PerftEvaluation.Api.Controllers.Users
         #endregion
 
         #region Class Methods
-        //GET api/Employee
+        //GET api/Employee/Get
         /// <summary>
         /// Get list of all employees
         /// </summary>
@@ -46,7 +46,7 @@ namespace PerftEvaluation.Api.Controllers.Users
             }
         }
 
-         // POST api/Employee
+         // POST api/Employee/Post
         /// <summary>
         /// Save employee detail
         /// </summary>
@@ -61,9 +61,9 @@ namespace PerftEvaluation.Api.Controllers.Users
             }
         }
 
-        // POST api/user/ActivateEmployee
+        // POST api/Employee/ActivateEmployee
         /// <summary>
-        /// Activate user
+        /// Activate Employee
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
@@ -76,9 +76,9 @@ namespace PerftEvaluation.Api.Controllers.Users
             }
         }
 
-         // POST api/user/InactivateMaster
+         // POST api/Employee/InactivateEmployee
         /// <summary>
-        /// Deactivate uset
+        /// Deactivate employee
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
@@ -91,9 +91,9 @@ namespace PerftEvaluation.Api.Controllers.Users
             }
         }
 
-        // POST api/user/GetEmployeeById
+        // POST api/Employee/GetEmployeeById
         /// <summary>
-        /// Get user by id
+        /// Get employee by id
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
