@@ -33,5 +33,42 @@ namespace PerftEvaluation.Helper.Common
                 return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
             }
         }
+
+        /// <summary>
+        /// Get dropdown for Teams (.NET, JAVA, etc)
+        /// </summary>
+        public IEnumerable<DropdownsDTO> Teams
+        {
+            get
+            {
+                var teams = this._masterService.GetMasterByType(Enums.MasterTypes.Team.ToString());
+
+                return this._mapper.Map<IEnumerable<DropdownsDTO>>(teams);
+            }
+        }
+        /// <summary>
+        /// Get dropdown for Groups
+        /// </summary>
+        public IEnumerable<DropdownsDTO> Groups
+        {
+            get
+            {
+                var departments = this._masterService.GetMasterByType(Enums.MasterTypes.Group.ToString());
+
+                return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
+            }
+        }
+        /// <summary>
+        /// Get dropdown for Designations
+        /// </summary>
+        public IEnumerable<DropdownsDTO> Designations
+        {
+            get
+            {
+                var designations = this._masterService.GetMasterByType(Enums.MasterTypes.Designation.ToString());
+
+                return this._mapper.Map<IEnumerable<DropdownsDTO>>(designations);
+            }
+        }
     }
 }
