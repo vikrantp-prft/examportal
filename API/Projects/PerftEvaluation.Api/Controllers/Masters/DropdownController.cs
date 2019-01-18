@@ -3,8 +3,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
-using PerftEvaluation.Helper;
 using PerftEvaluation.Helper.Common;
+using PerftEvaluation.Helper.Interfaces;
 
 namespace PerftEvaluation.Api.Controllers.Masters {
     /// <summary>
@@ -16,7 +16,6 @@ namespace PerftEvaluation.Api.Controllers.Masters {
     public class DropdownController : ControllerBase {
 
         #region Declarations
-        Dropdown dropdown;
         private ResponseModel responseModel = null;
         protected readonly IDropdown _dropdown;
         private readonly IMapper _mapper;
