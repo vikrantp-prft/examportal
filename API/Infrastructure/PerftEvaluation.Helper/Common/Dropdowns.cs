@@ -74,7 +74,7 @@ namespace PerftEvaluation.Helper.Common
         /// <summary>
         /// Get dropdown for Degrees
         /// </summary>
-          public IEnumerable<DropdownsDTO> Degrees
+        public IEnumerable<DropdownsDTO> Degrees
         {
             get
             {
@@ -84,10 +84,11 @@ namespace PerftEvaluation.Helper.Common
             }
         }
 
+
         /// <summary>
         /// Get dropdown for States
         /// </summary>
-          public IEnumerable<DropdownsDTO> States
+        public IEnumerable<DropdownsDTO> States
         {
             get
             {
@@ -96,6 +97,6 @@ namespace PerftEvaluation.Helper.Common
                 return this._mapper.Map<IEnumerable<DropdownsDTO>>(state);
             }
         }
-        
+
     }
 }
