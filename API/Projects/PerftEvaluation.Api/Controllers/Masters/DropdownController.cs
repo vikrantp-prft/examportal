@@ -10,7 +10,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
     /// <summary>
     /// All dropdown API Controller
     /// </summary>
-    [Route ("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
 
     public class DropdownController : ControllerBase {
@@ -32,9 +32,11 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         /// Get dropdown for department master
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route ("Departments")]
-        public IActionResult Departments () {
-            try {
+        [HttpGet, Route("Departments")]
+        public IActionResult Departments()
+        {
+            try
+            {
 
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Departments;
