@@ -30,6 +30,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpGet]
         public IActionResult Get () {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.GetMasters;
 
@@ -48,6 +49,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost]
         public IActionResult Post (MastersDTO mastersDTO) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.SaveMaster (mastersDTO);
 
@@ -66,6 +68,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("Update")]
         public IActionResult UpdateMaster (MastersDTO mastersDTO) {
             try {
+                responseModel.StartIndex = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.UpdateMaster (mastersDTO);
 
@@ -84,6 +87,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetMasterByType")]
         public IActionResult GetMasterByType (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.GetMasterByType (requestModel.Filter);
 
@@ -102,6 +106,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ActivateMaster")]
         public IActionResult ActivateMaster (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.ActivateMaster (requestModel.Id);
 
@@ -120,6 +125,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("InactivateMaster")]
         public IActionResult InactivateMaster (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.InactivateMaster (requestModel.Id);
 

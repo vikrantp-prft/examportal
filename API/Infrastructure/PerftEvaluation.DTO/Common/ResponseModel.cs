@@ -5,6 +5,7 @@ namespace PerftEvaluation.DTO {
     /// API Response model
     /// </summary>
     public class ResponseModel {
+        public int StatusCode { get; set; }
         public string Message { get; set; }
         public object Data { get; set; }
         public int PageSize { get; set; }

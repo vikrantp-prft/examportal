@@ -32,12 +32,10 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         /// Get dropdown for department master
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("Departments")]
-        public IActionResult Departments()
-        {
-            try
-            {
-
+        [HttpGet, Route ("Departments")]
+        public IActionResult Departments () {
+            try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Departments;
 
@@ -55,7 +53,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Groups")]
         public IActionResult Groups () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Groups;
 
@@ -73,7 +71,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Teams")]
         public IActionResult Teams () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Teams;
 
@@ -91,7 +89,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Designations")]
         public IActionResult Designations () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Designations;
 
@@ -101,7 +99,6 @@ namespace PerftEvaluation.Api.Controllers.Masters {
             }
         }
 
-
         // GET api/dropdown/Degrees
         /// <summary>
         /// Get dropdown for Degrees of user/employee
@@ -110,7 +107,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Degrees")]
         public IActionResult Degrees () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Degrees;
 
@@ -120,7 +117,6 @@ namespace PerftEvaluation.Api.Controllers.Masters {
             }
         }
 
-
         // GET api/dropdown/States
         /// <summary>
         /// Get dropdown for States
@@ -129,7 +125,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("States")]
         public IActionResult States () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.States;
 
