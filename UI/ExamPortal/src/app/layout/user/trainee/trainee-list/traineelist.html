@@ -21,10 +21,12 @@
           </div>
           <!-- </div>    -->
           <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/user/addtraineeuser']" class="btn-primary">Add Trainee</button>
+            <button [routerLink]="['/user/addtraineeuser']"><i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
           </div>
           <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/user/quickaddtraineeuser']" class="btn-primary">Quick Add Trainee</button>
+            <button [routerLink]="['/user/quickaddtraineeuser']">Quick Add Trainee
+            </button>
           </div>
         </div>
         <div class="card-body table-responsive">
@@ -39,17 +41,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>/index.html</td>
-                <td>1265</td>
-                <td>32.3%</td>
-                <td>$321.33</td>
+              <tr *ngFor="let trainee of traineeList; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{trainee.firstName}}</td>
+                <td>{{trainee.email}}</td>
+                <td>{{trainee.mobile}}</td>
                 <td>
+                  <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>&nbsp;
+                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+
+                  <!-- 
+
                   <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
+                  <button class="btn-primary">Delete</button> -->
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td>/about.html</td>
                 <td>261</td>
                 <td>33.3%</td>
@@ -108,7 +119,7 @@
                   <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
                   <button class="btn-primary">Delete</button>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
