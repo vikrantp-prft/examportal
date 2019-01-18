@@ -35,5 +35,19 @@ namespace PerftEvaluation.Helper.Interfaces
         /// <value></value>
 
         IEnumerable<DropdownsDTO> Designations{get;}
+
+          /// <summary>
+        /// Get dropdown for Degree of user/employee
+        /// </summary>
+        /// <value></value>
+
+        IEnumerable<DropdownsDTO> Degrees{get;}
+
+        /// <summary>
+        /// Get dropdown for States list
+        /// </summary>
+        /// <value></value>
+
+        IEnumerable<DropdownsDTO> States{get;}
     }
 }

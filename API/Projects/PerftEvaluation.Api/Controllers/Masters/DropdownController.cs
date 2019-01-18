@@ -98,5 +98,43 @@ namespace PerftEvaluation.Api.Controllers.Masters {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
+
+
+        // GET api/dropdown/Degrees
+        /// <summary>
+        /// Get dropdown for Degrees of user/employee
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route ("Degrees")]
+        public IActionResult Degrees () {
+            try {
+
+                responseModel.Message = "Success";
+                responseModel.Data = this._dropdown.Degrees;
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
+        // GET api/dropdown/States
+        /// <summary>
+        /// Get dropdown for States
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route ("States")]
+        public IActionResult States () {
+            try {
+
+                responseModel.Message = "Success";
+                responseModel.Data = this._dropdown.States;
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
     }
 }
