@@ -42,29 +42,25 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngFor="let admin of employeeList let i=index" >
               <tr>
-                <td>1</td>
-                <td>abc</td>
-                <td>a</td>
-                <td>SuperAdmin</td>
-                <td>abc@gmail.com</td>
-                <td>1234567890</td>
+                <td>{{i+1}}</td>
+                <td>{{admin.firstName}} {{admin.lastName}}</td>
+                <td>{{admin.email}}</td>
+                <td>{{admin.group}}</td>
+                <td>{{admin.email}}</td>
+                <td>{{admin.mobile}}</td>
                 <td>
-                  <span><button [routerLink]="['/user/addadminuser']" class="btn-primary">Update</button></span>
-                  <span><button class="btn-primary">Delete</button></span>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>xyz</td>
-                <td>x</td>
-                <td>SuperAdmin</td>
-                <td>abc@gmail.com</td>
-                <td>1234567890</td>
-                <td>
-                  <span><button [routerLink]="['/user/addadminuser']" class="btn-primary">Delete</button></span>
-                  <span><button class="btn-primary">Delete</button></span>
+                  <span>
+                    <button type="button" rel="tooltip">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>
+                </span>
+                  <span>
+                    <button type="button" rel="tooltip">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </span>
                 </td>
               </tr>
             </tbody>
