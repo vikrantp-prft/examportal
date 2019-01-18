@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.Helper.Common;
-using PerftEvaluation.Helper.Interfaces;
+using PerftEvaluation.Helper;
 
 namespace PerftEvaluation.Api.Controllers.Masters
 {
