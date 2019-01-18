@@ -21,9 +21,10 @@
           </div>
           <!-- </div>    -->
           <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/user/addtrainee']" class="btn-primary">Add Trainee</button>
-
-
+            <button [routerLink]="['/user/addtraineeuser']" class="btn-primary">Add Trainee</button>
+          </div>
+          <div class="col-md-2" style="display: inline-block;">
+            <button [routerLink]="['/user/quickaddtraineeuser']" class="btn-primary">Quick Add Trainee</button>
           </div>
         </div>
         <div class="card-body table-responsive">
@@ -111,8 +112,6 @@
             </tbody>
           </table>
         </div>
-        <!-- [(ngModel)]="params.currentPage" -->
-        <!-- [totalItems]="params.totalItems" -->
         <pagination class="pull-right" [totalItems]="100" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
           [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
           lastText="LAST"></pagination>
