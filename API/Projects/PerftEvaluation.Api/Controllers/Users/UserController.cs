@@ -48,7 +48,10 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost]
         public IActionResult Post (UsersDTO usersDTO) {
             try {
-                return Ok (this._userService.SaveUsers (usersDTO));
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.SaveUsers (usersDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -63,7 +66,10 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("Update")]
         public IActionResult UpdateUser (UsersDTO userDTO) {
             try {
-                return Ok (this._userService.UpdateUser (userDTO));
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.UpdateUser (userDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -78,7 +84,10 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ActivateUser")]
         public IActionResult ActivateUser (RequestModel requestModel) {
             try {
-                return Ok (this._userService.ActivateUser (requestModel.Id));
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.ActivateUser (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -93,7 +102,10 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("InactivateUser")]
         public IActionResult InactivateUser (RequestModel requestModel) {
             try {
-                return Ok (this._userService.InactivateUser (requestModel.Id));
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.InactivateUser (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
