@@ -128,6 +128,23 @@ namespace PerftEvaluation.Api.Controllers {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
+
+        // POST api/user/GetUserById
+        /// <summary>
+        /// Get dashboard count and required content
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route ("GetDashboardContent")]
+        public IActionResult GetDashboardContent () {
+            try {
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.GetDashboardInfo ();
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
         #endregion
     }
 }

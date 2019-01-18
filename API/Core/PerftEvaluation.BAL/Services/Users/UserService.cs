@@ -4,6 +4,7 @@ using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO.Dtos;
+using PerftEvaluation.DTO.Dtos.Dashboard;
 using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.BAL.Services {
@@ -85,6 +86,17 @@ namespace PerftEvaluation.BAL.Services {
         /// <returns></returns>
         public bool InactivateUser (string userId) {
             return this._userRepository.InactivateUsers (userId);
+        }
+
+        /// <summary>
+        /// Get the count and content for dashboard
+        /// </summary>
+        /// <returns></returns>
+        public DashboardDTO GetDashboardInfo () {
+            DashboardDTO dashboardDTO = new DashboardDTO ();
+            dashboardDTO.UserCount = _userRepository.UsersCount ();
+
+            return dashboardDTO;
         }
         #endregion
 

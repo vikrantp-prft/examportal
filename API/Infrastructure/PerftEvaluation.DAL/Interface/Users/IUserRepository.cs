@@ -47,5 +47,11 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="userId"></param>
         /// <returns></returns>
         bool ActiveUsers (string userId);
+
+        /// <summary>
+        /// Get the count of users
+        /// </summary>
+        /// <returns></returns>
+        int UsersCount ();
     }
 }
