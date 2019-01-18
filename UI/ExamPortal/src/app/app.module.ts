@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { commonService } from './common/services/common.service';
 import { HttpModule } from '@angular/http';
-
+import { ToastrModule } from 'ngx-toastr';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
 
@@ -24,6 +24,7 @@ export const createTranslateLoader = (http: HttpClient) => {
     BrowserAnimationsModule,
     HttpClientModule,
     HttpModule,
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

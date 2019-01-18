@@ -2,7 +2,7 @@ import { Injectable, Inject, EventEmitter } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import 'rxjs/Rx';
+ import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { appConfig } from '../core/app.config';
@@ -11,10 +11,11 @@ declare const $: any;
 @Injectable()
 export class commonService {
   public headers: Headers;
-  constructor(
+   constructor(
     @Inject(Http) public http: Http,
     public router: Router
   ) {
+    this.headers = new Headers({ 'Content-Type': 'application/json' });
 
     // this.headers = new Headers({
     //   Authorization: "Bearer " + authservice.token
@@ -29,9 +30,8 @@ export class commonService {
       .map((res: Response) => res.json())
       .catch((error: any) => {
         if (error.status === 401) {
-          // this.fn_log(error);
-          return Observable.throw(error.statusText);
-        }
+        // this.fn_log(error);
+        return Observable.throw(error.statusText); }
       });
   }
 
@@ -43,9 +43,8 @@ export class commonService {
       .catch((error: any) => {
         // solution check for status code 401 before calling fn_log()
         if (error.status === 401) {
-          // this.fn_log(error);
-          return Observable.throw(error.statusText);
-        }
+        // this.fn_log(error);
+        return Observable.throw(error.statusText); }
       });
   }
 
@@ -60,9 +59,8 @@ export class commonService {
       .map((res: Response) => res.json())
       .catch((error: any) => {
         if (error.status === 401) {
-          // this.fn_log(error);
-          return Observable.throw(error.statusText);
-        }
+        // this.fn_log(error);
+        return Observable.throw(error.statusText); }
       });
   }
   fn_Post(url: string) {
@@ -72,9 +70,8 @@ export class commonService {
       .map((res: Response) => res.json())
       .catch((error: any) => {
         if (error.status === 401) {
-          // this.fn_log(error);
-          return Observable.throw(error.statusText);
-        }
+        // this.fn_log(error);
+        return Observable.throw(error.statusText); }
       });
   }
 

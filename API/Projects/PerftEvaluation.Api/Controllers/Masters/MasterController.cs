@@ -30,6 +30,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpGet]
         public IActionResult Get () {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.GetMasters;
 
@@ -48,7 +49,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost]
         public IActionResult Post (MastersDTO mastersDTO) {
             try {
-                return Ok (this._masterService.SaveMaster (mastersDTO));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.SaveMaster (mastersDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -63,7 +68,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("Update")]
         public IActionResult UpdateMaster (MastersDTO mastersDTO) {
             try {
-                return Ok (this._masterService.UpdateMaster (mastersDTO));
+                responseModel.StartIndex = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.UpdateMaster (mastersDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -78,6 +87,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetMasterByType")]
         public IActionResult GetMasterByType (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.GetMasterByType (requestModel.Filter);
 
@@ -96,7 +106,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ActivateMaster")]
         public IActionResult ActivateMaster (RequestModel requestModel) {
             try {
-                return Ok (this._masterService.ActivateMaster (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.ActivateMaster (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -111,7 +125,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("InactivateMaster")]
         public IActionResult InactivateMaster (RequestModel requestModel) {
             try {
-                return Ok (this._masterService.InactivateMaster (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.InactivateMaster (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }

@@ -25,6 +25,8 @@ export class TraineeListComponent implements OnInit {
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
+  public traineeList = [];
+
   constructor(private CommonService: commonService) { }
   // Function for  pagination
   setRecordPerPage(event: any): void {
@@ -49,12 +51,14 @@ export class TraineeListComponent implements OnInit {
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/Values';
+    const url = 'api/User';
 
     this.CommonService.fn_Get(url).subscribe(
       (data: any) => {
-        if (data != null && data.statusCode === 200) {
-          //this.employeeList = data.data;
+        if (data != null /*&& data.statusCode === 200*/) {
+          console.log(data);
+          this.traineeList = data.data;
+          console.log(this.traineeList);
         }
       },
       err => console.error(err),

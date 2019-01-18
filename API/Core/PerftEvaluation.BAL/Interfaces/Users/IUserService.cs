@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PerftEvaluation.DTO.Dtos;
+using PerftEvaluation.DTO.Dtos.Dashboard;
 using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.BAL.Interfaces {
@@ -48,5 +49,11 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="userId"></param>
         /// <returns></returns>
         bool InactivateUser (string userId);
+
+        /// <summary>
+        /// Get the dashboard count and content
+        /// </summary>
+        /// <returns></returns>
+        DashboardDTO GetDashboardInfo ();
     }
 }

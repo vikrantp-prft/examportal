@@ -30,6 +30,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpGet]
         public IActionResult Get () {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.GetUsers;
 
@@ -48,7 +49,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost]
         public IActionResult Post (UsersDTO usersDTO) {
             try {
-                return Ok (this._userService.SaveUsers (usersDTO));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.SaveUsers (usersDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -63,7 +68,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("Update")]
         public IActionResult UpdateUser (UsersDTO userDTO) {
             try {
-                return Ok (this._userService.UpdateUser (userDTO));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.UpdateUser (userDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -78,7 +87,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ActivateUser")]
         public IActionResult ActivateUser (RequestModel requestModel) {
             try {
-                return Ok (this._userService.ActivateUser (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.ActivateUser (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -93,7 +106,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("InactivateUser")]
         public IActionResult InactivateUser (RequestModel requestModel) {
             try {
-                return Ok (this._userService.InactivateUser (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.InactivateUser (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -108,8 +125,27 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetUserById")]
         public IActionResult GetUserById (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.GetUserById (requestModel.Id);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/user/GetUserById
+        /// <summary>
+        /// Get dashboard count and required content
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route ("GetDashboardContent")]
+        public IActionResult GetDashboardContent () {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.GetDashboardInfo ();
 
                 return Ok (responseModel);
             } catch (Exception exception) {

@@ -118,6 +118,18 @@ namespace PerftEvaluation.DAL.Repositories {
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// Get the total count of users
+        /// </summary>
+        /// <returns></returns>
+        public int UsersCount () {
+            try {
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ().Count ();
+            } catch (Exception exception) {
+                throw exception;
+            }
+        }
         #endregion
     }
 }

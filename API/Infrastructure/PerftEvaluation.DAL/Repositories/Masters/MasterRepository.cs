@@ -58,7 +58,8 @@ namespace PerftEvaluation.DAL.Repositories {
 
             var updateQuery = Builders<Masters>.Update
                 .Set (c => c.Description, masters.Description)
-                .Set (c => c.Name, masters.Name);
+                .Set (c => c.Name, masters.Name)
+                .Set (c => c.MasterType, masters.MasterType);
 
             return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
         }

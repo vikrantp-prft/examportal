@@ -10,7 +10,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
     /// <summary>
     /// All dropdown API Controller
     /// </summary>
-    [Route ("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
 
     public class DropdownController : ControllerBase {
@@ -35,7 +35,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Departments")]
         public IActionResult Departments () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Departments;
 
@@ -53,7 +53,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Groups")]
         public IActionResult Groups () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Groups;
 
@@ -71,7 +71,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Teams")]
         public IActionResult Teams () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Teams;
 
@@ -89,9 +89,45 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         [HttpGet, Route ("Designations")]
         public IActionResult Designations () {
             try {
-
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._dropdown.Designations;
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // GET api/dropdown/Degrees
+        /// <summary>
+        /// Get dropdown for Degrees of user/employee
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route ("Degrees")]
+        public IActionResult Degrees () {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._dropdown.Degrees;
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // GET api/dropdown/States
+        /// <summary>
+        /// Get dropdown for States
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route ("States")]
+        public IActionResult States () {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._dropdown.States;
 
                 return Ok (responseModel);
             } catch (Exception exception) {

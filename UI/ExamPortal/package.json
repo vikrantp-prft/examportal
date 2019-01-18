@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "7.0.2",
+    "@angular/animations": "^7.0.2",
     "@angular/common": "7.0.2",
     "@angular/compiler": "7.0.2",
     "@angular/core": "7.0.2",
@@ -32,7 +32,9 @@
     "ng2-bootstrap": "^1.6.3",
     "ng2-charts": "1.6.0",
     "ngx-bootstrap": "^3.1.4",
+    "ngx-toastr": "^9.1.1",
     "rxjs-compat": "^6.3.3",
+    "sweetalert2": "^7.33.1",
     "yarn": "1.12.1",
     "zone.js": "0.8.26"
   },
