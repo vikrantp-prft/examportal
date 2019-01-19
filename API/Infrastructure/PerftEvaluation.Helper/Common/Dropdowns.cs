@@ -11,15 +11,20 @@ namespace PerftEvaluation.Helper.Common
 {
     public class Dropdown : IDropdown
     {
-        #region Declaration
+        #region Declarations
         protected readonly IMasterService _masterService;
         private readonly IMapper _mapper;
-        public Dropdown(IMasterService MasterService, IMapper mapper)
+
+        private readonly ICache _cache;
+        #endregion
+
+        public Dropdown(IMasterService MasterService, IMapper mapper, ICache Cache)
         {
             this._masterService = MasterService;
             this._mapper = mapper;
+            this._cache = Cache;
         }
-        #endregion
+        
 
         /// <summary>
         /// Get dropdown for departments
@@ -28,9 +33,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var departments = this._masterService.GetMasterByType(Enums.MasterTypes.Department.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
+               return _cache.GetDropdownMasterCache(CacheKeys.DepartmentMaster, Enums.MasterTypes.Department.ToString());
             }
         }
 
@@ -46,6 +49,7 @@ namespace PerftEvaluation.Helper.Common
                 return this._mapper.Map<IEnumerable<DropdownsDTO>>(teams);
             }
         }
+
         /// <summary>
         /// Get dropdown for Groups
         /// </summary>
@@ -58,6 +62,7 @@ namespace PerftEvaluation.Helper.Common
                 return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
             }
         }
+
         /// <summary>
         /// Get dropdown for Designations
         /// </summary>
@@ -83,7 +88,6 @@ namespace PerftEvaluation.Helper.Common
                 return this._mapper.Map<IEnumerable<DropdownsDTO>>(degree);
             }
         }
-
 
         /// <summary>
         /// Get dropdown for States

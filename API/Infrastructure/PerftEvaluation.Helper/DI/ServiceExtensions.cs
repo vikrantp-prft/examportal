@@ -31,7 +31,14 @@ namespace PerftEvaluation.Helper.DI
             //Projects Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IMasterRepository, MasterRepository>();
+<<<<<<< HEAD
             services.AddTransient<IEmployeeRepository,EmployeeRepository>();
+=======
+
+
+            //Cache helpers
+            services.AddTransient<ICache, Cache>();
+>>>>>>> Chaching for masters dropdowns
             // Add all other services here.
             return services;
         }

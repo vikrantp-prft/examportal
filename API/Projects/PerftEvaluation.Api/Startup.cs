@@ -53,6 +53,8 @@ namespace PerftEvaluation.Api {
 
             //CORS Declaration
             services.AddCors ();
+
+            services.AddMemoryCache();
         }
         #endregion
 
