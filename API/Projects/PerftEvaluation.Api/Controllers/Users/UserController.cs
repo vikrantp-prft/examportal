@@ -30,6 +30,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpGet]
         public IActionResult Get () {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.GetUsers;
 
@@ -48,6 +49,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost]
         public IActionResult Post (UsersDTO usersDTO) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.SaveUsers (usersDTO);
 
@@ -66,6 +68,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("Update")]
         public IActionResult UpdateUser (UsersDTO userDTO) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.UpdateUser (userDTO);
 
@@ -84,6 +87,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ActivateUser")]
         public IActionResult ActivateUser (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.ActivateUser (requestModel.Id);
 
@@ -102,6 +106,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("InactivateUser")]
         public IActionResult InactivateUser (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.InactivateUser (requestModel.Id);
 
@@ -120,6 +125,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetUserById")]
         public IActionResult GetUserById (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.GetUserById (requestModel.Id);
 
@@ -137,6 +143,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpGet, Route ("GetDashboardContent")]
         public IActionResult GetDashboardContent () {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.GetDashboardInfo ();
 

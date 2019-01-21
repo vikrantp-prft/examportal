@@ -14,6 +14,7 @@ namespace PerftEvaluation.Helper.Mapper {
         /// </summary>
         public MappingProfile () {
             CreateMap<Users, UsersDTO> ().ReverseMap();
+            CreateMap<Users, EmployeesDTO> ().ReverseMap();
             CreateMap<Masters, MastersDTO> ().ReverseMap();
             CreateMap<Masters, DropdownsDTO> ().ReverseMap();
         }

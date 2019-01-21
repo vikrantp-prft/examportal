@@ -9,6 +9,7 @@ namespace PerftEvaluation.Api.Controllers {
         public static ResponseModel ExceptionResponse (Exception ex) {
             ResponseModel responseModel = new ResponseModel ();
             responseModel.Message = ex.Message;
+            responseModel.StatusCode= 500;
             responseModel.Data = new object ();
 
             return responseModel;

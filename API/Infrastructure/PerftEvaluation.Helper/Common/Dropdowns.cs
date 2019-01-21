@@ -11,15 +11,20 @@ namespace PerftEvaluation.Helper.Common
 {
     public class Dropdown : IDropdown
     {
-        #region Declaration
+        #region Declarations
         protected readonly IMasterService _masterService;
         private readonly IMapper _mapper;
-        public Dropdown(IMasterService MasterService, IMapper mapper)
+
+        private readonly ICache _cache;
+        #endregion
+
+        public Dropdown(IMasterService MasterService, IMapper mapper, ICache Cache)
         {
             this._masterService = MasterService;
             this._mapper = mapper;
+            this._cache = Cache;
         }
-        #endregion
+        
 
         /// <summary>
         /// Get dropdown for departments
@@ -28,9 +33,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var departments = this._masterService.GetMasterByType(Enums.MasterTypes.Department.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
+               return _cache.GetDropdownMasterCache(CacheKeys.DepartmentMaster, Enums.MasterTypes.Department.ToString());
             }
         }
 
@@ -41,11 +44,10 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var teams = this._masterService.GetMasterByType(Enums.MasterTypes.Team.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(teams);
+                return _cache.GetDropdownMasterCache(CacheKeys.TeamMaster, Enums.MasterTypes.Team.ToString());
             }
         }
+
         /// <summary>
         /// Get dropdown for Groups
         /// </summary>
@@ -53,11 +55,11 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var departments = this._masterService.GetMasterByType(Enums.MasterTypes.Group.ToString());
+                return _cache.GetDropdownMasterCache(CacheKeys.GroupMaster, Enums.MasterTypes.Group.ToString());
 
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
             }
         }
+
         /// <summary>
         /// Get dropdown for Designations
         /// </summary>
@@ -65,9 +67,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var designations = this._masterService.GetMasterByType(Enums.MasterTypes.Designation.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(designations);
+                 return _cache.GetDropdownMasterCache(CacheKeys.DesignationMaster, Enums.MasterTypes.Designation.ToString());
             }
         }
 
@@ -78,12 +78,9 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var degree = this._masterService.GetMasterByType(Enums.MasterTypes.Degree.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(degree);
+                return _cache.GetDropdownMasterCache(CacheKeys.DegreeMaster, Enums.MasterTypes.Degree.ToString());
             }
         }
-
 
         /// <summary>
         /// Get dropdown for States
@@ -92,9 +89,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var state = this._masterService.GetMasterByType(Enums.MasterTypes.State.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(state);
+                return _cache.GetDropdownMasterCache(CacheKeys.StateMaster, Enums.MasterTypes.State.ToString());
             }
         }
 
