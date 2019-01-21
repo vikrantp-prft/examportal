@@ -42,7 +42,7 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody *ngFor="let admin of employeeList let i=index" >
+            <tbody *ngFor="let admin of employeeList let i=index">
               <tr>
                 <td>{{i+1}}</td>
                 <td>{{admin.firstName}} {{admin.lastName}}</td>
@@ -54,13 +54,13 @@
                   <span>
                     <button type="button" rel="tooltip">
                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                </span>
+                    </button>
+                  </span>
                   <span>
-                    <button type="button" rel="tooltip">
+                    <button type="button" rel="tooltip" (click)="fn_deleteAdminUser(admin.id)">
                       <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
-                </span>
+                    </button>
+                  </span>
                 </td>
               </tr>
             </tbody>
