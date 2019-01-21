@@ -44,9 +44,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var teams = this._masterService.GetMasterByType(Enums.MasterTypes.Team.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(teams);
+                return _cache.GetDropdownMasterCache(CacheKeys.TeamMaster, Enums.MasterTypes.Team.ToString());
             }
         }
 
@@ -57,9 +55,8 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var departments = this._masterService.GetMasterByType(Enums.MasterTypes.Group.ToString());
+                return _cache.GetDropdownMasterCache(CacheKeys.GroupMaster, Enums.MasterTypes.Group.ToString());
 
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(departments);
             }
         }
 
@@ -70,9 +67,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var designations = this._masterService.GetMasterByType(Enums.MasterTypes.Designation.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(designations);
+                 return _cache.GetDropdownMasterCache(CacheKeys.DesignationMaster, Enums.MasterTypes.Designation.ToString());
             }
         }
 
@@ -83,9 +78,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var degree = this._masterService.GetMasterByType(Enums.MasterTypes.Degree.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(degree);
+                return _cache.GetDropdownMasterCache(CacheKeys.DegreeMaster, Enums.MasterTypes.Degree.ToString());
             }
         }
 
@@ -96,9 +89,7 @@ namespace PerftEvaluation.Helper.Common
         {
             get
             {
-                var state = this._masterService.GetMasterByType(Enums.MasterTypes.State.ToString());
-
-                return this._mapper.Map<IEnumerable<DropdownsDTO>>(state);
+                return _cache.GetDropdownMasterCache(CacheKeys.StateMaster, Enums.MasterTypes.State.ToString());
             }
         }
 

@@ -62,5 +62,9 @@ namespace PerftEvaluation.Helper.Common
     {
         public static string GroupMaster { get { return "GroupMaster"; } }
         public static string DepartmentMaster { get { return "DepartmentMaster"; } }
+        public static string TeamMaster { get { return "TeamMaster"; } }
+        public static string DesignationMaster { get { return "DesignationMaster"; } }
+        public static string DegreeMaster { get { return "DegreeMaster"; } }
+        public static string StateMaster { get { return "StateMaster"; } }
     }
 }
