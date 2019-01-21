@@ -4,23 +4,20 @@ using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
-namespace PerftEvaluation.Api.Controllers.Users
-{
-    [Route("api/[controller]")]
+namespace PerftEvaluation.Api.Controllers.Users {
+    [Route ("api/[controller]")]
     [ApiController]
     /// <summary>
     /// Employee API Controller
     /// </summary>
-    public class EmployeeController : ControllerBase
-    {
+    public class EmployeeController : ControllerBase {
         #region Declaration
         protected readonly IEmployeeService _employeeService;
         private ResponseModel responseModel = null;
 
-        public EmployeeController(IEmployeeService EmployeeService)
-        {
+        public EmployeeController (IEmployeeService EmployeeService) {
             this._employeeService = EmployeeService;
-            this.responseModel = new ResponseModel();
+            this.responseModel = new ResponseModel ();
         }
         #endregion
 
@@ -31,22 +28,19 @@ namespace PerftEvaluation.Api.Controllers.Users
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
-        {
-            try
-            {
+        public IActionResult Get () {
+            try {
                 responseModel.Message = "Success";
                 responseModel.Data = this._employeeService.GetEmployees;
+                responseModel.StatusCode = 200;
 
-                return Ok(responseModel);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(CommonResponse.ExceptionResponse(ex));
+                return Ok (responseModel);
+            } catch (Exception ex) {
+                return BadRequest (CommonResponse.ExceptionResponse (ex));
             }
         }
 
-         // POST api/Employee/Post
+        // POST api/Employee/Post
         /// <summary>
         /// Save employee detail
         /// </summary>
@@ -55,7 +49,11 @@ namespace PerftEvaluation.Api.Controllers.Users
         [HttpPost]
         public IActionResult Post (EmployeesDTO employeeDTO) {
             try {
-                return Ok (this._employeeService.SaveEmployee (employeeDTO));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._employeeService.SaveEmployee (employeeDTO);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -70,13 +68,17 @@ namespace PerftEvaluation.Api.Controllers.Users
         [HttpPost, Route ("ActivateEmployee")]
         public IActionResult ActivateEmployee (RequestModel requestModel) {
             try {
-                return Ok (this._employeeService.ActivateEmployee(requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._employeeService.ActivateEmployee (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
-         // POST api/Employee/InactivateEmployee
+        // POST api/Employee/InactivateEmployee
         /// <summary>
         /// Deactivate employee
         /// </summary>
@@ -85,7 +87,11 @@ namespace PerftEvaluation.Api.Controllers.Users
         [HttpPost, Route ("InactivateEmployee")]
         public IActionResult InactivateEmployee (RequestModel requestModel) {
             try {
-                return Ok (this._employeeService.InactivateEmployee (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._employeeService.InactivateEmployee (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -100,6 +106,7 @@ namespace PerftEvaluation.Api.Controllers.Users
         [HttpPost, Route ("GetEmployeeById")]
         public IActionResult GetEmployeeById (RequestModel requestModel) {
             try {
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._employeeService.GetEmployeeById (requestModel.Id);
 
