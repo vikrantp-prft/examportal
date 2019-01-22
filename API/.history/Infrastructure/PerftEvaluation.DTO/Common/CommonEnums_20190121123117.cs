@@ -8,12 +8,5 @@ namespace PerftEvaluation.DTO.Common {
             designation
 
         }
-
-        public enum QuestionsEnum {
-            singleChoice,
-            multipleChoice,
-            theory
-
-        }
     }
 }

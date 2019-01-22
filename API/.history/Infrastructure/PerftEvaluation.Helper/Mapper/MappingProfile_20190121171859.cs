@@ -4,6 +4,8 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.DTO.Dtos.Exams.Questions;
 using PerftEvaluation.Entities.POCOEntities;
+using PerftEvaluation.Entities.POCOEntities.Exams;
+using PerftEvaluation.Entities.POCOEntities.Exams.Questions;
 
 namespace PerftEvaluation.Helper.Mapper {
     /// <summary>

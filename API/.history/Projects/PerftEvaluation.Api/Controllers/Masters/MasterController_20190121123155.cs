@@ -4,54 +4,54 @@ using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
-namespace PerftEvaluation.Api.Controllers.Users {
+namespace PerftEvaluation.Api.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     /// <summary>
-    /// Employee API Controller
+    /// Master API Controller
     /// </summary>
-    public class EmployeeController : ControllerBase {
+    public class MasterController : ControllerBase {
         #region Declaration
-        protected readonly IEmployeeService _employeeService;
+        protected readonly IMasterService _masterService;
         private ResponseModel responseModel = null;
 
-        public EmployeeController (IEmployeeService EmployeeService) {
-            this._employeeService = EmployeeService;
+        public MasterController (IMasterService MasterService) {
+            this._masterService = MasterService;
             this.responseModel = new ResponseModel ();
         }
         #endregion
 
         #region Class Methods
-        //GET api/Employee/Get
+        // GET api/masters
         /// <summary>
-        /// Get list of all employees
+        /// Get list of all the masters
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public IActionResult Get () {
             try {
-                responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.GetEmployees;
                 responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.GetMasters;
 
                 return Ok (responseModel);
-            } catch (Exception ex) {
-                return BadRequest (CommonResponse.ExceptionResponse (ex));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
-        // POST api/Employee/Post
+        // POST api/master
         /// <summary>
-        /// Save employee detail
+        /// Save master details
         /// </summary>
-        /// <param name="employeeDTO"></param>
+        /// <param name="mastersDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post (EmployeesDTO employeeDTO) {
+        public IActionResult Post (MastersDTO mastersDTO) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.SaveEmployee (employeeDTO);
+                responseModel.Data = this._masterService.SaveMaster (mastersDTO);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
@@ -59,18 +59,37 @@ namespace PerftEvaluation.Api.Controllers.Users {
             }
         }
 
-        // POST api/Employee/ActivateEmployee
+        // POST api/Master/Update
         /// <summary>
-        /// Activate Employee
+        /// Update master details
+        /// </summary>
+        /// <param name="mastersDTO"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("Update")]
+        public IActionResult UpdateMaster (MastersDTO mastersDTO) {
+            try {
+                responseModel.StartIndex = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.UpdateMaster (mastersDTO);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        // POST api/master/getmasterbytype
+        /// <summary>
+        /// Get master by type
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("ActivateEmployee")]
-        public IActionResult ActivateEmployee (RequestModel requestModel) {
+        [HttpPost, Route ("GetMasterByType")]
+        public IActionResult GetMasterByType (RequestModel requestModel) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.ActivateEmployee (requestModel.Id);
+                responseModel.Data = this._masterService.GetMasterByType (requestModel.Filter);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
@@ -78,18 +97,18 @@ namespace PerftEvaluation.Api.Controllers.Users {
             }
         }
 
-        // POST api/Employee/InactivateEmployee
+        // POST api/master/ActivateMaster
         /// <summary>
-        /// Deactivate employee
+        /// Activate master
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("InactivateEmployee")]
-        public IActionResult InactivateEmployee (RequestModel requestModel) {
+        [HttpPost, Route ("ActivateMaster")]
+        public IActionResult ActivateMaster (RequestModel requestModel) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.InactivateEmployee (requestModel.Id);
+                responseModel.Data = this._masterService.ActivateMaster (requestModel.Id);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
@@ -97,25 +116,24 @@ namespace PerftEvaluation.Api.Controllers.Users {
             }
         }
 
-        // POST api/Employee/GetEmployeeById
+        // POST api/master/InactivateMaster
         /// <summary>
-        /// Get employee by id
+        /// Deactivate master
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("GetEmployeeById")]
-        public IActionResult GetEmployeeById (RequestModel requestModel) {
+        [HttpPost, Route ("InactivateMaster")]
+        public IActionResult InactivateMaster (RequestModel requestModel) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.GetEmployeeById (requestModel.Id);
+                responseModel.Data = this._masterService.InactivateMaster (requestModel.Id);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
-
         #endregion
     }
 }
