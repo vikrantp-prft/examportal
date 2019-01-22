@@ -21,8 +21,8 @@ namespace PerftEvaluation.DAL.Context {
         /// Class Constructor
         /// </summary>
         public DBHelper () {
-            //_client = new MongoClient ("mongodb://ZIL395:27017");
-            _client = new MongoClient ("mongodb://localhost:27017");
+            _client = new MongoClient ("mongodb://ZIL395:27017");
+            //_client = new MongoClient ("mongodb://localhost:27017");
             _db = _client.GetDatabase ("PerftEvaluation");
         }
         #endregion
