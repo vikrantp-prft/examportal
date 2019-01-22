@@ -2,7 +2,6 @@ using System;
 using AutoMapper;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
-using PerftEvaluation.DTO.Dtos.Exams.Questions;
 using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.Helper.Mapper {
@@ -18,8 +17,6 @@ namespace PerftEvaluation.Helper.Mapper {
             CreateMap<Users, EmployeesDTO> ().ReverseMap();
             CreateMap<Masters, MastersDTO> ().ReverseMap();
             CreateMap<Masters, DropdownsDTO> ().ReverseMap();
-            CreateMap<Exams, ExamsDTO> ().ReverseMap();
-            CreateMap<Questions, QuestionsDTO> ().ReverseMap();
         }
     }
 }
