@@ -11,9 +11,11 @@ import { AddAdminUserComponent } from './admin-user/admin-user-add-update/adminu
 import { TraineeListComponent } from './trainee/trainee-list/traineeList.component';
 import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/traineeUserAddUpdate.component';
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
-    imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot()],
+    imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot(),FormsModule,ReactiveFormsModule],
     declarations: [UserComponent,
         EmployeeListComponent,
         AddEmployeeComponent,
