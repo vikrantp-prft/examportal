@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormArray,FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray,FormBuilder, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
@@ -17,10 +17,21 @@ export class AddEmployeeComponent implements OnInit {
   public stateArray: any[];
   public courseArray: any[];
   public educationArray: Array<any> = [];
+  public  interests = [
+    { id: 1, name: 'order 1' },
+    { id: 2, name: 'order 2' },
+    { id: 3, name: 'order 3' },
+    { id: 4, name: 'order 4' }
+  ];
+
   selectedCourse: any;
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http) {
-    this.employeeForm = new FormGroup({
+  constructor(public router: Router, private CommonService: commonService, public http: Http,private formBuilder: FormBuilder) {
+   // Create a new array with a form control for each order
+    //const controls = this.interests.map(c => new FormControl(false));
+    //controls[0].setValue(true); // Set the first checkbox to true (checked)
+
+    this.employeeForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
       lastName: new FormControl(''),
@@ -46,7 +57,24 @@ export class AddEmployeeComponent implements OnInit {
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
       percentage: new FormControl('')
+      //interests: new FormArray(controls,this.minSelectedCheckboxes(1))
     });
+  }
+
+  //Atleast 1 checkbox should be selected
+  minSelectedCheckboxes(min = 1) {
+    const validator: ValidatorFn = (formArray: FormArray) => {
+      const totalSelected = formArray.controls
+        // get a list of checkbox values (boolean)
+        .map(control => control.value)
+        // total up the number of checked checkboxes
+        .reduce((prev, next) => next ? prev + next : prev, 0);
+  
+      // if the total is not greater than the minimum, return the error message
+      return totalSelected >= min ? null : { required: true };
+    };
+  
+    return validator;
   }
 
   ngOnInit() {
@@ -91,7 +119,6 @@ export class AddEmployeeComponent implements OnInit {
         createdDate: Date.now,
         modifiedDate: Date.now
       }
-
       this.fn_saveEmployeefun(employeeModel, url);
     }
     else {
@@ -130,15 +157,15 @@ export class AddEmployeeComponent implements OnInit {
 
   fn_getCourse() {
     const url = 'api/Dropdown/Degrees';
-    this.CommonService.fn_Get(url).subscribe((result: any) => {
-      const courseResult = result;
-      if (courseResult.statusCode == 200) {
-        this.courseArray = courseResult.data;
-      }
-      else {
-        this.courseArray = null;
-      }
-    });
+    // this.CommonService.fn_Get(url).subscribe((result: any) => {
+    //   const courseResult = result;
+    //   if (courseResult.statusCode == 200) {
+    //     this.courseArray = courseResult.data;
+    //   }
+    //   else {
+    //     this.courseArray = null;
+    //   }
+    // });
   }
 
   fn_getState() {
@@ -178,5 +205,8 @@ export class AddEmployeeComponent implements OnInit {
     console.log('index',index);
     this.educationArray.splice(index,1);
   }
+
+  
+  
 }
 

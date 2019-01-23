@@ -144,13 +144,13 @@
                 <tbody>
                   <tr *ngFor="let educationField of educationArray; let i = index">
                     <td hidden="hidden">
-                       <label>{{educationField.courseId}}</label>
+                      <label>{{educationField.courseId}}</label>
                     </td>
                     <td>
                       <label>{{educationField.course}}</label>
                     </td>
                     <td>
-                       <label>{{educationField.yearOfPassing}}</label>
+                      <label>{{educationField.yearOfPassing}}</label>
                     </td>
                     <td>
                       <label>{{educationField.institution}}</label>
@@ -165,8 +165,8 @@
                 </tbody>
               </table>
 
-              <div class="form-group">
-                <p> Please Submit your interest by selecting the checkbox/below of the following options: </p>
+               <div class="form-group">
+                <!-- <p> Please Submit your interest by selecting the checkbox/below of the following options: </p>
                 <label class="checkbox-inline">
                   <input type="checkbox" value="">Quality Assurance (QA)
                 </label>
@@ -178,7 +178,17 @@
                 </label>
                 <label class="checkbox-inline">
                   <input type="checkbox" value=""> Design
-                </label>
+                </label> -->
+                <!-- <label formArrayName="interests" *ngFor="let interest of interests; let i = index">
+                  <input type="checkbox" formControlName="i" [(ngModel)]="interest.Checked">
+                  {{interests[i].name}}
+                </label> -->
+                <!-- <div *ngFor="let interest of interests">
+                    <label>
+                    <input type="checkbox" value="{{interest.id}}" [(ngModel)]="interest.Checked" [name]="interest.name" />
+                    <span innerHTML="{{interest.name}}"></span>
+                </label> 
+                </div>-->
               </div>
 
               <div class="form-group">
