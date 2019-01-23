@@ -24,33 +24,34 @@ namespace PerftEvaluation.DAL.Context
         /// </summary>
         public DBHelper()
         {
-             _client = new MongoClient ("mongodb://ZIL395:27017");
-            // _client = new MongoClient ("mongodb://localhost:27017");
-             _db = _client.GetDatabase ("PerftEvaluation");
+            //access db without username and password
+            // _client = new MongoClient ("mongodb://ZIL395:27017");
+            //// _client = new MongoClient ("mongodb://localhost:27017");
+            // _db = _client.GetDatabase ("PerftEvaluation");
 
             
             //Connection with username and password
-            // string username = "mDbAdmin";
-            // string password = "mDbAdmin@321";
-            // string mongoHost = "127.0.0.1";
-            // string mongoDbAuthMechanism = "SCRAM-SHA-1";
-            // string dbName = "PerfiEvaluation";
-            // MongoInternalIdentity internalIdentity =
-            //         new MongoInternalIdentity("admin", username);
-            // PasswordEvidence passwordEvidence = new PasswordEvidence(password);
-            // MongoCredential mongoCredential =
-            //     new MongoCredential(mongoDbAuthMechanism,
-            //             internalIdentity, passwordEvidence);
+            string username = "mDbAdmin";
+            string password = "mDbAdmin@321";
+            string mongoHost = "ZIL395";
+            string mongoDbAuthMechanism = "SCRAM-SHA-1";
+            string dbName = "PerftEvaluation";
+            MongoInternalIdentity internalIdentity =
+                    new MongoInternalIdentity("admin", username);
+            PasswordEvidence passwordEvidence = new PasswordEvidence(password);
+            MongoCredential mongoCredential =
+                new MongoCredential(mongoDbAuthMechanism,
+                        internalIdentity, passwordEvidence);
 
-            // MongoClientSettings settings = new MongoClientSettings();
-            // // comment this line below if your mongo doesn't run on secured mode
-            // settings.Credential = mongoCredential;
+            MongoClientSettings settings = new MongoClientSettings();
+            // comment this line below if your mongo doesn't run on secured mode
+            settings.Credential = mongoCredential;
             
-            // MongoServerAddress address = new MongoServerAddress(mongoHost);
-            // settings.Server = address;
-            // // _client = new MongoClient ("mongodb://ZIL395:27017");
-            // _client = new MongoClient(settings);
-            // _db = _client.GetDatabase(dbName);
+            MongoServerAddress address = new MongoServerAddress(mongoHost);
+            settings.Server = address;
+            // _client = new MongoClient ("mongodb://ZIL395:27017");
+            _client = new MongoClient(settings);
+            _db = _client.GetDatabase(dbName);
 
         }
         #endregion
