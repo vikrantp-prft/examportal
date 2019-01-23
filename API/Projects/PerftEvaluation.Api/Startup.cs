@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using PerftEvaluation.Helper.DI;
 using PerftEvaluation.Helper.Mapper;
 using Swashbuckle.AspNetCore.Swagger;
@@ -54,19 +56,20 @@ namespace PerftEvaluation.Api {
             //CORS Declaration
             services.AddCors ();
 
-            services.AddMemoryCache();
+            services.AddMemoryCache ();
         }
         #endregion
 
         #region Configure
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             if (env.IsDevelopment ()) {
                 app.UseDeveloperExceptionPage ();
             } else {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts ();
             }
+            env.ConfigureNLog ("nlog.config");
 
             app.UseHttpsRedirection ();
 
@@ -79,9 +82,15 @@ namespace PerftEvaluation.Api {
                 c.SwaggerEndpoint ("/swagger/V1.0.0/swagger.json", "PerftEvaluation API V1.0.0");
             });
 
+            //add NLog to ASP.NET Core
+            loggerFactory.AddNLog ();
+
+            //add NLog.Web
+            // app.AddNLogWeb ();
+
             // Shows UseCors with CorsPolicyBuilder.
             app.UseCors (builder => {
-                builder.WithOrigins ("http://localhost:4200","http://zil395:9002").AllowAnyMethod ().AllowAnyHeader ();
+                builder.WithOrigins ("http://localhost:4200", "http://zil395:9002").AllowAnyMethod ().AllowAnyHeader ();
             });
 
             app.UseMvc ();

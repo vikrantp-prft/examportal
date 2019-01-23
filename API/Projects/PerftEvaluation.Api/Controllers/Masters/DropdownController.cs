@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.Helper.Common;
@@ -10,7 +11,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
     /// <summary>
     /// All dropdown API Controller
     /// </summary>
-    [Route("api/[controller]")]
+    [Route ("api/[controller]")]
     [ApiController]
 
     public class DropdownController : ControllerBase {
@@ -19,12 +20,16 @@ namespace PerftEvaluation.Api.Controllers.Masters {
         private ResponseModel responseModel = null;
         protected readonly IDropdown _dropdown;
         private readonly IMapper _mapper;
+        protected readonly ILogger<DropdownController> _logger;
         #endregion
 
-        public DropdownController (IDropdown Dropdown, IMapper Mapper) {
+        public DropdownController (IDropdown Dropdown, IMapper Mapper, ILogger<DropdownController> logger = null) {
             this._mapper = Mapper;
             this._dropdown = Dropdown;
             responseModel = new ResponseModel ();
+            if (null != logger) {
+                this._logger = logger;
+            }
         }
 
         // GET api/dropdown/departments
@@ -41,6 +46,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -59,6 +65,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -77,6 +84,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -95,6 +103,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -113,6 +122,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -131,6 +141,7 @@ namespace PerftEvaluation.Api.Controllers.Masters {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }

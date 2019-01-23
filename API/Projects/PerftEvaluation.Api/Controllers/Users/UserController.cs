@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
@@ -14,10 +15,14 @@ namespace PerftEvaluation.Api.Controllers {
         #region Declaration
         protected readonly IUserService _userService;
         private ResponseModel responseModel = null;
+        protected readonly ILogger<UserController> _logger;
 
-        public UserController (IUserService UserService) {
+        public UserController (IUserService UserService, ILogger<UserController> logger = null) {
             this._userService = UserService;
             this.responseModel = new ResponseModel ();
+            if (null != logger) {
+                this._logger = logger;
+            }
         }
         #endregion
 
@@ -35,8 +40,9 @@ namespace PerftEvaluation.Api.Controllers {
                 responseModel.Data = this._userService.GetUsers;
 
                 return Ok (responseModel);
-            } catch (Exception ex) {
-                return BadRequest (CommonResponse.ExceptionResponse (ex));
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -55,6 +61,7 @@ namespace PerftEvaluation.Api.Controllers {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -74,6 +81,7 @@ namespace PerftEvaluation.Api.Controllers {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -93,6 +101,7 @@ namespace PerftEvaluation.Api.Controllers {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -112,6 +121,7 @@ namespace PerftEvaluation.Api.Controllers {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -131,6 +141,7 @@ namespace PerftEvaluation.Api.Controllers {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
@@ -149,6 +160,7 @@ namespace PerftEvaluation.Api.Controllers {
 
                 return Ok (responseModel);
             } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
