@@ -67,35 +67,7 @@ export class AddEmployeeComponent implements OnInit {
     debugger;
     if (this.employeeForm.valid) {
       const url = 'api/Employee';
-      const employeeModel =
-      {
-        firstName: this.employeeForm.controls.firstName.value,
-        middleName: this.employeeForm.controls.middleName.value,
-        lastName: this.employeeForm.controls.lastName.value,
-        isActive: true,
-        email: this.employeeForm.controls.email.value,
-        password: this.employeeForm.controls.password.value,
-        dob: this.employeeForm.controls.dateOfBirth.value,
-        address1: this.employeeForm.controls.address1.value,
-        address2: this.employeeForm.controls.address2.value,
-        city: this.employeeForm.controls.city.value,
-        stateId: this.employeeForm.controls.stateId.value,
-        pincode: this.employeeForm.controls.pincode.value,
-        currentAddress1: this.employeeForm.controls.currentAddress1.value,
-        currentAddress2: this.employeeForm.controls.currentAddress2.value,
-        currentCity: this.employeeForm.controls.currentCity.value,
-        currentStateId: this.employeeForm.controls.currentStateId.value,
-        currentPincode: this.employeeForm.controls.currentPincode.value,
-        mobile: this.employeeForm.controls.mobile.value,
-        teamId: this.employeeForm.controls.teamId.value,
-        note: this.employeeForm.controls.note.value,
-        interest: JSON.stringify(this.employeeForm.controls.checkedInterest.value),
-        educationDetails: this.educationArray,
-        isEmployee: true,
-        createdDate: Date.now,
-        modifiedDate: Date.now
-      }
-      this.fn_saveEmployeefun(employeeModel, url);
+      this.fn_saveEmployeefun(value.value, url);
     }
     else {
       return;
@@ -132,6 +104,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_getCourse() {
+    debugger;
     const url = 'api/Dropdown/Degrees';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const courseResult = result;
@@ -178,7 +151,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_deleteCourse(index) {
-    console.log('index', index);
     this.educationArray.splice(index, 1);
   }
 
