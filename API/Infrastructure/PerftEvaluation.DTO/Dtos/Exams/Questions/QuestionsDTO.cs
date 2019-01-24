@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using static PerftEvaluation.DTO.Common.CommonEnums;
 
-namespace PerftEvaluation.DTO.Dtos.Exams.Questions
+namespace PerftEvaluation.DTO.Dtos
 {
     /// <summary>
     /// Questions Entity's DTO class
