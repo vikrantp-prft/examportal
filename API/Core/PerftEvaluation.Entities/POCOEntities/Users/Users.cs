@@ -52,14 +52,14 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("mobile")]
         public string Mobile { get; set; }
 
-        [BsonElement("group")]
-        public string Group { get; set; }
+        [BsonElement("groupId")]
+        public string GroupId { get; set; }
 
-        [BsonElement("designation")]
-        public string Designation { get; set; }
+        [BsonElement("designationId")]
+        public string DesignationId { get; set; }
 
-        [BsonElement("team")]
-        public string Team { get; set; }
+        [BsonElement("teamId")]
+        public string TeamId { get; set; }
 
         [BsonElement("note")]
         public string Note { get; set; }
