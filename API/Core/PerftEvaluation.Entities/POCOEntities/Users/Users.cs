@@ -87,7 +87,7 @@ namespace PerftEvaluation.Entities.POCOEntities
 
         [BsonElement("isEmployee")]  
         public bool IsEmployee { get; set; }
-        public List<EducationDetails> EducationDetails {get;set;}
+        public List<EducationDetails> educationDetails {get;set;}
           
     }
 
