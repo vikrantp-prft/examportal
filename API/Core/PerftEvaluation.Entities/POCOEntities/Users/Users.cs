@@ -83,7 +83,7 @@ namespace PerftEvaluation.Entities.POCOEntities
         public string CurrentPincode { get; set; }
 
         [BsonElement("interest")]       
-        public string Interest { get; set; }
+        public string[] Interest { get; set; }
 
         [BsonElement("isEmployee")]  
         public bool IsEmployee { get; set; }

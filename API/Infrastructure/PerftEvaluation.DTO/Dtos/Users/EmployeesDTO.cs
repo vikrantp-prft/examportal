@@ -29,7 +29,7 @@ namespace PerftEvaluation.DTO.Dtos
         public string Mobile { get; set; }
         public string Team { get; set; }
         public string Note { get; set; }
-        public string Interest { get; set; }
+        public string[] Interest { get; set; }
         public List<EducationDetailsDTO> EducationDetails;
 
         public bool IsEmployee { get; set; }
