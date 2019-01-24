@@ -45,5 +45,9 @@ namespace PerftEvaluation.Entities.POCOEntities
 
         [BsonElement("isPaperPublic")]
         public bool IsPaperPublic { get; set; }
+
+        [BsonElement("totalQuestions")]
+        public int TotalQuestions { get; set; }
+        
     }
 }

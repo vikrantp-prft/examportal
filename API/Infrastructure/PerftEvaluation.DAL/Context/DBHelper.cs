@@ -3,6 +3,7 @@ using System.Linq;
 using MongoDbGenericRepository;
 using MongoDB.Driver;
 using PerftEvaluation.Entities.POCOEntities;
+using System.Reflection;
 
 namespace PerftEvaluation.DAL.Context
 {
@@ -33,7 +34,7 @@ namespace PerftEvaluation.DAL.Context
             //Connection with username and password
             string username = "mDbAdmin";
             string password = "mDbAdmin@321";
-            string mongoHost = "ZIL395";
+            string mongoHost = "ZIL189";
             string mongoDbAuthMechanism = "SCRAM-SHA-1";
             string dbName = "PerftEvaluation";
             MongoInternalIdentity internalIdentity =
@@ -65,7 +66,11 @@ namespace PerftEvaluation.DAL.Context
         /// <returns>list</returns>
         public IMongoCollection<T> GetCollection<T>(string strCollectionName)
         {
-            return _db.GetCollection<T>(strCollectionName);
+             PropertyInfo[] propInfos = typeof(T).GetProperties();
+             var propInfo = propInfos.ToList().Where(p => p.Name == "CollectionName").FirstOrDefault();
+
+            string collectionName = propInfo.GetValue("CollectionName").ToString();
+            return _db.GetCollection<T>(collectionName);
         }
 
         /// <summary>
@@ -89,7 +94,8 @@ namespace PerftEvaluation.DAL.Context
         /// <returns></returns>
         public bool UpdateOne<T>(FilterDefinition<T> filterDefinition, UpdateDefinition<T> updateDefinition, string strCollectionName)
         {
-            var updateResult = _db.GetCollection<T>(strCollectionName).UpdateOne(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = false });
+           
+           var updateResult = _db.GetCollection<T>(strCollectionName).UpdateOne(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = false });
             if (updateResult.ModifiedCount > 0 || updateResult.IsAcknowledged)
             {
                 return true;
@@ -97,5 +103,23 @@ namespace PerftEvaluation.DAL.Context
             return false;
         }
         #endregion
+
+        // private string GetCollectionName<T>(Object T) //where T : class
+        // {
+        //     // get all public static properties of MyClass type
+        //     PropertyInfo[] propertyInfos;
+        //     propertyInfos = typeof(MyClass).GetProperties(BindingFlags.Public |
+        //                                                 BindingFlags.Static);
+        //     // sort properties by name
+        //     Array.Sort(propertyInfos,
+        //             delegate(PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+        //             { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
+
+        //     // write property names
+        //     foreach (PropertyInfo propertyInfo in propertyInfos)
+        //     {
+        //     Console.WriteLine(propertyInfo.Name);
+        //     }
+        // }
     }
 }

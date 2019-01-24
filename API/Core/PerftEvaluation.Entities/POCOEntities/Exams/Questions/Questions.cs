@@ -37,5 +37,10 @@ namespace PerftEvaluation.Entities.POCOEntities
 
         [BsonElement("description")] 
         public string Description { get; set; }
+
+        [BsonElement("isCorrect")] 
+        public bool IsCorrect { get; set; }
+
+
      }
 }
