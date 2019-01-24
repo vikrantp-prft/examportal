@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormArray,FormBuilder, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray, FormBuilder, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
@@ -17,20 +17,15 @@ export class AddEmployeeComponent implements OnInit {
   public stateArray: any[];
   public courseArray: any[];
   public educationArray: Array<any> = [];
-  public  interests = [
-    { id: 1, name: 'order 1' },
-    { id: 2, name: 'order 2' },
-    { id: 3, name: 'order 3' },
-    { id: 4, name: 'order 4' }
-  ];
-
   selectedCourse: any;
-
-  constructor(public router: Router, private CommonService: commonService, public http: Http,private formBuilder: FormBuilder) {
-   // Create a new array with a form control for each order
-    //const controls = this.interests.map(c => new FormControl(false));
-    //controls[0].setValue(true); // Set the first checkbox to true (checked)
-
+  public interestArray: Array<any> = [
+    { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)' },
+    { description: "HTML/CSS", value: 'HTML/CSS' },
+    { description: "Flash/Flex", value: 'Flash/Flex' },
+    { description: "Design", value: 'Design' }
+  ];
+ 
+  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder) {
     this.employeeForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
@@ -56,25 +51,9 @@ export class AddEmployeeComponent implements OnInit {
       course: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
-      percentage: new FormControl('')
-      //interests: new FormArray(controls,this.minSelectedCheckboxes(1))
+      percentage: new FormControl(''),
+      checkedInterest: new FormArray([])
     });
-  }
-
-  //Atleast 1 checkbox should be selected
-  minSelectedCheckboxes(min = 1) {
-    const validator: ValidatorFn = (formArray: FormArray) => {
-      const totalSelected = formArray.controls
-        // get a list of checkbox values (boolean)
-        .map(control => control.value)
-        // total up the number of checked checkboxes
-        .reduce((prev, next) => next ? prev + next : prev, 0);
-  
-      // if the total is not greater than the minimum, return the error message
-      return totalSelected >= min ? null : { required: true };
-    };
-  
-    return validator;
   }
 
   ngOnInit() {
@@ -83,10 +62,7 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getCourse();
   }
 
-  get f() {
-    return this.employeeForm.controls;
-  }
-
+  //Save Employee details function
   fn_saveEmployee() {
     debugger;
     if (this.employeeForm.valid) {
@@ -113,8 +89,8 @@ export class AddEmployeeComponent implements OnInit {
         mobile: this.employeeForm.controls.mobile.value,
         teamId: this.employeeForm.controls.teamId.value,
         note: this.employeeForm.controls.note.value,
-        //interest: this.employeeForm.controls.interest.value,
-        educationDetails:this.educationArray,
+        interest: JSON.stringify(this.employeeForm.controls.checkedInterest.value),
+        educationDetails: this.educationArray,
         isEmployee: true,
         createdDate: Date.now,
         modifiedDate: Date.now
@@ -157,15 +133,15 @@ export class AddEmployeeComponent implements OnInit {
 
   fn_getCourse() {
     const url = 'api/Dropdown/Degrees';
-    // this.CommonService.fn_Get(url).subscribe((result: any) => {
-    //   const courseResult = result;
-    //   if (courseResult.statusCode == 200) {
-    //     this.courseArray = courseResult.data;
-    //   }
-    //   else {
-    //     this.courseArray = null;
-    //   }
-    // });
+    this.CommonService.fn_Get(url).subscribe((result: any) => {
+      const courseResult = result;
+      if (courseResult.statusCode == 200) {
+        this.courseArray = courseResult.data;
+      }
+      else {
+        this.courseArray = null;
+      }
+    });
   }
 
   fn_getState() {
@@ -202,11 +178,33 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_deleteCourse(index) {
-    console.log('index',index);
-    this.educationArray.splice(index,1);
+    console.log('index', index);
+    this.educationArray.splice(index, 1);
   }
 
-  
-  
+  //Interest check change function
+  onInterestChange(event) {
+    debugger;
+    const checkedInterestArray: FormArray = this.employeeForm.get('checkedInterest') as FormArray;
+  /* Selected */
+    if(event.target.checked){
+      // Add a new control in the arrayForm
+      checkedInterestArray.push(new FormControl(event.target.value));
+    }
+    /* unselected */
+    else{
+      // find the unselected element
+      let i: number = 0;
+      checkedInterestArray.controls.forEach((ctrl: FormControl) => {
+        if(ctrl.value == event.target.value) {
+          // Remove the unselected element from the arrayForm
+          checkedInterestArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
 }
 
