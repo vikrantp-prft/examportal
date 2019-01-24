@@ -94,8 +94,8 @@ namespace PerftEvaluation.Identity.Controllers
                 var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
                 if (identityResult.Succeeded)
                 {
-                   await _userManager.AddToRolesAsync(user, new List<string> {registerModel.RoleName});
-                    return Ok();
+                   await _userManager.AddToRoleAsync(user, registerModel.RoleName);
+                   return Ok();
                 }
                 else
                 {
@@ -112,13 +112,26 @@ namespace PerftEvaluation.Identity.Controllers
         {
             var utcNow = DateTime.UtcNow;
 
-            var claims = new Claim[]
+            var claims = new List<Claim>( new[]
             {
                         new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                         new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, utcNow.ToString())
-            };
+            });
+
+             // Add user role, they are converted to claims
+            foreach (var roleName in user.Roles)
+            {
+                // Find IdentityRole by name
+                var role =  _roleManager.FindByNameAsync(roleName);
+                if (role != null)
+                {
+                    // Convert Identity to claim and add 
+                    var roleClaim = new Claim("Roles", role.Result.Name);
+                    claims.Add(roleClaim);
+                }
+            }
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._configuration.GetValue<String>("TokenAuthentication:SecretKey")));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
@@ -151,6 +164,28 @@ namespace PerftEvaluation.Identity.Controllers
                 else
                 {
                     return BadRequest(result.Errors);
+                }
+            }
+           return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("assignrole")]
+         public async Task<IActionResult> AssignRole([FromBody] RegisterModel registerModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await this._userManager.FindByEmailAsync(registerModel.Username);
+                if (user == null)
+                {
+                    return BadRequest("User does not exist !!!");
+                   
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, registerModel.RoleName);
+                   return Ok();                    
                 }
             }
            return BadRequest(ModelState);

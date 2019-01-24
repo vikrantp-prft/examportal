@@ -67,7 +67,8 @@ namespace PerftEvaluation.Identity {
                     ValidateIssuer = true,
                     ValidIssuer = this.Configuration["TokenAuthentication:Issuer"],
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true
+                    ValidateIssuerSigningKey = true,
+                    RoleClaimType = "Roles"
                 };
             });
             #endregion
