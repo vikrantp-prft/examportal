@@ -33,7 +33,7 @@ namespace PerftEvaluation.DAL.Context
             //Connection with username and password
             string username = "mDbAdmin";
             string password = "mDbAdmin@321";
-            string mongoHost = "ZIL395";
+            string mongoHost = "ZIL189";
             string mongoDbAuthMechanism = "SCRAM-SHA-1";
             string dbName = "PerftEvaluation";
             MongoInternalIdentity internalIdentity =
