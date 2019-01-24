@@ -1,3 +1,5 @@
+import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
+import { CategoryListComponent } from './category-list/categorylist.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManageComponent } from './manage.component';
@@ -14,6 +16,6 @@ import { importQuestionComponent } from './exam/import-questions/importQuestion.
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, ManageRoutingModule, PaginationModule.forRoot()],
-    declarations: [FileSelectDirective, importQuestionComponent, ManageComponent, ExamListComponent, examAddUpdateComponent, questionListComponent, questionAddUpdateComponent]
+    declarations: [FileSelectDirective, importQuestionComponent, ManageComponent, ExamListComponent, examAddUpdateComponent, questionListComponent, questionAddUpdateComponent, CategoryListComponent, AddCategoryComponent]
 })
 export class ManageModule { }

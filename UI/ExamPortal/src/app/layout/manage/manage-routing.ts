@@ -1,3 +1,5 @@
+import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
+import { CategoryListComponent } from './category-list/categorylist.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExamListComponent } from './exam/exam-list/examList.component';
@@ -5,6 +7,7 @@ import { examAddUpdateComponent } from './exam/exam-add-update/examAddUpdate.com
 import { questionListComponent } from './exam/question-list/questionList.component';
 import { questionAddUpdateComponent } from './exam/question-add-update/questionAddUpdate.component';
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
+
 
 
 const routes: Routes = [
@@ -25,8 +28,13 @@ const routes: Routes = [
             },
             {
                 path: 'importExamQuestion', component: importQuestionComponent
+            },
+            {
+                path: 'categorylist', component: CategoryListComponent
+            },
+            {
+                path: 'addcategory', component: AddCategoryComponent
             }
-
 
 
         ]
