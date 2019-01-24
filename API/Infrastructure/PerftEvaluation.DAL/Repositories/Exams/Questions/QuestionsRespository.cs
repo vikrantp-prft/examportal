@@ -8,7 +8,7 @@ using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.DAL.Repositories
 {
-     /// <summary>
+    /// <summary>
     /// Questions Repository Class
     /// /// </summary>
     public class QuestionsRepository : IQuestionsRepository
@@ -19,6 +19,11 @@ namespace PerftEvaluation.DAL.Repositories
         {
             this._db = new DBHelper();
         }
+
+        /// <summary>
+        /// Get list of active Questions
+        /// </summary>
+        /// <value></value>
         public bool ActiveQuestion(string questionId)
         {
             var filter = Builders<Questions>.Filter;
@@ -27,12 +32,19 @@ namespace PerftEvaluation.DAL.Repositories
             return _db.UpdateOne<Questions>(filterDef, UpdateQuery, Questions.CollectionName);
         }
 
+        /// <summary>
+        /// Get list Questions
+        /// </summary>
+        /// <value></value>
         public IEnumerable<Questions> GetQuestionsByExamId(string examId)
         {
-            var s = _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsActive == true && x.ExamId == examId).ToList();
-            return s;
+            return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsActive == true && x.ExamId == examId).ToList();
         }
 
+        /// <summary>
+        /// Get Question By ID
+        /// </summary>
+        /// <value></value>
         public Questions GetQuestionsById(string questionId)
         {
             try
@@ -45,6 +57,10 @@ namespace PerftEvaluation.DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Get Inactive Questions
+        /// </summary>
+        /// <value></value>
         public bool InactivateQuestion(string questionId)
         {
             var filter = Builders<Questions>.Filter;
@@ -52,9 +68,13 @@ namespace PerftEvaluation.DAL.Repositories
             var updateQuery = Builders<Questions>.Update
                 .Set(c => c.IsActive, false);
 
-            return _db.UpdateOne<Questions>(filterDef, updateQuery, Exams.CollectionName);
+            return _db.UpdateOne<Questions>(filterDef, updateQuery, Questions.CollectionName);
         }
 
+        /// <summary>
+        /// Save Questions
+        /// </summary>
+        /// <value></value>
         public bool SaveQuestions(Questions questions)
         {
             try
@@ -68,6 +88,10 @@ namespace PerftEvaluation.DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Update Questions
+        /// </summary>
+        /// <value></value>
         public bool UpdateQuestions(Questions questions)
         {
             var filter = Builders<Questions>.Filter;
@@ -80,7 +104,7 @@ namespace PerftEvaluation.DAL.Repositories
                                 .Set(s => s.Question, questions.Question)
                                 .Set(s => s.QuestionType, questions.QuestionType);
 
-            return _db.UpdateOne<Questions>(filterDef, updateQuery, Exams.CollectionName);
+            return _db.UpdateOne<Questions>(filterDef, updateQuery, Questions.CollectionName);
         }
     }
 }

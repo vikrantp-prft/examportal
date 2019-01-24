@@ -50,8 +50,8 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="questionsDTO"></param>
         /// <returns></returns>
-        [HttpPost, Route("postQuestions")]
-        public IActionResult PostQuestions(QuestionsDTO questionsDTO)
+        [HttpPost]
+        public IActionResult Post(QuestionsDTO questionsDTO)
         {
             try
             {
