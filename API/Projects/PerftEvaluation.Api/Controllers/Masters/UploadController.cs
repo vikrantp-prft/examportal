@@ -1,12 +1,14 @@
 using System;
 using System.IO;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PerftEvaluation.DTO;
 
 namespace PerftEvaluation.Api.Controllers.Masters {
+    [EnableCors("AllowAll")]
     [Route ("api/[controller]")]
     [ApiController]
     /// <summary>
