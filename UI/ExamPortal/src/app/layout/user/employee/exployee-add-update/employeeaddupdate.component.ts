@@ -24,13 +24,13 @@ export class AddEmployeeComponent implements OnInit {
     { description: "Flash/Flex", value: 'Flash/Flex' },
     { description: "Design", value: 'Design' }
   ];
- 
+
   constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder) {
     this.employeeForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
       lastName: new FormControl(''),
-      dateOfBirth: new FormControl(''),
+      dob: new FormControl(''),
       phone: new FormControl(''),
       mobile: new FormControl(''),
       address1: new FormControl(''),
@@ -52,7 +52,8 @@ export class AddEmployeeComponent implements OnInit {
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
       percentage: new FormControl(''),
-      checkedInterest: new FormArray([])
+      interest: new FormArray([]),
+      educationDetails: new FormArray([])
     });
   }
 
@@ -67,6 +68,7 @@ export class AddEmployeeComponent implements OnInit {
     debugger;
     if (this.employeeForm.valid) {
       const url = 'api/Employee';
+      value.value.EducationDetails = this.educationArray;
       this.fn_saveEmployeefun(value.value, url);
     }
     else {
@@ -157,18 +159,18 @@ export class AddEmployeeComponent implements OnInit {
   //Interest check change function
   onInterestChange(event) {
     debugger;
-    const checkedInterestArray: FormArray = this.employeeForm.get('checkedInterest') as FormArray;
-  /* Selected */
-    if(event.target.checked){
+    const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
+    /* Selected */
+    if (event.target.checked) {
       // Add a new control in the arrayForm
       checkedInterestArray.push(new FormControl(event.target.value));
     }
     /* unselected */
-    else{
+    else {
       // find the unselected element
       let i: number = 0;
       checkedInterestArray.controls.forEach((ctrl: FormControl) => {
-        if(ctrl.value == event.target.value) {
+        if (ctrl.value == event.target.value) {
           // Remove the unselected element from the arrayForm
           checkedInterestArray.removeAt(i);
           return;
