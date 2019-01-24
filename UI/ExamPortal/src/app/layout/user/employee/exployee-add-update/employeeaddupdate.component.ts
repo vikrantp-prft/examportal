@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray,FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
@@ -13,6 +13,11 @@ import { ToastrService } from 'ngx-toastr';
 export class AddEmployeeComponent implements OnInit {
   public employeeForm: FormGroup;
   toastr: any;
+  public teamArray: any[];
+  public stateArray: any[];
+  public courseArray: any[];
+  public educationArray: Array<any> = [];
+  selectedCourse: any;
 
   constructor(public router: Router, private CommonService: commonService, public http: Http) {
     this.employeeForm = new FormGroup({
@@ -33,53 +38,70 @@ export class AddEmployeeComponent implements OnInit {
       currentStateId: new FormControl(''),
       currentPincode: new FormControl(''),
       note: new FormControl(''),
+      teamId: new FormControl(''),
       isActive: new FormControl(''),
       email: new FormControl(''),
-      password: new FormControl('')
+      password: new FormControl(''),
+      course: new FormControl(''),
+      yearOfPassing: new FormControl(''),
+      institution: new FormControl(''),
+      percentage: new FormControl('')
     });
   }
 
   ngOnInit() {
+    this.fn_getTeam();
+    this.fn_getState();
+    this.fn_getCourse();
+  }
 
+  get f() {
+    return this.employeeForm.controls;
   }
 
   fn_saveEmployee() {
     debugger;
-    const url = 'api/Employee';
-    const employeeModel =
-    {
-      firstName: this.employeeForm.controls.firstName.value,
-      middleName: this.employeeForm.controls.middleName.value,
-      lastName: this.employeeForm.controls.lastName.value,
-      isActive: true,
-      userName: this.employeeForm.controls.userName.value,
-      password: this.employeeForm.controls.password.value,
-      dob: this.employeeForm.controls.dateOfBirth.value,
-      address1: this.employeeForm.controls.address1.value,
-      address2: this.employeeForm.controls.address2.value,
-      city: this.employeeForm.controls.city.value,
-      stateId: this.employeeForm.controls.stateId.value,
-      pincode: this.employeeForm.controls.pincode.value,
-      currentAddress1: this.employeeForm.controls.currentAddress1.value,
-      currentAddress2: this.employeeForm.controls.currentAddress2.value,
-      currentCity: this.employeeForm.controls.currentCity.value,
-      currentStateId: this.employeeForm.controls.currentStateId.value,
-      currentPincode: this.employeeForm.controls.currentPincode.value,
-      mobile: this.employeeForm.controls.mobile.value,
-      team: this.employeeForm.controls.teamId.value,
-      note: this.employeeForm.controls.note.value,
-      interest: this.employeeForm.controls.interest.value,
-      isEmployee: true,
-      createdDate: this.employeeForm.controls.createdDate.value,
-      modifiedDate: this.employeeForm.controls.modifiedDate.value
-    }
+    if (this.employeeForm.valid) {
+      const url = 'api/Employee';
+      const employeeModel =
+      {
+        firstName: this.employeeForm.controls.firstName.value,
+        middleName: this.employeeForm.controls.middleName.value,
+        lastName: this.employeeForm.controls.lastName.value,
+        isActive: true,
+        email: this.employeeForm.controls.email.value,
+        password: this.employeeForm.controls.password.value,
+        dob: this.employeeForm.controls.dateOfBirth.value,
+        address1: this.employeeForm.controls.address1.value,
+        address2: this.employeeForm.controls.address2.value,
+        city: this.employeeForm.controls.city.value,
+        stateId: this.employeeForm.controls.stateId.value,
+        pincode: this.employeeForm.controls.pincode.value,
+        currentAddress1: this.employeeForm.controls.currentAddress1.value,
+        currentAddress2: this.employeeForm.controls.currentAddress2.value,
+        currentCity: this.employeeForm.controls.currentCity.value,
+        currentStateId: this.employeeForm.controls.currentStateId.value,
+        currentPincode: this.employeeForm.controls.currentPincode.value,
+        mobile: this.employeeForm.controls.mobile.value,
+        teamId: this.employeeForm.controls.teamId.value,
+        note: this.employeeForm.controls.note.value,
+        //interest: this.employeeForm.controls.interest.value,
+        educationDetails:this.educationArray,
+        isEmployee: true,
+        createdDate: Date.now,
+        modifiedDate: Date.now
+      }
 
-    this.fn_saveEmployeefun(url, employeeModel);
+      this.fn_saveEmployeefun(employeeModel, url);
+    }
+    else {
+      return;
+    }
   }
 
 
   // function for save employee details.
-  fn_saveEmployeefun(url, data) {
+  fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       debugger;
       const rs = result;
@@ -90,6 +112,71 @@ export class AddEmployeeComponent implements OnInit {
         this.toastr.success('Failed to add Employee details');
       }
     });
+  }
+
+  // function to get teams
+  fn_getTeam() {
+    const url = 'api/Dropdown/Teams';
+    this.CommonService.fn_Get(url).subscribe((result: any) => {
+      const teamResult = result;
+      if (teamResult.statusCode == 200) {
+        this.teamArray = teamResult.data;
+      }
+      else {
+        this.teamArray = null;
+      }
+    });
+  }
+
+  fn_getCourse() {
+    const url = 'api/Dropdown/Degrees';
+    this.CommonService.fn_Get(url).subscribe((result: any) => {
+      const courseResult = result;
+      if (courseResult.statusCode == 200) {
+        this.courseArray = courseResult.data;
+      }
+      else {
+        this.courseArray = null;
+      }
+    });
+  }
+
+  fn_getState() {
+    const url = 'api/Dropdown/States';
+    this.CommonService.fn_Get(url).subscribe((result: any) => {
+      const stateResult = result;
+      if (stateResult.statusCode == 200) {
+        this.stateArray = stateResult.data;
+      }
+      else {
+        this.stateArray = null;
+      }
+    });
+  }
+
+  fn_addNewCourse() {
+    debugger;
+    let newCourseModel = {
+      courseId: this.employeeForm.controls.course.value,
+      course: this.selectedCourse,
+      yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
+      institution: this.employeeForm.controls.institution.value,
+      percentage: this.employeeForm.controls.percentage.value
+    }
+    this.educationArray.push(newCourseModel);
+  }
+
+  //Get selected course value and text
+  fn_getSelectedCourse(event: Event) {
+    let selectedOptions = event.target['options'];
+    let selectedIndex = selectedOptions.selectedIndex;
+    let selectElementText = selectedOptions[selectedIndex].text;
+    this.selectedCourse = selectElementText;
+  }
+
+  fn_deleteCourse(index) {
+    console.log('index',index);
+    this.educationArray.splice(index,1);
   }
 }
 

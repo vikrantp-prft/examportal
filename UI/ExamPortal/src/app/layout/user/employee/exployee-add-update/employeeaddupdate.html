@@ -5,20 +5,23 @@
         <h1>Add Employee</h1>
       </div>
       <div class="col-md-12 col-xs-12 col-lg-12">
-        <form [formGroup]="employeeForm">
+        <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee()">
           <div class="sections">
             <div class="form-group">
               <label for="sel1">Team</label>
-              <select class="form-control" id="sel1">
-                <option>AEM</option>
-                <option>.NET/JAVA</option>
-                <option>MAGENTO</option>
-                <option>PEGA</option>
+              <select class="form-control" formControlName="teamId">
+                <option value="null">--All--</option>
+                <option *ngFor="let team of teamArray" value={{team.id}}>
+                  {{team.name}}
+                </option>
               </select>
             </div>
             <div class="form-group">
               <label for="firstName">First Name</label>
-              <input type="text" class="form-control" id="firstName" formControlName="firstName" required> 
+              <input type="text" class="form-control" id="firstName" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+              <div *ngIf="submitted && employeeForm.firstName.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.firstName.errors.required">First Name is required</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="middleName">Middle Name</label>
@@ -42,11 +45,11 @@
             </div>
           </div>
 
-           <div class="sections">
+          <div class="sections">
             <div class="section-heading">
               <h2>Permanent Address</h2>
             </div>
-             <div class="form-group">
+            <div class="form-group">
               <label for="Address">Address</label>
               <textarea class="form-control" id="address1" formControlName="address1"></textarea>
               <textarea class="form-control" id="address2" formControlName="address2"></textarea>
@@ -57,20 +60,20 @@
             </div>
             <div class="form-group">
               <label for="State">State</label>
-              <select class="form-control" id="stateId" formControlName="stateId">
-                <option>Maharashtra</option>
-                <option>Delhi</option>
-                <option>Kerala</option>
-                <option>Karnataka</option>
+              <select class="form-control" formControlName="stateId">
+                <option value="0">--All--</option>
+                <option *ngFor="let state of stateArray" value={{state.id}}>
+                  {{state.name}}
+                </option>
               </select>
             </div>
             <div class="form-group">
               <label for="pincode"> Pincode </label>
               <input type="number" class="form-control" id="pincode" formControlName="pincode">
             </div>
-          </div> 
+          </div>
 
-          
+
           <div class="sections">
             <div class="section-heading">
               <h2>Current Address</h2>
@@ -86,11 +89,11 @@
             </div>
             <div class="form-group">
               <label for="currentStateId">State</label>
-              <select class="form-control" id="currentStateId" formControlName="currentStateId">
-                <option>Maharashtra</option>
-                <option>Delhi</option>
-                <option>Kerala</option>
-                <option>Karnataka</option>
+              <select class="form-control" formControlName="currentStateId">
+                <option value="0">--All--</option>
+                <option *ngFor="let state of stateArray" value={{state.id}}>
+                  {{state.name}}
+                </option>
               </select>
             </div>
             <div class="form-group">
@@ -103,11 +106,35 @@
             <div class="section-heading">
               <h2>Educational Details</h2>
             </div>
-
+            <div class="form-group">
+              <label for="course"> Course </label>
+              <select class="form-control" formControlName="course" (change)="fn_getSelectedCourse($event)">
+                <option value="0">--All--</option>
+                <option *ngFor="let course of courseArray" value={{course.id}}>
+                  {{course.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="yearOfPassing">Year Of Passing </label>
+              <input type="number" class="form-control" id="yearOfPassing" formControlName="yearOfPassing">
+            </div>
+            <div class="form-group">
+              <label for="institute"> Institution </label>
+              <input type="text" class="form-control" id="institution" formControlName="institution">
+            </div>
+            <div class="form-group">
+              <label for="institute"> Percentage </label>
+              <input type="text" class="form-control" id="percentage" formControlName="percentage">
+            </div>
+            <div class="form-group">
+              <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
+            </div>
             <div class="container">
-              <table class="table">
+              <table class="table" id="educationDetailsTable">
                 <thead>
                   <tr>
+                    <th hidden="hidden">CourseID</th>
                     <th>Course</th>
                     <th>Year of Passing (YYYY)</th>
                     <th>School/College/University</th>
@@ -115,37 +142,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>SSC :</td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control"></td>
-                    <td><input type="text" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>HSSC :</td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control"></td>
-                    <td><input type="text" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>Degree :</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <select class="form-control" id="sel1">
-                        <option>Select Degree </option>
-                        <option>BE</option>
-                        <option>BCA/MCA</option>
-                        <option>MTECH</option>
-                        <option>BSc.</option>
-                      </select>
+                  <tr *ngFor="let educationField of educationArray; let i = index">
+                    <td hidden="hidden">
+                       <label>{{educationField.courseId}}</label>
                     </td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control"></td>
-                    <td><input type="text" class="form-control"></td>
+                    <td>
+                      <label>{{educationField.course}}</label>
+                    </td>
+                    <td>
+                       <label>{{educationField.yearOfPassing}}</label>
+                    </td>
+                    <td>
+                      <label>{{educationField.institution}}</label>
+                    </td>
+                    <td>
+                      <label>{{educationField.percentage}}</label>
+                    </td>
+                    <td>
+                      <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
+                    </td>
                   </tr>
                 </tbody>
-              </table>                
+              </table>
 
               <div class="form-group">
                 <p> Please Submit your interest by selecting the checkbox/below of the following options: </p>
@@ -192,11 +210,11 @@
 
           <div class="btn-sections">
             <button type="button" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-default" (click)="fn_saveEmployee()">Submit</button>
+            <button class="btn btn-default">Submit</button>
           </div>
         </form>
       </div>
-    
+
     </div>
   </div>
 </div>

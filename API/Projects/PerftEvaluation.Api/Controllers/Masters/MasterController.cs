@@ -75,7 +75,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("Update")]
         public IActionResult UpdateMaster (MastersDTO mastersDTO) {
             try {
-                responseModel.StartIndex = 200;
+                responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._masterService.UpdateMaster (mastersDTO);
 

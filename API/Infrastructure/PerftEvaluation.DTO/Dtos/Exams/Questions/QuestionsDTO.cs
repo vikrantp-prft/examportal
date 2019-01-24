@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using static PerftEvaluation.DTO.Common.CommonEnums;
 
-namespace PerftEvaluation.DTO.Dtos.Exams.Questions
+namespace PerftEvaluation.DTO.Dtos
 {
     /// <summary>
     /// Questions Entity's DTO class
@@ -17,6 +17,8 @@ namespace PerftEvaluation.DTO.Dtos.Exams.Questions
         
         public string Question { get; set; }
 
+        public bool IsActive { get; set; }
+
          public List<OptionsDTO> Options {get;set;}
     }
 
@@ -27,5 +29,7 @@ namespace PerftEvaluation.DTO.Dtos.Exams.Questions
         public string Option { get; set; }
         
         public string Description { get; set; }
+
+        public bool IsCorrect { get; set; }
      }
 }
