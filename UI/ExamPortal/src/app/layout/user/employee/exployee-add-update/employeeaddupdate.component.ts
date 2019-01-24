@@ -63,7 +63,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   //Save Employee details function
-  fn_saveEmployee() {
+  fn_saveEmployee(value) {
     debugger;
     if (this.employeeForm.valid) {
       const url = 'api/Employee';

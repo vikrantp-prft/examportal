@@ -5,7 +5,7 @@
         <h1>Add Employee</h1>
       </div>
       <div class="col-md-12 col-xs-12 col-lg-12">
-        <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee()">
+        <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee(employeeForm)">
           <div class="sections">
             <div class="form-group">
               <label for="sel1">Team</label>
