@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.DTO.Dtos.Dashboard;
 using PerftEvaluation.Entities.POCOEntities;
@@ -13,7 +14,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// Get Users list
         /// </summary>
         /// <value>List of User in DTO</value>
-        IEnumerable<UsersDTO> GetUsers { get; }
+        IEnumerable<UsersDTO> GetUsers (RequestModel requestModel);
 
         /// <summary>
         /// Save User Details
