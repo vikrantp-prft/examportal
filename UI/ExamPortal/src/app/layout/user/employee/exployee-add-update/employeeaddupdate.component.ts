@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormArray,FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray, FormBuilder, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
@@ -18,13 +18,19 @@ export class AddEmployeeComponent implements OnInit {
   public courseArray: any[];
   public educationArray: Array<any> = [];
   selectedCourse: any;
+  public interestArray: Array<any> = [
+    { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)' },
+    { description: "HTML/CSS", value: 'HTML/CSS' },
+    { description: "Flash/Flex", value: 'Flash/Flex' },
+    { description: "Design", value: 'Design' }
+  ];
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http) {
-    this.employeeForm = new FormGroup({
+  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder) {
+    this.employeeForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
       lastName: new FormControl(''),
-      dateOfBirth: new FormControl(''),
+      dob: new FormControl(''),
       phone: new FormControl(''),
       mobile: new FormControl(''),
       address1: new FormControl(''),
@@ -45,7 +51,9 @@ export class AddEmployeeComponent implements OnInit {
       course: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
-      percentage: new FormControl('')
+      percentage: new FormControl(''),
+      interest: new FormArray([]),
+      educationDetails: new FormArray([])
     });
   }
 
@@ -55,50 +63,18 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getCourse();
   }
 
-  get f() {
-    return this.employeeForm.controls;
-  }
-
-  fn_saveEmployee() {
+  //Save Employee details function
+  fn_saveEmployee(value) {
     debugger;
     if (this.employeeForm.valid) {
       const url = 'api/Employee';
-      const employeeModel =
-      {
-        firstName: this.employeeForm.controls.firstName.value,
-        middleName: this.employeeForm.controls.middleName.value,
-        lastName: this.employeeForm.controls.lastName.value,
-        isActive: true,
-        email: this.employeeForm.controls.email.value,
-        password: this.employeeForm.controls.password.value,
-        dob: this.employeeForm.controls.dateOfBirth.value,
-        address1: this.employeeForm.controls.address1.value,
-        address2: this.employeeForm.controls.address2.value,
-        city: this.employeeForm.controls.city.value,
-        stateId: this.employeeForm.controls.stateId.value,
-        pincode: this.employeeForm.controls.pincode.value,
-        currentAddress1: this.employeeForm.controls.currentAddress1.value,
-        currentAddress2: this.employeeForm.controls.currentAddress2.value,
-        currentCity: this.employeeForm.controls.currentCity.value,
-        currentStateId: this.employeeForm.controls.currentStateId.value,
-        currentPincode: this.employeeForm.controls.currentPincode.value,
-        mobile: this.employeeForm.controls.mobile.value,
-        teamId: this.employeeForm.controls.teamId.value,
-        note: this.employeeForm.controls.note.value,
-        //interest: this.employeeForm.controls.interest.value,
-        educationDetails:this.educationArray,
-        isEmployee: true,
-        createdDate: Date.now,
-        modifiedDate: Date.now
-      }
-
-      this.fn_saveEmployeefun(employeeModel, url);
+      value.value.EducationDetails = this.educationArray;
+      this.fn_saveEmployeefun(value.value, url);
     }
     else {
       return;
     }
   }
-
 
   // function for save employee details.
   fn_saveEmployeefun(data, url) {
@@ -129,6 +105,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_getCourse() {
+    debugger;
     const url = 'api/Dropdown/Degrees';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const courseResult = result;
@@ -175,8 +152,32 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_deleteCourse(index) {
-    console.log('index',index);
-    this.educationArray.splice(index,1);
+    this.educationArray.splice(index, 1);
   }
+
+  //Interest check change function
+  onInterestChange(event) {
+    debugger;
+    const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
+    /* Selected */
+    if (event.target.checked) {
+      // Add a new control in the arrayForm
+      checkedInterestArray.push(new FormControl(event.target.value));
+    }
+    /* unselected */
+    else {
+      // find the unselected element
+      let i: number = 0;
+      checkedInterestArray.controls.forEach((ctrl: FormControl) => {
+        if (ctrl.value == event.target.value) {
+          // Remove the unselected element from the arrayForm
+          checkedInterestArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
 }
 

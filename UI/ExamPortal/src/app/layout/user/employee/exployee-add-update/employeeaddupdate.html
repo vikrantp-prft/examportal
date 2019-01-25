@@ -5,7 +5,7 @@
         <h1>Add Employee</h1>
       </div>
       <div class="col-md-12 col-xs-12 col-lg-12">
-        <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee()">
+        <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee(employeeForm)">
           <div class="sections">
             <div class="form-group">
               <label for="sel1">Team</label>
@@ -18,10 +18,7 @@
             </div>
             <div class="form-group">
               <label for="firstName">First Name</label>
-              <input type="text" class="form-control" id="firstName" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-              <div *ngIf="submitted && employeeForm.firstName.errors" class="invalid-feedback">
-                <div *ngIf="employeeForm.firstName.errors.required">First Name is required</div>
-              </div>
+              <input type="text" class="form-control" id="firstName" formControlName="firstName">
             </div>
             <div class="form-group">
               <label for="middleName">Middle Name</label>
@@ -33,7 +30,7 @@
             </div>
             <div class="form-group">
               <label for="dateOfBirth">Date of Birth Name</label>
-              <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth">
+              <input type="date" class="form-control" id="dateOfBirth" formControlName="dob">
             </div>
             <div class="form-group">
               <label for="phone">Phone</label>
@@ -110,7 +107,7 @@
               <label for="course"> Course </label>
               <select class="form-control" formControlName="course" (change)="fn_getSelectedCourse($event)">
                 <option value="0">--All--</option>
-                <option *ngFor="let course of courseArray" value={{course.id}}>
+                <option *ngFor="let course of courseArray" value={{course.id}} >
                   {{course.name}}
                 </option>
               </select>
@@ -144,13 +141,13 @@
                 <tbody>
                   <tr *ngFor="let educationField of educationArray; let i = index">
                     <td hidden="hidden">
-                       <label>{{educationField.courseId}}</label>
+                      <label>{{educationField.courseId}}</label>
                     </td>
                     <td>
                       <label>{{educationField.course}}</label>
                     </td>
                     <td>
-                       <label>{{educationField.yearOfPassing}}</label>
+                      <label>{{educationField.yearOfPassing}}</label>
                     </td>
                     <td>
                       <label>{{educationField.institution}}</label>
@@ -164,32 +161,22 @@
                   </tr>
                 </tbody>
               </table>
-
               <div class="form-group">
-                <p> Please Submit your interest by selecting the checkbox/below of the following options: </p>
-                <label class="checkbox-inline">
-                  <input type="checkbox" value="">Quality Assurance (QA)
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" value=""> HTML/CSS
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" value=""> Flesh/FLex
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" value=""> Design
-                </label>
+                <label for="isActive">IsActive :</label>
+                <input type="checkbox" id="isActive" formControlName="isActive">
               </div>
-
+              <div class="form-group">
+                <label for="Interest">Interest: </label>
+                <div *ngFor="let interest of interestArray; let i=index" class="col-md-2">
+                  <label>
+                    <input type="checkbox" [value]="interest.value" (change)="onInterestChange($event)">
+                    {{interest.description}}
+                  </label>
+                </div>
+              </div>
               <div class="form-group">
                 <label for="other-details"> Note (If any): </label>
                 <textarea class="form-control" id="note" formControlName="note"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label class="checkbox-inline"> Is Active :
-                  <input type="checkbox" value="IsActive" formControlName="isActive">
-                </label>
               </div>
             </div>
           </div>
