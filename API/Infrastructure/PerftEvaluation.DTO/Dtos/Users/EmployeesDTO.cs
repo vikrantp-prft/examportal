@@ -35,6 +35,8 @@ namespace PerftEvaluation.DTO.Dtos
         public bool IsEmployee { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+         public MastersDTO Team { get; set; }
     }
 
     public class EducationDetailsDTO
