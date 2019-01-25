@@ -6,16 +6,19 @@ using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.DAL.Repositories {
+namespace PerftEvaluation.DAL.Repositories
+{
     /// <summary>
     /// Manage CRUD of Users Entity
     /// </summary>
-    public class UserRepository : IUserRepository {
+    public class UserRepository : IUserRepository
+    {
         #region Declaration
         protected readonly DBHelper _db = null;
 
-        public UserRepository () {
-            this._db = new DBHelper ();
+        public UserRepository()
+        {
+            this._db = new DBHelper();
         }
         #endregion
 
@@ -24,10 +27,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// Get the list of all the actived users
         /// </summary>
         /// <returns>Users List</returns>
-        public IEnumerable<Users> GetUsers () {
-            try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ();
-            } catch (Exception ex) {
+        public IEnumerable<Users> GetUsers()
+        {
+            try
+            {
+                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.IsActive == true).ToList();
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
@@ -37,11 +44,15 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="users"></param>
         /// <returns>bool</returns>
-        public bool SaveUser (Users users) {
-            try {
-                _db.Save<Users> (users, Users.CollectionName);
+        public bool SaveUser(Users users)
+        {
+            try
+            {
+                _db.Save<Users>(users, Users.CollectionName);
                 return true;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
@@ -51,31 +62,32 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        public bool UpdateUser (Users users) {
+        public bool UpdateUser(Users users)
+        {
             var filter = Builders<Users>.Filter;
-            var filterDef = filter.Eq (c => c.Id, users.Id);
+            var filterDef = filter.Eq(c => c.Id, users.Id);
 
             var updateQuery = Builders<Users>.Update
-                .Set (c => c.IsActive, users.IsActive)
-                .Set (c => c.LastName, users.LastName)
-                .Set (c => c.Mobile, users.Mobile)
-                .Set (c => c.ModifiedDate, users.ModifiedDate)
-                .Set (c => c.Note, users.Note)
-                .Set (c => c.Password, users.Password)
-                .Set (c => c.Pincode, users.Pincode)
-                .Set (c => c.StateId, users.StateId)
-                .Set (c => c.Team, users.Team)
-                .Set (c => c.Address1, users.Address1)
-                .Set (c => c.Address2, users.Address2)
-                .Set (c => c.City, users.City)
-                .Set (c => c.CreatedDate, users.CreatedDate)
-                .Set (c => c.DOB, users.DOB)
-                .Set (c => c.Designation, users.Designation)
-                .Set (c => c.Email, users.Email)
-                .Set (c => c.FirstName, users.FirstName)
-                .Set (c => c.Group, users.Group);
+                .Set(c => c.IsActive, users.IsActive)
+                .Set(c => c.LastName, users.LastName)
+                .Set(c => c.Mobile, users.Mobile)
+                .Set(c => c.ModifiedDate, users.ModifiedDate)
+                .Set(c => c.Note, users.Note)
+                .Set(c => c.Password, users.Password)
+                .Set(c => c.Pincode, users.Pincode)
+                .Set(c => c.StateId, users.StateId)
+                .Set(c => c.TeamId, users.TeamId)
+                .Set(c => c.Address1, users.Address1)
+                .Set(c => c.Address2, users.Address2)
+                .Set(c => c.City, users.City)
+                .Set(c => c.CreatedDate, users.CreatedDate)
+                .Set(c => c.DOB, users.DOB)
+                .Set(c => c.DesignationId, users.DesignationId)
+                .Set(c => c.Email, users.Email)
+                .Set(c => c.FirstName, users.FirstName)
+                .Set(c => c.GroupId, users.GroupId);
 
-            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
         }
 
         /// <summary>
@@ -83,13 +95,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool InactivateUsers (string userId) {
+        public bool InactivateUsers(string userId)
+        {
             var filter = Builders<Users>.Filter;
-            var filterDef = filter.Eq (c => c.Id, userId);
+            var filterDef = filter.Eq(c => c.Id, userId);
             var updateQuery = Builders<Users>.Update
-                .Set (c => c.IsActive, false);
+                .Set(c => c.IsActive, false);
 
-            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
         }
 
         /// <summary>
@@ -97,13 +110,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool ActiveUsers (string userId) {
+        public bool ActiveUsers(string userId)
+        {
             var filter = Builders<Users>.Filter;
-            var filterDef = filter.Eq (c => c.Id, userId);
+            var filterDef = filter.Eq(c => c.Id, userId);
             var updateQuery = Builders<Users>.Update
-                .Set (c => c.IsActive, true);
+                .Set(c => c.IsActive, true);
 
-            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
         }
 
         /// <summary>
@@ -111,10 +125,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>Users</returns>
-        public Users GetUserById (string Id) {
-            try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.Id == Id).FirstOrDefault ();
-            } catch (Exception ex) {
+        public Users GetUserById(string Id)
+        {
+            try
+            {
+                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.Id == Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
@@ -123,10 +141,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// Get the total count of users
         /// </summary>
         /// <returns></returns>
-        public int UsersCount () {
-            try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ().Count ();
-            } catch (Exception exception) {
+        public int UsersCount()
+        {
+            try
+            {
+                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.IsActive == true).ToList().Count();
+            }
+            catch (Exception exception)
+            {
                 throw exception;
             }
         }

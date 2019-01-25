@@ -13,7 +13,7 @@ namespace PerftEvaluation.DTO.Dtos
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }
-        public string UserName { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public DateTime? DOB { get; set; }
         public string Address1 { get; set; }
@@ -27,9 +27,9 @@ namespace PerftEvaluation.DTO.Dtos
         public string CurrentStateId { get; set; }
         public string CurrentPincode { get; set; }
         public string Mobile { get; set; }
-        public string Team { get; set; }
+        public string TeamId { get; set; }
         public string Note { get; set; }
-        public string Interest { get; set; }
+        public string[] Interest { get; set; }
         public List<EducationDetailsDTO> EducationDetails;
 
         public bool IsEmployee { get; set; }

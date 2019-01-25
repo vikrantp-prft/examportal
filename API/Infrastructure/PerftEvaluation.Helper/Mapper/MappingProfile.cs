@@ -2,7 +2,6 @@ using System;
 using AutoMapper;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
-using PerftEvaluation.DTO.Dtos.Exams.Questions;
 using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.Helper.Mapper {

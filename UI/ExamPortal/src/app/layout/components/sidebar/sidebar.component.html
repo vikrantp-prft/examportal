@@ -61,13 +61,13 @@
             <li class="nested" [class.expand]="showMenu === 'manage'">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
+                        <a routerLink="/manage/examlist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Exam' }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a routerLink="/manage/categorylist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Category'}}</span>
                         </a>

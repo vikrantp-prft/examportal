@@ -18,5 +18,6 @@ namespace PerftEvaluation.DTO.Dtos
         public bool ShuffleQuestions { get; set; }
         public bool ShuffleOptions { get; set; }
         public bool IsPaperPublic { get; set; }
+        public int TotalQuestions { get; set; }
     }
 }
