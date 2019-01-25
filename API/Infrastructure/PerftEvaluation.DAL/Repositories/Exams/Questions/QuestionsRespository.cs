@@ -79,6 +79,13 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
+                questions.CreatedDate = DateTime.UtcNow;
+                questions.ModifiedDate = DateTime.UtcNow;
+                if(questions.Options != null)
+                {
+                   //TO DO - Generate Option id for newly inserted document
+                }
+
                 _db.Save<Questions>(questions, Questions.CollectionName);
                 return true;
             }
