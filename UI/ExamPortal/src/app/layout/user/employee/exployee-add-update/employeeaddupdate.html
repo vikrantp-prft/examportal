@@ -58,7 +58,7 @@
             <div class="form-group">
               <label for="State">State</label>
               <select class="form-control" formControlName="stateId">
-                <option value="0">--All--</option>
+                <option value="null">--All--</option>
                 <option *ngFor="let state of stateArray" value={{state.id}}>
                   {{state.name}}
                 </option>
@@ -87,7 +87,7 @@
             <div class="form-group">
               <label for="currentStateId">State</label>
               <select class="form-control" formControlName="currentStateId">
-                <option value="0">--All--</option>
+                <option value="null">--All--</option>
                 <option *ngFor="let state of stateArray" value={{state.id}}>
                   {{state.name}}
                 </option>
@@ -106,7 +106,7 @@
             <div class="form-group">
               <label for="course"> Course </label>
               <select class="form-control" formControlName="course" (change)="fn_getSelectedCourse($event)">
-                <option value="0">--All--</option>
+                <option value="null">--All--</option>
                 <option *ngFor="let course of courseArray" value={{course.id}} >
                   {{course.name}}
                 </option>
@@ -169,7 +169,7 @@
                 <label for="Interest">Interest: </label>
                 <div *ngFor="let interest of interestArray; let i=index" class="col-md-2">
                   <label>
-                    <input type="checkbox" [value]="interest.value" (change)="onInterestChange($event)">
+                    <input type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)" [(ngModel)]="interest.selected" [ngModelOptions]="{standalone: true}">
                     {{interest.description}}
                   </label>
                 </div>
@@ -196,7 +196,7 @@
           </div>
 
           <div class="btn-sections">
-            <button type="button" class="btn btn-default">Reset</button>
+            <button type="button" class="btn btn-default" (click)="fn_resetEmployeeDetails()">Reset</button>
             <button class="btn btn-default">Submit</button>
           </div>
         </form>
