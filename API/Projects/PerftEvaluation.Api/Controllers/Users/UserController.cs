@@ -32,7 +32,7 @@ namespace PerftEvaluation.Api.Controllers {
         /// Get list of all users
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Route ("GetUsers")]
         public IActionResult Get (RequestModel requestModel) {
             try {
                 responseModel.StatusCode = 200;

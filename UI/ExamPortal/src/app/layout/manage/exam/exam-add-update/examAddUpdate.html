@@ -9,32 +9,28 @@
           <div class="sections">
             <div class="form-group">
               <label for="Team">Team</label>
-              <select class="form-control" formControlName="addQuestionForm_team" #addQuestionForm_team>
-                <option>.Net/Java</option>
-                <option>UI</option>
-                <option>MAGENTO</option>
-                <option>PEGA</option>
+              <select class="form-control" formControlName="teamId" #teamId>
+                <option value="">Select</option>
+                <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
               </select>
             </div>
             <div class="form-group">
               <label for="Question Paper Name">Question Paper Name</label>
-              <input type="text" class="form-control" formControlName="addQuestionForm_Question_Paper_Name"
-                #addQuestionForm_Question_Paper_Name>
+              <input type="text" class="form-control" formControlName="title" #title>
             </div>
             <div class="form-group">
               <label for="Description">Description</label>
-              <input type="textbox" class="form-control" formControlName="addQuestionForm_Description"
-                #addQuestionForm_Description>
+              <input type="textbox" class="form-control" formControlName="description" #description>
             </div>
             <div class="form-group">
               <label for="Exam Duration">Exam Duration</label>
-              <select class="form-control" formControlName="addQuestionForm_Hours" #addQuestionForm_Hours>
+              <select class="form-control" formControlName="examDurationHours" #examDurationHours>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
                 <option>4</option>
               </select>
-              <select class="form-control" formControlName="addQuestionForm_Minutes" #addQuestionForm_Minutes>
+              <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
                 <option>00</option>
                 <option>05</option>
                 <option>10</option>
@@ -51,60 +47,40 @@
             </div>
             <div class="form-group">
               <label for="Passing Marks">Passing Marks</label>
-              <input type="number" class="form-control" formControlName="addQuestionForm_Passing_Marks"
-                #addQuestionForm_Passing_Marks>%
+              <input type="number" class="form-control" formControlName="passingMarks" #passingMarks>%
             </div>
             <div class="form-group">
               <label for="Exam Active From">Exam Active From</label>
-              <input type="date" class="form-control" formControlName="addQuestionForm_Exam_Active_From"
-                #addQuestionForm_Exam_Active_From>
+              <input type="date" class="form-control" formControlName="fromDate" #fromDate>
             </div>
             <div class="form-group">
               <label for="Exam Active Till">Exam Active Till</label>
-              <input type="date" class="form-control" formControlName="addQuestionForm_Exam_Active_Till"
-                #addQuestionForm_Exam_Active_Till>
+              <input type="date" class="form-control" formControlName="toDate" #toDate>
             </div>
             <div class="form-group">
               <label for="Is Active">Is Active</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Is_Active"
-                #addQuestionForm_Is_Active>
+              <input type="checkbox" class="form-control" formControlName="isActive" #isActive>
             </div>
             <div class="form-group">
               <label for="Show Result in Front">Show Result in Front</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Show_Result_in_Front"
-                #addQuestionForm_Show_Result_in_Front>
-            </div>
-            <div class="form-group">
-              <label for="View Result Permission">View Result Permission</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_View_Result_Permission"
-                #addQuestionForm_View_Result_Permission>
-            </div>
-            <div class="form-group">
-              <label for="Allow Upload Code">Allow Upload Code</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Allow_Upload_Code"
-                #addQuestionForm_Allow_Upload_Code>
+              <input type="checkbox" class="form-control" formControlName="showResultInFront" #showResultInFront>
             </div>
             <div class="form-group">
               <label for="Shuffle Question">Shuffle Question</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Shuffle_Question"
-                #addQuestionForm_Shuffle_Question>
+              <input type="checkbox" class="form-control" formControlName="shuffleQuestions" #shuffleQuestions>
             </div>
             <div class="form-group">
               <label for="Shuffle Options">Shuffle Options</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Shuffle_Options"
-                #addQuestionForm_Shuffle_Options>
-            </div>
-            <div class="form-group">
-              <label for="Show Categories">Show Categories</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Show_Categories"
-                #addQuestionForm_Show_Categories>
+              <input type="checkbox" class="form-control" formControlName="shuffleOptions" #shuffleOptions>
             </div>
             <div class="form-group">
               <label for="Is Paper Public">Is Paper Public</label>
-              <input type="checkbox" class="form-control" formControlName="addQuestionForm_Is_Paper_Public"
-                #addQuestionForm_Is_Paper_Public>
+              <input type="checkbox" class="form-control" formControlName="isPaperPublic" #isPaperPublic>
             </div>
-
+            <div class="form-group">
+              <label for="Total Questions">Total Questions</label>
+              <input type="text" class="form-control" formControlName="totalQuestions" #totalQuestions>
+            </div>
             <div class="form-group">
               <input type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
               <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">

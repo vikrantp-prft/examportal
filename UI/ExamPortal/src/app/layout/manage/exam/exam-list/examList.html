@@ -54,26 +54,26 @@
                     <i class="fa fa-monument"></i>&nbsp;
                     <span>{{ 'View Question' }}</span>
                   </a>
-                  <!-- <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
+                  <!-- <button type="button" rel="tooltip" (click)="fn_deleteEmployee(exam.id)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button> -->
                 </th>
               </tr>
 
 
-              <tr *ngFor="let emp of employeeList; let i = index">
+              <tr *ngFor="let exam of examList; let i = index">
                 <td>{{i + 1}}</td>
-                <td>{{emp.firstName}} {{emp.lastName}}</td>
-                <td>{{emp.email}}</td>
-                <td>{{emp.team}}</td>
-                <td>{{emp.designation}}</td>
-                <td>{{emp.designation}}</td>
-                <td>{{emp.designation}}</td>
+                <td>{{exam.title}}</td>
+                <td>{{exam.teamId}}</td>
+                <td>{{exam.examDurationHours}} Hours {{exam.examDurationMinutes}} Minutes</td>
+                <td>{{exam.totalQuestions}}</td>
+                <td></td>
+                <td></td>
                 <td>
-                  <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
+                  <button type="button" rel="tooltip" (click)="fn_getEmployee(exam.id)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
+                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(exam.id)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </td>

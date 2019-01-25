@@ -48,6 +48,8 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
+                users.CreatedDate = DateTime.UtcNow;
+                users.ModifiedDate = DateTime.UtcNow;
                 _db.Save<Users>(users, Users.CollectionName);
                 return true;
             }

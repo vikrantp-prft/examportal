@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { commonService } from 'src/app/common/services/common.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 const URL = 'http://localhost:3000/api/upload';
 
@@ -14,45 +16,50 @@ export class examAddUpdateComponent implements OnInit {
 
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
   public addQuestionForm: FormGroup;
-  public url = 'api/addExam';
-  constructor(private fb: FormBuilder, private commonService: commonService) {
+  public url = 'api/Exams';
+  public categoryList = [];
+  public departmentsUrl = 'api/Dropdown/Departments';
+  constructor(public router: Router, private fb: FormBuilder, private commonService: commonService, private toastr: ToastrService) {
     this.createForm();
 
   }
 
   createForm() {
     this.addQuestionForm = this.fb.group({
-      addQuestionForm_team: ['', Validators.required],
-      addQuestionForm_Question_Paper_Name: ['', Validators.required],
-      addQuestionForm_Description: ['', Validators.required],
-      addQuestionForm_Hours: ['', Validators.required],
-      addQuestionForm_Minutes: ['', Validators.required],
-      addQuestionForm_Passing_Marks: ['', Validators.required],
-      addQuestionForm_Exam_Active_From: ['', Validators.required],
-      addQuestionForm_Exam_Active_Till: ['', Validators.required],
-      addQuestionForm_Is_Active: ['', Validators.required],
-      addQuestionForm_Show_Result_in_Front: ['', Validators.required],
-      addQuestionForm_View_Result_Permission: ['', Validators.required],
-      addQuestionForm_Allow_Upload_Code: ['', Validators.required],
-      addQuestionForm_Shuffle_Question: ['', Validators.required],
-      addQuestionForm_Shuffle_Options: ['', Validators.required],
-      addQuestionForm_Show_Categories: ['', Validators.required],
-      addQuestionForm_Is_Paper_Public: ['', Validators.required]
+      title: new FormControl(''),
+      teamId: new FormControl(''),
+      description: new FormControl(''),
+      examDurationHours: new FormControl(0),
+      examDurationMinutes: new FormControl(0),
+      passingMarks: new FormControl(0),
+      fromDate: new FormControl(''),
+      toDate: new FormControl(''),
+      isActive: new FormControl(true),
+      showResultInFront: new FormControl(false),
+      shuffleQuestions: new FormControl(false),
+      shuffleOptions: new FormControl(false),
+      isPaperPublic: new FormControl(false),
+      totalQuestions: new FormControl(0)
     });
   }
 
 
   onSubmit = function (formData) {
-
-    //console.log(formData);
-
-    this.commonService.fn_PostWithData(formData, this.url).subscribe(
-      (data: any) => {
-        console.log(data.data);
-      },
-      err => console.error(err),
-      () => { }
-    );
+    if (this.addQuestionForm.valid) {
+      this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {
+        const rs = result;
+        if (rs.statusCode == 200) {
+          this.toastr.success('Exam details added successfully!');
+          this.router.navigate(['manage/examlist']);
+        }
+        else {
+          this.toastr.console.error('Failed to add Exam details');
+        }
+      });
+    }
+    else {
+      return;
+    }
 
 
     /*
@@ -73,5 +80,14 @@ export class examAddUpdateComponent implements OnInit {
       console.log('ImageUpload:uploaded:', item, status, response);
       alert('File uploaded successfully');
     };
+
+    this.commonService.fn_Get(this.departmentsUrl).subscribe(
+      (data: any) => {
+        // if (data != null && data.statusCode === 200) {
+        this.categoryList = data.data;
+      },
+      err => console.error(err),
+      () => { }
+    );
   }
 }
