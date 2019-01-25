@@ -58,15 +58,17 @@ export class EmployeeListComponent implements OnInit {
   // Function to get list of employees
 
   fn_GetEmployeeList() {
+    debugger;
     const prop: paginationModel = {
       currentPage: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/User';
+    const url = 'api/Employee/';
 
     this.CommonService.fn_Get(url).subscribe(
       (data: any) => {
+        debugger;
         // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;
       },
