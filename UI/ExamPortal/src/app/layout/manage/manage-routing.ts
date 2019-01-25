@@ -21,10 +21,10 @@ const routes: Routes = [
                 path: 'addexam', component: examAddUpdateComponent
             },
             {
-                path: 'questionList', component: questionListComponent
+                path: 'questionList/:id', component: questionListComponent
             },
             {
-                path: 'addExamQuestion', component: questionAddUpdateComponent
+                path: 'addExamQuestion/:id', component: questionAddUpdateComponent
             },
             {
                 path: 'importExamQuestion', component: importQuestionComponent

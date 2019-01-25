@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { count } from 'rxjs/operators';
 import { commonService } from 'src/app/common/services/common.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'question-add-update',
@@ -11,13 +12,8 @@ import { commonService } from 'src/app/common/services/common.service';
 
 })
 export class questionAddUpdateComponent implements OnInit {
-  private quesCat: any = "3";
-  private multi: Array<any> = [];
-  private question: any = {
-
-  };
+  public examID = "";
   public url = 'api/addQuestion';
-
   public questionForm: FormGroup;
 
   onSubmit(model) {
@@ -43,7 +39,12 @@ export class questionAddUpdateComponent implements OnInit {
   multipleSelectoptionArray = [];
   singleSelectoptionArray = [];
 
-  constructor(private toastr: ToastrService, public fb: FormBuilder, private commonService: commonService) {
+  constructor(private route: ActivatedRoute, private toastr: ToastrService, public fb: FormBuilder, private commonService: commonService) {
+
+    this.route.params.subscribe(params => {
+      this.examID = params['id'];
+    });
+
     this.questionForm = this.fb.group({
       questionCategory: [null],
       questionType: [null],
