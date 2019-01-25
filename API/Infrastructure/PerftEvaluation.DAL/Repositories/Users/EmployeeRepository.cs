@@ -6,16 +6,13 @@ using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.DAL.Repositories
-{
-    public class EmployeeRepository : IEmployeeRepository
-    {
+namespace PerftEvaluation.DAL.Repositories {
+    public class EmployeeRepository : IEmployeeRepository {
         #region Declaration
         protected readonly DBHelper _db = null;
 
-        public EmployeeRepository()
-        {
-            this._db = new DBHelper();
+        public EmployeeRepository () {
+            this._db = new DBHelper ();
         }
         #endregion
 
@@ -24,14 +21,10 @@ namespace PerftEvaluation.DAL.Repositories
         /// Get the list of all the actived Employee
         /// </summary>
         /// <returns>Employees List</returns>
-        public IEnumerable<Users> GetEmployees()
-        {
-            try
-            {
-                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.IsActive == true && x.IsEmployee == true).ToList();
-            }
-            catch (Exception ex)
-            {
+        public IEnumerable<Users> GetEmployees () {
+            try {
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.IsEmployee == true).ToList ();
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -42,18 +35,14 @@ namespace PerftEvaluation.DAL.Repositories
         /// <param name="users"></param>
         /// <returns>bool</returns>
 
-        public bool SaveEmployee(Users users)
-        {
-            try
-            {
+        public bool SaveEmployee (Users users) {
+            try {
                 users.IsEmployee = true;
                 users.CreatedDate = DateTime.Now;
                 users.ModifiedDate = DateTime.Now;
-                _db.Save<Users>(users, Users.CollectionName);
+                _db.Save<Users> (users, Users.CollectionName);
                 return true;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -63,14 +52,13 @@ namespace PerftEvaluation.DAL.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool InactivateEmployee(string userId)
-        {
+        public bool InactivateEmployee (string userId) {
             var filter = Builders<Users>.Filter;
-            var filterDef = filter.Eq(c => c.Id, userId);
+            var filterDef = filter.Eq (c => c.Id, userId);
             var updateQuery = Builders<Users>.Update
-                .Set(c => c.IsActive, false);
+                .Set (c => c.IsActive, false);
 
-            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
         }
 
         /// <summary>
@@ -78,14 +66,13 @@ namespace PerftEvaluation.DAL.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool ActiveEmployee(string userId)
-        {
+        public bool ActiveEmployee (string userId) {
             var filter = Builders<Users>.Filter;
-            var filterDef = filter.Eq(c => c.Id, userId);
+            var filterDef = filter.Eq (c => c.Id, userId);
             var updateQuery = Builders<Users>.Update
-                .Set(c => c.IsActive, true);
+                .Set (c => c.IsActive, true);
 
-            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
         }
 
         /// <summary>
@@ -93,14 +80,10 @@ namespace PerftEvaluation.DAL.Repositories
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>Users</returns>
-        public Users GetEmployeeById(string Id)
-        {
-            try
-            {
-                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.Id == Id).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
+        public Users GetEmployeeById (string Id) {
+            try {
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.Id == Id).FirstOrDefault ();
+            } catch (Exception ex) {
                 throw ex;
             }
         }

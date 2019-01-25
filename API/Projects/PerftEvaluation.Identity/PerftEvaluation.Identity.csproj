@@ -8,8 +8,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\PerftEvaluation.BAL\PerftEvaluation.BAL.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.Helper\PerftEvaluation.Helper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PerfiEvaluation.Identity.Mongo\PerfiEvaluation.Identity.Mongo.csproj" />
   </ItemGroup>
 </Project>

@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace PerftEvaluation.DTO.Dtos
-{
+namespace PerftEvaluation.DTO.Dtos {
     /// <summary>
     /// Employee DTO class
     /// </summary>
-    public class EmployeesDTO
-    {
+    public class EmployeesDTO {
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -35,10 +33,12 @@ namespace PerftEvaluation.DTO.Dtos
         public bool IsEmployee { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public MastersDTO Team { get; set; }
     }
 
-    public class EducationDetailsDTO
-    {
+    public class EducationDetailsDTO {
         public string Course { get; set; }
         public int YearOfPassing { get; set; }
         public string Institution { get; set; }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
@@ -29,18 +29,22 @@ export class questionListComponent implements OnInit {
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
-  public employeeList = [];
+  public questionList = [];
+  public examID = "";
+  public questionListUrl = 'api/Questions/listQuestionsByExamId';
 
-  // Constructor
+  constructor(private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
+    this.route.params.subscribe(params => {
+      this.examID = params['id'];
+    });
+  }
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
-  // Lifecycle method
 
   ngOnInit() {
-    this.fn_GetEmployeeList();
+    this.fn_GetQuestionsList();
   }
 
   // Function for  pagination
@@ -57,22 +61,31 @@ export class questionListComponent implements OnInit {
 
   // Function to get list of employees
 
-  fn_GetEmployeeList() {
+  fn_GetQuestionsList() {
     const prop: paginationModel = {
       currentPage: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/User';
-
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.employeeList = data.data;
-      },
-      err => console.error(err),
-      () => { }
-    );
+    const questionModel =
+    {
+      "id": this.examID,
+      "filter": "string",
+      "pageSize": 0,
+      "pageNumber": 0,
+      "totleRecords": 0,
+      "filterBy": "string",
+      "sortBy": "string",
+      "isDescending": true
+    }
+    this.CommonService.fn_PostWithData(questionModel, this.questionListUrl).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.questionList = rs.data;
+      }
+      else {
+      }
+    });
   }
 
   // FUnction to get employee ID
@@ -110,7 +123,7 @@ export class questionListComponent implements OnInit {
       const rs = result;
       if ((result.message = 'Success')) {
         this.toastr.success('Employee details deleted successfully!');
-        this.fn_GetEmployeeList();
+        this.fn_GetQuestionsList();
       }
     });
   }

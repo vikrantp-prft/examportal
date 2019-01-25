@@ -38,7 +38,7 @@ namespace PerftEvaluation.DAL.Repositories
         /// <value></value>
         public IEnumerable<Questions> GetQuestionsByExamId(string examId)
         {
-            return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsActive == true && x.ExamId == examId).ToList();
+            return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsDeleted == false && x.ExamId == examId).ToList();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsActive == true).FirstOrDefault();
+                return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsDeleted == false).FirstOrDefault();
             }
             catch (Exception ex)
             {

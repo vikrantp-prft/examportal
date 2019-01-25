@@ -10,11 +10,9 @@
           <div class="sections">
             <div class="form-group">
               <label for="sel1">Question Category</label>
-              <select class="form-control" formControlName="questionCategory">
-                <option value="0">C++ Language</option>
-                <option value="1">C Language</option>
-                <option value="2">MAGENTO</option>
-                <option value="3">PHP</option>
+              <select class="form-control" formControlName="questionCategory" #questionCategory>
+                <option value="">Select</option>
+                <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
               </select>
             </div>
 

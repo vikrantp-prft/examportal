@@ -29,7 +29,7 @@ export class ExamListComponent implements OnInit {
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
-  public employeeList = [];
+  public examList = [];
 
   // Constructor
 
@@ -63,12 +63,12 @@ export class ExamListComponent implements OnInit {
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/User';
+    const url = 'api/Exams';
 
     this.CommonService.fn_Get(url).subscribe(
       (data: any) => {
         // if (data != null && data.statusCode === 200) {
-        this.employeeList = data.data;
+        this.examList = data.data;
       },
       err => console.error(err),
       () => {}
