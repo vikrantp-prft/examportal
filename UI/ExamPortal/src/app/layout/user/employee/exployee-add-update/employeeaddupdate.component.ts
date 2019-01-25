@@ -76,7 +76,6 @@ export class AddEmployeeComponent implements OnInit {
     }
   }
 
-
   // function for save employee details.
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
