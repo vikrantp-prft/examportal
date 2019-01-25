@@ -25,7 +25,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Masters> GetAllMasters () {
-            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ();
+            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false);
         }
 
         /// <summary>
