@@ -27,7 +27,7 @@ namespace PerftEvaluation.DTO.Dtos
         public string CurrentStateId { get; set; }
         public string CurrentPincode { get; set; }
         public string Mobile { get; set; }
-        public string Team { get; set; }
+        public string TeamId { get; set; }
         public string Note { get; set; }
         public string[] Interest { get; set; }
         public List<EducationDetailsDTO> EducationDetails;

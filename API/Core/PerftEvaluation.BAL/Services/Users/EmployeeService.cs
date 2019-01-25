@@ -6,13 +6,11 @@ using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services
-{
+namespace PerftEvaluation.BAL.Services {
     /// <summary>
     /// Service for Users
     /// </summary>
-    public class EmployeeService : IEmployeeService
-    {
+    public class EmployeeService : IEmployeeService {
         #region Declaration
         protected readonly IEmployeeRepository _employeeRepository;
 
@@ -23,8 +21,7 @@ namespace PerftEvaluation.BAL.Services
         /// Class Constructor
         /// </summary>
         /// <param name="EmployeeRepository"></param>
-        public EmployeeService(IEmployeeRepository EmployeeRepository, IMapper mapper)
-        {
+        public EmployeeService (IEmployeeRepository EmployeeRepository, IMapper mapper) {
             this._employeeRepository = EmployeeRepository;
             this._mapper = mapper;
         }
@@ -35,11 +32,9 @@ namespace PerftEvaluation.BAL.Services
         /// Get Employees List
         /// </summary>
         /// <value></value>
-        public IEnumerable<EmployeesDTO> GetEmployees
-        {
-            get
-            {
-                return this._mapper.Map<IEnumerable<EmployeesDTO>>(this._employeeRepository.GetEmployees());
+        public IEnumerable<EmployeesDTO> GetEmployees {
+            get {
+                return this._mapper.Map<IEnumerable<EmployeesDTO>> (this._employeeRepository.GetEmployees ());
             }
         }
 
@@ -48,11 +43,10 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeesDTO"></param>
         /// <returns></returns>
-        public bool SaveEmployee(EmployeesDTO employeesDTO)
-        {
-            Users users = new Users();
-            users = this._mapper.Map<Users>(employeesDTO);
-            return this._employeeRepository.SaveEmployee(users);
+        public bool SaveEmployee (EmployeesDTO employeesDTO) {
+            Users users = new Users ();
+            users = this._mapper.Map<Users> (employeesDTO);
+            return this._employeeRepository.SaveEmployee (users);
         }
 
         /// <summary>
@@ -60,9 +54,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public EmployeesDTO GetEmployeeById(string Id)
-        {
-            return this._mapper.Map<EmployeesDTO>(this._employeeRepository.GetEmployeeById(Id));
+        public EmployeesDTO GetEmployeeById (string Id) {
+            return this._mapper.Map<EmployeesDTO> (this._employeeRepository.GetEmployeeById (Id));
         }
 
         /// <summary>
@@ -70,9 +63,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool ActivateEmployee(string employeeId)
-        {
-            return this._employeeRepository.ActiveEmployee(employeeId);
+        public bool ActivateEmployee (string employeeId) {
+            return this._employeeRepository.ActiveEmployee (employeeId);
         }
 
         /// <summary>
@@ -80,9 +72,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool InactivateEmployee(string employeeId)
-        {
-            return this._employeeRepository.InactivateEmployee(employeeId);
+        public bool InactivateEmployee (string employeeId) {
+            return this._employeeRepository.InactivateEmployee (employeeId);
         }
         #endregion
 
