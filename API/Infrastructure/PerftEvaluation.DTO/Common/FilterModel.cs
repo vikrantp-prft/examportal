@@ -27,7 +27,7 @@ namespace PerftEvaluation.DTO.Common {
                     PageSize = 20;
                 if (PageNumber.Equals (0))
                     PageNumber = 0;
-                return PageNumber * PageSize;
+                return (PageNumber * PageSize) - PageSize;
             }
         }
     }
