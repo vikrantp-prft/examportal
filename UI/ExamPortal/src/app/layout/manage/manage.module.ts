@@ -13,9 +13,26 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
+import { DesignationListComponent } from './Designation/designation-list/designationList.component';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ManageRoutingModule, PaginationModule.forRoot()],
-    declarations: [FileSelectDirective, importQuestionComponent, ManageComponent, ExamListComponent, examAddUpdateComponent, questionListComponent, questionAddUpdateComponent, CategoryListComponent, AddCategoryComponent]
+    imports: [
+        CommonModule, 
+        FormsModule, 
+        ReactiveFormsModule, 
+        ManageRoutingModule, 
+        PaginationModule.forRoot()],
+    declarations: [
+        FileSelectDirective, 
+        importQuestionComponent, 
+        ManageComponent, 
+        ExamListComponent, 
+        examAddUpdateComponent, 
+        questionListComponent, 
+        questionAddUpdateComponent, 
+        CategoryListComponent, 
+        AddCategoryComponent,
+        DesignationListComponent
+    ]
 })
 export class ManageModule { }

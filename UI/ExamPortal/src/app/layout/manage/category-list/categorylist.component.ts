@@ -73,4 +73,44 @@ export class CategoryListComponent implements OnInit {
       () => {}
     );
   }
+
+  // FUnction to get employee ID
+  fn_getCategory(empid) {}
+  // function to display the alert before deleting the Order.
+  fn_deleteCategory(Id) {
+    if (Id != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the Category!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        if (x.value = true) {
+          const url = 'api/Master';
+          const model = {
+            id: ''
+            // deletedBy: 0
+          };
+          model.id = Id;
+          // obj_SearchDetails.deletedBy = 1;
+          this.fn_delfun(url, model);
+        }
+
+      });
+    }
+  }
+
+  // function for soft deleting the Employee.
+  fn_delfun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if ((result.message = 'Success')) {
+        this.toastr.success('Category details deleted successfully!');
+        this.fn_GetCategoryList();
+      }
+    });
+  }
 }

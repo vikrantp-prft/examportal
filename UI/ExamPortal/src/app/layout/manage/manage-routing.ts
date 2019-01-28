@@ -7,6 +7,7 @@ import { examAddUpdateComponent } from './exam/exam-add-update/examAddUpdate.com
 import { questionListComponent } from './exam/question-list/questionList.component';
 import { questionAddUpdateComponent } from './exam/question-add-update/questionAddUpdate.component';
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
+import { DesignationListComponent } from './Designation/designation-list/designationList.component';
 
 
 
@@ -34,8 +35,10 @@ const routes: Routes = [
             },
             {
                 path: 'addcategory', component: AddCategoryComponent
+            },
+            {
+                path: 'designationlist', component: DesignationListComponent
             }
-
 
         ]
     }
