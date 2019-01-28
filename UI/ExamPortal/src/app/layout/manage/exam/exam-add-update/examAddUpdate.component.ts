@@ -17,8 +17,8 @@ export class examAddUpdateComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
   public addExamForm: FormGroup;
   public url = 'api/Exams';
-  public categoryList = [];
-  public departmentsUrl = 'api/Dropdown/Departments';
+  public teamList = [];
+  public teamUrl = 'api/Dropdown/Teams';
   constructor(public router: Router, private fb: FormBuilder, private commonService: commonService, private toastr: ToastrService) {
     this.createForm();
 
@@ -81,10 +81,10 @@ export class examAddUpdateComponent implements OnInit {
       alert('File uploaded successfully');
     };
 
-    this.commonService.fn_Get(this.departmentsUrl).subscribe(
+    this.commonService.fn_Get(this.teamUrl).subscribe(
       (data: any) => {
         // if (data != null && data.statusCode === 200) {
-        this.categoryList = data.data;
+        this.teamList = data.data;
       },
       err => console.error(err),
       () => { }
