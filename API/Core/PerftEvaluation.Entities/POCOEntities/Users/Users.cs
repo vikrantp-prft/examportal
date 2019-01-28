@@ -52,18 +52,18 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("mobile")]
         public string Mobile { get; set; }
 
-        [BsonElement("group")]
-        public string Group { get; set; }
+        [BsonElement("groupId")]
+        public string GroupId { get; set; }
 
-        [BsonElement("designation")]
-        public string Designation { get; set; }
+        [BsonElement("designationId")]
+        public string DesignationId { get; set; }
 
-        [BsonElement("team")]
-        public string Team { get; set; }
+        [BsonElement("teamId")]
+        public string TeamId { get; set; }
 
         [BsonElement("note")]
         public string Note { get; set; }
-        
+
         [BsonElement("userName")]
         public string UserName { get; set; }
 
@@ -82,27 +82,27 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("currentPincode")]
         public string CurrentPincode { get; set; }
 
-        [BsonElement("interest")]       
-        public string Interest { get; set; }
+        [BsonElement("interest")]
+        public string[] Interest { get; set; }
 
-        [BsonElement("isEmployee")]  
+        [BsonElement("isEmployee")]
         public bool IsEmployee { get; set; }
-        public List<EducationDetails> EducationDetails {get;set;}
-          
+        public List<EducationDetails> educationDetails { get; set; }
+
     }
 
     public class EducationDetails
     {
-        [BsonElement("course")] 
+        [BsonElement("course")]
         public string Course { get; set; }
 
-        [BsonElement("yearOfPassing")] 
+        [BsonElement("yearOfPassing")]
         public int YearOfPassing { get; set; }
 
-        [BsonElement("institution")] 
+        [BsonElement("institution")]
         public string Institution { get; set; }
 
-        [BsonElement("percentage")] 
+        [BsonElement("percentage")]
         public double Percentage { get; set; }
-     }
+    }
 }

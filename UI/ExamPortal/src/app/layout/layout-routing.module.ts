@@ -11,7 +11,7 @@ const routes: Routes = [
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
             { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
             { path: 'user', loadChildren: './user/user.module#UserModule' },
-
+            { path: 'manage', loadChildren: './manage/manage.module#ManageModule' }
         ]
     }
 ];
@@ -20,4 +20,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

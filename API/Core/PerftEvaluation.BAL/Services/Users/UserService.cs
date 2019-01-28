@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DAL.Interface;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.DTO.Dtos.Dashboard;
 using PerftEvaluation.Entities.POCOEntities;
@@ -34,10 +36,9 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Users List
         /// </summary>
         /// <value></value>
-        public IEnumerable<UsersDTO> GetUsers {
-            get {
-                return this._mapper.Map<IEnumerable<UsersDTO>> (this._userRepository.GetUsers ());
-            }
+        public IEnumerable<UsersDTO> GetUsers (RequestModel requestModel) {
+            var user = this._userRepository.GetUsers ().AsQueryable ().Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable();
+            return this._mapper.Map<IEnumerable<UsersDTO>> (user);
         }
 
         /// <summary>

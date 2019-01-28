@@ -1,0 +1,53 @@
+import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
+import { CategoryListComponent } from './category-list/categorylist.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ExamListComponent } from './exam/exam-list/examList.component';
+import { examAddUpdateComponent } from './exam/exam-add-update/examAddUpdate.component';
+import { questionListComponent } from './exam/question-list/questionList.component';
+import { questionAddUpdateComponent } from './exam/question-add-update/questionAddUpdate.component';
+import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
+import { DesignationListComponent } from './Designation/designation-list/designationList.component';
+
+
+
+const routes: Routes = [
+    {
+        path: '',
+        children: [
+            {
+                path: 'examlist', component: ExamListComponent
+            },
+            {
+                path: 'addexam', component: examAddUpdateComponent
+            },
+            {
+                path: 'questionList/:id', component: questionListComponent
+            },
+            {
+                path: 'addExamQuestion/:id', component: questionAddUpdateComponent
+            },
+            {
+                path: 'importExamQuestion', component: importQuestionComponent
+            },
+            {
+                path: 'categorylist', component: CategoryListComponent
+            },
+            {
+                path: 'addcategory', component: AddCategoryComponent
+            },
+            {
+                path: 'designationlist', component: DesignationListComponent
+            }
+
+        ]
+    }
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
+})
+export class ManageRoutingModule {
+
+}

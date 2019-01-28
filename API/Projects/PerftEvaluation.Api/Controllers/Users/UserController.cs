@@ -32,12 +32,12 @@ namespace PerftEvaluation.Api.Controllers {
         /// Get list of all users
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Get () {
+        [HttpPost, Route ("GetUsers")]
+        public IActionResult Get (RequestModel requestModel) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.GetUsers;
+                responseModel.Data = this._userService.GetUsers (requestModel);
 
                 return Ok (responseModel);
             } catch (Exception exception) {

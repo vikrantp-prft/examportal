@@ -1,9 +1,7 @@
 using System;
 
-namespace PerftEvaluation.DTO.Dtos
-{
-    public class ExamsDTO
-    {
+namespace PerftEvaluation.DTO.Dtos {
+    public class ExamsDTO {
         public string Id { get; set; }
         public string Title { get; set; }
         public string TeamId { get; set; }
@@ -18,5 +16,7 @@ namespace PerftEvaluation.DTO.Dtos
         public bool ShuffleQuestions { get; set; }
         public bool ShuffleOptions { get; set; }
         public bool IsPaperPublic { get; set; }
+        public int TotalQuestions { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

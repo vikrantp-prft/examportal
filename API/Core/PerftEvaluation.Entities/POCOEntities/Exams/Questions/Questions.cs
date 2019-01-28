@@ -29,13 +29,16 @@ namespace PerftEvaluation.Entities.POCOEntities
 
     public class Options
     {
-        [BsonElement("questionsId"), BsonRepresentation(BsonType.ObjectId)]
-        public string QuestionsId { get; set; }
+        [BsonElement("optionsId"), BsonRepresentation(BsonType.ObjectId)]
+        public string OptionsId { get; set; }
 
         [BsonElement("option")] 
         public string Option { get; set; }
 
         [BsonElement("description")] 
         public string Description { get; set; }
+
+        [BsonElement("isCorrect")] 
+        public bool IsCorrect { get; set; }
      }
 }

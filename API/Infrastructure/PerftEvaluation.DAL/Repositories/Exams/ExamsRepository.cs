@@ -35,7 +35,7 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                return _db.GetCollection<Exams>(Exams.CollectionName).AsQueryable().Where(x => x.IsActive == true).ToList();
+                return _db.GetCollection<Exams>(Exams.CollectionName).AsQueryable().Where(x => x.IsDeleted == false).ToList();
             }
             catch (Exception ex)
             {

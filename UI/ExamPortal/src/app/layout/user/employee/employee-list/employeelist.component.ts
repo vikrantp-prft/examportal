@@ -33,7 +33,7 @@ export class EmployeeListComponent implements OnInit {
 
   // Constructor
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {}
+  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
@@ -53,30 +53,34 @@ export class EmployeeListComponent implements OnInit {
     this.params.pageSize = parseInt(event.itemsPerPage);
   }
   // Searching
-  searchRecord(event: any): void {}
+  searchRecord(event: any): void { }
 
   // Function to get list of employees
 
   fn_GetEmployeeList() {
+    debugger;
     const prop: paginationModel = {
       currentPage: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/User';
+    const url = 'api/Employee/';
 
     this.CommonService.fn_Get(url).subscribe(
       (data: any) => {
+        debugger;
         // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;
       },
       err => console.error(err),
-      () => {}
+      () => { }
     );
   }
 
-  // FUnction to get employee ID
-  fn_getEmployee(empid) {}
+  // Function to get employee ID
+  fn_getEmployee(empid) {
+    this.router.navigate(['/user/addemployee'],{queryParams:{id:empid}});
+  }
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
     if (Id != null) {

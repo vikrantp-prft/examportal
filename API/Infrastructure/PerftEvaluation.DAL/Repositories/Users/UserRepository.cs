@@ -26,7 +26,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Users List</returns>
         public IEnumerable<Users> GetUsers () {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsActive == true).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false).ToList ();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -39,6 +39,8 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>bool</returns>
         public bool SaveUser (Users users) {
             try {
+                users.CreatedDate = DateTime.UtcNow;
+                users.ModifiedDate = DateTime.UtcNow;
                 _db.Save<Users> (users, Users.CollectionName);
                 return true;
             } catch (Exception ex) {
@@ -64,16 +66,16 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.Password, users.Password)
                 .Set (c => c.Pincode, users.Pincode)
                 .Set (c => c.StateId, users.StateId)
-                .Set (c => c.Team, users.Team)
+                .Set (c => c.TeamId, users.TeamId)
                 .Set (c => c.Address1, users.Address1)
                 .Set (c => c.Address2, users.Address2)
                 .Set (c => c.City, users.City)
                 .Set (c => c.CreatedDate, users.CreatedDate)
                 .Set (c => c.DOB, users.DOB)
-                .Set (c => c.Designation, users.Designation)
+                .Set (c => c.DesignationId, users.DesignationId)
                 .Set (c => c.Email, users.Email)
                 .Set (c => c.FirstName, users.FirstName)
-                .Set (c => c.Group, users.Group);
+                .Set (c => c.GroupId, users.GroupId);
 
             return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
         }
