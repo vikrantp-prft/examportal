@@ -16,23 +16,25 @@ import { importQuestionComponent } from './exam/import-questions/importQuestion.
 import { DesignationListComponent } from './Designation/designation-list/designationList.component';
 import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
 import { TeamListComponent } from './team/team-list/teamList.component';
+import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
 
 @NgModule({
     imports: [
-        CommonModule, 
-        FormsModule, 
-        ReactiveFormsModule, 
-        ManageRoutingModule, 
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ManageRoutingModule,
         PaginationModule.forRoot()],
     declarations: [
-        FileSelectDirective, 
-        importQuestionComponent, 
-        ManageComponent, 
-        ExamListComponent, 
-        examAddUpdateComponent, 
-        questionListComponent, 
-        questionAddUpdateComponent, 
-        CategoryListComponent, 
+        FileSelectDirective,
+        importQuestionComponent,
+        ManageComponent,
+        ExamListComponent,
+        examEditUpdateComponent,
+        examAddUpdateComponent,
+        questionListComponent,
+        questionAddUpdateComponent,
+        CategoryListComponent,
         AddCategoryComponent,
         DesignationListComponent,
         TeamListComponent,

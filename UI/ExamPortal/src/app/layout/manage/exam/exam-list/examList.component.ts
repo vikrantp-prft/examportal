@@ -33,14 +33,14 @@ export class ExamListComponent implements OnInit {
 
   // Constructor
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {}
+  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
   // Lifecycle method
 
   ngOnInit() {
-    this.fn_GetEmployeeList();
+    this.fn_GetExamList();
   }
 
   // Function for  pagination
@@ -53,11 +53,11 @@ export class ExamListComponent implements OnInit {
     this.params.pageSize = parseInt(event.itemsPerPage);
   }
   // Searching
-  searchRecord(event: any): void {}
+  searchRecord(event: any): void { }
 
   // Function to get list of employees
 
-  fn_GetEmployeeList() {
+  fn_GetExamList() {
     const prop: paginationModel = {
       currentPage: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
@@ -71,46 +71,43 @@ export class ExamListComponent implements OnInit {
         this.examList = data.data;
       },
       err => console.error(err),
-      () => {}
+      () => { }
     );
   }
 
   // FUnction to get employee ID
-  fn_getEmployee(empid) {}
+  fn_getEmployee(empid) { }
   // function to display the alert before deleting the Order.
-  fn_deleteEmployee(Id) {
+  fn_deleteExam(Id) {
     if (Id != null) {
       swal({
         title: 'Are you sure?',
-        text: 'You want to delete the Employee!',
+        text: 'You want to delete the Exam!',
         buttonsStyling: true,
         confirmButtonClass: 'btn btn-success',
         showCancelButton: true,
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-        if (x.value = true) {
-          const url = 'api/User/InactivateUser';
+        if (x.value == true) {
+          const deleteExamUrl = 'api/Exam/deleteExam';
           const model = {
             id: ''
-            // deletedBy: 0
           };
           model.id = Id;
-          // obj_SearchDetails.deletedBy = 1;
-          this.fn_delfun(url, model);
+          this.fn_delfun(deleteExamUrl, model);
         }
-
       });
     }
   }
 
-  // function for soft deleting the Employee.
+  // function for soft deleting the Exam.
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((result.message = 'Success')) {
-        this.toastr.success('Employee details deleted successfully!');
-        this.fn_GetEmployeeList();
+        this.toastr.success('Exam deleted successfully!');
+        this.fn_GetExamList();
       }
     });
   }

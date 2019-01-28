@@ -79,10 +79,10 @@
                     type="button" rel="tooltip" (click)="fn_getEmployee(exam.id)">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                   </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_getEmployee(exam.id)">
+                  <button title="Edit Exam" type="button" rel="tooltip" [routerLink]="['/manage/editExam', exam.id]">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(exam.id)">
+                  <button title="Delete Exam" type="button" rel="tooltip" (click)="fn_deleteExam(exam.id)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </td>

@@ -10,6 +10,7 @@ import { questionAddUpdateComponent } from './exam/question-add-update/questionA
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
 import { DesignationListComponent } from './Designation/designation-list/designationList.component';
 import { TeamListComponent } from './team/team-list/teamList.component';
+import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
 
 
 
@@ -22,6 +23,9 @@ const routes: Routes = [
             },
             {
                 path: 'addexam', component: examAddUpdateComponent
+            },
+            {
+                path: 'editExam/:id', component: examEditUpdateComponent
             },
             {
                 path: 'questionList/:id', component: questionListComponent

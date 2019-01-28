@@ -65,7 +65,6 @@ export class AddEmployeeComponent implements OnInit {
 
   //Save Employee details function
   fn_saveEmployee(value) {
-    debugger;
     if (this.employeeForm.valid) {
       if (this.educationArray.length == 0) {
         this.toastr.error('Please add education details');
@@ -86,7 +85,6 @@ export class AddEmployeeComponent implements OnInit {
   // function for save employee details.
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      debugger;
       const rs = result;
       if (rs.statusCode == 200) {
         this.toastr.success('Employee details added successfully!');
@@ -113,7 +111,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_getCourse() {
-    debugger;
     const url = 'api/Dropdown/Degrees';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const courseResult = result;
@@ -140,7 +137,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_addNewCourse() {
-    debugger;
     let newCourseModel = {
       courseId: this.employeeForm.controls.course.value,
       course: this.selectedCourse,
@@ -172,7 +168,6 @@ export class AddEmployeeComponent implements OnInit {
 
   //Interest check change function
   fn_onInterestChange(event) {
-    debugger;
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
@@ -195,7 +190,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_resetEmployeeDetails() {
-    debugger;
     this.employeeForm.controls.teamId.setValue(null);
     this.employeeForm.controls.firstName.reset();
     this.employeeForm.controls.middleName.reset();
@@ -217,7 +211,7 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm.controls.email.reset();
     this.employeeForm.controls.password.reset();
     this.employeeForm.controls.note.reset();
-    this.educationArray=[];
+    this.educationArray = [];
     this.employeeForm.controls.isActive.setValue(false);
     this.interestArray.forEach(element => {
       element.selected = false;
