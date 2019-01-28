@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'employee-add-update',
@@ -16,6 +17,7 @@ export class AddEmployeeComponent implements OnInit {
   public stateArray: any[];
   public courseArray: any[];
   public educationArray: Array<any> = [];
+  public employeeId: any;
   selectedCourse: any;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
@@ -24,7 +26,7 @@ export class AddEmployeeComponent implements OnInit {
     { description: "Design", value: 'Design', selected: false }
   ];
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder, private toastr: ToastrService) {
+  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder, private toastr: ToastrService, private route: ActivatedRoute) {
     this.employeeForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
@@ -57,6 +59,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     this.employeeForm.controls.isActive.setValue(true);
     this.fn_getTeam();
     this.fn_getState();
@@ -65,16 +68,15 @@ export class AddEmployeeComponent implements OnInit {
 
   //Save Employee details function
   fn_saveEmployee(value) {
-    debugger;
     if (this.employeeForm.valid) {
       if (this.educationArray.length == 0) {
         this.toastr.error('Please add education details');
         return false;
       }
       else {
-        const url = 'api/Employee';
+        const saveEmployeeurl = 'api/Employee';
         value.value.EducationDetails = this.educationArray;
-        this.fn_saveEmployeefun(value.value, url);
+        this.fn_saveEmployeefun(value.value, saveEmployeeurl);
       }
     }
     else {
@@ -86,7 +88,6 @@ export class AddEmployeeComponent implements OnInit {
   // function for save employee details.
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      debugger;
       const rs = result;
       if (rs.statusCode == 200) {
         this.toastr.success('Employee details added successfully!');
@@ -100,8 +101,8 @@ export class AddEmployeeComponent implements OnInit {
 
   // function to get teams
   fn_getTeam() {
-    const url = 'api/Dropdown/Teams';
-    this.CommonService.fn_Get(url).subscribe((result: any) => {
+    const teamUrl = 'api/Dropdown/Teams';
+    this.CommonService.fn_Get(teamUrl).subscribe((result: any) => {
       const teamResult = result;
       if (teamResult.statusCode == 200) {
         this.teamArray = teamResult.data;
@@ -112,10 +113,10 @@ export class AddEmployeeComponent implements OnInit {
     });
   }
 
+  //function to get course
   fn_getCourse() {
-    debugger;
-    const url = 'api/Dropdown/Degrees';
-    this.CommonService.fn_Get(url).subscribe((result: any) => {
+    const degreeUrl = 'api/Dropdown/Degrees';
+    this.CommonService.fn_Get(degreeUrl).subscribe((result: any) => {
       const courseResult = result;
       if (courseResult.statusCode == 200) {
         this.courseArray = courseResult.data;
@@ -126,9 +127,10 @@ export class AddEmployeeComponent implements OnInit {
     });
   }
 
+  //function to get state
   fn_getState() {
-    const url = 'api/Dropdown/States';
-    this.CommonService.fn_Get(url).subscribe((result: any) => {
+    const stateUrl = 'api/Dropdown/States';
+    this.CommonService.fn_Get(stateUrl).subscribe((result: any) => {
       const stateResult = result;
       if (stateResult.statusCode == 200) {
         this.stateArray = stateResult.data;
@@ -139,8 +141,8 @@ export class AddEmployeeComponent implements OnInit {
     });
   }
 
+  //function to add new course
   fn_addNewCourse() {
-    debugger;
     let newCourseModel = {
       courseId: this.employeeForm.controls.course.value,
       course: this.selectedCourse,
@@ -172,7 +174,6 @@ export class AddEmployeeComponent implements OnInit {
 
   //Interest check change function
   fn_onInterestChange(event) {
-    debugger;
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
@@ -195,7 +196,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_resetEmployeeDetails() {
-    debugger;
     this.employeeForm.controls.teamId.setValue(null);
     this.employeeForm.controls.firstName.reset();
     this.employeeForm.controls.middleName.reset();
@@ -217,7 +217,7 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm.controls.email.reset();
     this.employeeForm.controls.password.reset();
     this.employeeForm.controls.note.reset();
-    this.educationArray=[];
+    this.educationArray = [];
     this.employeeForm.controls.isActive.setValue(false);
     this.interestArray.forEach(element => {
       element.selected = false;
@@ -231,7 +231,6 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm.controls.percentage.reset();
     this.employeeForm.controls.institution.reset();
   }
-
 
 }
 

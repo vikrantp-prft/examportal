@@ -1,0 +1,207 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="card col-md-12 col-xs-12 col-lg-12">
+      <div class="card-header">
+        <h1>Update Employee</h1>
+      </div>
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <form [formGroup]="employeeForm" (ngSubmit)="fn_updateEmployee(employeeForm)">
+          <div class="sections">
+            <div class="form-group">
+              <label for="sel1">Team</label>
+              <select class="form-control" formControlName="teamId">
+                <option value="null">--All--</option>
+                <option *ngFor="let team of teamArray" value={{team.id}}>
+                  {{team.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" formControlName="firstName">
+            </div>
+            <div class="form-group">
+              <label for="middleName">Middle Name</label>
+              <input type="text" class="form-control" id="middleName" formControlName="middleName">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" formControlName="lastName">
+            </div>
+            <div class="form-group">
+              <label for="dateOfBirth">Date of Birth Name</label>
+              <input type="date" class="form-control" id="dateOfBirth" formControlName="dob">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="number" class="form-control" id="phone" formControlName="phone">
+            </div>
+            <div class="form-group">
+              <label for="mobile">Mobile</label>
+              <input type="number" class="form-control" id="mobile" formControlName="mobile">
+            </div>
+          </div>
+
+          <div class="sections">
+            <div class="section-heading">
+              <h2>Permanent Address</h2>
+            </div>
+            <div class="form-group">
+              <label for="Address">Address</label>
+              <textarea class="form-control" id="address1" formControlName="address1"></textarea>
+              <textarea class="form-control" id="address2" formControlName="address2"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="city"> City </label>
+              <input type="text" class="form-control" id="city" formControlName="city">
+            </div>
+            <div class="form-group">
+              <label for="State">State</label>
+              <select class="form-control" formControlName="stateId">
+                <option value="null">--All--</option>
+                <option *ngFor="let state of stateArray" value={{state.id}}>
+                  {{state.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pincode"> Pincode </label>
+              <input type="number" class="form-control" id="pincode" formControlName="pincode">
+            </div>
+          </div>
+
+
+          <div class="sections">
+            <div class="section-heading">
+              <h2>Current Address</h2>
+            </div>
+            <div class="form-group">
+              <label for="Address">Address</label>
+              <textarea class="form-control" id="currentAddress1" formControlName="currentAddress1"></textarea>
+              <textarea class="form-control" id="currentAddress2" formControlName="currentAddress2"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="state"> City </label>
+              <input type="text" class="form-control" id="currentCity" formControlName="currentCity">
+            </div>
+            <div class="form-group">
+              <label for="currentStateId">State</label>
+              <select class="form-control" formControlName="currentStateId">
+                <option value="null">--All--</option>
+                <option *ngFor="let state of stateArray" value={{state.id}}>
+                  {{state.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pincode"> Pincode </label>
+              <input type="number" class="form-control" id="currentPincode" formControlName="currentPincode">
+            </div>
+          </div>
+
+          <div class="sections">
+            <div class="section-heading">
+              <h2>Educational Details</h2>
+            </div>
+            <div class="form-group">
+              <label for="course"> Course </label>
+              <select class="form-control" formControlName="course" (change)="fn_getSelectedCourse($event)">
+                <option value="null">--All--</option>
+                <option *ngFor="let course of courseArray" value={{course.id}} >
+                  {{course.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="yearOfPassing">Year Of Passing </label>
+              <input type="number" class="form-control" id="yearOfPassing" formControlName="yearOfPassing">
+            </div>
+            <div class="form-group">
+              <label for="institute"> Institution </label>
+              <input type="text" class="form-control" id="institution" formControlName="institution">
+            </div>
+            <div class="form-group">
+              <label for="institute"> Percentage </label>
+              <input type="text" class="form-control" id="percentage" formControlName="percentage">
+            </div>
+            <div class="form-group">
+              <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
+            </div>
+            <div class="container">
+              <table class="table" id="educationDetailsTable">
+                <thead>
+                  <tr>
+                    <th hidden="hidden">CourseID</th>
+                    <th>Course</th>
+                    <th>Year of Passing (YYYY)</th>
+                    <th>School/College/University</th>
+                    <th>Percentage %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let educationField of educationArray; let i = index">
+                    <td hidden="hidden">
+                      <label>{{educationField.courseId}}</label>
+                    </td>
+                    <td>
+                      <label>{{educationField.course}}</label>
+                    </td>
+                    <td>
+                      <label>{{educationField.yearOfPassing}}</label>
+                    </td>
+                    <td>
+                      <label>{{educationField.institution}}</label>
+                    </td>
+                    <td>
+                      <label>{{educationField.percentage}}</label>
+                    </td>
+                    <td>
+                      <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="form-group">
+                <label for="isActive">IsActive :</label>
+                <input type="checkbox" id="isActive" formControlName="isActive">
+              </div>
+              <div class="form-group">
+                <label for="Interest">Interest: </label>
+                <div *ngFor="let interest of interestArray; let i=index" class="col-md-2">
+                  <label>
+                    <input type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)" [(ngModel)]="interest.selected" [ngModelOptions]="{standalone: true}">
+                    {{interest.description}}
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="other-details"> Note (If any): </label>
+                <textarea class="form-control" id="note" formControlName="note"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="sections">
+            <div class="section-heading">
+              <h2>Login Details</h2>
+            </div>
+            <div class="form-group">
+              <label for="email">Email :</label>
+              <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+            <div class="form-group">
+              <label for="password">Password :</label>
+              <input type="password" class="form-control" id="password" formControlName="password">
+            </div>
+          </div>
+
+          <div class="btn-sections">
+            <button type="button" class="btn btn-default" (click)="fn_resetEmployeeDetails()">Reset</button>
+            <button class="btn btn-default">Submit</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

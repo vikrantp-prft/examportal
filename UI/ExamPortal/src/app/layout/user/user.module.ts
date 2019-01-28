@@ -12,6 +12,7 @@ import { TraineeListComponent } from './trainee/trainee-list/traineeList.compone
 import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/traineeUserAddUpdate.component';
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 
 @NgModule({
     imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot(),FormsModule,ReactiveFormsModule],
@@ -23,7 +24,8 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
         AddAdminUserComponent,
         TraineeListComponent,
         AddTraineeUserComponent,
-        QuickTraineeAddUpdate
+        QuickTraineeAddUpdate,
+        EmployeeUpdateComponent,
     ]
 })
 export class UserModule { }

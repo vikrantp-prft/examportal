@@ -8,7 +8,7 @@ import { AdminUserListComponent } from './admin-user/admin-user-list/adminuserli
 import { TraineeListComponent } from './trainee/trainee-list/traineeList.component';
 import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/traineeUserAddUpdate.component';
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
-
+import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 
 const routes: Routes = [
     {
@@ -37,6 +37,9 @@ const routes: Routes = [
             },
             {
                 path: 'quickaddtraineeuser', component: QuickTraineeAddUpdate
+            },
+            {
+                path: 'updateemployee/:_empid', component: EmployeeUpdateComponent
             }
         ]
     }
