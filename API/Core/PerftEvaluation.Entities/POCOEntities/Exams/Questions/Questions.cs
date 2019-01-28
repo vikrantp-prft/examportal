@@ -29,9 +29,6 @@ namespace PerftEvaluation.Entities.POCOEntities
 
     public class Options
     {
-        [BsonElement("optionsId"), BsonRepresentation(BsonType.ObjectId)]
-        public string OptionsId { get; set; }
-
         [BsonElement("option")] 
         public string Option { get; set; }
 

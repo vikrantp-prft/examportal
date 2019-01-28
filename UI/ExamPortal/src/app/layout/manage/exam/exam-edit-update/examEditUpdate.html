@@ -5,9 +5,10 @@
         <h1>Add Exam</h1>
       </div>
       <div class="col-md-12 col-xs-12 col-lg-12">
-        <form [formGroup]="addExamForm" (ngSubmit)="onSubmit(addExamForm.value)">
+        <form [formGroup]="editExamForm" (ngSubmit)="onSubmit(editExamForm.value)">
           <div class="sections">
             <div class="form-group">
+              <input type="hidden" formControlName="id" #id>
               <label for="sel1">Team</label>
               <select class="form-control" formControlName="teamId" #teamId>
                 <option value="null">--All--</option>
@@ -81,7 +82,7 @@
             </div>
             <div class="form-group">
               <label for="Total Questions">Total Questions</label>
-              <input type="text" class="form-control" formControlName="totalQuestions" #totalQuestions>
+              <input type="number" class="form-control" formControlName="totalQuestions" #totalQuestions>
             </div>
             <div class="form-group">
               <input type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />

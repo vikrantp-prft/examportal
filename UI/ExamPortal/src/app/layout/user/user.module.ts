@@ -13,6 +13,7 @@ import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/train
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
     imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot(),FormsModule,ReactiveFormsModule],
@@ -26,6 +27,7 @@ import { EmployeeUpdateComponent } from './employee/employee-update/employee-upd
         AddTraineeUserComponent,
         QuickTraineeAddUpdate,
         EmployeeUpdateComponent,
+        UploadComponent
     ]
 })
 export class UserModule { }

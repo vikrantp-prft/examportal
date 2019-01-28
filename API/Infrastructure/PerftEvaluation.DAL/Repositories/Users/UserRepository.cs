@@ -26,7 +26,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Users List</returns>
         public IEnumerable<Users> GetUsers () {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false).AsQueryable ();
             } catch (Exception ex) {
                 throw ex;
             }

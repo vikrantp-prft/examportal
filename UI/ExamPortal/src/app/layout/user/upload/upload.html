@@ -1,0 +1,49 @@
+<!-- <div class="row">
+  <label class="col-sm-2 label-on-left">Import File
+    <span class="required">*</span>
+  </label>
+  <div class="fileinput fileinput-new importFile fileImg col-sm-7" data-provides="fileinput">
+    <div class="fileinput-new thumbnail">
+      <img [src]="reportImageurl" alt="..." id="fileid1">
+    </div>
+    <div class="fileinput-preview fileinput-exists thumbnail" id="fileid"></div>
+    <span class="btn btn-rose btn-round btn-file">
+      <span class="fileinput-new">Select CSV</span>
+      <span class="fileinput-exists">Select CSV File</span>
+      <input type="file" name="..." (change)="fn_fileChange($event)" required />
+    </span>
+  </div>
+</div> -->
+<!-- {{question |json}} -->
+<!-- <div *ngFor="let question of quizes;" let i="index"> -->
+    <!-- <div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}.</div> -->
+    <form>
+        <!-- <div class="row">
+            <div class="card col-md-12 col-xs-12 col-lg-12"> -->
+              <div class="card-header">
+                <h1>Exam</h1>
+              </div>
+              
+    <h2 style="padding-top: 20px">
+      <!-- {{pager.index + 1}}. -->
+       <span [innerHTML]="question.Name"></span></h2>
+    <div class="row text-left options">
+      <div class="col-md-6" *ngFor="let option of question.ans">
+        <div class="option">
+          <label class="" [attr.for]="option.val">
+              <input id="{{option.val}}" type="checkbox"  />
+              {{option.option}}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top: 20px">
+    <button (click) = "fn_previous()">< Previous</button>&nbsp;
+    <button (click) = "fn_next()">Save & Next ></button>&nbsp;
+    <button (click) = "fn_submit()">End Exam</button>
+  </div>
+  </form>
+
+  <!-- [(ngModel)]="option.Selected"  -->
+  <!-- </div> -->
+  <!-- (change)="onSelect(question, option);" -->

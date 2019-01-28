@@ -9,6 +9,7 @@ import { TraineeListComponent } from './trainee/trainee-list/traineeList.compone
 import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/traineeUserAddUpdate.component';
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
+import { UploadComponent } from './upload/upload.component';
 
 const routes: Routes = [
     {
@@ -40,6 +41,9 @@ const routes: Routes = [
             },
             {
                 path: 'updateemployee/:_empid', component: EmployeeUpdateComponent
+            },
+            {
+                path:'upload', component: UploadComponent
             }
         ]
     }
