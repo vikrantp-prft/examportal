@@ -1,3 +1,4 @@
+import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
 import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
 import { CategoryListComponent } from './category-list/categorylist.component';
 import { NgModule } from '@angular/core';
@@ -8,6 +9,7 @@ import { questionListComponent } from './exam/question-list/questionList.compone
 import { questionAddUpdateComponent } from './exam/question-add-update/questionAddUpdate.component';
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
 import { DesignationListComponent } from './Designation/designation-list/designationList.component';
+import { TeamListComponent } from './team/team-list/teamList.component';
 
 
 
@@ -38,6 +40,12 @@ const routes: Routes = [
             },
             {
                 path: 'designationlist', component: DesignationListComponent
+            },
+            {
+                path: 'teamlist', component: TeamListComponent
+            },
+            {
+                path: 'addTeam', component: AddTeamComponent
             }
 
         ]

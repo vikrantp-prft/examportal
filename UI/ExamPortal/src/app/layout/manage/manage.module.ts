@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
 import { DesignationListComponent } from './Designation/designation-list/designationList.component';
+import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
+import { TeamListComponent } from './team/team-list/teamList.component';
 
 @NgModule({
     imports: [
@@ -32,7 +34,9 @@ import { DesignationListComponent } from './Designation/designation-list/designa
         questionAddUpdateComponent, 
         CategoryListComponent, 
         AddCategoryComponent,
-        DesignationListComponent
+        DesignationListComponent,
+        TeamListComponent,
+        AddTeamComponent
     ]
 })
 export class ManageModule { }

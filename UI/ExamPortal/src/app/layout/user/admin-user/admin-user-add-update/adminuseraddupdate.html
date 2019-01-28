@@ -1,3 +1,5 @@
+
+
 <div class="col-md-12">
   <div class="row">
 
@@ -6,86 +8,110 @@
         <h1>Add Users</h1>
       </div>
 
-      <div class="col-md-12 col-xs-12 col-lg-12">
-        <form action="">
+        <div class="col-md-12 col-xs-12 col-lg-12">
+        <form [formGroup]="adminForm">
           <div class="sections">
             <div class="form-group">
               <label for="sel1">User group</label>
-              <select class="form-control" id="sel1">
-                <option>Admin</option>
-                <option>Super Admin</option>
+             
+              <select class="form-control" formControlName="groupId">
+                <option value="null">--All--</option>
+                <option *ngFor="let group of groupArray" value={{group.id}}>
+                  {{group.name}}
+                </option>
               </select>
             </div>
 
+             <!--
+              <select class="form-control" formControlName="teamId">
+              <option value="null">--All--</option>
+              <option *ngFor="let team of teamArray" value={{team.id}}>
+              {{team.name}}
+              </option>
+              </select> 
+            -->
+
             <div class="form-group">
               <label for="sel1">Team</label>
-              <select class="form-control" id="sel1">
-                <option>.Net/Java</option>
-                <option>UI</option>
-                <option>MAGENTO</option>
-                <option>PEGA</option>
+              <select class="form-control" formControlName="teamId">
+                <option value="null">--All--</option>
+                <option *ngFor="let team of teamArray" value={{team.id}}>
+                  {{team.name}}
+                </option>
               </select>
             </div>
 
             <div class="form-group">
               <label for="sel1">Select Designation</label>
-              <select class="form-control" id="sel1">
-                <option>Interface Developer</option>
-                <option>ATC</option>
-                <option>TC</option>
-                <option>STC</option>
-                <option>LTC</option>
+              <select class="form-control" formControlName="designationId">
+                <option value="null">--All--</option>
+                <option *ngFor="let designation of designationArray" value={{designation.id}}>
+                  {{designation.name}}
+                </option>
+                
               </select>
             </div>
 
             <div class="form-group">
               <label for="firstName">First Name</label>
-              <input type="text" class="form-control" id="firstName">
+              <input type="text" formControlName="firstName" class="form-control" id="firstName">
+              <div *ngIf="adminForm.get('firstName').touched && adminForm.get('firstName').invalid" class="alert alert-danger">Required Field</div>
             </div>
             <div class="form-group">
               <label for="lastName">Last Name</label>
-              <input type="text" class="form-control" id="lastName">
+              <input type="text" formControlName="lastName" class="form-control" id="lastName">
+              <div *ngIf="adminForm.get('lastName').touched && adminForm.get('lastName').invalid" class="alert alert-danger">Required Field</div>
             </div>
             <div class="form-group">
               <label for="dateOfBirth">Date of Birth Name</label>
-              <input type="date" class="form-control" id="dateOfBirth">
+              <input type="date" formControlName="dateOfBirth" class="form-control" id="dateOfBirth">
             </div>
           </div>
 
           <div class="sections">
             <div class="form-group">
-              <label for="phone">Address</label>
-              <input type="text" class="form-control" id="phone1">
-              <input type="text" class="form-control" id="phone2">
+              <label for="address">Address</label>
+              <!-- <input type="text" [formControl]="address1" class="form-control" id="address1">
+              <input type="text" [formControl]="address2" class="form-control" id="address2"> -->
+              <textarea class="form-control" formControlName="address1" id="address1"></textarea>
+              <textarea class="form-control" formControlName="address2" id="address2"></textarea>
             </div>
             <div class="form-group">
-              <label for="state"> City </label>
-              <input type="text" class="form-control" id="state">
+              <label for="city"> City </label>
+              <input type="text" formControlName="city" class="form-control" id="city">
             </div>
             <div class="form-group">
               <label for="sel1">State</label>
-              <select class="form-control" id="sel1">
-                <option>Maharashtra</option>
-                <option>Delhi</option>
-                <option>Kerala</option>
-                <option>Karnataka</option>
+              <select class="form-control" formControlName="stateId">
+                <option value="null">--All--</option>
+                <option *ngFor="let state of stateArray" value="{{state.id}}">
+                  {{state.name}}
+                </option>
               </select>
             </div>
             <div class="form-group">
               <label for="pincode"> Pincode </label>
-              <input type="number" class="form-control" id="pincode">
+              <input type="number" formControlName="pincode" class="form-control" id="pincode">
             </div>
+            
             <div class="form-group">
               <label for="phone">Phone</label>
-              <input type="number" class="form-control" id="phone">
+              <input type="number" formControlName="phone" class="form-control" id="phone">
             </div>
             <div class="form-group">
               <label for="mobile">Mobile</label>
-              <input type="number" class="form-control" id="mobile">
+              <input type="number" formControlName="mobile" class="form-control" id="mobile">
+              <div *ngIf="adminForm.get('mobile').touched && adminForm.get('mobile').invalid" class="alert alert-danger">
+                <div *ngIf="adminForm.get('mobile').errors.required">Required field</div>
+                <div *ngIf="adminForm.get('mobile').errors?.pattern">Please enter valid mobile number</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="note">Note (if any)</label>
-              <textarea class="form-control" id="note"></textarea> 
+              <textarea class="form-control" formControlName="note" id="note"></textarea> 
+              <!-- <div *ngIf="adminForm.get('note').touched && adminForm.get('note').invalid" class="alert alert-danger">
+                <div *ngIf="adminForm.get('note').errors?.minlength"> Please enter valid text. </div> 
+              </div> -->
             </div>
           </div>
 
@@ -95,17 +121,21 @@
             </div>
             <div class="form-group">
               <label for="email">Email :</label>
-              <input type="email" class="form-control" id="email">
+              <input type="email" formControlName="email" class="form-control" id="email">
+              <div *ngIf="adminForm.get('email').touched && adminForm.get('email').invalid" class="alert alert-danger">
+                <div *ngIf="adminForm.get('email').errors?.pattern"> Please enter valid email. </div> 
+              </div>
             </div>
             <div class="form-group">
               <label for="password">Password :</label>
-              <input type="password" class="form-control" id="password">
+              <input type="password" formControlName="password" class="form-control" id="password">
+              <div *ngIf="adminForm.get('password').touched && adminForm.get('password').invalid" class="alert alert-danger">Required Field</div>
             </div>
           </div>
 
           <div class="btn-sections">
             <button type="button" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" (click)="fn_saveUser()">Submit</button>
           </div>
         </form>
       </div>
