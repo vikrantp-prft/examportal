@@ -74,5 +74,16 @@ export class commonService {
         return Observable.throw(error.statusText); }
       });
   }
+  fn_UploadImage(url: string, formData: any) {
+    debugger;
+     const headers_fileUp = new Headers({ 'Content-Type': 'multipart/form-data' });
+    // let headers_fileUp = new Headers({
+    //   Authorization: "Bearer " + this.authservice.token
+    // });
+    return this.http
+      .post(appConfig.apiUrl + url, formData, {headers : headers_fileUp})
+
+      .map((res: Response) => res.json());
+  }
 
 }

@@ -44,6 +44,13 @@
                             <span>{{ 'Employees' | translate }}</span>
                         </a>
                     </li>
+
+                    <!-- <li>
+                        <a routerLink="/user/upload" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Upload' | translate }}</span>
+                        </a>
+                    </li> -->
                     <li>
                         <a routerLink="/user/traineelist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
@@ -73,38 +80,38 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Tags' }}</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="javascript:void(0)">
+                        <a routerLink="/manage/teamlist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Team' }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a routerLink="/manage/designationlist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Designation'}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Project' }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Resource'}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Query window' }}</span>
                         </a>
@@ -112,7 +119,10 @@
                 </ul>
             </li>
         </div>
-
+        <a routerLink="/user/upload" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+            <span>{{ 'User Exam' | translate }}</span>
+        </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;

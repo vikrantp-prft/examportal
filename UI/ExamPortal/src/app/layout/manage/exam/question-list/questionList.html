@@ -21,7 +21,7 @@
           </div>
           <!-- </div>    -->
           <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/manage/addExamQuestion']" class="btn-primary">Add Question</button>
+            <button [routerLink]="['/manage/addExamQuestion', examID]" class="btn-primary">Add Question</button>
           </div>
           <div class="col-md-2" style="display: inline-block;">
             <button [routerLink]="['/manage/importExamQuestion']" class="btn-primary">Import Questions</button>
@@ -39,35 +39,30 @@
               </tr>
             </thead>
             <tbody>
-
-
-              <tr>
+              <!-- <tr>
                 <th>Sr. No.</th>
                 <th>Question</th>
                 <th>Question Type</th>
                 <th>Category</th>
                 <th>
-                  <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
+                  <button type="button" rel="tooltip" (click)="fn_getEmployee(question.id)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
+                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(question.id)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </th>
-              </tr>
-
-
-              <tr *ngFor="let emp of employeeList; let i = index">
+              </tr> -->
+              <tr *ngFor="let question of questionList; let i = index">
                 <td>{{i + 1}}</td>
-                <td>{{emp.firstName}} {{emp.lastName}}</td>
-                <td>{{emp.email}}</td>
-                <td>{{emp.team}}</td>
-
+                <td>{{question.question}}</td>
+                <td>{{question.questionType}}</td>
+                <td>{{question.categoryId}}</td>
                 <td>
-                  <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
+                  <button type="button" rel="tooltip" (click)="fn_getEmployee(question.id)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
+                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(question.id)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </td>
@@ -75,7 +70,6 @@
             </tbody>
           </table>
         </div>
-
         <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
           [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
           lastText="LAST"></pagination>

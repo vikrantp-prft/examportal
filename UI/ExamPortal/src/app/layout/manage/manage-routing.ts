@@ -1,3 +1,4 @@
+import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
 import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
 import { CategoryListComponent } from './category-list/categorylist.component';
 import { NgModule } from '@angular/core';
@@ -7,6 +8,9 @@ import { examAddUpdateComponent } from './exam/exam-add-update/examAddUpdate.com
 import { questionListComponent } from './exam/question-list/questionList.component';
 import { questionAddUpdateComponent } from './exam/question-add-update/questionAddUpdate.component';
 import { importQuestionComponent } from './exam/import-questions/importQuestion.component';
+import { DesignationListComponent } from './Designation/designation-list/designationList.component';
+import { TeamListComponent } from './team/team-list/teamList.component';
+import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
 
 
 
@@ -21,10 +25,13 @@ const routes: Routes = [
                 path: 'addexam', component: examAddUpdateComponent
             },
             {
-                path: 'questionList', component: questionListComponent
+                path: 'editExam/:id', component: examEditUpdateComponent
             },
             {
-                path: 'addExamQuestion', component: questionAddUpdateComponent
+                path: 'questionList/:id', component: questionListComponent
+            },
+            {
+                path: 'addExamQuestion/:id', component: questionAddUpdateComponent
             },
             {
                 path: 'importExamQuestion', component: importQuestionComponent
@@ -34,8 +41,16 @@ const routes: Routes = [
             },
             {
                 path: 'addcategory', component: AddCategoryComponent
+            },
+            {
+                path: 'designationlist', component: DesignationListComponent
+            },
+            {
+                path: 'teamlist', component: TeamListComponent
+            },
+            {
+                path: 'addTeam', component: AddTeamComponent
             }
-
 
         ]
     }

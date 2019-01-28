@@ -3,33 +3,20 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { count } from 'rxjs/operators';
 import { commonService } from 'src/app/common/services/common.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'question-add-update',
   templateUrl: './questionAddUpdate.html',
   providers: [commonService]
-
 })
+
 export class questionAddUpdateComponent implements OnInit {
-  private quesCat: any = "3";
-  private multi: Array<any> = [];
-  private question: any = {
-
-  };
-  public url = 'api/addQuestion';
-
+  public examID = "";
+  public url = 'api/Questions';
   public questionForm: FormGroup;
-
-  onSubmit(model) {
-    console.log(model.value);
-    this.commonService.fn_PostWithData(model.value, this.url).subscribe(
-      (data: any) => {
-        console.log(data.data);
-      },
-      err => console.error(err),
-      () => { }
-    );
-  }
+  public categoryList = [];
+  public departmentsUrl = 'api/Dropdown/Departments';
 
   subjectiveFlag: boolean;
   singleSelectFlag: boolean;
@@ -37,24 +24,73 @@ export class questionAddUpdateComponent implements OnInit {
   multipleSelectEdit: boolean;
   singleSelectEdit: boolean;
 
-  singleSelectCount: number;
-  multipleSelectCount: number;
-
-  multipleSelectoptionArray = [];
-  singleSelectoptionArray = [];
-
-  constructor(private toastr: ToastrService, public fb: FormBuilder, private commonService: commonService) {
+  constructor(public router: Router, private route: ActivatedRoute, private toastr: ToastrService, public fb: FormBuilder, private commonService: commonService) {
+    this.route.params.subscribe(params => {
+      this.examID = params['id'];
+    });
     this.questionForm = this.fb.group({
-      questionCategory: [null],
-      questionType: [null],
-      questionText: [null],
-      examID: [null],
-      singleSelectOptionsCorrectAns: [null],
+      questionCategory: new FormControl(''),
+      questionType: new FormControl(''),
+      questionText: new FormControl(''),
+      examID: new FormControl(this.examID),
+      singleSelectOptionsCorrectAns: new FormControl(0),
       obj_multiSelectOptions: this.fb.array([this.fn_addSubMultipleSelectOption()]),
       obj_singleSelectOptions: this.fb.array([this.fn_addSubSingleSelectOption()]),
-      subjectivDescription: [null]
+      subjectivDescription: new FormControl('')
     });
   }
+
+  ngOnInit() {
+    this.disbleAllFlag();
+    this.multipleSelectEdit = false;
+    this.singleSelectEdit = false;
+
+    this.commonService.fn_Get(this.departmentsUrl).subscribe(
+      (data: any) => {
+        this.categoryList = data.data;
+      },
+      err => console.error(err),
+      () => { }
+    );
+  }
+
+
+
+
+  onSubmit = function (formData) {
+    if (this.questionForm.valid) {
+      this.commonService.fn_PostWithData(formData.value, this.url).subscribe((result: any) => {
+        const rs = result;
+        if (rs.statusCode == 200) {
+          this.toastr.success('Question added successfully!');
+          //this.router.navigate(['manage/questionList'], { queryParams: { id: this.examID } });
+        }
+        else {
+          this.toastr.error('Failed to add Question');
+        }
+      });
+    }
+    else {
+      return;
+    }
+
+  }
+
+
+
+
+
+
+  // onSubmit(model) {
+  //   console.log(model.value);
+  //   this.commonService.fn_PostWithData(model.value, this.url).subscribe(
+  //     (data: any) => {
+  //       console.log(data.data);
+  //     },
+  //     err => console.error(err),
+  //     () => { }
+  //   );
+  // }
 
   fn_addSubMultipleSelectOption() {
     return this.fb.group({
@@ -69,14 +105,6 @@ export class questionAddUpdateComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    this.disbleAllFlag();
-    this.singleSelectCount = 2;
-    this.multipleSelectCount = 1;
-    this.multipleSelectEdit = false;
-    this.singleSelectEdit = false;
-  }
-
   disbleAllFlag() {
     this.subjectiveFlag = false;
     this.singleSelectFlag = false;
@@ -87,7 +115,6 @@ export class questionAddUpdateComponent implements OnInit {
     const control = <FormArray>(
       this.questionForm.controls["obj_multiSelectOptions"]
     );
-
     this.multipleSelectEdit = true;
     if (actionType == 'add') {
       if (control.length >= 5) {

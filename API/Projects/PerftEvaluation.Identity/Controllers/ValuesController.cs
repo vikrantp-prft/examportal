@@ -12,7 +12,7 @@ namespace PerftEvaluation.Identity.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase {
-        [Authorize]
+        [Authorize(Roles="Administrator")]
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get () {

@@ -1,0 +1,101 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12 col-xs-12 col-lg-12 card">
+      <div class="card-header">
+        <h1>Add Exam</h1>
+      </div>
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <form [formGroup]="editExamForm" (ngSubmit)="onSubmit(editExamForm.value)">
+          <div class="sections">
+            <div class="form-group">
+              <input type="hidden" formControlName="id" #id>
+              <label for="sel1">Team</label>
+              <select class="form-control" formControlName="teamId" #teamId>
+                <option value="null">--All--</option>
+                <option *ngFor="let team of teamList" value={{team.id}}>
+                  {{team.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Question Paper Name">Question Paper Name</label>
+              <input type="text" class="form-control" formControlName="title" #title>
+            </div>
+            <div class="form-group">
+              <label for="Description">Description</label>
+              <input type="textbox" class="form-control" formControlName="description" #description>
+            </div>
+            <div class="form-group">
+              <label for="Exam Duration">Exam Duration</label>
+              <select class="form-control" formControlName="examDurationHours" #examDurationHours>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+              <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
+                <option>00</option>
+                <option>05</option>
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+                <option>25</option>
+                <option>30</option>
+                <option>35</option>
+                <option>40</option>
+                <option>45</option>
+                <option>50</option>
+                <option>55</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Passing Marks">Passing Marks</label>
+              <input type="number" class="form-control" formControlName="passingMarks" #passingMarks>%
+            </div>
+            <div class="form-group">
+              <label for="Exam Active From">Exam Active From</label>
+              <input type="date" class="form-control" formControlName="fromDate" #fromDate>
+            </div>
+            <div class="form-group">
+              <label for="Exam Active Till">Exam Active Till</label>
+              <input type="date" class="form-control" formControlName="toDate" #toDate>
+            </div>
+            <div class="form-group">
+              <label for="Is Active">Is Active</label>
+              <input type="checkbox" class="form-control" formControlName="isActive" #isActive>
+            </div>
+            <div class="form-group">
+              <label for="Show Result in Front">Show Result in Front</label>
+              <input type="checkbox" class="form-control" formControlName="showResultInFront" #showResultInFront>
+            </div>
+            <div class="form-group">
+              <label for="Shuffle Question">Shuffle Question</label>
+              <input type="checkbox" class="form-control" formControlName="shuffleQuestions" #shuffleQuestions>
+            </div>
+            <div class="form-group">
+              <label for="Shuffle Options">Shuffle Options</label>
+              <input type="checkbox" class="form-control" formControlName="shuffleOptions" #shuffleOptions>
+            </div>
+            <div class="form-group">
+              <label for="Is Paper Public">Is Paper Public</label>
+              <input type="checkbox" class="form-control" formControlName="isPaperPublic" #isPaperPublic>
+            </div>
+            <div class="form-group">
+              <label for="Total Questions">Total Questions</label>
+              <input type="number" class="form-control" formControlName="totalQuestions" #totalQuestions>
+            </div>
+            <div class="form-group">
+              <input type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
+              <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                Upload File
+              </button>
+            </div>
+            <div class="form-group">
+              <button type="submit">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,17 +15,17 @@ const URL = 'http://localhost:3000/api/upload';
 export class examAddUpdateComponent implements OnInit {
 
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
-  public addQuestionForm: FormGroup;
+  public addExamForm: FormGroup;
   public url = 'api/Exams';
-  public categoryList = [];
-  public departmentsUrl = 'api/Dropdown/Departments';
+  public teamList = [];
+  public teamUrl = 'api/Dropdown/Teams';
   constructor(public router: Router, private fb: FormBuilder, private commonService: commonService, private toastr: ToastrService) {
     this.createForm();
 
   }
 
   createForm() {
-    this.addQuestionForm = this.fb.group({
+    this.addExamForm = this.fb.group({
       title: new FormControl(''),
       teamId: new FormControl(''),
       description: new FormControl(''),
@@ -45,7 +45,7 @@ export class examAddUpdateComponent implements OnInit {
 
 
   onSubmit = function (formData) {
-    if (this.addQuestionForm.valid) {
+    if (this.addExamForm.valid) {
       this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {
         const rs = result;
         if (rs.statusCode == 200) {
@@ -81,10 +81,10 @@ export class examAddUpdateComponent implements OnInit {
       alert('File uploaded successfully');
     };
 
-    this.commonService.fn_Get(this.departmentsUrl).subscribe(
+    this.commonService.fn_Get(this.teamUrl).subscribe(
       (data: any) => {
         // if (data != null && data.statusCode === 200) {
-        this.categoryList = data.data;
+        this.teamList = data.data;
       },
       err => console.error(err),
       () => { }

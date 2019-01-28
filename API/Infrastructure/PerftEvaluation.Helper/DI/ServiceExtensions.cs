@@ -29,6 +29,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IExamsService, ExamsService>();
             services.AddTransient<IQuestionsService, QuestionsService>();
+            services.AddTransient<IResultsService, ResultsService>();
 
             //Projects Repositories
             services.AddTransient<IUserRepository, UserRepository>();
@@ -36,6 +37,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IExamsRepository, ExamsRepository>();
             services.AddTransient<IQuestionsRepository, QuestionsRepository>();
+            services.AddTransient<IResultsRepository, ResultsRepository>();
             //Cache helpers
             services.AddTransient<ICache, Cache>();
 

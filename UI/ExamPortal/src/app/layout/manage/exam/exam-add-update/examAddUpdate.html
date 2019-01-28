@@ -5,13 +5,15 @@
         <h1>Add Exam</h1>
       </div>
       <div class="col-md-12 col-xs-12 col-lg-12">
-        <form [formGroup]="addQuestionForm" (ngSubmit)="onSubmit(addQuestionForm.value)">
+        <form [formGroup]="addExamForm" (ngSubmit)="onSubmit(addExamForm.value)">
           <div class="sections">
             <div class="form-group">
-              <label for="Team">Team</label>
+              <label for="sel1">Team</label>
               <select class="form-control" formControlName="teamId" #teamId>
-                <option value="">Select</option>
-                <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
+                <option value="null">--All--</option>
+                <option *ngFor="let team of teamList" value={{team.id}}>
+                  {{team.name}}
+                </option>
               </select>
             </div>
             <div class="form-group">
