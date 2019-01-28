@@ -44,6 +44,13 @@
                             <span>{{ 'Employees' | translate }}</span>
                         </a>
                     </li>
+
+                    <!-- <li>
+                        <a routerLink="/user/upload" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Upload' | translate }}</span>
+                        </a>
+                    </li> -->
                     <li>
                         <a routerLink="/user/traineelist" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
@@ -112,7 +119,10 @@
                 </ul>
             </li>
         </div>
-
+        <a routerLink="/user/upload" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+            <span>{{ 'User Exam' | translate }}</span>
+        </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
