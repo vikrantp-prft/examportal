@@ -42,47 +42,47 @@ ngOnInit() {
       {
         "Id": 1055,
         "QuestionId": 1010,
-        "Name": "First",
+        "Name": "Which technology is used for front end development?",
         "IsAnswer": false,
         'ans': [
-          {'option': 'a', 'val': '1'},
-          {'option': 's', 'val': '2'},
-          {'option': 'd', 'val': '3'},
-          {'option': 'f', 'val': '4'} ]
+          {'option': 'C#', 'val': '1'},
+          {'option': 'VB.net', 'val': '2'},
+          {'option': 'Angular', 'val': '3'},
+          {'option': 'SQL', 'val': '4'} ]
     },
     {
         "Id": 1056,
         "QuestionId": 1010,
-        "Name": "Second",
+        "Name": "Which of the following is the address of the router?",
         "IsAnswer": true,
         'ans': [
-          {'option': '1', 'val': '1'},
-          {'option': '2', 'val': '2'},
-          {'option': '3', 'val': '3'},
-          {'option': '4', 'val': '4'}
+          {'option': 'The IP address', 'val': '1'},
+          {'option': 'The TCP address', 'val': '2'},
+          {'option': 'The subnet mask', 'val': '3'},
+          {'option': 'The default gateway', 'val': '4'}
         ]
         },
         {
           "Id": 1,
           "QuestionId": 1010,
-          "Name": "Third",
+          "Name": "One way in which a structure differs from an array is that",
           "IsAnswer": false,
           'ans': [
-            {'option': 'a', 'val': '1'},
-            {'option': 'b', 'val': '2'},
-            {'option': 'c', 'val': '3'},
-            {'option': 'd', 'val': '4'} ]
+            {'option': 'a structure may have members of more than one type', 'val': '1'},
+            {'option': 'a structure must have members that are all the same type', 'val': '2'},
+            {'option': 'an array may have members of more than one type', 'val': '3'},
+            {'option': 'there is no difference between a structure and an array', 'val': '4'} ]
       },
       {
           "Id": 2,
           "QuestionId": 1010,
-          "Name": "Forth",
+          "Name": "Arithmetic operation are coded in",
           "IsAnswer": true,
           'ans': [
-            {'option': '1', 'val': '1'},
-            {'option': '2', 'val': '2'},
-            {'option': '3', 'val': '3'},
-            {'option': '4', 'val': '4'}
+            {'option': 'Decision symbols', 'val': '1'},
+            {'option': 'Input/Outpur(I/0)', 'val': '2'},
+            {'option': 'Processing symbols', 'val': '3'},
+            {'option': 'Terminal symbols', 'val': '4'}
           ]
           }
       ];
