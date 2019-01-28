@@ -51,11 +51,7 @@ namespace PerftEvaluation.Identity {
 
             #region Add Authentication
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenAuthentication:SecretKey"]));
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(config =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(config =>
             {
                 config.RequireHttpsMetadata = false;
                 config.SaveToken = true;
@@ -106,9 +102,11 @@ namespace PerftEvaluation.Identity {
                 c.SwaggerEndpoint ("/swagger/V1.0.0/swagger.json", "PerftEvaluation API V1.0.0");
             });
 
+            app.UseAuthentication();
+            app.UseCors("Cors"); 
             app.UseMvc ();
 
-            app.UseCors("Cors"); 
+            
         }
         #endregion
     }
