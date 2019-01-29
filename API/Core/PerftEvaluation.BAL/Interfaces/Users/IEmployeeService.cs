@@ -12,17 +12,24 @@ namespace PerftEvaluation.BAL.Interfaces
     public interface IEmployeeService
     {
         /// <summary>
-        /// Get Users list
+        /// Get Employees list
         /// </summary>
         /// <value>List of User in DTO</value>
         IEnumerable<EmployeesDTO> GetEmployees(RequestModel requestModel);
 
         /// <summary>
-        /// Save User Details
+        /// Save Employee Details
+        /// </summary>
+        /// <param name="employeeDTO"></param>
+        /// <returns></returns>
+        bool SaveEmployee (EmployeesDTO employeeDTO);
+
+        /// <summary>
+        /// Update Employee details
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        bool SaveEmployee (EmployeesDTO employeeDTO);
+        bool UpdateEmployee (EmployeesDTO employeesDTO);
 
          /// <summary>
         /// Get Employee Detail by Id

@@ -121,6 +121,15 @@ namespace PerftEvaluation.BAL.Services {
         {
             return this._employeeRepository.DeleteEmployee(employeeId);
         }
+
+        /// <summary>
+        /// Update Employee record
+        /// </summary>
+        /// <returns></returns>
+        public bool UpdateEmployee(EmployeesDTO employeesDTO)
+        {
+            return this._employeeRepository.UpdateEmployee(this._mapper.Map<Users>(employeesDTO));
+        }
         #endregion
 
     }

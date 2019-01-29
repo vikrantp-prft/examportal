@@ -32,7 +32,7 @@ namespace PerftEvaluation.DAL.Interface {
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        //bool UpdateEmployee (Users users);
+        bool UpdateEmployee (Users users);
 
         /// <summary>
         /// Inactivate the employee detail

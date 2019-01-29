@@ -98,6 +98,50 @@ namespace PerftEvaluation.DAL.Repositories {
             return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
         }
 
+        /// <summary>
+        /// Update the user details
+        /// </summary>
+        /// <returns></returns>
+        public bool UpdateEmployee(Users users)
+        {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq (c => c.Id, users.Id);
+            var updateQuery = Builders<Users>.Update
+                .Set (c => c.FirstName, users.FirstName)
+                .Set (c => c.MiddleName, users.MiddleName)
+                .Set (c => c.LastName, users.LastName)
+                .Set (c => c.Email, users.Email)
+                .Set (c => c.Password, users.Password)
+                .Set (c => c.DOB, users.DOB)
+                .Set (c => c.Address1, users.Address1)
+                .Set (c => c.Address2, users.Address2)
+                .Set (c => c.City, users.City)
+                .Set (c => c.Pincode, users.Pincode)
+                .Set (c => c.StateId, users.StateId)
+                .Set (c => c.CurrentAddress1, users.CurrentAddress1)
+                .Set (c => c.CurrentAddress2, users.CurrentAddress2)
+                .Set (c => c.CurrentCity, users.CurrentCity)
+                .Set (c => c.CurrentPincode, users.CurrentPincode)
+                .Set (c => c.CurrentStateId, users.CurrentStateId)
+                .Set (c => c.Mobile, users.Mobile)
+                .Set (c => c.TeamId, users.TeamId)
+                .Set (c => c.Email, users.Email)
+                .Set (c => c.Note, users.Note)
+                .Set (c => c.Interest, users.Interest)
+                .Set (c => c.educationDetails, users.educationDetails)
+                .Set (c => c.IsEmployee, users.IsEmployee)
+                .Set (c => c.TeamId, users.TeamId);
+
+            try {
+                users.IsEmployee = true;
+                users.ModifiedDate = DateTime.Now;
+                _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+                return true;
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+
         #endregion
     }
 }
