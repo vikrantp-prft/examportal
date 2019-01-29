@@ -7,19 +7,12 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 
-interface paginationModel {
-  currentPage: number;
-  pageSize: number;
-  searchString: string;
-}
-
 @Component({
   selector: 'question-list',
   templateUrl: './questionList.html',
   providers: [commonService]
 })
 export class questionListComponent implements OnInit {
-  // Declaration
 
   public examID = "";
   public url = 'api/Questions';
@@ -32,17 +25,22 @@ export class questionListComponent implements OnInit {
   multipleSelectEdit: boolean;
   singleSelectEdit: boolean;
 
-  public params: any = {
-    currentPage: 1,
-    pageSize: 10,
-    searchString: ''
-  };
+  public questionModel: any = {
+    "id": this.examID,
+    "filter": "string",
+    "pageSize": 10,
+    "pageNumber": 1,
+    "totleRecords": 0,
+    "filterBy": "string",
+    "sortBy": "string",
+    "isDescending": true
+  }
 
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
   public recordno = 0;
-  public totalItems = 0;
+  public totalItems = 10;
   public questionList = [];
   public questionListUrl = 'api/Questions/listQuestionsByExamId';
 
@@ -87,6 +85,12 @@ export class questionListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.questionModel =
+    {
+      "id": this.examID,
+      "pageSize": 10,
+      "pageNumber": 1,
+    }
     this.fn_GetQuestionsList();
     this.disbleAllFlag();
     this.multipleSelectEdit = false;
@@ -103,22 +107,22 @@ export class questionListComponent implements OnInit {
     this.fn_clear_obj_singleSelectOptions();
   }
 
-
   disbleAllFlag() {
     this.singleSelectFlag = false;
     this.multipleSelectFlag = false;
   }
 
-
-
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.questionModel.pageNumber = 1;
+    this.questionModel.pageSize = event.target.value;
+    this.fn_GetQuestionsList();
   }
+
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.questionModel.pageNumber = parseInt(event.page);
+    this.questionModel.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetQuestionsList();
   }
   // Searching
   searchRecord(event: any): void { }
@@ -126,23 +130,7 @@ export class questionListComponent implements OnInit {
   // Function to get list of employees
 
   fn_GetQuestionsList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
-    const questionModel =
-    {
-      "id": this.examID,
-      "filter": "string",
-      "pageSize": 0,
-      "pageNumber": 0,
-      "totleRecords": 0,
-      "filterBy": "string",
-      "sortBy": "string",
-      "isDescending": true
-    }
-    this.CommonService.fn_PostWithData(questionModel, this.questionListUrl).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionList = rs.data;
