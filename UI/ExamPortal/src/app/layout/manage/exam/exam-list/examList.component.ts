@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 interface paginationModel {
-  currentPage: number;
+  pageNumber: number;
   pageSize: number;
   searchString: string;
 }
@@ -20,10 +20,11 @@ export class ExamListComponent implements OnInit {
   // Declaration
 
   public params: any = {
-    currentPage: 1,
+    pageNumber: 1,
     pageSize: 10,
     searchString: ''
   };
+
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -45,12 +46,16 @@ export class ExamListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
+    this.params.pageNumber = 1;
     this.params.pageSize = event.target.value;
+    this.fn_GetExamList();
   }
+
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
+    console.log(event);
+    this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetExamList();
   }
   // Searching
   searchRecord(event: any): void { }
@@ -59,20 +64,27 @@ export class ExamListComponent implements OnInit {
 
   fn_GetExamList() {
     const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
+      pageNumber: parseInt(this.params.pageNumber),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/Exams';
-
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.examList = data.data;
-      },
-      err => console.error(err),
-      () => { }
-    );
+    const url = 'api/Exams/GetExams';
+    this.CommonService.fn_PostWithData(this.params, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.examList = rs.data;
+      }
+      else {
+      }
+    });
+    // this.CommonService.fn_Get(url).subscribe(
+    //   (data: any) => {
+    //     // if (data != null && data.statusCode === 200) {
+    //     this.examList = data.data;
+    //   },
+    //   err => console.error(err),
+    //   () => { }
+    // );
   }
 
   // FUnction to get employee ID
