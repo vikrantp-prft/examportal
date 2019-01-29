@@ -22,9 +22,12 @@ namespace PerftEvaluation.Test
         /// Test1 Method 
         /// </summary>
         [Fact]
-        public void GetAllMasters_TranslateCorrectly(RequestModel requestModel)
+        public void GetAllMasters_TranslateCorrectly()
         {
             bool actual = false;
+            RequestModel requestModel = new RequestModel();
+            requestModel.PageNumber = 1;
+            requestModel.PageSize = 5;
 
             #region ToDo :Pickup all Configuration from main application itself by separating configuration from startup? 
             // Auto Mapper Configurations
@@ -34,7 +37,7 @@ namespace PerftEvaluation.Test
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
-            
+
             #endregion
 
             Masters masters = new Masters();

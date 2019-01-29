@@ -4,7 +4,7 @@ namespace PerftEvaluation.DTO.Dtos.ExamSession
 {
     public class ExamUserSession
     {
-        private string sessionId;
+        // private string sessionId;
         // public ExamUserSession(string userId, string examId)
         // {
         //     sessionId = userId + "_" + examId;
