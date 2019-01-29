@@ -15,7 +15,7 @@ namespace PerftEvaluation.Test
     /// <summary>
     /// Test Class
     /// </summary>
-    public class UnitTest1
+    public class BalMasterServiceTests
     {
         /// <summary>
         /// Test1 Method 
