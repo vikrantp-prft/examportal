@@ -4,11 +4,8 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
-<<<<<<< HEAD
 import { ActivatedRoute } from '@angular/router';
-=======
 import { appConfig } from 'src/app/common/core/app.config';
->>>>>>> 6eed6ef70d05020d749eab1dd0e5cf05abffa061
 
 @Component({
   selector: 'employee-add-update',
@@ -30,12 +27,8 @@ export class AddEmployeeComponent implements OnInit {
     { description: 'Design', value: 'Design', selected: false }
   ];
 
-<<<<<<< HEAD
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder, private toastr: ToastrService, private route: ActivatedRoute) {
-=======
   constructor(public router: Router, private CommonService: commonService, public http: Http,
      private formBuilder: FormBuilder, private toastr: ToastrService) {
->>>>>>> 6eed6ef70d05020d749eab1dd0e5cf05abffa061
     this.employeeForm = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
       middleName: new FormControl(''),
@@ -87,14 +80,9 @@ isFieldValid(form: FormGroup, field: string) {
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
         return false;
-<<<<<<< HEAD
       }
       else {
         const saveEmployeeurl = 'api/Employee';
-=======
-      } else {
-        const url = 'api/Employee';
->>>>>>> 6eed6ef70d05020d749eab1dd0e5cf05abffa061
         value.value.EducationDetails = this.educationArray;
         this.fn_saveEmployeefun(value.value, saveEmployeeurl);
       }
@@ -133,13 +121,8 @@ isFieldValid(form: FormGroup, field: string) {
 
   //function to get course
   fn_getCourse() {
-<<<<<<< HEAD
-    const degreeUrl = 'api/Dropdown/Degrees';
-    this.CommonService.fn_Get(degreeUrl).subscribe((result: any) => {
-=======
     const url = 'api/Dropdown/Degrees';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
->>>>>>> 6eed6ef70d05020d749eab1dd0e5cf05abffa061
       const courseResult = result;
       if (courseResult.statusCode === 200) {
         this.courseArray = courseResult.data;
@@ -195,10 +178,7 @@ isFieldValid(form: FormGroup, field: string) {
 
   // Interest check change function
   fn_onInterestChange(event) {
-<<<<<<< HEAD
-=======
     
->>>>>>> 6eed6ef70d05020d749eab1dd0e5cf05abffa061
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
