@@ -63,7 +63,6 @@ export class questionAddUpdateComponent implements OnInit {
     if (formData.value.questionType === '0') {
       formData.value.options = formData.value.obj_singleSelectOptions;
     }
-    console.log(formData.value);
     if (this.questionForm.valid) {
       this.commonService.fn_PostWithData(formData.value, this.url).subscribe((result: any) => {
         const rs = result;
@@ -113,7 +112,6 @@ export class questionAddUpdateComponent implements OnInit {
   }
 
   fn_test(i) {
-    alert(i);
     for (let j = 0 ; j < this.questionForm.value.obj_singleSelectOptions.length; j++) {
       this.questionForm.value.obj_singleSelectOptions[j].isCorrect = false;
     }
