@@ -7,7 +7,7 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 interface paginationModel {
-  currentPage: number;
+  pageNumber: number;
   pageSize: number;
   searchString: string;
 }
@@ -20,10 +20,13 @@ interface paginationModel {
 })
 export class AdminUserListComponent implements OnInit {
   public params: any = {
-    currentPage: 1,
+    pageNumber: 1,
     pageSize: 10,
-    searchString: ''
   };
+
+  public url = 'api/User/GetUsers';
+
+
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -31,38 +34,51 @@ export class AdminUserListComponent implements OnInit {
   public totalItems = 0;
   public employeeList = [];
   toastr: any;
-  constructor(public router: Router, private CommonService: commonService, public http: Http) {}
+  constructor(public router: Router, private CommonService: commonService, public http: Http) { }
   // Function for  pagination
- setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
+  setRecordPerPage(event: any): void {
+    this.params.pageNumber = 1;
     this.params.pageSize = event.target.value;
+    this.fn_GetAdminUserList();
   }
-  pageChanged(event: any): void {
 
-    this.params.currentPage = parseInt(event.page);
+  pageChanged(event: any): void {
+    console.log(event);
+    this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetAdminUserList();
   }
+
   // Searching
   searchRecord(event: any): void {
   }
+
   ngOnInit() {
     this.fn_GetAdminUserList();
   }
+
   fn_GetAdminUserList() {
     const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
+      pageNumber: parseInt(this.params.pageNumber),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/user';
+    this.CommonService.fn_PostWithData(this.params, this.url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.employeeList = rs.data;
+      }
+      else {
+      }
+    });
 
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-          this.employeeList = data.data;
-      },
-      err => console.error(err),
-      () => {}
-    );
+    // this.CommonService.fn_Get(url).subscribe(
+    //   (data: any) => {
+    //       this.employeeList = data.data;
+    //   },
+    //   err => console.error(err),
+    //   () => {}
+    // );
   }
 
   fn_getEmployee(id) {

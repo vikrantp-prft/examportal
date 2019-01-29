@@ -57,8 +57,8 @@ export class questionListComponent implements OnInit {
   };
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
-    this.route.params.subscribe(params => {
-      this.examID = params['id'];
+    this.route.params.subscribe(params1 => {
+      this.examID = params1['id'];
     });
 
     this.questionForm = this.fb.group({
