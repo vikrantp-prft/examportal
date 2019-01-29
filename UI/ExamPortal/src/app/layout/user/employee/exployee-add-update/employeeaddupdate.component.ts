@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
+import { appConfig } from 'src/app/common/core/app.config';
 
 @Component({
   selector: 'employee-add-update',
@@ -19,14 +20,15 @@ export class AddEmployeeComponent implements OnInit {
   selectedCourse: any;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
-    { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
-    { description: "Flash/Flex", value: 'Flash/Flex', selected: false },
-    { description: "Design", value: 'Design', selected: false }
+    { description: 'HTML/CSS', value: 'HTML/CSS', selected: false },
+    { description: 'Flash/Flex', value: 'Flash/Flex', selected: false },
+    { description: 'Design', value: 'Design', selected: false }
   ];
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder, private toastr: ToastrService) {
+  constructor(public router: Router, private CommonService: commonService, public http: Http,
+     private formBuilder: FormBuilder, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
+      firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
       middleName: new FormControl(''),
       lastName: new FormControl(''),
       dob: new FormControl(''),
@@ -63,22 +65,26 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getCourse();
   }
 
-  //Save Employee details function
+// function to display the error message for  validation.
+isFieldValid(form: FormGroup, field: string) {
+  return !form.get(field).valid && form.get(field).touched;
+}
+
+  // Save Employee details function
+
   fn_saveEmployee(value) {
-    debugger;
     if (this.employeeForm.valid) {
-      if (this.educationArray.length == 0) {
+      if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
         return false;
-      }
-      else {
+      } else {
         const url = 'api/Employee';
         value.value.EducationDetails = this.educationArray;
         this.fn_saveEmployeefun(value.value, url);
       }
-    }
-    else {
-      this.toastr.error('Please add all details');
+    } else {
+      this.CommonService.validateAllFormFields(this.employeeForm);
+      this.toastr.error('Please fill required details');
       return false;
     }
   }
@@ -86,13 +92,11 @@ export class AddEmployeeComponent implements OnInit {
   // function for save employee details.
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      debugger;
       const rs = result;
-      if (rs.statusCode == 200) {
+      if (rs.statusCode === 200) {
         this.toastr.success('Employee details added successfully!');
         this.fn_resetEmployeeDetails();
-      }
-      else {
+      } else {
         this.toastr.error('Failed to add Employee details');
       }
     });
@@ -103,24 +107,21 @@ export class AddEmployeeComponent implements OnInit {
     const url = 'api/Dropdown/Teams';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const teamResult = result;
-      if (teamResult.statusCode == 200) {
+      if (teamResult.statusCode === 200) {
         this.teamArray = teamResult.data;
-      }
-      else {
+      } else {
         this.teamArray = null;
       }
     });
   }
 
   fn_getCourse() {
-    debugger;
     const url = 'api/Dropdown/Degrees';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const courseResult = result;
-      if (courseResult.statusCode == 200) {
+      if (courseResult.statusCode === 200) {
         this.courseArray = courseResult.data;
-      }
-      else {
+      } else {
         this.courseArray = null;
       }
     });
@@ -130,17 +131,15 @@ export class AddEmployeeComponent implements OnInit {
     const url = 'api/Dropdown/States';
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const stateResult = result;
-      if (stateResult.statusCode == 200) {
+      if (stateResult.statusCode === 200) {
         this.stateArray = stateResult.data;
-      }
-      else {
+      } else {
         this.stateArray = null;
       }
     });
   }
 
   fn_addNewCourse() {
-    debugger;
     let newCourseModel = {
       courseId: this.employeeForm.controls.course.value,
       course: this.selectedCourse,
@@ -149,7 +148,7 @@ export class AddEmployeeComponent implements OnInit {
       percentage: this.employeeForm.controls.percentage.value
     }
     this.educationArray.forEach(element => {
-      if (element.courseId == newCourseModel.courseId) {
+      if (element.courseId === newCourseModel.courseId) {
         this.toastr.error('Course is already added');
         return false;
       }
@@ -170,9 +169,9 @@ export class AddEmployeeComponent implements OnInit {
     this.educationArray.splice(index, 1);
   }
 
-  //Interest check change function
+  // Interest check change function
   fn_onInterestChange(event) {
-    debugger;
+    
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
@@ -195,7 +194,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_resetEmployeeDetails() {
-    debugger;
     this.employeeForm.controls.teamId.setValue(null);
     this.employeeForm.controls.firstName.reset();
     this.employeeForm.controls.middleName.reset();
