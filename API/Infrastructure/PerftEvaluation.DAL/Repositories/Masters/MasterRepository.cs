@@ -97,14 +97,26 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool DeleteMaster(string masterId)
-        {
+        public bool DeleteMaster (string masterId) {
             var filter = Builders<Masters>.Filter;
             var filterDef = filter.Eq (c => c.Id, masterId);
             var updateQuery = Builders<Masters>.Update
                 .Set (c => c.IsDeleted, true);
 
             return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
+
+        /// <summary>
+        /// Get Masters By Id
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public Masters GetMasterById (string masterId) {
+            try {
+                return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.Id == masterId).FirstOrDefault ();
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         #endregion
     }

@@ -20,7 +20,7 @@ namespace PerftEvaluation.Api.Controllers {
         public MasterController (IMasterService MasterService, ILogger<MasterController> logger = null) {
             this._masterService = MasterService;
             this.responseModel = new ResponseModel ();
-             if (null != logger) {
+            if (null != logger) {
                 this._logger = logger;
             }
         }
@@ -37,7 +37,7 @@ namespace PerftEvaluation.Api.Controllers {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._masterService.GetMasters(requestModel);
+                responseModel.Data = this._masterService.GetMasters (requestModel);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
@@ -146,28 +146,43 @@ namespace PerftEvaluation.Api.Controllers {
             }
         }
 
-
         // POST api/master/DeleteMaster
         /// <summary>
         /// Delete Master
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("DeleteMaster")]
-        public IActionResult DeleteMaster(RequestModel requestModel)
-        {
-            try
-            {
+        [HttpPost, Route ("DeleteMaster")]
+        public IActionResult DeleteMaster (RequestModel requestModel) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._masterService.DeleteMaster(requestModel.Id);
+                responseModel.Data = this._masterService.DeleteMaster (requestModel.Id);
 
-                return Ok(responseModel);
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+        }
+
+        // POST api/master/GetMasterById
+        /// <summary>
+        /// Get Master by Id
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("GetMasterById")]
+        public IActionResult GetMasterById (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.GetMasterById (requestModel.Id);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
         #endregion

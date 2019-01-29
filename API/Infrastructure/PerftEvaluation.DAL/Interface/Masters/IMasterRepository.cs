@@ -41,7 +41,6 @@ namespace PerftEvaluation.DAL.Interface {
         /// <returns></returns>
         bool ActivateMaster (string masterId);
 
-
         /// <summary>
         /// Deleted Masters detail
         /// </summary>
@@ -55,5 +54,12 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="masters"></param>
         /// <returns></returns>
         bool UpdateMaster (Masters masters);
+
+        /// <summary>
+        /// Get Master by Id
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        Masters GetMasterById (string masterId);
     }
 }

@@ -12,7 +12,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// Get list masters
         /// </summary>
         /// <value></value>
-        IEnumerable<MastersDTO> GetMasters(RequestModel requestModel);
+        IEnumerable<MastersDTO> GetMasters (RequestModel requestModel);
 
         /// <summary>
         /// Save master detail
@@ -49,13 +49,19 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <returns></returns>
         bool ActivateMaster (string masterId);
 
-
         /// <summary>
         /// Delete Masters
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
         bool DeleteMaster (string masterId);
+
+        /// <summary>
+        /// Get master by id
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        MastersDTO GetMasterById (string masterId);
 
     }
 }

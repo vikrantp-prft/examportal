@@ -8,13 +8,11 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services
-{
+namespace PerftEvaluation.BAL.Services {
     /// <summary>
     /// Master Service Class
     /// </summary>
-    public class MasterService : IMasterService
-    {
+    public class MasterService : IMasterService {
         #region Declaration
         protected readonly IMasterRepository _masterRepository;
 
@@ -25,8 +23,7 @@ namespace PerftEvaluation.BAL.Services
         /// Class Constructor
         /// </summary>
         /// <param name="UserRepository"></param>
-        public MasterService(IMasterRepository MasterRepository, IMapper mapper)
-        {
+        public MasterService (IMasterRepository MasterRepository, IMapper mapper) {
             this._masterRepository = MasterRepository;
             this._mapper = mapper;
         }
@@ -37,9 +34,8 @@ namespace PerftEvaluation.BAL.Services
         /// Get Masters List
         /// </summary>
         /// <value></value>
-        public IEnumerable<MastersDTO> GetMasters (RequestModel requestModel)
-        {
-            return this._mapper.Map<IEnumerable<MastersDTO>>(this._masterRepository.GetAllMasters().AsQueryable().Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable());
+        public IEnumerable<MastersDTO> GetMasters (RequestModel requestModel) {
+            return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetAllMasters ().AsQueryable ().Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ());
         }
 
         /// <summary>
@@ -47,9 +43,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
-        public bool SaveMaster(MastersDTO mastersDTO)
-        {
-            return this._masterRepository.SaveMaster(this._mapper.Map<Masters>(mastersDTO));
+        public bool SaveMaster (MastersDTO mastersDTO) {
+            return this._masterRepository.SaveMaster (this._mapper.Map<Masters> (mastersDTO));
         }
 
         /// <summary>
@@ -57,9 +52,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="masterType"></param>
         /// <returns></returns>
-        public IEnumerable<MastersDTO> GetMasterByType(string masterType)
-        {
-            return this._mapper.Map<IEnumerable<MastersDTO>>(this._masterRepository.GetMastersByType(masterType));
+        public IEnumerable<MastersDTO> GetMasterByType (string masterType) {
+            return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetMastersByType (masterType));
         }
 
         /// <summary>
@@ -67,9 +61,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
-        public bool UpdateMaster(MastersDTO mastersDTO)
-        {
-            return this._masterRepository.UpdateMaster(this._mapper.Map<Masters>(mastersDTO));
+        public bool UpdateMaster (MastersDTO mastersDTO) {
+            return this._masterRepository.UpdateMaster (this._mapper.Map<Masters> (mastersDTO));
         }
 
         /// <summary>
@@ -77,9 +70,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool ActivateMaster(string masterId)
-        {
-            return this._masterRepository.ActivateMaster(masterId);
+        public bool ActivateMaster (string masterId) {
+            return this._masterRepository.ActivateMaster (masterId);
         }
 
         /// <summary>
@@ -87,9 +79,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool InactivateMaster(string masterId)
-        {
-            return this._masterRepository.InactivateMaster(masterId);
+        public bool InactivateMaster (string masterId) {
+            return this._masterRepository.InactivateMaster (masterId);
         }
 
         /// <summary>
@@ -97,9 +88,17 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool DeleteMaster(string masterId)
-        {
-            return this._masterRepository.DeleteMaster(masterId);
+        public bool DeleteMaster (string masterId) {
+            return this._masterRepository.DeleteMaster (masterId);
+        }
+
+        /// <summary>
+        /// Get master by Id
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public MastersDTO GetMasterById (string masterId) {
+            return this._mapper.Map<MastersDTO> (this._masterRepository.GetMasterById (masterId));
         }
         #endregion
     }
