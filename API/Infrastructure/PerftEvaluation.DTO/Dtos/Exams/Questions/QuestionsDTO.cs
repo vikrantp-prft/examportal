@@ -22,7 +22,7 @@ namespace PerftEvaluation.DTO.Dtos {
     }
 
     public class OptionsDTO {
-        // public string OptionsId { get; set; }
+        public string OptionId { get; set; }
 
         public string Option { get; set; }
 

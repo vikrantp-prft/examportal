@@ -91,6 +91,21 @@ namespace PerftEvaluation.DAL.Repositories {
 
             return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
         }
+
+        /// <summary>
+        /// Delete Masters 
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public bool DeleteMaster(string masterId)
+        {
+            var filter = Builders<Masters>.Filter;
+            var filterDef = filter.Eq (c => c.Id, masterId);
+            var updateQuery = Builders<Masters>.Update
+                .Set (c => c.IsDeleted, true);
+
+            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
         #endregion
     }
 }

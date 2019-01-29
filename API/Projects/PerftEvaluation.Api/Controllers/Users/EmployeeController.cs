@@ -32,11 +32,11 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// Get list of all employees
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Get () {
+        [HttpPost, Route ("GetEmployees")]
+        public IActionResult Get (RequestModel requestModel) {
             try {
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.GetEmployees;
+                responseModel.Data = this._employeeService.GetEmployees(requestModel);
                 responseModel.StatusCode = 200;
 
                 return Ok (responseModel);
@@ -123,6 +123,31 @@ namespace PerftEvaluation.Api.Controllers.Users {
             } catch (Exception exception) {
                 _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
+        // POST api/Employee/DeleteEmployee
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route("DeleteEmployee")]
+        public IActionResult DeleteEmployee(RequestModel requestModel)
+        {
+            try
+            {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._employeeService.DeleteEmployee(requestModel.Id);
+
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 

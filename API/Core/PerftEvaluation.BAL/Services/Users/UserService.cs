@@ -9,11 +9,13 @@ using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.DTO.Dtos.Dashboard;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services {
+namespace PerftEvaluation.BAL.Services
+{
     /// <summary>
     /// Service for Users
     /// </summary>
-    public class UserService : IUserService {
+    public class UserService : IUserService
+    {
 
         #region Declaration
         protected readonly IUserRepository _userRepository;
@@ -25,7 +27,8 @@ namespace PerftEvaluation.BAL.Services {
         /// Class Constructor
         /// </summary>
         /// <param name="UserRepository"></param>
-        public UserService (IUserRepository UserRepository, IMapper mapper) {
+        public UserService(IUserRepository UserRepository, IMapper mapper)
+        {
             this._userRepository = UserRepository;
             this._mapper = mapper;
         }
@@ -36,9 +39,10 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Users List
         /// </summary>
         /// <value></value>
-        public IEnumerable<UsersDTO> GetUsers (RequestModel requestModel) {
-            var user = this._userRepository.GetUsers ().AsQueryable ().Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable();
-            return this._mapper.Map<IEnumerable<UsersDTO>> (user);
+        public IEnumerable<UsersDTO> GetUsers(RequestModel requestModel)
+        {
+            var user = this._userRepository.GetUsers().AsQueryable().Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+            return this._mapper.Map<IEnumerable<UsersDTO>>(user);
         }
 
         /// <summary>
@@ -46,11 +50,12 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        public bool SaveUsers (UsersDTO usersDTO) {
-            Users users = new Users ();
+        public bool SaveUsers(UsersDTO usersDTO)
+        {
+            Users users = new Users();
 
-            users = this._mapper.Map<Users> (usersDTO);
-            return this._userRepository.SaveUser (users);
+            users = this._mapper.Map<Users>(usersDTO);
+            return this._userRepository.SaveUser(users);
         }
 
         /// <summary>
@@ -58,8 +63,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public UsersDTO GetUserById (string Id) {
-            return this._mapper.Map<UsersDTO> (this._userRepository.GetUserById (Id));
+        public UsersDTO GetUserById(string Id)
+        {
+            return this._mapper.Map<UsersDTO>(this._userRepository.GetUserById(Id));
         }
 
         /// <summary>
@@ -67,8 +73,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        public bool UpdateUser (UsersDTO usersDTO) {
-            return this._userRepository.UpdateUser (this._mapper.Map<Users> (usersDTO));
+        public bool UpdateUser(UsersDTO usersDTO)
+        {
+            return this._userRepository.UpdateUser(this._mapper.Map<Users>(usersDTO));
         }
 
         /// <summary>
@@ -76,8 +83,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool ActivateUser (string userId) {
-            return this._userRepository.ActiveUsers (userId);
+        public bool ActivateUser(string userId)
+        {
+            return this._userRepository.ActiveUsers(userId);
         }
 
         /// <summary>
@@ -85,19 +93,31 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool InactivateUser (string userId) {
-            return this._userRepository.InactivateUsers (userId);
+        public bool InactivateUser(string userId)
+        {
+            return this._userRepository.InactivateUsers(userId);
         }
 
         /// <summary>
         /// Get the count and content for dashboard
         /// </summary>
         /// <returns></returns>
-        public DashboardDTO GetDashboardInfo () {
-            DashboardDTO dashboardDTO = new DashboardDTO ();
-            dashboardDTO.UserCount = _userRepository.UsersCount ();
+        public DashboardDTO GetDashboardInfo()
+        {
+            DashboardDTO dashboardDTO = new DashboardDTO();
+            dashboardDTO.UserCount = _userRepository.UsersCount();
 
             return dashboardDTO;
+        }
+
+        /// <summary>
+        /// Delete user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool DeleteUser(string userId)
+        {
+            return this._userRepository.DeleteUsers(userId);
         }
         #endregion
 

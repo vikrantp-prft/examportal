@@ -42,6 +42,13 @@ namespace PerftEvaluation.DAL.Interface {
         bool InactivateEmployee (string userId);
 
         /// <summary>
+        /// Deleted Employee detail
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool DeleteEmployee (string userId);
+
+        /// <summary>
         /// Active the employee detail
         /// </summary>
         /// <param name="userId"></param>

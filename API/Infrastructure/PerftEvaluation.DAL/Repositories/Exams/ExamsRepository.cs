@@ -27,6 +27,16 @@ namespace PerftEvaluation.DAL.Repositories
             return _db.UpdateOne<Exams>(filterDef, updateQuery, Exams.CollectionName);
         }
 
+        public bool DeleteExam(string examId)
+        {
+            var filter = Builders<Exams>.Filter;
+            var filterDef = filter.Eq(c => c.Id, examId);
+            var updateQuery = Builders<Exams>.Update
+                .Set(c => c.IsDeleted, true);
+
+            return _db.UpdateOne<Exams>(filterDef, updateQuery, Exams.CollectionName);
+        }
+
         /// <summary>
         /// Get Exams List
         /// </summary>
@@ -95,7 +105,8 @@ namespace PerftEvaluation.DAL.Repositories
                 .Set(c => c.ShuffleOptions, exams.ShuffleOptions)
                 .Set(c => c.ShuffleQuestions, exams.ShuffleQuestions)
                 .Set(c => c.TeamId, exams.TeamId)
-                .Set(c => c.Title, exams.Title);
+                .Set(c => c.Title, exams.Title)
+                .Set(c => c.TotalQuestions, exams.TotalQuestions);
 
             return _db.UpdateOne<Exams>(filterDef, updateQuery, Exams.CollectionName);
         }

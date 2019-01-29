@@ -32,12 +32,12 @@ namespace PerftEvaluation.Api.Controllers {
         /// Get list of all the masters
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Get () {
+        [HttpPost, Route ("GetMasters")]
+        public IActionResult Get (RequestModel requestModel) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._masterService.GetMasters;
+                responseModel.Data = this._masterService.GetMasters(requestModel);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
@@ -143,6 +143,31 @@ namespace PerftEvaluation.Api.Controllers {
             } catch (Exception exception) {
                 _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
+        // POST api/master/DeleteMaster
+        /// <summary>
+        /// Delete Master
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route("DeleteMaster")]
+        public IActionResult DeleteMaster(RequestModel requestModel)
+        {
+            try
+            {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._masterService.DeleteMaster(requestModel.Id);
+
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
         #endregion

@@ -88,6 +88,16 @@ namespace PerftEvaluation.DAL.Repositories {
             }
         }
 
+        public bool DeleteEmployee(string userId)
+        {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq (c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set (c => c.IsDeleted, true);
+
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+        }
+
         #endregion
     }
 }

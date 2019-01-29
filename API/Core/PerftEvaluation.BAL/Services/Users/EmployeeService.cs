@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DAL.Interface;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
@@ -37,10 +38,11 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Employees List
         /// </summary>
         /// <value></value>
-        public IEnumerable<EmployeesDTO> GetEmployees {
-            get {
-                return from p in this._mapper.Map<IEnumerable<EmployeesDTO>> (this._employeeRepository.GetEmployees ()).AsQueryable ()
-                join o in _masterService.GetMasters.AsQueryable () on p.TeamId equals o.Id into MasterTeam
+        public IEnumerable<EmployeesDTO> GetEmployees (RequestModel requestModel){
+
+            var employees = this._employeeRepository.GetEmployees ().AsQueryable().Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+                return from p in this._mapper.Map<IEnumerable<EmployeesDTO>> (employees)
+                join o in _masterService. GetMasters(requestModel).AsQueryable () on p.TeamId equals o.Id into MasterTeam
                 select new EmployeesDTO () {
                     Id = p.Id,
                     Team = MasterTeam.FirstOrDefault (),
@@ -69,8 +71,7 @@ namespace PerftEvaluation.BAL.Services {
                     CreatedDate = p.CreatedDate,
                     ModifiedDate = p.ModifiedDate,
                     EducationDetails = p.EducationDetails
-                };
-            }
+            };
         }
 
         /// <summary>
@@ -109,6 +110,16 @@ namespace PerftEvaluation.BAL.Services {
         /// <returns></returns>
         public bool InactivateEmployee (string employeeId) {
             return this._employeeRepository.InactivateEmployee (employeeId);
+        }
+        
+        /// <summary>
+        /// Delete Employee record
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        public bool DeleteEmployee(string employeeId)
+        {
+            return this._employeeRepository.DeleteEmployee(employeeId);
         }
         #endregion
 

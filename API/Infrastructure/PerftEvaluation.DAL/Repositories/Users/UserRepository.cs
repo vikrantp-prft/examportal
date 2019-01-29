@@ -132,6 +132,21 @@ namespace PerftEvaluation.DAL.Repositories {
                 throw exception;
             }
         }
+
+        /// <summary>
+        /// Delete users
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool DeleteUsers(string userId)
+        {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq (c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set (c => c.IsDeleted, true);
+
+            return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
+        }
         #endregion
     }
 }

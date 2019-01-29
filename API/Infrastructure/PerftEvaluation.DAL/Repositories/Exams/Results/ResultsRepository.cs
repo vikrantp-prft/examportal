@@ -20,6 +20,20 @@ namespace PerftEvaluation.DAL.Repositories
         }
 
         /// <summary>
+        /// Delete Results
+        /// </summary>
+        /// <returns></returns>
+        public bool DeleteResultsByExamId(string examId)
+        {
+            var filter = Builders<Results>.Filter;
+            var filterDef = filter.Eq (c => c.Id, examId);
+            var updateQuery = Builders<Results>.Update
+                .Set (c => c.IsDeleted, true);
+
+            return _db.UpdateOne<Results> (filterDef, updateQuery, Masters.CollectionName);
+        }
+
+        /// <summary>
         /// Get Results By Exams Id
         /// </summary>
         /// <returns></returns>
@@ -27,7 +41,7 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                return _db.GetCollection<Results>(Results.CollectionName).AsQueryable().Where(x => x.IsActive == true && x.ExamId == examId).ToList();
+                return _db.GetCollection<Results>(Results.CollectionName).AsQueryable().Where(x => x.IsDeleted == false && x.ExamId == examId).ToList();
             }
             catch (Exception ex)
             {

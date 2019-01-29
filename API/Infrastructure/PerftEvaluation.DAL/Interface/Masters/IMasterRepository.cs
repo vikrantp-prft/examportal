@@ -41,6 +41,14 @@ namespace PerftEvaluation.DAL.Interface {
         /// <returns></returns>
         bool ActivateMaster (string masterId);
 
+
+        /// <summary>
+        /// Deleted Masters detail
+        /// </summary>
+        /// <param name="mastersId"></param>
+        /// <returns></returns>
+        bool DeleteMaster (string masterId);
+
         /// <summary>
         /// Update master detail
         /// </summary>

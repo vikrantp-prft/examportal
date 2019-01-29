@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
 namespace PerftEvaluation.BAL.Interfaces {
@@ -11,7 +12,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// Get list masters
         /// </summary>
         /// <value></value>
-        IEnumerable<MastersDTO> GetMasters { get; }
+        IEnumerable<MastersDTO> GetMasters(RequestModel requestModel);
 
         /// <summary>
         /// Save master detail
@@ -47,5 +48,14 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="masterId"></param>
         /// <returns></returns>
         bool ActivateMaster (string masterId);
+
+
+        /// <summary>
+        /// Delete Masters
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        bool DeleteMaster (string masterId);
+
     }
 }
