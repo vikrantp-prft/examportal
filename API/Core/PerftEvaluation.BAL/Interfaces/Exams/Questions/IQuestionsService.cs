@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
 namespace PerftEvaluation.BAL.Interfaces
@@ -14,7 +15,7 @@ namespace PerftEvaluation.BAL.Interfaces
         /// Get list Exams
         /// </summary>
         /// <value></value>
-        IEnumerable<QuestionsDTO> GetQuestionsByExamId(string examId);
+        IEnumerable<QuestionsDTO> GetQuestionsByExamId(string examId, RequestModel requestModel);
 
         /// <summary>
         /// Save Questions
@@ -45,5 +46,12 @@ namespace PerftEvaluation.BAL.Interfaces
         /// </summary>
         /// <value></value> 
         bool InactiveQuestions(string questionId);
+
+        /// <summary>
+        /// Delete Questions
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        bool DeleteQuestions (string questionId);
     }
 }

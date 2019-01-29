@@ -12,6 +12,7 @@ import { TraineeListComponent } from './trainee/trainee-list/traineeList.compone
 import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/traineeUserAddUpdate.component';
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { UploadComponent } from './upload/upload.component';
         TraineeListComponent,
         AddTraineeUserComponent,
         QuickTraineeAddUpdate,
+        EmployeeUpdateComponent,
         UploadComponent
     ]
 })

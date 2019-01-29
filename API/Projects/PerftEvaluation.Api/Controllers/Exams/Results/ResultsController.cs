@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
@@ -17,10 +18,15 @@ namespace PerftEvaluation.Api.Controllers
 
         private ResponseModel responseModel = null;
 
-        public ResultsController(IResultsService resultsService)
+        protected readonly ILogger<MasterController> _logger;
+
+        public ResultsController(IResultsService resultsService, ILogger<MasterController> logger = null)
         {
             this._resultsService = resultsService;
             this.responseModel = new ResponseModel();
+            if (null != logger) {
+                this._logger = logger;
+            }
         }
 
         //GET api/exams/resultsByExamId
@@ -35,7 +41,7 @@ namespace PerftEvaluation.Api.Controllers
             {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._resultsService.GetResultsByExamId(requestModel.Id);
+                responseModel.Data = this._resultsService.GetResultsByExamId(requestModel.Id, requestModel);
 
                 return Ok(responseModel);
             }
@@ -58,7 +64,7 @@ namespace PerftEvaluation.Api.Controllers
             {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._resultsService.GetResultsByUserId(requestModel.Id);
+                responseModel.Data = this._resultsService.GetResultsByUserId(requestModel.Id, requestModel);
 
                 return Ok(responseModel);
             }
@@ -88,6 +94,31 @@ namespace PerftEvaluation.Api.Controllers
             }
             catch (Exception exception)
             {
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
+            }
+        }
+
+
+        // POST api/exams/DeleteResults
+        /// <summary>
+        /// Delete Results
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route("DeleteResult")]
+        public IActionResult DeleteResult(RequestModel requestModel)
+        {
+            try
+            {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._resultsService.DeleteResultsByExamId(requestModel.Id);
+
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
                 return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }

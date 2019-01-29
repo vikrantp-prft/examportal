@@ -5,6 +5,7 @@ using AutoMapper;
 using Moq;
 using PerftEvaluation.BAL.Services;
 using PerftEvaluation.DAL.Interface;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 using PerftEvaluation.Helper.Mapper;
@@ -21,7 +22,7 @@ namespace PerftEvaluation.Test
         /// Test1 Method 
         /// </summary>
         [Fact]
-        public void GetAllMasters_TranslateCorrectly()
+        public void GetAllMasters_TranslateCorrectly(RequestModel requestModel)
         {
             bool actual = false;
 
@@ -47,7 +48,7 @@ namespace PerftEvaluation.Test
             masterDal.Setup(r => r.GetAllMasters()).Returns(mastersExpected);
 
             MasterService masterServiceBal = new MasterService(masterDal.Object, mapper);
-            List<MastersDTO> masterActual = masterServiceBal.GetMasters.ToList();
+            List<MastersDTO> masterActual = masterServiceBal.GetMasters(requestModel).ToList();
 
             if (Utility.CompareToObjectProperties<Masters, MastersDTO>(mastersExpected[0], masterActual[0]))
             {

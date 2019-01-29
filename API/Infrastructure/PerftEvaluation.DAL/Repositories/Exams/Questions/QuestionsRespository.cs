@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
@@ -29,6 +30,18 @@ namespace PerftEvaluation.DAL.Repositories
             var filter = Builders<Questions>.Filter;
             var filterDef = filter.Eq(c => c.Id, questionId);
             var UpdateQuery = Builders<Questions>.Update.Set(s => s.IsActive, true);
+            return _db.UpdateOne<Questions>(filterDef, UpdateQuery, Questions.CollectionName);
+        }
+
+        /// <summary>
+        /// Delete Questions
+        /// </summary>
+        /// <value></value>
+        public bool DeleteQuestion(string questionId)
+        {
+            var filter = Builders<Questions>.Filter;
+            var filterDef = filter.Eq(c => c.Id, questionId);
+            var UpdateQuery = Builders<Questions>.Update.Set(s => s.IsDeleted, true);
             return _db.UpdateOne<Questions>(filterDef, UpdateQuery, Questions.CollectionName);
         }
 
@@ -81,9 +94,9 @@ namespace PerftEvaluation.DAL.Repositories
             {
                 questions.CreatedDate = DateTime.UtcNow;
                 questions.ModifiedDate = DateTime.UtcNow;
-                if(questions.Options != null)
+                if (questions.Options != null)
                 {
-                   //TO DO - Generate Option id for newly inserted document
+                    questions.Options.Where(c => c.OptionId == null).ToList().ForEach(c => c.OptionId = ObjectId.GenerateNewId().ToString());
                 }
 
                 _db.Save<Questions>(questions, Questions.CollectionName);
@@ -103,6 +116,11 @@ namespace PerftEvaluation.DAL.Repositories
         {
             var filter = Builders<Questions>.Filter;
             var filterDef = filter.Eq(c => c.Id, questions.Id);
+
+            if (questions.Options != null)
+            {
+                questions.Options.Where(c => c.OptionId == null).ToList().ForEach(c => c.OptionId = ObjectId.GenerateNewId().ToString());
+            }
 
             var updateQuery = Builders<Questions>.Update
                                 .Set(s => s.CategoryId, questions.CategoryId)

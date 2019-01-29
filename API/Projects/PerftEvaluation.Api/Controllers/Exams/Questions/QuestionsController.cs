@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
@@ -16,10 +17,16 @@ namespace PerftEvaluation.Api.Controllers
         protected readonly IQuestionsService _questionService;
         private ResponseModel responseModel = null;
 
-         public QuestionsController(IQuestionsService questionsService)
+        protected readonly ILogger<MasterController> _logger;
+
+        public QuestionsController(IQuestionsService questionsService, ILogger<MasterController> logger = null)
         {
             this._questionService = questionsService;
             this.responseModel = new ResponseModel();
+            if (null != logger)
+            {
+                this._logger = logger;
+            }
         }
 
         //GET api/exams/questionsByExamId
@@ -34,7 +41,7 @@ namespace PerftEvaluation.Api.Controllers
             {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._questionService.GetQuestionsByExamId(requestModel.Id);
+                responseModel.Data = this._questionService.GetQuestionsByExamId(requestModel.Id, requestModel);
 
                 return Ok(responseModel);
             }
@@ -138,7 +145,7 @@ namespace PerftEvaluation.Api.Controllers
             }
         }
 
-         // POST api/exams/GetQuestionById
+        // POST api/exams/GetQuestionById
         /// <summary>
         /// Get Question by id
         /// </summary>
@@ -157,6 +164,31 @@ namespace PerftEvaluation.Api.Controllers
             }
             catch (Exception exception)
             {
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
+            }
+        }
+
+
+        // POST api/exams/DeleteQuestion
+        /// <summary>
+        /// Delete Exam
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route("DeleteQuestion")]
+        public IActionResult DeleteQuestion(RequestModel requestModel)
+        {
+            try
+            {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._questionService.DeleteQuestions(requestModel.Id);
+
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
                 return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }

@@ -51,6 +51,14 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <returns></returns>
         bool InactivateUser (string userId);
 
+
+        /// <summary>
+        /// Deleted user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool DeleteUser (string userId);
+
         /// <summary>
         /// Get the dashboard count and content
         /// </summary>

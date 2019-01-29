@@ -77,8 +77,9 @@ export class EmployeeListComponent implements OnInit {
 
   // Function to get employee ID
   fn_getEmployee(empid) {
-    this.router.navigate(['/user/addemployee'],{queryParams:{id:empid}});
+    this.router.navigate(['/user/updateemployee'],{queryParams:{_empid:empid}});
   }
+
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
     if (Id != null) {

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
@@ -16,10 +17,15 @@ namespace PerftEvaluation.Api.Controllers
         protected readonly IExamsService _examService;
         private ResponseModel responseModel = null;
 
-        public ExamsController(IExamsService examsService)
+        protected readonly ILogger<MasterController> _logger;
+
+        public ExamsController(IExamsService examsService, ILogger<MasterController> logger = null)
         {
             this._examService = examsService;
             this.responseModel = new ResponseModel();
+            if (null != logger) {
+                this._logger = logger;
+            }
         }
 
 
@@ -28,14 +34,14 @@ namespace PerftEvaluation.Api.Controllers
         /// Get list of all Exams
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Get()
+        [HttpPost, Route ("GetExams")]
+        public IActionResult Get(RequestModel requestModel)
         {
             try
             {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._examService.GetExams;
+                responseModel.Data = this._examService.GetExams(requestModel);
 
                 return Ok(responseModel);
             }
@@ -159,6 +165,31 @@ namespace PerftEvaluation.Api.Controllers
             }
             catch (Exception exception)
             {
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
+            }
+        }
+
+
+        // POST api/exam/DeleteExam
+        /// <summary>
+        /// Delete Exam
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route("DeleteExam")]
+        public IActionResult DeleteExam(RequestModel requestModel)
+        {
+            try
+            {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._examService.DeleteExams(requestModel.Id);
+
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
                 return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }

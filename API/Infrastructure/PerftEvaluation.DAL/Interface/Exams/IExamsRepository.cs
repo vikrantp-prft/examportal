@@ -49,5 +49,13 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="examId"></param>
         /// <returns></returns>
         bool ActiveExams(string examId);
+
+
+        /// <summary>
+        /// Deleted Exam detail
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        bool DeleteExam (string examId);
     }
 }

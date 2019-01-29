@@ -37,7 +37,13 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <value></value>
         public IEnumerable<UsersDTO> GetUsers (RequestModel requestModel) {
-            var user = this._userRepository.GetUsers ().AsQueryable ().Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable();
+            //requestModel.SortBy = "FirstName";
+
+            List<string> lstFilters = new List<string> () {
+                "FirstName",
+                "LastName"
+            };
+            var user = this._userRepository.GetUsers ().AsQueryable ().SortAndFilter (requestModel, lstFilters).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             return this._mapper.Map<IEnumerable<UsersDTO>> (user);
         }
 
@@ -98,6 +104,15 @@ namespace PerftEvaluation.BAL.Services {
             dashboardDTO.UserCount = _userRepository.UsersCount ();
 
             return dashboardDTO;
+        }
+
+        /// <summary>
+        /// Delete user record
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool DeleteUser (string userId) {
+            return this._userRepository.DeleteUsers (userId);
         }
         #endregion
 

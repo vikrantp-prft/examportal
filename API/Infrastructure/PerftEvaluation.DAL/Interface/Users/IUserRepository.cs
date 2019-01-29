@@ -48,6 +48,14 @@ namespace PerftEvaluation.DAL.Interface {
         /// <returns></returns>
         bool ActiveUsers (string userId);
 
+
+        /// <summary>
+        /// Deleted users detail
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool DeleteUsers (string userId);
+
         /// <summary>
         /// Get the count of users
         /// </summary>

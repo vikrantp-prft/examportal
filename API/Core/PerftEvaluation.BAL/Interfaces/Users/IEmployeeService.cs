@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
@@ -11,17 +12,24 @@ namespace PerftEvaluation.BAL.Interfaces
     public interface IEmployeeService
     {
         /// <summary>
-        /// Get Users list
+        /// Get Employees list
         /// </summary>
         /// <value>List of User in DTO</value>
-        IEnumerable<EmployeesDTO> GetEmployees { get; }
+        IEnumerable<EmployeesDTO> GetEmployees(RequestModel requestModel);
 
         /// <summary>
-        /// Save User Details
+        /// Save Employee Details
+        /// </summary>
+        /// <param name="employeeDTO"></param>
+        /// <returns></returns>
+        bool SaveEmployee (EmployeesDTO employeeDTO);
+
+        /// <summary>
+        /// Update Employee details
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        bool SaveEmployee (EmployeesDTO employeeDTO);
+        bool UpdateEmployee (EmployeesDTO employeesDTO);
 
          /// <summary>
         /// Get Employee Detail by Id
@@ -43,5 +51,12 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <param name="employeeId"></param>
         /// <returns></returns>
         bool InactivateEmployee (string employeeId);
+
+        /// <summary>
+        /// Delete Employee
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool DeleteEmployee (string employeeId);
     }
 }

@@ -50,5 +50,12 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="questionId"></param>
         /// <returns></returns>
         bool ActiveQuestion(string questionId);
+
+        /// <summary>
+        /// Deleted Questions detail
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        bool DeleteQuestion (string questionId);
     }
 }
