@@ -37,13 +37,7 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <value></value>
         public IEnumerable<UsersDTO> GetUsers (RequestModel requestModel) {
-            //requestModel.SortBy = "FirstName";
-
-            List<string> lstFilters = new List<string> () {
-                "FirstName",
-                "LastName"
-            };
-            var user = this._userRepository.GetUsers ().AsQueryable ().SortAndFilter (requestModel, lstFilters).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var user = this._userRepository.GetUsers ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             return this._mapper.Map<IEnumerable<UsersDTO>> (user);
         }
 
