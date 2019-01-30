@@ -9,8 +9,6 @@ namespace PerftEvaluation.Helper.Interfaces
     /// </summary>
     public interface ICache
     {
-
-        
         /// <summary>
         /// Get cached data for all masters dropdowns
         /// </summary>

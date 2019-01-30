@@ -19,14 +19,14 @@ namespace PerftEvaluation.Identity.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
+    // For testing purpose only - To execute below actions without any restriction, uncomment below line
+    //[AllowAnonymous]
     public class IdentityController : ControllerBase
     {
-         readonly UserManager<PerfiUser> _userManager;
+        readonly UserManager<PerfiUser> _userManager;
         readonly SignInManager<PerfiUser> _signInManager;
         private readonly RoleManager<PerfiRole> _roleManager;
         readonly IConfiguration _configuration;
-
 
         public IdentityController(
            UserManager<PerfiUser> userManager,
@@ -40,7 +40,7 @@ namespace PerftEvaluation.Identity.Controllers
             this._configuration = configuration;
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("gettoken")]
         public async Task<IActionResult> CreateToken([FromBody] LoginModel loginModel)
@@ -63,7 +63,7 @@ namespace PerftEvaluation.Identity.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         [Route("refreshtoken")]
         public async Task<IActionResult> RefreshToken()
         {
@@ -75,36 +75,38 @@ namespace PerftEvaluation.Identity.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("destroytoken")]
+        public async Task<IActionResult> DestroyToken()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok("Token destroyed.");
 
-        [HttpPost]
-        [Route("registeruser")]
+        }
+
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
+        [HttpPost]
+        [Route("resetpassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] LoginModel resetPasswordModel)
         {
             if (ModelState.IsValid)
             {
-                var user = new PerfiUser
+                var user = await _userManager.FindByEmailAsync(resetPasswordModel.Username);
+                if (user == null)
                 {
-                    //TODO: Use Automapper instaed of manual binding
-
-                    UserName = registerModel.Username,
-                    Email = registerModel.Username
-                };
-
-                var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
-                if (identityResult.Succeeded)
-                {
-                   await _userManager.AddToRoleAsync(user, registerModel.RoleName);
-                   return Ok();
+                    return BadRequest("User doest not exist.");
                 }
-                else
+
+                string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordModel.Password);
+                if (result.Succeeded)
                 {
-                    return BadRequest(identityResult.Errors);
+                    return Ok($"Password reset to '{resetPasswordModel.Password}'");
                 }
             }
-                return BadRequest(ModelState);
-            
-            
+            return BadRequest(ModelState);
+
         }
 
         //private String GetToken(IdentityUser user)
@@ -112,7 +114,7 @@ namespace PerftEvaluation.Identity.Controllers
         {
             var utcNow = DateTime.UtcNow;
 
-            var claims = new List<Claim>( new[]
+            var claims = new List<Claim>(new[]
             {
                         new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                         new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
@@ -120,11 +122,11 @@ namespace PerftEvaluation.Identity.Controllers
                         new Claim(JwtRegisteredClaimNames.Iat, utcNow.ToString())
             });
 
-             // Add user role, they are converted to claims
+            // Add user role, they are converted to claims
             foreach (var roleName in user.Roles)
             {
                 // Find IdentityRole by name
-                var role =  _roleManager.FindByNameAsync(roleName);
+                var role = _roleManager.FindByNameAsync(roleName);
                 if (role != null)
                 {
                     // Convert Identity to claim and add 
@@ -148,10 +150,41 @@ namespace PerftEvaluation.Identity.Controllers
 
         }
 
+        #region User Related Admin Actions
         [HttpPost]
-        [AllowAnonymous]
+        [Route("registeruser")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new PerfiUser
+                {
+                    //TODO: Use Automapper instaed of manual binding
+                    UserName = registerModel.Username,
+                    Email = registerModel.Username
+                };
+
+                var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
+                if (identityResult.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, registerModel.RoleName);
+                    return Ok($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'");
+                }
+                else
+                {
+                    return BadRequest(identityResult.Errors);
+                }
+            }
+            return BadRequest(ModelState);
+        }
+        #endregion
+
+        #region Role Related Admin Actions
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [Route("createrole")]
-         public async Task<IActionResult> CreateRole([FromBody] RoleModel model)
+        public async Task<IActionResult> CreateRole([FromBody] RoleModel model)
         {
             if (ModelState.IsValid)
             {
@@ -159,38 +192,60 @@ namespace PerftEvaluation.Identity.Controllers
                 var result = await _roleManager.CreateAsync(role);
                 if (result.Succeeded)
                 {
-                    return Ok();
+                    return Ok($"'{model.RoleName}' Role created.");
                 }
                 else
                 {
                     return BadRequest(result.Errors);
                 }
             }
-           return BadRequest(ModelState);
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         [Route("assignrole")]
-         public async Task<IActionResult> AssignRole([FromBody] RegisterModel registerModel)
+        public async Task<IActionResult> AssignRole([FromBody] UserRoleModel userRoleModel)
         {
             if (ModelState.IsValid)
             {
-                var user = await this._userManager.FindByEmailAsync(registerModel.Username);
+                var user = await this._userManager.FindByEmailAsync(userRoleModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User does not exist !!!");
-                   
+                    return BadRequest("User does not exist.");
+
                 }
                 else
                 {
-                    await _userManager.AddToRoleAsync(user, registerModel.RoleName);
-                   return Ok();                    
+                    await _userManager.AddToRoleAsync(user, userRoleModel.RoleName);
+                    return Ok($"'{userRoleModel.RoleName}' role assigned to user '{userRoleModel.Username}'");
                 }
             }
-           return BadRequest(ModelState);
+            return BadRequest(ModelState);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [Route("removerole")]
+        public async Task<IActionResult> RemoveRole([FromBody] UserRoleModel userRoleModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await this._userManager.FindByEmailAsync(userRoleModel.Username);
+                if (user == null)
+                {
+                    return BadRequest("User does not exist.");
+
+                }
+                else
+                {
+                    await _userManager.RemoveFromRoleAsync(user, userRoleModel.RoleName);
+                    return Ok($"'{userRoleModel.RoleName}' role removed from user '{userRoleModel.Username}'");
+                }
+            }
+            return BadRequest(ModelState);
+        }
+        #endregion 
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

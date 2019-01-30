@@ -44,7 +44,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <param name="masterType"></param>
         /// <returns></returns>
         public IEnumerable<Masters> GetMastersByType (string masterType) {
-            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType).ToList ();
+            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType && x.IsDeleted == false).ToList ();
         }
 
         /// <summary>
@@ -90,6 +90,33 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.IsActive, true);
 
             return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
+
+        /// <summary>
+        /// Delete Masters 
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public bool DeleteMaster (string masterId) {
+            var filter = Builders<Masters>.Filter;
+            var filterDef = filter.Eq (c => c.Id, masterId);
+            var updateQuery = Builders<Masters>.Update
+                .Set (c => c.IsDeleted, true);
+
+            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+        }
+
+        /// <summary>
+        /// Get Masters By Id
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public Masters GetMasterById (string masterId) {
+            try {
+                return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.Id == masterId).FirstOrDefault ();
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         #endregion
     }

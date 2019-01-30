@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { appConfig } from 'src/app/common/core/app.config';
 
 @Component({
   selector: 'employee-add-update',
@@ -22,17 +23,18 @@ export class AddEmployeeComponent implements OnInit {
   selectedCourse: any;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
-    { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
-    { description: "Flash/Flex", value: 'Flash/Flex', selected: false },
-    { description: "Design", value: 'Design', selected: false }
+    { description: 'HTML/CSS', value: 'HTML/CSS', selected: false },
+    { description: 'Flash/Flex', value: 'Flash/Flex', selected: false },
+    { description: 'Design', value: 'Design', selected: false }
   ];
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private formBuilder: FormBuilder, private toastr: ToastrService, private route: ActivatedRoute) {
+  constructor(public router: Router, private CommonService: commonService, public http: Http,
+     private formBuilder: FormBuilder, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
-      middleName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      dob: new FormControl('', Validators.required),
+      firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
+      middleName: new FormControl(''),
+      lastName: new FormControl(''),
+      dob: new FormControl(''),
       phone: new FormControl(''),
       mobile: new FormControl('', Validators.required),
       address1: new FormControl('', Validators.required),
@@ -66,19 +68,22 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getCourse();
   }
 
-  // convenience getter for easy access to form fields
-  get employeeControls() { return this.employeeForm.controls; }
+// function to display the error message for  validation.
+isFieldValid(form: FormGroup, field: string) {
+  return !form.get(field).valid && form.get(field).touched;
+}
 
-  //Save Employee details function
+  // Save Employee details function
+
   fn_saveEmployee(value) {
     this.submitted = true;
     if (this.employeeForm.valid) {
-      if (this.educationArray.length == 0) {
+      if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
         return false;
       }
-      else if (this.employeeControls.interest == null) {
-        this.toastr.error('Please add education details');
+      else if (this.employeeForm.controls.interest == null) {
+        this.toastr.error('Please select atleast 1 interest');
         return false;
       }
       else {
@@ -86,9 +91,9 @@ export class AddEmployeeComponent implements OnInit {
         value.value.EducationDetails = this.educationArray;
         this.fn_saveEmployeefun(value.value, saveEmployeeurl);
       }
-    }
-    else {
-      this.toastr.error('Invalid details');
+    } else {
+      this.CommonService.validateAllFormFields(this.employeeForm);
+      this.toastr.error('Please fill required details');
       return false;
     }
   }
@@ -97,11 +102,10 @@ export class AddEmployeeComponent implements OnInit {
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
-      if (rs.statusCode == 200) {
+      if (rs.statusCode === 200) {
         this.toastr.success('Employee details added successfully!');
         this.fn_resetEmployeeDetails();
-      }
-      else {
+      } else {
         this.toastr.error('Failed to add Employee details');
       }
     });
@@ -112,10 +116,9 @@ export class AddEmployeeComponent implements OnInit {
     const teamUrl = 'api/Dropdown/Teams';
     this.CommonService.fn_Get(teamUrl).subscribe((result: any) => {
       const teamResult = result;
-      if (teamResult.statusCode == 200) {
+      if (teamResult.statusCode === 200) {
         this.teamArray = teamResult.data;
-      }
-      else {
+      } else {
         this.teamArray = null;
       }
     });
@@ -123,13 +126,12 @@ export class AddEmployeeComponent implements OnInit {
 
   //function to get course
   fn_getCourse() {
-    const degreeUrl = 'api/Dropdown/Degrees';
-    this.CommonService.fn_Get(degreeUrl).subscribe((result: any) => {
+    const url = 'api/Dropdown/Degrees';
+    this.CommonService.fn_Get(url).subscribe((result: any) => {
       const courseResult = result;
-      if (courseResult.statusCode == 200) {
+      if (courseResult.statusCode === 200) {
         this.courseArray = courseResult.data;
-      }
-      else {
+      } else {
         this.courseArray = null;
       }
     });
@@ -140,10 +142,9 @@ export class AddEmployeeComponent implements OnInit {
     const stateUrl = 'api/Dropdown/States';
     this.CommonService.fn_Get(stateUrl).subscribe((result: any) => {
       const stateResult = result;
-      if (stateResult.statusCode == 200) {
+      if (stateResult.statusCode === 200) {
         this.stateArray = stateResult.data;
-      }
-      else {
+      } else {
         this.stateArray = null;
       }
     });
@@ -189,8 +190,9 @@ export class AddEmployeeComponent implements OnInit {
     this.educationArray.splice(index, 1);
   }
 
-  //Interest check change function
+  // Interest check change function
   fn_onInterestChange(event) {
+    
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {

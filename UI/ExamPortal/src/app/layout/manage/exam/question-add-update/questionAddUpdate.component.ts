@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class questionAddUpdateComponent implements OnInit {
-  public examID = "";
+  public examId = "";
   public url = 'api/Questions';
   public questionForm: FormGroup;
   public categoryList = [];
@@ -26,17 +26,19 @@ export class questionAddUpdateComponent implements OnInit {
 
   constructor(public router: Router, private route: ActivatedRoute, private toastr: ToastrService, public fb: FormBuilder, private commonService: commonService) {
     this.route.params.subscribe(params => {
-      this.examID = params['id'];
+      this.examId = params['id'];
     });
     this.questionForm = this.fb.group({
-      questionCategory: new FormControl(''),
+      categoryId: new FormControl(''),
       questionType: new FormControl(''),
-      questionText: new FormControl(''),
-      examID: new FormControl(this.examID),
+      question: new FormControl(''),
+      examId: new FormControl(this.examId),
       singleSelectOptionsCorrectAns: new FormControl(0),
-      obj_multiSelectOptions: this.fb.array([this.fn_addSubMultipleSelectOption()]),
+      options: this.fb.array([this.fn_addSubMultipleSelectOption()]),
       obj_singleSelectOptions: this.fb.array([this.fn_addSubSingleSelectOption()]),
-      subjectivDescription: new FormControl('')
+      subjectivDescription: new FormControl(''),
+      IsActive: true,
+      IsDeleted: false
     });
   }
 
@@ -58,12 +60,15 @@ export class questionAddUpdateComponent implements OnInit {
 
 
   onSubmit = function (formData) {
+    if (formData.value.questionType === '0') {
+      formData.value.options = formData.value.obj_singleSelectOptions;
+    }
     if (this.questionForm.valid) {
       this.commonService.fn_PostWithData(formData.value, this.url).subscribe((result: any) => {
         const rs = result;
-        if (rs.statusCode == 200) {
+        if (rs.statusCode === 200) {
           this.toastr.success('Question added successfully!');
-          //this.router.navigate(['manage/questionList'], { queryParams: { id: this.examID } });
+          //this.router.navigate(['manage/questionList'], { queryParams: { id: this.examId } });
         }
         else {
           this.toastr.error('Failed to add Question');
@@ -74,7 +79,7 @@ export class questionAddUpdateComponent implements OnInit {
       return;
     }
 
-  }
+  };
 
 
 
@@ -94,15 +99,23 @@ export class questionAddUpdateComponent implements OnInit {
 
   fn_addSubMultipleSelectOption() {
     return this.fb.group({
-      multipleSelectOptions: null,
-      multipleSelectOptionsCorrectAns: null
-    })
+      option: null,
+      isCorrect: false
+    });
   }
 
   fn_addSubSingleSelectOption() {
     return this.fb.group({
-      singleSelectOptions: null
-    })
+      option: null,
+      isCorrect: false
+    });
+  }
+
+  fn_test(i) {
+    for (let j = 0 ; j < this.questionForm.value.obj_singleSelectOptions.length; j++) {
+      this.questionForm.value.obj_singleSelectOptions[j].isCorrect = false;
+    }
+    this.questionForm.value.obj_singleSelectOptions[i].isCorrect = true;
   }
 
   disbleAllFlag() {
@@ -113,7 +126,7 @@ export class questionAddUpdateComponent implements OnInit {
 
   addSubstractMultipleSelectOptions(actionType) {
     const control = <FormArray>(
-      this.questionForm.controls["obj_multiSelectOptions"]
+      this.questionForm.controls["options"]
     );
     this.multipleSelectEdit = true;
     if (actionType == 'add') {
@@ -159,18 +172,18 @@ export class questionAddUpdateComponent implements OnInit {
   }
 
   loadOptions(questionTypeValue) {
-    if (questionTypeValue == "multipleSelect") {
+    if (questionTypeValue === '1') {
       this.disbleAllFlag();
       this.multipleSelectFlag = true;
       if (this.multipleSelectEdit === false) {
         const control = <FormArray>(
-          this.questionForm.controls["obj_multiSelectOptions"]
+          this.questionForm.controls["options"]
         );
         control.push(this.fn_addSubMultipleSelectOption());
         this.multipleSelectEdit = true;
       }
     }
-    if (questionTypeValue == "SingleSelect") {
+    if (questionTypeValue === '0') {
       this.disbleAllFlag();
       this.singleSelectFlag = true;
       if (this.singleSelectEdit === false) {
@@ -181,7 +194,7 @@ export class questionAddUpdateComponent implements OnInit {
         this.singleSelectEdit = true;
       }
     }
-    if (questionTypeValue == "subjective") {
+    if (questionTypeValue === '2' ) {
       this.disbleAllFlag();
       this.subjectiveFlag = true;
     }

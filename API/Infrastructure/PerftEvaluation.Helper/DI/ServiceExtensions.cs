@@ -40,6 +40,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IResultsRepository, ResultsRepository>();
             //Cache helpers
             services.AddTransient<ICache, Cache>();
+            //services.AddTransient<IFilterExtensions, FilterExtensions>();
 
             // Add all other services here.
             return services;

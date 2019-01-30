@@ -19,12 +19,22 @@
                 <div *ngIf="employeeControls.teamId.errors.required">Team is required</div>
               </div>
             </div>
+<<<<<<< HEAD
             <div class="form-group">
               <label for="firstName">First Name</label><span style="color:red">*</span>
               <input type="text" class="form-control" id="firstName" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && employeeControls.firstName.errors }">
               <div *ngIf="submitted && employeeControls.firstName.errors" class="invalid-feedback">
                 <div *ngIf="employeeControls.firstName.errors.required">First Name is required</div>
               </div>
+=======
+            <div class="form-group" >
+              <label for="firstName">First Name   <span class="required">*</span></label>
+              <input type="text" class="form-control " id="firstName" formControlName="firstName" required>
+              <!-- <div class="is-invalid"> -->
+              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid name.">
+              </app-field-error-display>
+            <!-- </div> -->
+>>>>>>> 6bf0fd839d1b6d15c461e9922df25f877f6a8b66
             </div>
             <div class="form-group">
               <label for="middleName">Middle Name</label><span style="color:red">*</span>
@@ -235,8 +245,9 @@
             </div>
           </div>
           <div class="btn-sections">
+            <button class="btn btn-primary">Submit</button> &nbsp;&nbsp;
             <button type="button" class="btn btn-default" (click)="fn_resetEmployeeDetails()">Reset</button>
-            <button class="btn btn-default">Submit</button>
+
           </div>
         </form>
       </div>
@@ -244,3 +255,8 @@
     </div>
   </div>
 </div>
+<style>
+.ng-invalid.ng-touched {
+    border-color: red;
+}
+</style>

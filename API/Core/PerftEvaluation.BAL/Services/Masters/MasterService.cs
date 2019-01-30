@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DAL.Interface;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
@@ -32,10 +34,8 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Masters List
         /// </summary>
         /// <value></value>
-        public IEnumerable<MastersDTO> GetMasters {
-            get {
-                return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetAllMasters ());
-            }
+        public IEnumerable<MastersDTO> GetMasters (RequestModel requestModel) {
+            return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetAllMasters ().AsQueryable ().Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ());
         }
 
         /// <summary>
@@ -81,6 +81,24 @@ namespace PerftEvaluation.BAL.Services {
         /// <returns></returns>
         public bool InactivateMaster (string masterId) {
             return this._masterRepository.InactivateMaster (masterId);
+        }
+
+        /// <summary>
+        /// Delete Master
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public bool DeleteMaster (string masterId) {
+            return this._masterRepository.DeleteMaster (masterId);
+        }
+
+        /// <summary>
+        /// Get master by Id
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
+        public MastersDTO GetMasterById (string masterId) {
+            return this._mapper.Map<MastersDTO> (this._masterRepository.GetMasterById (masterId));
         }
         #endregion
     }

@@ -26,6 +26,8 @@ namespace PerftEvaluation.DTO.Dtos
 
         public DateTime? EndTime { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public List<QuestionDTO> Question { get; set; }
     }
 

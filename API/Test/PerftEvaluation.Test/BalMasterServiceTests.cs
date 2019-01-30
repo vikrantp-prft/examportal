@@ -5,6 +5,7 @@ using AutoMapper;
 using Moq;
 using PerftEvaluation.BAL.Services;
 using PerftEvaluation.DAL.Interface;
+using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 using PerftEvaluation.Helper.Mapper;
@@ -15,7 +16,7 @@ namespace PerftEvaluation.Test
     /// <summary>
     /// Test Class
     /// </summary>
-    public class UnitTest1
+    public class BalMasterServiceTests
     {
         /// <summary>
         /// Test1 Method 
@@ -24,6 +25,9 @@ namespace PerftEvaluation.Test
         public void GetAllMasters_TranslateCorrectly()
         {
             bool actual = false;
+            RequestModel requestModel = new RequestModel();
+            requestModel.PageNumber = 1;
+            requestModel.PageSize = 5;
 
             #region ToDo :Pickup all Configuration from main application itself by separating configuration from startup? 
             // Auto Mapper Configurations
@@ -33,7 +37,7 @@ namespace PerftEvaluation.Test
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
-            
+
             #endregion
 
             Masters masters = new Masters();
@@ -47,7 +51,7 @@ namespace PerftEvaluation.Test
             masterDal.Setup(r => r.GetAllMasters()).Returns(mastersExpected);
 
             MasterService masterServiceBal = new MasterService(masterDal.Object, mapper);
-            List<MastersDTO> masterActual = masterServiceBal.GetMasters.ToList();
+            List<MastersDTO> masterActual = masterServiceBal.GetMasters(requestModel).ToList();
 
             if (Utility.CompareToObjectProperties<Masters, MastersDTO>(mastersExpected[0], masterActual[0]))
             {
