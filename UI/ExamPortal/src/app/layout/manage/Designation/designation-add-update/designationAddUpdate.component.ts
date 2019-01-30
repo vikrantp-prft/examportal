@@ -22,12 +22,21 @@ export class AddDesignationComponent implements OnInit {
 
   designationForm = new FormGroup({
     designationTitle: new FormControl('', Validators.required),
-    designationisActive: new FormControl('')
+    designationDescription: new FormControl('', [Validators.required])
   });
 
   get designationTitle(){
     return this.designationForm.get('designationTitle');
   }
+
+  get designationDescription(){
+    return this.designationForm.get('designationDescription');
+  }
+
+  frmReset()
+  {
+    this.designationForm.reset();
+  }  
   
   fn_saveDesignation(data) {
     if (this.designationForm.invalid) {
@@ -40,8 +49,8 @@ export class AddDesignationComponent implements OnInit {
     {
       // firstName: this.employeeForm.controls.firstName.value,
       name: data.value.designationTitle ,
-      isActive: data.value.designationisActive,
-      description: "",
+      isActive: true,
+      description: data.value.designationDescription,
       masterType: "Designation"
      
     }

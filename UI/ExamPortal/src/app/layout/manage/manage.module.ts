@@ -20,6 +20,7 @@ import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component
 import { TeamListComponent } from './team/team-list/teamList.component';
 import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
 import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.component';
+import { EditDesignationComponent } from './Designation/designation-edit-update/designationEditUpdate.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.compon
         CategoryEditUpdateComponent,
         DesignationListComponent,
         AddDesignationComponent,
+        EditDesignationComponent,
         TeamListComponent,
         AddTeamComponent,
         EditTeamComponent

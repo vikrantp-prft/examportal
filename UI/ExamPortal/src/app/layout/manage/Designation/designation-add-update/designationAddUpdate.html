@@ -19,17 +19,21 @@
                 <div *ngIf="designationTitle.touched && designationTitle.invalid" class="alert alert-danger">Designation title is required</div>
               </div>  
             </div>
+            <div class="form-group row">
+                    <label for="designationDescription" class="col-sm-3 col-form-label">Designation Title</label>
+                    <div class="col-sm-9">
+                      <input 
+                          formControlName="designationDescription"
+                          type="text" 
+                          class="form-control" 
+                          id="desigantionTitle" 
+                          placeholder="Designation Description">
+                      <div *ngIf="designationDescription.touched && designationDescription.invalid" class="alert alert-danger">Designation title is required</div>
+                    </div>  
+                  </div>
             
-            <div class="form-group row ">
-                <label for="isActive" class="col-sm-3 col-form-label">Is Active</label>
-                <div class="col-sm-9">
-                        <input 
-                        formControlName="designationisActive"
-                        type="checkbox" class="ml-1 form-check-input" id="isACtive">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-md">Submit</button>
-            <button type="reset" class="btn btn-primary btn-md ml-3">Reset</button>
+            <button type="submit" class="btn btn-primary btn-md" [disabled]="!designationForm.valid">Submit</button>
+            <button type="reset" class="btn btn-primary btn-md ml-3" (click)="frmReset()">Reset</button>
 
         </form>
     </div>

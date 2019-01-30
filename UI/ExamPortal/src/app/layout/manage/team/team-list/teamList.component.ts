@@ -92,7 +92,7 @@ export class TeamListComponent implements OnInit {
     if (Id != null) {
       swal({
         title: 'Are you sure?',
-        text: 'You want to delete the User!',
+        text: 'You want to delete the Team!',
         buttonsStyling: true,
         confirmButtonClass: 'btn btn-success',
         showCancelButton: true,
@@ -126,7 +126,7 @@ export class TeamListComponent implements OnInit {
         this.fn_GetTeamList();
       }
       else{
-        this.toastr.error("Not deleted");
+        this.toastr.error("Failed to delete team");
       }
       
     });

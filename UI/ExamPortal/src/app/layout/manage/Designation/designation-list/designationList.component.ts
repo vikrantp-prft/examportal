@@ -70,22 +70,60 @@ export class DesignationListComponent implements OnInit {
     const designationModel =
     {
       "filter": "Designation",
-      "pageSize": 0,
-      "pageNumber": 0,
-      "totleRecords": 0,
-      "filterBy": "string",
-      "sortBy": "string",
-      "isDescending": true
     };
 
     this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
        this.designationList = rs.data;
-       console.log(this.designationList)
       }
       else {
       }
     }); 
   }
+
+  fn_deleteDesignation(Id) {
+    if (Id != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the Designation!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        console.log(x);
+        console.log(x.value);
+        if (x.value == true) {
+          console.log(x);
+           console.log(x.value);
+          const url = 'api/Master/DeleteMaster';
+          const model = {
+            id: ''
+          };
+          model.id = Id;
+          this.fn_delDesignationFun(url, model);
+        }
+      });
+     
+    }
+  }
+
+  
+  // function for soft deleting the Admin User.
+  fn_delDesignationFun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if ((rs.message == 'Success')) {
+        this.toastr.success('Designation\'s details deleted successfully!');
+        this.fn_GetDesignationList();
+      }
+      else{
+        this.toastr.error("Not deleted");
+      }
+      
+    });
+  }
+
 }
