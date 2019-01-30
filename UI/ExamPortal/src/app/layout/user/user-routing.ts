@@ -43,7 +43,7 @@ const routes: Routes = [
                 path: 'updateemployee/:_empid', component: EmployeeUpdateComponent
             },
             {
-                path:'upload', component: UploadComponent
+                path: 'upload/:examId', component: UploadComponent
             }
         ]
     }

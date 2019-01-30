@@ -14,7 +14,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// Get Users list
         /// </summary>
         /// <value>List of User in DTO</value>
-        IEnumerable<UsersDTO> GetUsers (RequestModel requestModel);
+        ResponseModel GetUsers (RequestModel requestModel);
 
         /// <summary>
         /// Save User Details
@@ -50,7 +50,6 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="userId"></param>
         /// <returns></returns>
         bool InactivateUser (string userId);
-
 
         /// <summary>
         /// Deleted user record

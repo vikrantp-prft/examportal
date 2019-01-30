@@ -65,15 +65,27 @@ export class DesignationListComponent implements OnInit {
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/Dropdown/Designations';
+    const url = 'api/Master/GetMasterByType';
 
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.designationList = data.data;
-      },
-      err => console.error(err),
-      () => {}
-    );
+    const designationModel =
+    {
+      "filter": "Designation",
+      "pageSize": 0,
+      "pageNumber": 0,
+      "totleRecords": 0,
+      "filterBy": "string",
+      "sortBy": "string",
+      "isDescending": true
+    };
+
+    this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+       this.designationList = rs.data;
+       console.log(this.designationList)
+      }
+      else {
+      }
+    }); 
   }
 }

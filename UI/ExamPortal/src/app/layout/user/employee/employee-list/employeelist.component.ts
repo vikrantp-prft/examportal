@@ -6,9 +6,10 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 interface paginationModel {
-  currentPage: number;
+  //currentPage: number;
   pageSize: number;
-  searchString: string;
+  //searchString: string;
+  pageNumber: number;
 }
 
 @Component({
@@ -22,7 +23,8 @@ export class EmployeeListComponent implements OnInit {
   public params: any = {
     currentPage: 1,
     pageSize: 10,
-    searchString: ''
+    searchString: '',
+    pageNumber: 1
   };
   public i: Number = 0;
   public startrecordno: Number = 1;
@@ -58,14 +60,17 @@ export class EmployeeListComponent implements OnInit {
   // Function to get list of employees
 
   fn_GetEmployeeList() {
+    // const prop: paginationModel = {
+    //   currentPage: parseInt(this.params.currentPage),
+    //   pageSize: parseInt(this.params.pageSize),
+    //   searchString: this.params.searchString
+    // };
     const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
+      pageNumber: this.params.pageNumber
     };
-    const url = 'api/Employee/';
-
-    this.CommonService.fn_Get(url).subscribe(
+    const url = 'api/Employee/GetEmployees';
+    this.CommonService.fn_PostWithData(prop, url).subscribe(
       (data: any) => {
         // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;
@@ -77,7 +82,7 @@ export class EmployeeListComponent implements OnInit {
 
   // Function to get employee ID
   fn_getEmployee(empid) {
-    this.router.navigate(['/user/updateemployee'],{queryParams:{_empid:empid}});
+    this.router.navigate(['/user/updateemployee'], { queryParams: { _empid: empid } });
   }
 
   // function to display the alert before deleting the Order.

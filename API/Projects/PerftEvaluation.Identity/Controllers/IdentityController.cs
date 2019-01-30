@@ -42,7 +42,7 @@ namespace PerftEvaluation.Identity.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("gettoken")]
+        [Route("getidentitytoken")]
         public async Task<IActionResult> CreateToken([FromBody] LoginModel loginModel)
         {
             if (ModelState.IsValid)
@@ -51,7 +51,7 @@ namespace PerftEvaluation.Identity.Controllers
 
                 if (!loginResult.Succeeded)
                 {
-                    return BadRequest();
+                    return BadRequest("Login failed. Please check your credentials.");
                 }
 
                 var user = await _userManager.FindByNameAsync(loginModel.Username);
@@ -64,7 +64,7 @@ namespace PerftEvaluation.Identity.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("refreshtoken")]
+        [Route("refreshidentitytoken")]
         public async Task<IActionResult> RefreshToken()
         {
             var user = await _userManager.FindByNameAsync(
@@ -77,7 +77,7 @@ namespace PerftEvaluation.Identity.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("destroytoken")]
+        [Route("destroyidentitytoken")]
         public async Task<IActionResult> DestroyToken()
         {
             await _signInManager.SignOutAsync();
@@ -85,6 +85,7 @@ namespace PerftEvaluation.Identity.Controllers
 
         }
 
+        // Reset password directly
         [AllowAnonymous]
         [HttpPost]
         [Route("resetpassword")]
@@ -104,6 +105,57 @@ namespace PerftEvaluation.Identity.Controllers
                 {
                     return Ok($"Password reset to '{resetPasswordModel.Password}'");
                 }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        // Reset password with reset code
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("resetpasswordwithtoken")]
+        public async Task<IActionResult> ResetPasswordWithToken([FromBody] ResetPasswordModel resetPasswordModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordModel.Username);
+                if (user == null)
+                {
+                    return BadRequest("User doest not exist.");
+                }
+
+                var result = await _userManager.ResetPasswordAsync(user, resetPasswordModel.ResetCode, resetPasswordModel.Password);
+                if (result.Succeeded)
+                {
+                    return Ok($"Password reset to '{resetPasswordModel.Password}'");
+                }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("getresetpasswordtoken")]
+        public async Task<IActionResult> CreateResetPasswordToken([FromBody] UsernameModel usernameModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(usernameModel.Username);
+                if (user == null)
+                {
+                    return BadRequest("User doest not exist.");
+                }
+
+                return Ok(await _userManager.GeneratePasswordResetTokenAsync(user));
             }
             return BadRequest(ModelState);
 

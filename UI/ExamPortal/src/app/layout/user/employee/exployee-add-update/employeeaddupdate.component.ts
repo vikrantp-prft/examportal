@@ -14,6 +14,7 @@ import { appConfig } from 'src/app/common/core/app.config';
 })
 export class AddEmployeeComponent implements OnInit {
   public employeeForm: FormGroup;
+  submitted = false;
   public teamArray: any[];
   public stateArray: any[];
   public courseArray: any[];
@@ -35,22 +36,22 @@ export class AddEmployeeComponent implements OnInit {
       lastName: new FormControl(''),
       dob: new FormControl(''),
       phone: new FormControl(''),
-      mobile: new FormControl(''),
-      address1: new FormControl(''),
+      mobile: new FormControl('', Validators.required),
+      address1: new FormControl('', Validators.required),
       address2: new FormControl(''),
-      city: new FormControl(''),
-      stateId: new FormControl(''),
-      pincode: new FormControl(''),
-      currentAddress1: new FormControl(''),
-      currentAddress2: new FormControl(''),
-      currentCity: new FormControl(''),
-      currentStateId: new FormControl(''),
-      currentPincode: new FormControl(''),
+      city: new FormControl('', Validators.required),
+      stateId: new FormControl('', Validators.required),
+      pincode: new FormControl('', Validators.required),
+      currentAddress1: new FormControl('', Validators.required),
+      currentAddress2: new FormControl('', Validators.required),
+      currentCity: new FormControl('', Validators.required),
+      currentStateId: new FormControl('', Validators.required),
+      currentPincode: new FormControl('', Validators.required),
       note: new FormControl(''),
-      teamId: new FormControl(''),
-      isActive: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
+      teamId: new FormControl('', Validators.required),
+      isActive: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
       course: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
@@ -61,7 +62,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     this.employeeForm.controls.isActive.setValue(true);
     this.fn_getTeam();
     this.fn_getState();
@@ -76,9 +76,14 @@ isFieldValid(form: FormGroup, field: string) {
   // Save Employee details function
 
   fn_saveEmployee(value) {
+    this.submitted = true;
     if (this.employeeForm.valid) {
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
+        return false;
+      }
+      else if (this.employeeForm.controls.interest == null) {
+        this.toastr.error('Please select atleast 1 interest');
         return false;
       }
       else {
@@ -154,13 +159,22 @@ isFieldValid(form: FormGroup, field: string) {
       institution: this.employeeForm.controls.institution.value,
       percentage: this.employeeForm.controls.percentage.value
     }
-    this.educationArray.forEach(element => {
-      if (element.courseId === newCourseModel.courseId) {
-        this.toastr.error('Course is already added');
-        return false;
-      }
-    });
-    this.educationArray.push(newCourseModel);
+
+    if (this.educationArray.length!=0) {
+      this.educationArray.forEach(element => {
+        if (element.courseId == newCourseModel.courseId) {
+          this.toastr.error('Course is already added');
+          return false;
+        }
+        else {
+          this.educationArray.push(newCourseModel);
+        }
+      });
+    }
+    else {
+      this.educationArray.push(newCourseModel);
+    }
+    
     this.fn_resetEducationDetails();
   }
 

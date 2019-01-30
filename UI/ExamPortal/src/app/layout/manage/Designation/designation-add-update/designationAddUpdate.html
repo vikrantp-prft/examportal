@@ -1,22 +1,22 @@
 <div class="row justify-content-center">
     <div class="col-md-12 mt-2">
-        <h3 class="text-center">ADD CATEGORY</h3>
+        <h3 class="text-center">ADD DESIGNATION</h3>
     </div>
     <div class="col-md-7 mt-3">
-        <form class="" [formGroup]="categoryForm" (ngSubmit)="fn_saveCategory(categoryForm)">
-            <div *ngIf="categoryForm.errors" class="div alert alert-danger">
-                The categorry title is required
+        <form class="" [formGroup]="designationForm" (ngSubmit)="fn_saveDesignation(designationForm)">
+            <div *ngIf="designationForm.errors" class="div alert alert-danger">
+                The designation title is required
             </div>
             <div class="form-group row">
-              <label for="categoryTitle" class="col-sm-3 col-form-label">Category Title</label>
+              <label for="designationTitle" class="col-sm-3 col-form-label">Designation Title</label>
               <div class="col-sm-9">
                 <input 
-                    formControlName="categoryTitle"
+                    formControlName="designationTitle"
                     type="text" 
                     class="form-control" 
-                    id="categoryTitle" 
-                    placeholder="Category Name">
-                <div *ngIf="categoryTitle.touched && categoryTitle.invalid" class="alert alert-danger">Category title is required</div>
+                    id="desigantionTitle" 
+                    placeholder="Designation Name">
+                <div *ngIf="designationTitle.touched && designationTitle.invalid" class="alert alert-danger">Designation title is required</div>
               </div>  
             </div>
             
@@ -24,7 +24,7 @@
                 <label for="isActive" class="col-sm-3 col-form-label">Is Active</label>
                 <div class="col-sm-9">
                         <input 
-                        formControlName="categoryisActive"
+                        formControlName="designationisActive"
                         type="checkbox" class="ml-1 form-check-input" id="isACtive">
                 </div>
             </div>

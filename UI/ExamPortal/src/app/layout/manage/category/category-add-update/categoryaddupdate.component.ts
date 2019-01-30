@@ -10,7 +10,7 @@ import { commonService } from 'src/app/common/services/common.service';
   selector: 'category-add-update',
   templateUrl: './categoryaddupdate.html',
   providers: [commonService]
-})
+}) 
 export class AddCategoryComponent implements OnInit {
   
   constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
@@ -18,21 +18,29 @@ export class AddCategoryComponent implements OnInit {
   }
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   categoryForm = new FormGroup({
-    categoryTitle: new FormControl('', Validators.required),
-    categoryisActive: new FormControl('')
+    categoryTitle: new FormControl('', [Validators.required]),
+    categoryDescription: new FormControl('', [Validators.required])
   });
 
   get categoryTitle(){
     return this.categoryForm.get('categoryTitle');
   }
-  
-  
 
+  get categoryDescription(){
+    return this.categoryForm.get('categoryDescription');
+  }
+
+  frmReset()
+  {
+    this.categoryForm.reset();
+  }  
   fn_saveCategory(data) {
-    if (this.categoryForm.invalid) {
+    if (!this.categoryForm.valid) {
       this.categoryForm.setErrors({
         Validators
       })
@@ -42,12 +50,11 @@ export class AddCategoryComponent implements OnInit {
     {
       // firstName: this.employeeForm.controls.firstName.value,
       name: data.value.categoryTitle ,
-      isActive: data.value.categoryisActive,
-      description: "",
-      masterType: "Department"
+      isActive: true,
+      description: data.value.categoryDescription,
+      masterType: "Category"
      
     }
-    console.log(categoryModel);
 
     this.fn_saveCategoryfun(url, categoryModel);
   }

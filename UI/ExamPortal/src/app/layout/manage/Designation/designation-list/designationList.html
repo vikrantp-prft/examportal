@@ -31,6 +31,9 @@
                 <tr>
                   <th>Sr. No.</th>
                   <th>Designation Title</th>
+                  <th>Designation Description</th>
+                  <th>Status</th>
+                  <th>Is Deleted </th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -39,6 +42,7 @@
                   <tr *ngFor="let designation of designationList; let i = index">
                       <td>{{i + 1}}</td>
                       <td>{{ designation.name }}</td>
+                      <td>{{ designation.description}}</td>
                      
                       <td>
                         <button type="button" rel="tooltip"  (click)="fn_getEmployee(emp.id)">
