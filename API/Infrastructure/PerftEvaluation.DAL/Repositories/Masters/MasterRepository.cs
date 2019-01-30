@@ -44,7 +44,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <param name="masterType"></param>
         /// <returns></returns>
         public IEnumerable<Masters> GetMastersByType (string masterType) {
-            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType).ToList ();
+            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType && x.IsDeleted == false).ToList ();
         }
 
         /// <summary>
