@@ -30,6 +30,8 @@ export class TeamListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public teamList = [];
+  public teamInfo: any;
+  
 
   // Constructor
 
@@ -41,6 +43,7 @@ export class TeamListComponent implements OnInit {
     this.fn_GetTeamList();
   }
 
+  
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.params.currentPage = 1;
@@ -55,25 +58,85 @@ export class TeamListComponent implements OnInit {
   searchRecord(event: any): void {}
 
   
-  // Function to get list of team
+  // Function to get teamList (GetMasterByType)
   fn_GetTeamList() {
     const prop: paginationModel = {
       currentPage: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/Dropdown/Teams';
+    const url = 'api/Master/GetMasterByType';
+    const teamModel =
+       {
+         "filter": "Team",
+         "pageSize": 0,
+         "pageNumber": 0,
+         "totleRecords": 0,
+         "filterBy": "string",
+         "sortBy": "string",
+         "isDescending": true
+       };
 
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.teamList = data.data;
-      },
-      err => console.error(err),
-      () => {}
-    );
+    this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.teamList = rs.data;
+      }
+      else {
+      }
+      }); 
+  }
+
+  
+  fn_deleteTeam(Id) {
+    if (Id != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the User!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        console.log(x);
+        console.log(x.value);
+        if (x.value == true) {
+          console.log(x);
+           console.log(x.value);
+          const url = 'api/Master/DeleteMaster';
+          const model = {
+            id: ''
+          };
+          model.id = Id;
+          this.fn_delTeamFun(url, model);
+        }
+      });
+     
+    }
+  }
+
+  
+  // function for soft deleting the Admin User.
+  fn_delTeamFun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if ((rs.message == 'Success')) {
+        this.toastr.success('Team\'s details deleted successfully!');
+        this.fn_GetTeamList();
+      }
+      else{
+        this.toastr.error("Not deleted");
+      }
+      
+    });
   }
   
-
   
+    
+  // function to change isActive status
+  // fn_changeStatus(id, status) {
+  // }
+
+
 }
