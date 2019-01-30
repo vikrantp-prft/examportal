@@ -36,9 +36,9 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Users List
         /// </summary>
         /// <value></value>
-        public IEnumerable<UsersDTO> GetUsers (RequestModel requestModel) {
+        public ResponseModel GetUsers (RequestModel requestModel) {
             var user = this._userRepository.GetUsers ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
-            return this._mapper.Map<IEnumerable<UsersDTO>> (user);
+            return CommonResponse.OkResponse (requestModel, user, this._userRepository.GetUsers ().AsQueryable ().Count ());
         }
 
         /// <summary>
