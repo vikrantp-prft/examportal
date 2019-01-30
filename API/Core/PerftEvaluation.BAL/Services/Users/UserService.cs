@@ -38,7 +38,7 @@ namespace PerftEvaluation.BAL.Services {
         /// <value></value>
         public ResponseModel GetUsers (RequestModel requestModel) {
             var user = this._userRepository.GetUsers ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
-            return CommonResponse.OkResponse (requestModel, user, this._userRepository.GetUsers ().AsQueryable ().Count ());
+            return CommonResponse.OkResponse (requestModel, user, (this._userRepository.GetUsers ().AsQueryable ().Count () < 100 ? this._userRepository.GetUsers ().AsQueryable ().Count () : 100));
         }
 
         /// <summary>
