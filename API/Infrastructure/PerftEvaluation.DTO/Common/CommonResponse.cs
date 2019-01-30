@@ -21,7 +21,7 @@ namespace PerftEvaluation.DTO {
             responseModel.PageSize = requestModel.PageSize;
             responseModel.Filter = requestModel.Filter;
             responseModel.IsDescending = requestModel.IsDescending;
-            responseModel.TotleRecords = totalRecords;
+            responseModel.TotalRecords = totalRecords;
 
             return responseModel;
         }

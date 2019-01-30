@@ -41,9 +41,10 @@ namespace PerftEvaluation.BAL.Services {
         public ResponseModel GetEmployees (RequestModel requestModel) {
 
             //Add filter query
-            var filteredEmployee = this._employeeRepository.GetEmployees ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
+            var filteredEmployees = this._employeeRepository.GetEmployees ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
             //Manage the pagnation & joins 
-            var employees = from p in this._mapper.Map<IEnumerable<EmployeesDTO>> (filteredEmployee.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ())
+            var pagedEmployees = filteredEmployees.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var employees = from p in this._mapper.Map<IEnumerable<EmployeesDTO>> (pagedEmployees)
             join o in _masterService.GetMasters (requestModel).AsQueryable () on p.TeamId equals o.Id into MasterTeam
             select new EmployeesDTO () {
                 Id = p.Id,
@@ -76,7 +77,7 @@ namespace PerftEvaluation.BAL.Services {
             };
 
             //return object
-            return CommonResponse.OkResponse (requestModel, employees, (filteredEmployee.Count () < 100 ? filteredEmployee.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, employees, (filteredEmployees.Count () < 100 ? filteredEmployees.Count () : 100));
         }
 
         /// <summary>

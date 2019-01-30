@@ -17,7 +17,7 @@ namespace PerftEvaluation.DTO.Common {
             }
         }
         public int PageNumber { get; set; }
-        public long TotleRecords { get; set; }
+        public long TotalRecords { get; set; }
         public string Filter { get; set; }
         public string SortBy { get; set; }
         public bool IsDescending { get; set; }
