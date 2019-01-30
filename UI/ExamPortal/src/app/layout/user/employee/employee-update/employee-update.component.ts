@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { appConfig } from 'src/app/common/core/app.config';
 
 @Component({
   selector: 'app-employee-update',
@@ -13,7 +14,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EmployeeUpdateComponent implements OnInit {
   public employeeForm: FormGroup;
-  submitted = true;
   public teamArray: any[];
   public stateArray: any[];
   public courseArray: any[];
@@ -33,28 +33,27 @@ export class EmployeeUpdateComponent implements OnInit {
 
   constructor(public router: Router, private CommonService: commonService, private formBuilder: FormBuilder, private route: ActivatedRoute, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
-      middleName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      dob: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
-      mobile: new FormControl('', Validators.required),
-      address1: new FormControl('', Validators.required),
+      firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      middleName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      dob: new FormControl(''),
+      //phone: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(20)]],
+      mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(20)]],
+      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
       address2: new FormControl(''),
-      city: new FormControl('', Validators.required),
+      city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(50)]],
       stateId: new FormControl('', Validators.required),
-      pincode: new FormControl('', Validators.required),
-      currentAddress1: new FormControl(''),
+      pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
+      currentAddress1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
       currentAddress2: new FormControl(''),
-      currentCity: new FormControl(''),
+      currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(20)]],
       currentStateId: new FormControl(''),
-      currentPincode: new FormControl(''),
+      currentPincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
       note: new FormControl(''),
       teamId: new FormControl('', Validators.required),
-      isActive: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      course: new FormControl(''),
+      email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
+      password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD)]],
+      courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
       percentage: new FormControl(''),
@@ -63,7 +62,6 @@ export class EmployeeUpdateComponent implements OnInit {
     });
     this.route.params.subscribe(params => {
       this.employeeId = params['_empid'];
-      console.log('this.employeeId', this.employeeId);
     });
   }
 
@@ -74,9 +72,10 @@ export class EmployeeUpdateComponent implements OnInit {
     this.fn_getEmployeeDetailsById();
   }
 
-  // convenience getter for easy access to form fields
-  get employeeControls() { return this.employeeForm.controls; }
-
+  // function to display the error message for  validation.
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
   // function to get teams
   fn_getTeam() {
     const teamUrl = 'api/Dropdown/Teams';
@@ -121,7 +120,6 @@ export class EmployeeUpdateComponent implements OnInit {
 
   //get employee details by employee Id
   fn_getEmployeeDetailsById() {
-    debugger;
     const employeeUrl = 'api/Employee/GetEmployeeById';
     const employeeModel =
     {
@@ -142,7 +140,6 @@ export class EmployeeUpdateComponent implements OnInit {
           this.employeeForm.controls.firstName.setValue(employeeResult.data.firstName);
           this.employeeForm.controls.middleName.setValue(employeeResult.data.middleName);
           this.employeeForm.controls.lastName.setValue(employeeResult.data.lastName);
-          this.employeeForm.controls.phone.setValue(employeeResult.data.phone);
           this.employeeForm.controls.address1.setValue(employeeResult.data.address1);
           this.employeeForm.controls.address2.setValue(employeeResult.data.address2);
           this.employeeForm.controls.currentAddress1.setValue(employeeResult.data.currentAddress1);
@@ -154,16 +151,13 @@ export class EmployeeUpdateComponent implements OnInit {
           this.employeeForm.controls.email.setValue(employeeResult.data.email);
           this.employeeForm.controls.password.setValue(employeeResult.data.password);
           this.employeeForm.controls.teamId.setValue(employeeResult.data.teamId);
-          this.isActiveProperty = employeeResult.data.isActive;
           this.employeeForm.controls.mobile.setValue(employeeResult.data.mobile);
           this.employeeForm.controls.note.setValue(employeeResult.data.note);
-          this.employeeForm.controls.phone.setValue(employeeResult.data.phone);
           this.employeeForm.controls.city.setValue(employeeResult.data.city);
           this.employeeForm.controls.pincode.setValue(employeeResult.data.pincode);
-          this.isChecked = employeeResult.data.isActive;
           var dates = new Date(employeeResult.data.dob);
           var date = dates.getFullYear() + "-" + "03" + "-" + dates.getDate();
-          this.employeeForm.controls.dob.setValue(date.toString());
+          this.employeeForm.controls.dob.setValue('1991-03-01');
           this.educationArray = employeeResult.data.educationDetails;
           this.fetchInterest = employeeResult.data.interest;
           this.checkedInterestArray = this.employeeForm.get('interest') as FormArray;
@@ -176,18 +170,13 @@ export class EmployeeUpdateComponent implements OnInit {
             });
           });
         }
-        else {
-          this.toastr.success('Employee details deleted successfully!');
-        }
       }
     });
   }
 
   //Update Employee details function
   fn_updateEmployee(value) {
-    debugger;
-    this.submitted = true;
-    if (this.employeeForm.valid) {
+      if (this.employeeForm.valid) {
       if (this.educationArray.length == 0) {
         this.toastr.error('Please add education details');
         return false;
@@ -200,6 +189,11 @@ export class EmployeeUpdateComponent implements OnInit {
         this.fn_updateEmployeefun(employeeModel, updateEmployeeurl);
       }
     }
+    else {
+      this.CommonService.validateAllFormFields(this.employeeForm);
+      this.toastr.error('Please fill required details');
+      return false;
+    }
   }
 
   // function for update employee details.
@@ -208,10 +202,10 @@ export class EmployeeUpdateComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.toastr.success('Employee details updated successfully!');
-        this.fn_resetEmployeeDetails();
+        this.router.navigate(['user/employeelist']);
       }
       else {
-        this.toastr.error('Failed to add Employee details');
+        this.toastr.error('Failed to update Employee details');
       }
     });
   }
@@ -227,19 +221,16 @@ export class EmployeeUpdateComponent implements OnInit {
     this.employeeForm.controls.city.reset();
     this.employeeForm.controls.pincode.reset();
     this.employeeForm.controls.stateId.setValue(null);
-    this.employeeForm.controls.phone.reset();
     this.employeeForm.controls.mobile.reset();
     this.employeeForm.controls.currentAddress1.reset();
     this.employeeForm.controls.currentAddress2.reset();
     this.employeeForm.controls.currentCity.reset();
     this.employeeForm.controls.currentStateId.setValue(null);
     this.employeeForm.controls.currentPincode.reset();
-    this.employeeForm.controls.isActive.reset();
     this.employeeForm.controls.email.reset();
     this.employeeForm.controls.password.reset();
     this.employeeForm.controls.note.reset();
     this.educationArray = [];
-    this.employeeForm.controls.isActive.setValue(false);
     this.interestArray.forEach(element => {
       element.selected = false;
     });
@@ -247,7 +238,7 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   fn_resetEducationDetails() {
-    this.employeeForm.controls.course.reset();
+    this.employeeForm.controls.courseId.reset();
     this.employeeForm.controls.yearOfPassing.reset();
     this.employeeForm.controls.percentage.reset();
     this.employeeForm.controls.institution.reset();
@@ -279,17 +270,17 @@ export class EmployeeUpdateComponent implements OnInit {
     }
   }
 
-   //function to add new course
+  //function to add new course
   fn_addNewCourse() {
     let newCourseModel = {
-      courseId: this.employeeForm.controls.course.value,
+      courseId: this.employeeForm.controls.courseId.value,
       course: this.selectedCourse,
       yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
       institution: this.employeeForm.controls.institution.value,
       percentage: this.employeeForm.controls.percentage.value
     }
 
-    if (this.educationArray.length!=0) {
+    if (this.educationArray.length != 0) {
       this.educationArray.forEach(element => {
         if (element.courseId == newCourseModel.courseId) {
           this.toastr.error('Course is already added');
@@ -303,7 +294,7 @@ export class EmployeeUpdateComponent implements OnInit {
     else {
       this.educationArray.push(newCourseModel);
     }
-    
+
     this.fn_resetEducationDetails();
   }
 

@@ -14,7 +14,6 @@ import { appConfig } from 'src/app/common/core/app.config';
 })
 export class AddEmployeeComponent implements OnInit {
   public employeeForm: FormGroup;
-  submitted = false;
   public teamArray: any[];
   public stateArray: any[];
   public courseArray: any[];
@@ -29,30 +28,28 @@ export class AddEmployeeComponent implements OnInit {
   ];
 
   constructor(public router: Router, private CommonService: commonService, public http: Http,
-     private formBuilder: FormBuilder, private toastr: ToastrService) {
+    private formBuilder: FormBuilder, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
-      firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
-      middleName: new FormControl(''),
-      lastName: new FormControl(''),
+      firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      middleName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
       dob: new FormControl(''),
-      phone: new FormControl(''),
-      mobile: new FormControl('', Validators.required),
-      address1: new FormControl('', Validators.required),
+      mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
+      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(10)]],
       address2: new FormControl(''),
-      city: new FormControl('', Validators.required),
-      stateId: new FormControl('', Validators.required),
-      pincode: new FormControl('', Validators.required),
-      currentAddress1: new FormControl('', Validators.required),
-      currentAddress2: new FormControl('', Validators.required),
-      currentCity: new FormControl('', Validators.required),
-      currentStateId: new FormControl('', Validators.required),
-      currentPincode: new FormControl('', Validators.required),
+      city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(20)]],
+      stateId: new FormControl(''),
+      pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
+      currentAddress1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
+      currentAddress2: new FormControl(''),
+      currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(20)]],
+      currentStateId: new FormControl(''),
+      currentPincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
       note: new FormControl(''),
-      teamId: new FormControl('', Validators.required),
-      isActive: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      course: new FormControl(''),
+      teamId: new FormControl(''),
+      email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
+      password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD), Validators.maxLength(20)]],
+      courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),
       percentage: new FormControl(''),
@@ -62,21 +59,19 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employeeForm.controls.isActive.setValue(true);
     this.fn_getTeam();
     this.fn_getState();
     this.fn_getCourse();
   }
 
-// function to display the error message for  validation.
-isFieldValid(form: FormGroup, field: string) {
-  return !form.get(field).valid && form.get(field).touched;
-}
+  // function to display the error message for  validation.
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
 
   // Save Employee details function
 
   fn_saveEmployee(value) {
-    this.submitted = true;
     if (this.employeeForm.valid) {
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
@@ -104,7 +99,8 @@ isFieldValid(form: FormGroup, field: string) {
       const rs = result;
       if (rs.statusCode === 200) {
         this.toastr.success('Employee details added successfully!');
-        this.fn_resetEmployeeDetails();
+        this.router.navigate(['user/employeelist']);
+        //this.fn_resetEmployeeDetails();
       } else {
         this.toastr.error('Failed to add Employee details');
       }
@@ -153,14 +149,14 @@ isFieldValid(form: FormGroup, field: string) {
   //function to add new course
   fn_addNewCourse() {
     let newCourseModel = {
-      courseId: this.employeeForm.controls.course.value,
+      courseId: this.employeeForm.controls.courseId.value,
       course: this.selectedCourse,
       yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
       institution: this.employeeForm.controls.institution.value,
       percentage: this.employeeForm.controls.percentage.value
     }
 
-    if (this.educationArray.length!=0) {
+    if (this.educationArray.length != 0) {
       this.educationArray.forEach(element => {
         if (element.courseId == newCourseModel.courseId) {
           this.toastr.error('Course is already added');
@@ -174,7 +170,7 @@ isFieldValid(form: FormGroup, field: string) {
     else {
       this.educationArray.push(newCourseModel);
     }
-    
+
     this.fn_resetEducationDetails();
   }
 
@@ -192,7 +188,7 @@ isFieldValid(form: FormGroup, field: string) {
 
   // Interest check change function
   fn_onInterestChange(event) {
-    
+
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
@@ -225,19 +221,16 @@ isFieldValid(form: FormGroup, field: string) {
     this.employeeForm.controls.city.reset();
     this.employeeForm.controls.pincode.reset();
     this.employeeForm.controls.stateId.setValue(null);
-    this.employeeForm.controls.phone.reset();
     this.employeeForm.controls.mobile.reset();
     this.employeeForm.controls.currentAddress1.reset();
     this.employeeForm.controls.currentAddress2.reset();
     this.employeeForm.controls.currentCity.reset();
     this.employeeForm.controls.currentStateId.setValue(null);
     this.employeeForm.controls.currentPincode.reset();
-    this.employeeForm.controls.isActive.reset();
     this.employeeForm.controls.email.reset();
     this.employeeForm.controls.password.reset();
     this.employeeForm.controls.note.reset();
     this.educationArray = [];
-    this.employeeForm.controls.isActive.setValue(false);
     this.interestArray.forEach(element => {
       element.selected = false;
     });
@@ -245,7 +238,7 @@ isFieldValid(form: FormGroup, field: string) {
   }
 
   fn_resetEducationDetails() {
-    this.employeeForm.controls.course.reset();
+    this.employeeForm.controls.courseId.reset();
     this.employeeForm.controls.yearOfPassing.reset();
     this.employeeForm.controls.percentage.reset();
     this.employeeForm.controls.institution.reset();
