@@ -45,10 +45,10 @@ namespace PerftEvaluation.BAL.Services {
             //Manage the pagnation & joins 
             var pagedEmployees = filteredEmployees.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             var employees = from p in this._mapper.Map<IEnumerable<EmployeesDTO>> (pagedEmployees)
-            join o in _masterService.GetMasters (requestModel).AsQueryable () on p.TeamId equals o.Id into MasterTeam
+            join o in _masterRepository.GetAllMasters ().AsQueryable () on p.TeamId equals o.Id into MasterTeam
             select new EmployeesDTO () {
                 Id = p.Id,
-                Team = MasterTeam.FirstOrDefault (),
+                //Team = MasterTeam.FirstOrDefault (),
                 FirstName = p.FirstName,
                 MiddleName = p.MiddleName,
                 LastName = p.LastName,

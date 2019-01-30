@@ -34,8 +34,13 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Masters List
         /// </summary>
         /// <value></value>
-        public IEnumerable<MastersDTO> GetMasters (RequestModel requestModel) {
-            return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetAllMasters ().AsQueryable ().Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ());
+        public ResponseModel GetMasters (RequestModel requestModel) {
+            //Filter & sort the data
+            var filteredMasters = this._masterRepository.GetAllMasters ().AsQueryable ().SortAndFilter (requestModel, DbFilters.MasterFilters);
+            //Integrate pagination
+            var masters = filteredMasters.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            //return object
+            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<MastersDTO>>(masters), (filteredMasters.Count () < 100 ? filteredMasters.Count () : 100));
         }
 
         /// <summary>

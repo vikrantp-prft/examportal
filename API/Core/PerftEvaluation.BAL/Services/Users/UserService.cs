@@ -42,7 +42,7 @@ namespace PerftEvaluation.BAL.Services {
             //Integrate pagination
             var user = filteredUser.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             //return object
-            return CommonResponse.OkResponse (requestModel, user, (filteredUser.Count () < 100 ? filteredUser.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<UsersDTO>>(user), (filteredUser.Count () < 100 ? filteredUser.Count () : 100));
         }
 
         /// <summary>

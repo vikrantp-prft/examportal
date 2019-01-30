@@ -35,11 +35,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetMasters")]
         public IActionResult Get (RequestModel requestModel) {
             try {
-                responseModel.StatusCode = 200;
-                responseModel.Message = "Success";
-                responseModel.Data = this._masterService.GetMasters (requestModel);
-
-                return Ok (responseModel);
+                return Ok (this._masterService.GetMasters (requestModel));
             } catch (Exception exception) {
                 _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));

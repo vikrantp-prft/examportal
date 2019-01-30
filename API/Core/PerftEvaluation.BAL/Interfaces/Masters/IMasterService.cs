@@ -12,7 +12,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// Get list masters
         /// </summary>
         /// <value></value>
-        IEnumerable<MastersDTO> GetMasters (RequestModel requestModel);
+        ResponseModel GetMasters (RequestModel requestModel);
 
         /// <summary>
         /// Save master detail
