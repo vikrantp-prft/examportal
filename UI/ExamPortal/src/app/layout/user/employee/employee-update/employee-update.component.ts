@@ -23,6 +23,7 @@ export class EmployeeUpdateComponent implements OnInit {
   public fetchInterest: any[];
   public isActiveProperty: any;
   public checkedInterestArray: FormArray;
+  public isChecked: any;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
     { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
@@ -159,11 +160,13 @@ export class EmployeeUpdateComponent implements OnInit {
           this.employeeForm.controls.phone.setValue(employeeResult.data.phone);
           this.employeeForm.controls.city.setValue(employeeResult.data.city);
           this.employeeForm.controls.pincode.setValue(employeeResult.data.pincode);
+          this.isChecked = employeeResult.data.isActive;
           var dates = new Date(employeeResult.data.dob);
           var date = dates.getFullYear() + "-" + "03" + "-" + dates.getDate();
           this.employeeForm.controls.dob.setValue(date.toString());
           this.educationArray = employeeResult.data.educationDetails;
           this.fetchInterest = employeeResult.data.interest;
+          this.checkedInterestArray = this.employeeForm.get('interest') as FormArray;
           this.interestArray.forEach(allInterest => {
             this.fetchInterest.forEach(selectedInterest => {
               if (allInterest.description == selectedInterest) {
@@ -256,7 +259,6 @@ export class EmployeeUpdateComponent implements OnInit {
 
   //Interest check change function
   fn_onInterestChange(event) {
-    this.checkedInterestArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
       // Add a new control in the arrayForm
@@ -275,5 +277,41 @@ export class EmployeeUpdateComponent implements OnInit {
         i++;
       });
     }
+  }
+
+   //function to add new course
+  fn_addNewCourse() {
+    let newCourseModel = {
+      courseId: this.employeeForm.controls.course.value,
+      course: this.selectedCourse,
+      yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
+      institution: this.employeeForm.controls.institution.value,
+      percentage: this.employeeForm.controls.percentage.value
+    }
+
+    if (this.educationArray.length!=0) {
+      this.educationArray.forEach(element => {
+        if (element.courseId == newCourseModel.courseId) {
+          this.toastr.error('Course is already added');
+          return false;
+        }
+        else {
+          this.educationArray.push(newCourseModel);
+        }
+      });
+    }
+    else {
+      this.educationArray.push(newCourseModel);
+    }
+    
+    this.fn_resetEducationDetails();
+  }
+
+  //Get selected course value and text
+  fn_getSelectedCourse(event: Event) {
+    let selectedOptions = event.target['options'];
+    let selectedIndex = selectedOptions.selectedIndex;
+    let selectElementText = selectedOptions[selectedIndex].text;
+    this.selectedCourse = selectElementText;
   }
 }

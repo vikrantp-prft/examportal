@@ -60,7 +60,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     this.employeeForm.controls.isActive.setValue(true);
     this.fn_getTeam();
     this.fn_getState();
@@ -72,15 +71,13 @@ export class AddEmployeeComponent implements OnInit {
 
   //Save Employee details function
   fn_saveEmployee(value) {
-    debugger;
     this.submitted = true;
     if (this.employeeForm.valid) {
       if (this.educationArray.length == 0) {
         this.toastr.error('Please add education details');
         return false;
       }
-      else if(this.employeeControls.interest==null)
-      {
+      else if (this.employeeControls.interest == null) {
         this.toastr.error('Please add education details');
         return false;
       }
@@ -161,13 +158,22 @@ export class AddEmployeeComponent implements OnInit {
       institution: this.employeeForm.controls.institution.value,
       percentage: this.employeeForm.controls.percentage.value
     }
-    this.educationArray.forEach(element => {
-      if (element.courseId == newCourseModel.courseId) {
-        this.toastr.error('Course is already added');
-        return false;
-      }
-    });
-    this.educationArray.push(newCourseModel);
+
+    if (this.educationArray.length!=0) {
+      this.educationArray.forEach(element => {
+        if (element.courseId == newCourseModel.courseId) {
+          this.toastr.error('Course is already added');
+          return false;
+        }
+        else {
+          this.educationArray.push(newCourseModel);
+        }
+      });
+    }
+    else {
+      this.educationArray.push(newCourseModel);
+    }
+    
     this.fn_resetEducationDetails();
   }
 
