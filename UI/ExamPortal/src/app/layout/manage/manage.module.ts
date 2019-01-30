@@ -1,5 +1,7 @@
-import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
-import { CategoryListComponent } from './category-list/categorylist.component';
+import { CategoryEditUpdateComponent } from './category/category-edit-update/categoryEditUpdate.component';
+import { AddDesignationComponent } from './Designation/designation-add-update/designationAddUpdate.component';
+import { AddCategoryComponent } from './category/category-add-update/categoryaddupdate.component';
+import { CategoryListComponent } from './category/category-list/categorylist.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManageComponent } from './manage.component';
@@ -36,7 +38,9 @@ import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.
         questionAddUpdateComponent,
         CategoryListComponent,
         AddCategoryComponent,
+        CategoryEditUpdateComponent,
         DesignationListComponent,
+        AddDesignationComponent,
         TeamListComponent,
         AddTeamComponent
     ]
