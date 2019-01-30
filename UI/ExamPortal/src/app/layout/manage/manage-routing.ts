@@ -13,6 +13,7 @@ import { DesignationListComponent } from './Designation/designation-list/designa
 import { TeamListComponent } from './team/team-list/teamList.component';
 import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
 import { AddDesignationComponent } from './Designation/designation-add-update/designationAddUpdate.component';
+import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.component';
 
 
 
@@ -58,6 +59,9 @@ const routes: Routes = [
             },
             {
                 path: 'addTeam', component: AddTeamComponent
+            },
+            {
+                path: 'editTeamList/:id', component: EditTeamComponent
             }
 
         ]

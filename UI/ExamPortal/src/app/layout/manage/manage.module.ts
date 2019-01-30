@@ -19,6 +19,7 @@ import { DesignationListComponent } from './Designation/designation-list/designa
 import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
 import { TeamListComponent } from './team/team-list/teamList.component';
 import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
+import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.
         DesignationListComponent,
         AddDesignationComponent,
         TeamListComponent,
-        AddTeamComponent
+        AddTeamComponent,
+        EditTeamComponent
     ]
 })
 export class ManageModule { }
