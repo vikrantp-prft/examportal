@@ -95,8 +95,11 @@ namespace PerftEvaluation.Entities.POCOEntities
 
     public class EducationDetails
     {
-        [BsonElement("course")]
-        public string Course { get; set; }
+        [BsonElement("educationDetailsId"), BsonRepresentation(BsonType.ObjectId)]
+        public string EducationDetailsId { get; set; }
+
+        [BsonElement("courseId"), BsonRepresentation(BsonType.ObjectId)]
+        public string CourseId { get; set; }
 
         [BsonElement("yearOfPassing")]
         public int YearOfPassing { get; set; }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
@@ -40,6 +41,12 @@ namespace PerftEvaluation.DAL.Repositories {
                 users.IsEmployee = true;
                 users.CreatedDate = DateTime.Now;
                 users.ModifiedDate = DateTime.Now;
+
+                if (users.educationDetails != null)
+                {
+                    users.educationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                }
+
                 _db.Save<Users> (users, Users.CollectionName);
                 return true;
             } catch (Exception ex) {
