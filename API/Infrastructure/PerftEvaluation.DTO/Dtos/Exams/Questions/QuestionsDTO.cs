@@ -7,6 +7,8 @@ namespace PerftEvaluation.DTO.Dtos {
     /// Questions Entity's DTO class
     /// </summary>
     public class QuestionsDTO {
+        public string Id { get; set; }
+        
         public string ExamId { get; set; }
 
         public string CategoryId { get; set; }

@@ -1,5 +1,7 @@
-import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
-import { CategoryListComponent } from './category-list/categorylist.component';
+import { CategoryEditUpdateComponent } from './category/category-edit-update/categoryEditUpdate.component';
+import { AddDesignationComponent } from './Designation/designation-add-update/designationAddUpdate.component';
+import { AddCategoryComponent } from './category/category-add-update/categoryaddupdate.component';
+import { CategoryListComponent } from './category/category-list/categorylist.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManageComponent } from './manage.component';
@@ -17,6 +19,8 @@ import { DesignationListComponent } from './Designation/designation-list/designa
 import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
 import { TeamListComponent } from './team/team-list/teamList.component';
 import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
+import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.component';
+import { EditDesignationComponent } from './Designation/designation-edit-update/designationEditUpdate.component';
 
 @NgModule({
     imports: [
@@ -36,9 +40,13 @@ import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.
         questionAddUpdateComponent,
         CategoryListComponent,
         AddCategoryComponent,
+        CategoryEditUpdateComponent,
         DesignationListComponent,
+        AddDesignationComponent,
+        EditDesignationComponent,
         TeamListComponent,
-        AddTeamComponent
+        AddTeamComponent,
+        EditTeamComponent
     ]
 })
 export class ManageModule { }

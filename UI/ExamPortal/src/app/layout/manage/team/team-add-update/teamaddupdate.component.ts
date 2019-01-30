@@ -22,7 +22,7 @@ export class AddTeamComponent implements OnInit {
 
   teamForm = new FormGroup({
     teamTitle: new FormControl('', Validators.required),
-    //teamDescription: new FormControl('', Validators.required),
+    teamDescription: new FormControl('', Validators.required),
     teamisActive: new FormControl('')
   });
 
@@ -30,9 +30,9 @@ export class AddTeamComponent implements OnInit {
     return this.teamForm.get('teamTitle');
   }
 
-//   get teamDescription(){
-//     return this.teamForm.get('teamDescription');
-//   }
+  get teamDescription(){
+    return this.teamForm.get('teamDescription');
+  }
   
   
 
@@ -47,29 +47,29 @@ export class AddTeamComponent implements OnInit {
     {
       // firstName: this.employeeForm.controls.firstName.value,
       name: data.value.teamTitle ,
-      isActive: data.value.teamisActive,
-      //description: data.value.teamDescription,
+      isActive: true,
+      description: data.value.teamDescription,
       masterType: "Team"
      
     }
-    console.log(teamModel);
+    //console.log(teamModel);
 
     this.fn_saveTeamfun(url, teamModel);
   }
 
-  // function for save employee details.
-  fn_saveTeamfun(url, data) {
-    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
-      const rs = result;
-      if (rs.statusCode == 200) {
-        this.toastr.success('Team added successfully!');
-        this.router.navigate(['manage/teamlist']);
-      }
-      else {
-        this.toastr.success('Failed to add team');
-      }
-    });
-  }
+    // function for save employee details.
+    fn_saveTeamfun(url, data) {
+      this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+        // debugger;
+        // console.log(result);
+        const rs = result;
+        if (rs.statusCode == 200) {
+          this.toastr.success('Team added successfully!');
+          this.router.navigate(['manage/teamlist']);
+        }
+        else {
+          this.toastr.success('Failed to add team');
+        }
+      });
+    }
 }

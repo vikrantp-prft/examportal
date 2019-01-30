@@ -34,9 +34,7 @@ export class CategoryListComponent implements OnInit {
   // Constructor
 
   constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {}
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
-  }
+  toggle: boolean = true;
   // Lifecycle method
 
   ngOnInit() {
@@ -62,20 +60,78 @@ export class CategoryListComponent implements OnInit {
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/Dropdown/Departments';
+    const url = 'api/Master/GetMasterByType';
 
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.categoryList = data.data;
-      },
-      err => console.error(err),
-      () => {}
-    );
+    const categoryModel =
+    {
+      "filter": "Category",
+      "pageSize": 0,
+      "pageNumber": 0,
+      "totleRecords": 0,
+      "filterBy": "string",
+      "sortBy": "string",
+      "isDescending": true
+    };
+
+    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+       this.categoryList = rs.data;
+      }
+      else {
+      }
+    }); 
   }
 
-  // FUnction to get employee ID
-  fn_getCategory(empid) {}
+  // Inactivate category
+  fn_ChangeStatus(categoryid, isactive){
+    if(isactive == true){
+      const toggleUrl = "api/Master/InactivateMaster";
+   
+      const categoryModel =
+      {
+        "id": categoryid,
+        "pageSize": 0,
+        "pageNumber": 0,
+        "totleRecords": 0,
+        "filter": "string",
+        "sortBy": "string"
+      };
+  
+      this.CommonService.fn_PostWithData(categoryModel, toggleUrl).subscribe((result: any) => {
+        const rs = result;
+        if (rs.statusCode == 200) {
+         this.categoryList = rs.data;
+        }
+        else {
+        }
+      }); 
+    }
+    if(isactive == false){
+      const toggleUrl = "api/Master/ActivateMaster";
+   
+      const categoryModel =
+      {
+        "id": categoryid,
+        "pageSize": 0,
+        "pageNumber": 0,
+        "totleRecords": 0,
+        "filter": "string",
+        "sortBy": "string"
+      };
+  
+      this.CommonService.fn_PostWithData(categoryModel, toggleUrl).subscribe((result: any) => {
+        const rs = result;
+        if (rs.statusCode == 200) {
+         this.categoryList = rs.data;
+        }
+        else {
+        }
+      }); 
+    }
+    //this.fn_GetCategoryList();
+  }
+
   // function to display the alert before deleting the Order.
   fn_deleteCategory(Id) {
     if (Id != null) {
@@ -88,17 +144,21 @@ export class CategoryListComponent implements OnInit {
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-        if (x.value = true) {
-          const url = 'api/Master';
+        if (x.value == true) {
+          const url = 'api/Master/DeleteMaster';
           const model = {
-            id: ''
-            // deletedBy: 0
+            "id": Id,
+            "pageSize": 0,
+            "pageNumber": 0,
+            "totleRecords": 0,
+            "filter": "string",
+            "sortBy": "string",
+            "isDescending": true
           };
-          model.id = Id;
+
           // obj_SearchDetails.deletedBy = 1;
           this.fn_delfun(url, model);
         }
-
       });
     }
   }
@@ -107,10 +167,11 @@ export class CategoryListComponent implements OnInit {
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
-      if ((result.message = 'Success')) {
+      if ((result.message == 'Success')) {
         this.toastr.success('Category details deleted successfully!');
         this.fn_GetCategoryList();
       }
+
     });
   }
 }

@@ -36,10 +36,13 @@ namespace PerftEvaluation.DTO.Dtos {
         public bool IsDeleted { get; set; }
 
         public MastersDTO Team { get; set; }
+
     }
 
     public class EducationDetailsDTO {
-        public string Course { get; set; }
+
+        public string EducationDetailsId { get; set; }
+        public string CourseId { get; set; }
         public int YearOfPassing { get; set; }
         public string Institution { get; set; }
         public double Percentage { get; set; }

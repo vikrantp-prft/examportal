@@ -62,7 +62,7 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsDeleted == false).FirstOrDefault();
+                return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsDeleted == false && x.Id == questionId).FirstOrDefault();
             }
             catch (Exception ex)
             {
