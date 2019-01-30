@@ -136,12 +136,16 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.Note, users.Note)
                 .Set (c => c.Interest, users.Interest)
                 .Set (c => c.educationDetails, users.educationDetails)
-                .Set (c => c.IsEmployee, users.IsEmployee)
                 .Set (c => c.TeamId, users.TeamId);
 
             try {
                 users.IsEmployee = true;
                 users.ModifiedDate = DateTime.Now;
+                if (users.educationDetails != null)
+                {
+                    users.educationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                }
+
                 _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
                 return true;
             } catch (Exception ex) {

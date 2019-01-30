@@ -58,7 +58,7 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("designationId")]
         public string DesignationId { get; set; }
 
-        [BsonElement("teamId")]
+        [BsonElement("teamId"), BsonRepresentation(BsonType.ObjectId)]
         public string TeamId { get; set; }
 
         [BsonElement("note")]
