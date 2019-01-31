@@ -35,7 +35,7 @@ export class AddEmployeeComponent implements OnInit {
       lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
       dob: new FormControl(''),
       mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
-      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(10)]],
+      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
       address2: new FormControl(''),
       city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(20)]],
       stateId: new FormControl(''),
@@ -62,6 +62,10 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getTeam();
     this.fn_getState();
     this.fn_getCourse();
+    this.employeeForm.controls.teamId.setValue(null);
+    this.employeeForm.controls.courseId.setValue(null);
+    this.employeeForm.controls.stateId.setValue(null);
+    this.employeeForm.controls.currentStateId.setValue(null);
   }
 
   // function to display the error message for  validation.

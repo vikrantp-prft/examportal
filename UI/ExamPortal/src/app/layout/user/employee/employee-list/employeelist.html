@@ -3,45 +3,44 @@
     <div class="col col-xl-12 col-lg-12">
       <div class="card mb-3">
         <div class="card-header">Employee List</div>
-        <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
-          <div class="col-md-3">
-            <div class="dataTables_length_code">
-              <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select> entries</label>
+        <div class="datatable-header">
+            <div class="mx-1 row">
+                <div class="col-md-2">
+                    <div class="">
+                        <select class="custom-select" id="inlineFormCustomSelect">
+                            <option selected>Choose</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <button [routerLink]="['/user/addemployee']" class="btn btn-md btn-primary">
+                        Add Employee
+                    </button>
+                </div>
+                <div class="col-4">
+                    <div class="input-group custom-search-form">
+                        <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
+                        <button class="btn btn-md">Search</button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <!-- [(ngModel)]="params.searchString" -->
-          <!-- <div class=""> -->
-          <div class="input-group custom-search-form col-md-4" style="display: inline-flex;">
-            <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-          </div>
-          <!-- </div>    -->
-          <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/user/addemployee']" class="btn-primary">Add Employee
-
-            </button>
-
-
-          </div>
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-hover table-striped">
+          <table class="table table-hover table-bordered">
             <thead>
               <tr>
                 <th>Sr. No.</th>
                 <th>Name</th>
                 <th>Email</th>
-                 <th>Team</th>
-                <!--<th>Designation</th> -->
+                <th>Team</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-
               <tr *ngFor="let emp of employeeList; let i = index">
                 <td>{{i + 1}}</td>
                 <td>{{emp.firstName}} {{emp.lastName}}</td>
@@ -63,10 +62,6 @@
             </tbody>
           </table>
         </div>
-        <!-- [(ngModel)]="params.currentPage" -->
-        <!-- [totalItems]="params.totalItems" -->
-
-
         <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
           [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
           lastText="LAST"></pagination>

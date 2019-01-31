@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col col-xl-12 col-lg-12">
         <div class="card mb-3">
-          <div class="card-header">Team List</div>
+          <div class="card-header">Degree List</div>
           <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
             <div class="col-md-3">
               <div class="dataTables_length_code">
@@ -26,7 +26,7 @@
             </div>
             <!-- </div>    -->
             <div class="col-md-2" style="display: inline-block;">
-              <button [routerLink]="['/manage/addTeam']" class="btn btn-md btn-primary">Add Team
+              <button [routerLink]="['/manage/addDegree']" class="btn btn-md btn-primary">Add Degree
               </button>
   
   
@@ -37,7 +37,7 @@
               <thead>
                 <tr>
                   <th>Sr. No.</th>
-                  <th>Team Title</th>
+                  <th>Degree Title</th>
                   <th>Description</th>
                   <th>Status</th>
                   <th>Action</th> 
@@ -45,16 +45,16 @@
               </thead>
               <tbody>
         
-                  <tr *ngFor="let team of teamList; let i = index">
+                  <tr *ngFor="let degree of degreeList; let i = index">
                       <td>{{i + 1}}</td>
-                      <td>{{team.name}}</td>
-                      <td>{{team.description}}</td>
-                      <td>{{team.isActive}}</td>
+                      <td>{{degree.name}}</td>
+                      <td>{{degree.description}}</td>
+                      <td>{{degree.isActive}}</td>
                       <td>
-                      <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editTeamList', team.id]">
+                      <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', degree.id]">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </button>&nbsp;
-                      <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_deleteTeam(team.id)">
+                      <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_deleteDegree(degree.id)">
                           <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>&nbsp;
                       <!-- <button class="btn btn-md" type="button" rel="tooltip"  >

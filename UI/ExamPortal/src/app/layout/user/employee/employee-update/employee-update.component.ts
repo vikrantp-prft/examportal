@@ -24,6 +24,9 @@ export class EmployeeUpdateComponent implements OnInit {
   public isActiveProperty: any;
   public checkedInterestArray: FormArray;
   public isChecked: any;
+  public year: any;
+  public month: any;
+  public day: any;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
     { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
@@ -118,6 +121,20 @@ export class EmployeeUpdateComponent implements OnInit {
     });
   }
 
+  fn_getDate(inputDate) {
+    var date = new Date(inputDate);
+    this.year = date.getFullYear();
+    this.month = date.getMonth() + 1;
+    this.day = date.getDate();
+    if (this.day < 10) {
+      this.day = '0' + this.day;
+    }
+    if (this.month < 10) {
+      this.month = '0' + this.month;
+    }
+    return this.year + '-' + this.month + '-' + this.day;
+  }
+
   //get employee details by employee Id
   fn_getEmployeeDetailsById() {
     const employeeUrl = 'api/Employee/GetEmployeeById';
@@ -155,9 +172,8 @@ export class EmployeeUpdateComponent implements OnInit {
           this.employeeForm.controls.note.setValue(employeeResult.data.note);
           this.employeeForm.controls.city.setValue(employeeResult.data.city);
           this.employeeForm.controls.pincode.setValue(employeeResult.data.pincode);
-          var dates = new Date(employeeResult.data.dob);
-          var date = dates.getFullYear() + "-" + "03" + "-" + dates.getDate();
-          this.employeeForm.controls.dob.setValue('1991-03-01');
+          var date = this.fn_getDate(employeeResult.data.dob);
+          this.employeeForm.controls.dob.setValue(date);
           this.educationArray = employeeResult.data.educationDetails;
           this.fetchInterest = employeeResult.data.interest;
           this.checkedInterestArray = this.employeeForm.get('interest') as FormArray;
@@ -176,7 +192,7 @@ export class EmployeeUpdateComponent implements OnInit {
 
   //Update Employee details function
   fn_updateEmployee(value) {
-      if (this.employeeForm.valid) {
+    if (this.employeeForm.valid) {
       if (this.educationArray.length == 0) {
         this.toastr.error('Please add education details');
         return false;

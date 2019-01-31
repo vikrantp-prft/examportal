@@ -97,7 +97,7 @@ export class EmployeeListComponent implements OnInit {
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-        if (x.value = true) {
+        if (x.value == true) {
           const url = 'api/User/InactivateUser';
           const model = {
             id: ''
