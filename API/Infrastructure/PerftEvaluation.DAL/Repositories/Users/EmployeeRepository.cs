@@ -39,12 +39,13 @@ namespace PerftEvaluation.DAL.Repositories {
         public bool SaveEmployee (Users users) {
             try {
                 users.IsEmployee = true;
+                users.IsActive = true;
                 users.CreatedDate = DateTime.Now;
                 users.ModifiedDate = DateTime.Now;
 
-                if (users.educationDetails != null)
+                if (users.EducationDetails != null)
                 {
-                    users.educationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                    users.EducationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
                 }
 
                 _db.Save<Users> (users, Users.CollectionName);
@@ -135,15 +136,15 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.Email, users.Email)
                 .Set (c => c.Note, users.Note)
                 .Set (c => c.Interest, users.Interest)
-                .Set (c => c.educationDetails, users.educationDetails)
+                .Set (c => c.EducationDetails, users.EducationDetails)
                 .Set (c => c.TeamId, users.TeamId);
 
             try {
                 users.IsEmployee = true;
                 users.ModifiedDate = DateTime.Now;
-                if (users.educationDetails != null)
+                if (users.EducationDetails != null)
                 {
-                    users.educationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                    users.EducationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
                 }
 
                 _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);

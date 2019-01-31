@@ -28,7 +28,7 @@ namespace PerftEvaluation.BAL.Services {
             //Integrate pagination
             var questions = filteredQuestions.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<QuestionDTO>> (questions), (filteredQuestions.Count () < 100 ? filteredQuestions.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<QuestionsDTO>> (questions), (filteredQuestions.Count () < 100 ? filteredQuestions.Count () : 100));
         }
 
         public bool ActiveQuestions (string questionId) {

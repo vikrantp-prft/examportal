@@ -63,10 +63,10 @@
                       <td>{{question.questionType}}</td>
                       <!-- <td>{{question.categoryId}}</td> -->
                       <td>
-                        <button type="button" rel="tooltip" (click)="fn_getEmployee(question.id)">
+                        <button type="button" rel="tooltip" (click)="editQuestion(question.id)">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </button>&nbsp;
-                        <button type="button" rel="tooltip" (click)="fn_deleteEmployee(question.id)">
+                        <button type="button" rel="tooltip" (click)="deleteQuestion(question.id)">
                           <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                       </td>
@@ -181,55 +181,14 @@
                       </button>
                     </div>
                   </div>
-
-                  <!-- 
-                      <div *ngIf="singleSelectFlag">
-                        Answer Options
-                        <div class="col-sm-8">
-                          <div class="col-sm-6">Options</div>
-                          <div class="col-sm-2">Correct Answer</div>
-                        </div>
-                        <div class="col-sm-8" *ngFor="let option of singleSelectoptionArray; let i = index">
-                          <div class="col-sm-2">
-                            <label for="lastName">Option {{i+1}}</label>
-                          </div>
-                          <div class="col-sm-4">
-                            <input type="text" class="form-control">
-                          </div>
-                          <div class="col-sm-2">
-                            <input type="radio" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-sm-2">
-                          <button type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('add')">
-                            Add More Options
-                          </button>
-                          <button type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('sub')">
-                            Remove Last Options
-                          </button>
-                        </div>
-                      </div> -->
-
-                  <!-- <div *ngIf="subjectiveFlag">
-                    <div class="col-sm-8">
-                      <div class="col-sm-2">
-                        <label for="lastName">Description</label>
-                      </div>
-                      <div class="col-sm-4">
-                        <input type="textarea" formControlName="subjectivDescription" class="form-control">
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
                 <button type="submit">Submit</button>
-                <button type="button" (click)="fun_resetAll()">Reset Form</button>
+                <button type="button" (click)="resetAll()">Reset Form</button>
               </form>
             </div>
           </div>
         </div>
       </div>
-
-
     </td>
   </tr>
 </table>

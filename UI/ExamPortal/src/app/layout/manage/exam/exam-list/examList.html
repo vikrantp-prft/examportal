@@ -1,47 +1,61 @@
 <div>
-  <div class="row">
-    <div class="col col-xl-12 col-lg-12">
-      <div class="card mb-3">
-        <div class="card-header">Exam List</div>
-        <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
-          <div class="col-md-3">
-            <div class="dataTables_length_code">
-              <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select> entries</label>
+  <div class="card">
+    <div class="card-header">
+      Exam List
+    </div>
+    <div class="card-body datatable-header">
+      <div class="row">
+        <div class="col-md-2 align-items-start">
+          <!-- <select name="example_length" (change)="setRecordPerPage($event)">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select> entries -->
+          <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+            <option selected>Choose</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="col align-items-start">
+            <div class="">
+              <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary">Add Exam</button>
             </div>
           </div>
+        <div class="col-4 align-items-end">
           <!-- [(ngModel)]="params.searchString" -->
           <!-- <div class=""> -->
-          <div class="input-group custom-search-form col-md-4" style="display: inline-flex;">
+          <div class="input-group custom-search-form">
             <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
+            <button class="btn btn-primary btn-md"> Search</button>
           </div>
           <!-- </div>    -->
-          <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/manage/addexam']" class="btn-primary">Add Exam</button>
-          </div>
         </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover table-striped">
-            <thead>
-              <tr>
-                <th>Sr. No.</th>
-                <th>Question Paper</th>
-                <th>Team</th>
-                <th>Duration</th>
-                <th>Total Question</th>
-                <th>Total User Assigned</th>
-                <th>Total User Completed</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
+        
+      </div>
+    </div>
+
+    <div class="card-body table-responsive ">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Sr. No.</th>
+            <th>Question Paper</th>
+            <th>Team</th>
+            <th>Duration</th>
+            <th>Total Question</th>
+            <!-- <th>Total User Assigned</th>
+                <th>Total User Completed</th> -->
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
 
 
-              <!-- <tr>
+          <!-- <tr>
                 <th>Sr. No.</th>
                 <th>Question Paper</th>
                 <th>Team</th>
@@ -61,40 +75,39 @@
               </tr> -->
 
 
-              <tr *ngFor="let exam of examList; let i = index">
-                <td>{{i + 1}}</td>
-                <td>{{exam.title}}</td>
-                <!-- <td>{{exam.teamId}}</td> -->
-                <td></td>
-                <td>{{exam.examDurationHours}} Hours {{exam.examDurationMinutes}} Minutes</td>
-                <td>{{exam.totalQuestions}}</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <!-- <a [routerLink]="['/manage/questionList', exam.id]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+          <tr *ngFor="let exam of examList; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{exam.title | slice:0:35}}</td>
+            <!-- <td>{{exam.teamId}}</td> -->
+            <td></td>
+            <td>{{exam.examDurationHours}} Hours {{exam.examDurationMinutes}} Minutes</td>
+            <td>{{exam.totalQuestions}}</td>
+            <!-- <td></td>
+                <td></td> -->
+            <td>
+              <!-- <a [routerLink]="['/manage/questionList', exam.id]" [routerLinkActive]="['router-link-active']" class="list-group-item">
                     <i class="fa fa-monument"></i>&nbsp;
                     <span>{{ 'View Question' }}</span>
                   </a> -->
-                  <button title="View Questions" [routerLink]="['/manage/questionList', exam.id]" [routerLinkActive]="['router-link-active']"
-                    type="button" rel="tooltip" (click)="fn_getEmployee(exam.id)">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                  </button>&nbsp;
-                  <button title="Edit Exam" type="button" rel="tooltip" [routerLink]="['/manage/editExam', exam.id]">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>&nbsp;
-                  <button title="Delete Exam" type="button" rel="tooltip" (click)="fn_deleteExam(exam.id)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-          lastText="LAST"></pagination>
-      </div>
+              <button class="btn btn-md " title="View Questions" [routerLink]="['/manage/questionList', exam.id]"
+                [routerLinkActive]="['router-link-active']" type="button" rel="tooltip" (click)="fn_getEmployee(exam.id)">
+                <i class="fa fa-eye text-primary" aria-hidden="true"></i>
+              </button>&nbsp;
+              <button class="btn btn-md" title="Edit Exam" type="button" rel="tooltip" [routerLink]="['/manage/editExam', exam.id]">
+                <i class="fa text-dark fa-pencil-square-o" aria-hidden="true"></i>
+              </button>&nbsp;
+              <button class="btn btn-md" title="Delete Exam" type="button" rel="tooltip" (click)="fn_deleteExam(exam.id)">
+                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <pagination class="card-body btn btn-md pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+      [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+      lastText="LAST">
+    </pagination>
   </div>
 </div>
