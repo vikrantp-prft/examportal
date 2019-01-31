@@ -18,5 +18,7 @@ namespace PerftEvaluation.DTO.Dtos {
         public bool IsPaperPublic { get; set; }
         public int TotalQuestions { get; set; }
         public bool IsDeleted { get; set; }
+        
+        public MastersDTO Team { get; set; }
     }
 }
