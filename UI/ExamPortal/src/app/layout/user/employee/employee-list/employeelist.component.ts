@@ -6,10 +6,9 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 interface paginationModel {
-  //currentPage: number;
-  pageSize: number;
-  //searchString: string;
   pageNumber: number;
+  pageSize: number;
+  searchString: string;
 }
 
 @Component({
@@ -20,12 +19,34 @@ interface paginationModel {
 export class EmployeeListComponent implements OnInit {
   // Declaration
 
-  public params: any = {
-    currentPage: 1,
-    pageSize: 10,
-    searchString: '',
-    pageNumber: 1
-  };
+  // public params: any = {
+  //   pageNumber: 1,
+  //   pageSize: 10,
+  //   searchString: ''
+  // };
+  // public employeeModel: any = {
+  //   "id": null,
+  //   "filter": "string",
+  //   "pageSize": 10,
+  //   "pageNumber": 1,
+  //   "totleRecords": 0,
+  //   "filterBy": "string",
+  //   "sortBy": "string",
+  //   "isDescending": true,
+  //   "searchString":"string"
+  // };
+
+  public employeeModel: any = {
+    // "id": "string",
+    // "pageSize": 0,
+    // "pageNumber": 0,
+    // "totalRecords": 0,
+    // "filter": "string",
+    // "sortBy": "string",
+    // "isDescending": true
+    "pageSize": 10,
+    "pageNumber": 1
+  }
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -47,30 +68,26 @@ export class EmployeeListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.employeeModel.pageNumber = 1;
+    this.employeeModel.pageSize = event.target.value;
+    this.fn_GetEmployeeList();
   }
+
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    console.log(event);
+    this.employeeModel.pageNumber = parseInt(event.page);
+    this.employeeModel.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetEmployeeList();
   }
   // Searching
   searchRecord(event: any): void { }
 
+
   // Function to get list of employees
 
   fn_GetEmployeeList() {
-    // const prop: paginationModel = {
-    //   currentPage: parseInt(this.params.currentPage),
-    //   pageSize: parseInt(this.params.pageSize),
-    //   searchString: this.params.searchString
-    // };
-    const prop: paginationModel = {
-      pageSize: parseInt(this.params.pageSize),
-      pageNumber: this.params.pageNumber
-    };
     const url = 'api/Employee/GetEmployees';
-    this.CommonService.fn_PostWithData(prop, url).subscribe(
+    this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
         // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;

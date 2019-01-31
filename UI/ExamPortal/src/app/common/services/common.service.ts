@@ -32,6 +32,7 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }
@@ -45,6 +46,7 @@ export class commonService {
         // solution check for status code 401 before calling fn_log()
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }
@@ -61,6 +63,7 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }
@@ -72,6 +75,7 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }

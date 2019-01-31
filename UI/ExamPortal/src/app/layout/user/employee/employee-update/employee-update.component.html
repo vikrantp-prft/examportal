@@ -10,7 +10,7 @@
             <div class="form-group">
               <label for="sel1">Team</label><span style="color:red">*</span>
               <select class="form-control" formControlName="teamId">
-                <option value="null">--All--</option>
+                <option value="null">--Select--</option>
                 <option *ngFor="let team of teamArray" value={{team.id}}>
                   {{team.name}}
                 </option>
@@ -69,7 +69,7 @@
             <div class="form-group">
               <label for="State">State</label><span style="color:red">*</span>
               <select class="form-control" formControlName="stateId" [ngClass]="{ 'is-invalid': submitted && employeeControls.stateId.errors }">
-                <option value="null">--All--</option>
+                <option value="null">--Select--</option>
                 <option *ngFor="let state of stateArray" value={{state.id}}>
                   {{state.name}}
                 </option>
@@ -104,7 +104,7 @@
             <div class="form-group">
               <label for="currentStateId">State</label>
               <select class="form-control" formControlName="currentStateId">
-                <option value="null">--All--</option>
+                <option value="null">--Select--</option>
                 <option *ngFor="let state of stateArray" value={{state.id}}>
                   {{state.name}}
                 </option>
@@ -126,23 +126,36 @@
             <div class="form-group">
               <label for="courseId"> Course </label>
               <select class="form-control" formControlName="courseId" (change)="fn_getSelectedCourse($event)">
-                <option value="null">--All--</option>
+                <option value="null">--Select--</option>
                 <option *ngFor="let course of courseArray" value={{course.id}}>
                   {{course.name}}
                 </option>
               </select>
+              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'courseId')" errorMsg="Select course">
+              </app-field-error-display> -->
             </div>
             <div class="form-group">
               <label for="yearOfPassing">Year Of Passing </label>
-              <input type="text" class="form-control" id="yearOfPassing" formControlName="yearOfPassing">
+              <select class="form-control" formControlName="yearOfPassing">
+                <option value="null">--Select--</option>
+                <option *ngFor="let passingYear of yearOfPassingArray" value={{passingYear.year}}>
+                  {{passingYear.year}}
+                </option>
+              </select>
+              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'yearOfPassing')" errorMsg="Select year of passing">
+              </app-field-error-display> -->
             </div>
             <div class="form-group">
               <label for="institute"> Institution </label>
               <input type="text" class="form-control" id="institution" formControlName="institution">
+              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'institution')" errorMsg="Enter institue name">
+              </app-field-error-display> -->
             </div>
             <div class="form-group">
               <label for="institute"> Percentage </label>
               <input type="text" class="form-control" id="percentage" formControlName="percentage">
+              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'percentage')" errorMsg="Enter valid percentage">
+              </app-field-error-display> -->
             </div>
             <div class="form-group">
               <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
@@ -165,7 +178,7 @@
                       <label>{{educationField.courseId}}</label>
                     </td>
                     <td>
-                      <label>{{educationField.course}}</label>
+                      <label>{{educationField.course.name}}</label>
                     </td>
                     <td>
                       <label>{{educationField.yearOfPassing}}</label>

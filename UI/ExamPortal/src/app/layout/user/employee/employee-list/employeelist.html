@@ -4,30 +4,30 @@
       <div class="card mb-3">
         <div class="card-header">Employee List</div>
         <div class="datatable-header">
-            <div class="mx-1 row">
-                <div class="col-md-2">
-                    <div class="">
-                        <select class="custom-select" id="inlineFormCustomSelect">
-                            <option selected>Choose</option>
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <button [routerLink]="['/user/addemployee']" class="btn btn-md btn-primary">
-                        Add Employee
-                    </button>
-                </div>
-                <div class="col-4">
-                    <div class="input-group custom-search-form">
-                        <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-                        <button class="btn btn-md">Search</button>
-                    </div>
-                </div>
+          <div class="mx-1 row">
+            <div class="col-md-2">
+              <div class="">
+                <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+                  <option selected>Choose</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
             </div>
+            <div class="col">
+              <button [routerLink]="['/user/addemployee']" class="btn btn-md btn-primary">
+                Add Employee
+              </button>
+            </div>
+            <div class="col-4">
+              <div class="input-group custom-search-form">
+                <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
+                <button class="btn btn-primary btn-md"> Search</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card-body table-responsive">
           <table class="table table-hover table-bordered">
@@ -62,9 +62,9 @@
             </tbody>
           </table>
         </div>
-        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-          lastText="LAST"></pagination>
+        <pagination class="pull-right" [totalItems]="15" [itemsPerPage]="employeeModel.pageSize" (pageChanged)="pageChanged($event)"
+        [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+        lastText="LAST"></pagination>
       </div>
     </div>
   </div>

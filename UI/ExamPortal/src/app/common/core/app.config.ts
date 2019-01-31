@@ -27,6 +27,7 @@ export const appConfig = {
     DESCRIPTION: '^[A-Za-z0-9 _@./#&+-;]*[A-Za-z0-9@./#&+-;][A-Za-z0-9 _@./#&+-;]*$',
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _@./#&+-;]*[A-Za-z0-9@./#&+-;][A-Za-z0-9 _@./#&+-;]*$',
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$',
-    PINCODE:/^[1-9][0-9]{5}$/
+    PINCODE:/^[1-9][0-9]{5}$/,
+    Year:/^[1-9][0-9]{3}$/
   }
 };

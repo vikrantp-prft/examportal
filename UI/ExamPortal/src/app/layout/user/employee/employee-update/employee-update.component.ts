@@ -33,6 +33,11 @@ export class EmployeeUpdateComponent implements OnInit {
     { description: "Flash/Flex", value: 'Flash/Flex', selected: false },
     { description: "Design", value: 'Design', selected: false }
   ];
+  public yearOfPassingArray: Array<any> = [
+    { year: 1991 }, { year: 1992 }, { year: 1993 }, { year: 1994 }, { year: 1995 }, { year: 1996 }, { year: 1997 }, { year: 1998 }, { year: 1999 }, { year: 2000 },
+    { year: 2001 }, { year: 2002 }, { year: 2003 }, { year: 2004 }, { year: 2005 }, { year: 2006 }, { year: 2007 }, { year: 2008 }, { year: 2009 }, { year: 2010 },
+    { year: 2011 }, { year: 2012 }, { year: 2013 }, { year: 2014 }, { year: 2015 }, { year: 2016 }, { year: 2017 }, { year: 2018 }
+  ]
 
   constructor(public router: Router, private CommonService: commonService, private formBuilder: FormBuilder, private route: ActivatedRoute, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
@@ -58,8 +63,8 @@ export class EmployeeUpdateComponent implements OnInit {
       password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD)]],
       courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
-      institution: new FormControl(''),
-      percentage: new FormControl(''),
+      institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
+      percentage:new FormControl(''),// [null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
       interest: new FormArray([]),
       educationDetails: new FormArray([])
     });
@@ -73,6 +78,8 @@ export class EmployeeUpdateComponent implements OnInit {
     this.fn_getState();
     this.fn_getCourse();
     this.fn_getEmployeeDetailsById();
+    this.employeeForm.controls.courseId.setValue(null);
+    this.employeeForm.controls.yearOfPassing.setValue(null);
   }
 
   // function to display the error message for  validation.
@@ -288,9 +295,13 @@ export class EmployeeUpdateComponent implements OnInit {
 
   //function to add new course
   fn_addNewCourse() {
+    if(this.fn_validateEducationFields())
+    {
     let newCourseModel = {
       courseId: this.employeeForm.controls.courseId.value,
-      course: this.selectedCourse,
+      course:{
+        name:this.selectedCourse,
+      },
       yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
       institution: this.employeeForm.controls.institution.value,
       percentage: this.employeeForm.controls.percentage.value
@@ -304,15 +315,16 @@ export class EmployeeUpdateComponent implements OnInit {
         }
         else {
           this.educationArray.push(newCourseModel);
+          this.fn_resetEducationDetails();
         }
       });
     }
     else {
       this.educationArray.push(newCourseModel);
+      this.fn_resetEducationDetails();
     }
-
-    this.fn_resetEducationDetails();
   }
+}
 
   //Get selected course value and text
   fn_getSelectedCourse(event: Event) {
@@ -320,5 +332,19 @@ export class EmployeeUpdateComponent implements OnInit {
     let selectedIndex = selectedOptions.selectedIndex;
     let selectElementText = selectedOptions[selectedIndex].text;
     this.selectedCourse = selectElementText;
+  }
+
+  fn_validateEducationFields() {
+    if (this.employeeForm.controls.courseId.value == null
+      || (this.employeeForm.controls.yearOfPassing.value == null)
+      || (this.employeeForm.controls.institution.invalid == true)
+      || (this.employeeForm.controls.percentage.invalid == true)
+    ) {
+      this.toastr.error('Enter valid all educational details');
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 }
