@@ -31,7 +31,6 @@ namespace PerftEvaluation.Entities.POCOEntities {
         [BsonElement ("password")]
         public string Password { get; set; }
 
-        [Required]
         [BsonElement ("dob")]
         public DateTime? DOB { get; set; }
 

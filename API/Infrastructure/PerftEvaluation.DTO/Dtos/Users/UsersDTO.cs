@@ -20,7 +20,6 @@ namespace PerftEvaluation.DTO.Dtos {
         [Required]
         public string Password { get; set; }
 
-        [Required]
         public DateTime? DOB { get; set; }
 
         [Required]

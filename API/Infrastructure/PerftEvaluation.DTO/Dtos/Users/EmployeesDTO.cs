@@ -20,13 +20,11 @@ namespace PerftEvaluation.DTO.Dtos {
         public bool IsActive { get; set; }
 
         [Required]
-        [EmailAddress (ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }
 
-        [Required]
         public DateTime? DOB { get; set; }
 
         [Required]
@@ -72,17 +70,13 @@ namespace PerftEvaluation.DTO.Dtos {
 
         public string EducationDetailsId { get; set; }
 
-        [Required]
         public string CourseId { get; set; }
         public MastersDTO Course { get; set; }
 
-        [Required]
         public int YearOfPassing { get; set; }
 
-        [Required]
         public string Institution { get; set; }
 
-        [Required]
         public double Percentage { get; set; }
     }
 }
