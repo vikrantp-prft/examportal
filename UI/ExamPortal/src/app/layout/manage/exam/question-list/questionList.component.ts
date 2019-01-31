@@ -62,7 +62,6 @@ export class questionListComponent implements OnInit {
     id: ''
   };
 
-
   constructor(public fb: FormBuilder, private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
     this.route.params.subscribe(params1 => {
       this.examID = params1['id'];
@@ -79,7 +78,6 @@ export class questionListComponent implements OnInit {
       obj_singleSelectOptions: this.fb.array([this.fn_addSubSingleSelectOption(null, false, null)]),
     });
   }
-
 
   fn_addSubMultipleSelectOption(param, flag, optionID) {
     return this.fb.group({
@@ -140,8 +138,7 @@ export class questionListComponent implements OnInit {
   // Searching
   searchRecord(event: any): void { }
 
-  // Function to get list of employees
-
+  // Function to get list of Exam
   fn_GetQuestionsList() {
     this.CommonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
       const rs = result;
@@ -188,12 +185,8 @@ export class questionListComponent implements OnInit {
       this.questionForm.controls["obj_multiSelectOptions"]
     );
     this.questionDetail.options.forEach((item, index) => {
-      //console.log(item);
-      //console.log(item.option); // 1, 2, 3
-      //console.log(index); // 0, 1, 2
       if (this.questionDetail.questionType == 0) {
         this.singleSelectFlag = true;
-        console.log(index);
         if (item.isCorrect) this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(index.toString());
         control_obj_singleSelectOptions.push(this.fn_addSubSingleSelectOption(item.option, item.isCorrect, item.optionId));
       }
@@ -202,41 +195,7 @@ export class questionListComponent implements OnInit {
         control_obj_multiSelectOptions.push(this.fn_addSubMultipleSelectOption(item.option, item.isCorrect, item.optionId));
       }
     });
-    //console.log(this.questionDetail.options);
-    console.log(this.questionForm.controls);
-    // obj_multiSelectOptions: this.fb.array([this.fn_addSubMultipleSelectOption()]),
-    //   obj_singleSelectOptions: this.fb.array([this.fn_addSubSingleSelectOption()]),
   }
-
-
-  // // FUnction to get employee ID
-  // fn_getEmployee(empid) { }
-  // // function to display the alert before deleting the Order.
-  // fn_deleteEmployee(Id) {
-  //   if (Id != null) {
-  //     swal({
-  //       title: 'Are you sure?',
-  //       text: 'You want to delete the Employee!',
-  //       buttonsStyling: true,
-  //       confirmButtonClass: 'btn btn-success',
-  //       showCancelButton: true,
-  //       cancelButtonClass: 'btn btn-danger',
-  //       confirmButtonText: 'Yes, delete it!'
-  //     }).then(x => {
-  //       if (x.value = true) {
-  //         const url = 'api/User/InactivateUser';
-  //         const model = {
-  //           id: ''
-  //           // deletedBy: 0
-  //         };
-  //         model.id = Id;
-  //         // obj_SearchDetails.deletedBy = 1;
-  //         this.fn_delfun(url, model);
-  //       }
-
-  //     });
-  //   }
-  // }
 
   onSubmit = function (formData) {
     if (this.questionForm.valid) {
@@ -275,29 +234,27 @@ export class questionListComponent implements OnInit {
       this.formDataCustom.examId = this.examID;
       this.formDataCustom.id = this.questionForm.value.id;
 
-      console.log(this.questionForm.value);
-      console.log(this.formDataCustom);
+      this.url = "api/Questions"; var formMsg = 'Question added successfully!';
+      if (this.formDataCustom.id != null) {
+        this.url = "api/Questions/UpdateQuestions";
+        formMsg = 'Question Updated successfully!';
+      }
 
-      this.url = "api/Questions";
-      if (this.formDataCustom.id != null) this.url = "api/Questions/UpdateQuestions";
-
-      console.log(this.url);
       this.CommonService.fn_PostWithData(this.formDataCustom, this.url).subscribe((result: any) => {
         const rs = result;
         if (rs.statusCode == 200) {
-          this.toastr.success('Question added successfully!');
-          //this.router.navigate(['manage/questionList'], { queryParams: { id: this.examID } });
+          this.toastr.success(formMsg);
         }
         else {
-          this.toastr.error('Failed to add Question');
+          this.toastr.error('Failed to Add/Update Question');
         }
       });
     }
     else {
       return;
     }
-    this.fn_GetQuestionsList();
     this.fun_resetAll();
+    this.fn_GetQuestionsList();
   }
 
   fun_resetAll() {
@@ -350,7 +307,6 @@ export class questionListComponent implements OnInit {
         control.push(this.fn_addSubMultipleSelectOption(null, false, null));
       }
     }
-
     if (actionType == 'sub') {
       if (control.length <= 2) {
         this.toastr.warning('Min 2 Options are Mandatory');
@@ -409,15 +365,4 @@ export class questionListComponent implements OnInit {
       }
     }
   }
-
-  // // function for soft deleting the Employee.
-  // fn_delfun(url, data) {
-  //   this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-  //     const rs = result;
-  //     if ((result.message = 'Success')) {
-  //       this.toastr.success('Employee details deleted successfully!');
-  //       this.fn_GetQuestionsList();
-  //     }
-  //   });
-  // }
 }
