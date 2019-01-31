@@ -224,11 +224,13 @@ export class questionListComponent implements OnInit {
     this.questionDetail.options.forEach((item, index) => {
       if (this.questionDetail.questionType == 0) {
         this.singleSelectFlag = true;
+        this.singleSelectEdit = true;
         if (item.isCorrect) this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(index.toString());
         control_obj_singleSelectOptions.push(this.addSubSingleSelectOption(item.option, item.isCorrect, item.optionId));
       }
       else if (this.questionDetail.questionType == 1) {
         this.multipleSelectFlag = true;
+        this.multipleSelectEdit === true
         control_obj_multiSelectOptions.push(this.addSubMultipleSelectOption(item.option, item.isCorrect, item.optionId));
       }
     });

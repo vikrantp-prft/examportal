@@ -67,7 +67,7 @@
                                   </th>
                                 </tr> -->
               <tr *ngFor="let question of questionList; let i = index">
-                <td>{{i + 1}}</td>
+                <td>{{(questionModel.pageNumber-1)*10 + i +1 }}</td>
                 <td>{{question.question | slice:0:40 }}...</td>
                 <!-- <td>{{question.questionType}}</td> -->
                 <!-- <td>{{question.categoryId}}</td> -->
@@ -147,7 +147,7 @@
               <div>
                 <button class="mt-2 btn btn-sm" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('add')">
                   Add Options
-                </button> 
+                </button>
                 <button class="ml-1 mt-2 btn btn-sm" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')">
                   Remove Last Options
                 </button>
