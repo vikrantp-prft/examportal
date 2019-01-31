@@ -15,6 +15,9 @@ import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.
 import { AddDesignationComponent } from './Designation/designation-add-update/designationAddUpdate.component';
 import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.component';
 import { EditDesignationComponent } from './Designation/designation-edit-update/designationEditUpdate.component';
+import { DegreeListComponent } from './degree/degree-list/degreeList.component';
+import { AddDegreeComponent } from './degree/degree-add-update/degreeAddUpdate.component';
+import { EditDegreeComponent } from './degree/degree-edit-update/degreeEditUpdate.component';
 
 
 
@@ -66,6 +69,15 @@ const routes: Routes = [
             },
             {
                 path: 'editTeamList/:id', component: EditTeamComponent
+            },
+            {
+                path: 'degreeList', component: DegreeListComponent
+            },
+            {
+                path: 'addDegree', component: AddDegreeComponent
+            },
+            {
+                path: 'editDegree/:id', component: EditDegreeComponent
             }
 
         ]
