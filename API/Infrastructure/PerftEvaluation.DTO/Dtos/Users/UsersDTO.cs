@@ -37,6 +37,7 @@ namespace PerftEvaluation.DTO.Dtos {
         public string Pincode { get; set; }
 
         [Required]
+        [EmailAddress (ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
         [Required]
