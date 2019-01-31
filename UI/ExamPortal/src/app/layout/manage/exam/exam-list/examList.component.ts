@@ -102,7 +102,7 @@ export class ExamListComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
         if (x.value == true) {
-          const deleteExamUrl = 'api/Exam/deleteExam';
+          const deleteExamUrl = 'api/Exams/deleteExam';
           const model = {
             id: ''
           };
@@ -117,9 +117,12 @@ export class ExamListComponent implements OnInit {
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
-      if ((result.message = 'Success')) {
+      if (rs.statusCode == 200) {
         this.toastr.success('Exam deleted successfully!');
         this.fn_GetExamList();
+      }
+      else {
+        this.toastr.error('Failed to Delete Exam');
       }
     });
   }

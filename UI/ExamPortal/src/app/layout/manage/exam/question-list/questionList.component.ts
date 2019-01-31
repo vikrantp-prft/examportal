@@ -152,6 +152,25 @@ export class questionListComponent implements OnInit {
   }
 
   deleteQuestion(questionID) {
+
+    if (questionID != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the Question!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        if (x.value == true) {
+          this.deleteQuestionConfirm(questionID);
+        }
+      });
+    }
+  }
+  deleteQuestionConfirm(questionID) {
+
     this.questionDetailModel.id = questionID;
     this.CommonService.fn_PostWithData(this.questionDetailModel, this.deleteQuestionUrl).subscribe((result: any) => {
       const rs = result;
@@ -166,6 +185,7 @@ export class questionListComponent implements OnInit {
     this.resetAll();
     this.getQuestionsList();
   }
+
 
   editQuestion(questionID) {
     this.resetAll();
