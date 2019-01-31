@@ -1,0 +1,7 @@
+FROM microsoft/dotnet:3.0.0-runtime
+WORKDIR /dotnetapp
+COPY .bin/Debug/netcoreapp3.0/publish .
+ENV ASPNETCORE_URLS http://*:5000
+ENV ASPNETCORE_ENVIRONMENT Development
+ENTRYPOINT dotnet perfEvaluation.Api.dll
+
