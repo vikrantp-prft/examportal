@@ -3,9 +3,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="mongocsharpdriver" Version="2.7.2" />
+    <PackageReference Include="mongocsharpdriver" Version="2.7.2"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj"/>
   </ItemGroup>
 </Project>
