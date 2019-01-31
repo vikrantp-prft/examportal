@@ -1,9 +1,10 @@
-  <div class="row">
-    <div class="col-md-12 col-xs-12 col-lg-12 card">
-      <div class="card-header">
-        <h1>Add Exam</h1>
-      </div>
-      <div class="col-md-12 col-xs-12 col-lg-12">
+<div class="card">
+  <div class="card-header">
+    <h3 class="font-weight-bold text-center">Add Exam</h3>
+  </div>
+  <div class="card-body">
+    <div class="row justify-content-center">
+      <div class="col-6">
         <form [formGroup]="addExamForm" (ngSubmit)="onSubmit(addExamForm.value)">
           <div class="sections">
             <div class="form-group">
@@ -25,26 +26,33 @@
             </div>
             <div class="form-group">
               <label for="Exam Duration">Exam Duration</label>
-              <select class="form-control" formControlName="examDurationHours" #examDurationHours>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
-              <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
-                <option>00</option>
-                <option>05</option>
-                <option>10</option>
-                <option>15</option>
-                <option>20</option>
-                <option>25</option>
-                <option>30</option>
-                <option>35</option>
-                <option>40</option>
-                <option>45</option>
-                <option>50</option>
-                <option>55</option>
-              </select>
+              <div class="row">
+                <div class="col">
+                  <select class="form-control" formControlName="examDurationHours" #examDurationHours>
+                    <option>1</option> 
+                    <option>2</option> 
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div> 
+                <span class="pt-1">HR</span>
+                <div class="col">
+                  <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
+                    <option>00</option>
+                    <option>05</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option>35</option>
+                    <option>40</option>
+                    <option>45</option>
+                    <option>50</option>
+                    <option>55</option>
+                  </select>
+                </div> <span class="pt-1 pl-0">Min</span>
+              </div>
             </div>
             <div class="form-group">
               <label for="Passing Marks">Passing Marks</label>
@@ -83,16 +91,17 @@
               <input type="text" class="form-control" formControlName="totalQuestions" #totalQuestions>
             </div>
             <div class="form-group">
-              <input type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
+              <input class="" type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
               <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                 Upload File
               </button>
             </div>
             <div class="form-group">
-              <button type="submit">Save</button>
+              <button class="mt-5 btn btn-success btn-md btn-block" type="submit">Save</button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+</div>

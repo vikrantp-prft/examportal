@@ -45,6 +45,7 @@ export class questionListComponent implements OnInit {
   public questionDetail: any;
   public questionListUrl = 'api/Questions/listQuestionsByExamId';
   public questionDetailUrl = 'api/Questions/GetQuestionById';
+  public deleteQuestionUrl = 'api/Questions/DeleteQuestion';
 
 
   public formDataCustom: any = {
@@ -74,12 +75,12 @@ export class questionListComponent implements OnInit {
       questionText: new FormControl(''),
       examID: new FormControl(this.examID),
       singleSelectOptionsCorrectAns: new FormControl(null),
-      obj_multiSelectOptions: this.fb.array([this.fn_addSubMultipleSelectOption(null, false, null)]),
-      obj_singleSelectOptions: this.fb.array([this.fn_addSubSingleSelectOption(null, false, null)]),
+      obj_multiSelectOptions: this.fb.array([this.addSubMultipleSelectOption(null, false, null)]),
+      obj_singleSelectOptions: this.fb.array([this.addSubSingleSelectOption(null, false, null)]),
     });
   }
 
-  fn_addSubMultipleSelectOption(param, flag, optionID) {
+  addSubMultipleSelectOption(param, flag, optionID) {
     return this.fb.group({
       multipleSelectOptionsID: optionID,
       multipleSelectOptions: param,
@@ -87,7 +88,7 @@ export class questionListComponent implements OnInit {
     })
   }
 
-  fn_addSubSingleSelectOption(param, flag, optionID) {
+  addSubSingleSelectOption(param, flag, optionID) {
     return this.fb.group({
       singleSelectOptionsID: optionID,
       singleSelectOptions: param,
@@ -102,7 +103,7 @@ export class questionListComponent implements OnInit {
         "pageSize": 10,
         "pageNumber": 1,
       }
-    this.fn_GetQuestionsList();
+    this.getQuestionsList();
     this.disbleAllFlag();
     this.multipleSelectEdit = false;
     this.singleSelectEdit = false;
@@ -114,8 +115,8 @@ export class questionListComponent implements OnInit {
       err => console.error(err),
       () => { }
     );
-    this.fn_clear_obj_multiSelectOptions();
-    this.fn_clear_obj_singleSelectOptions();
+    this.clear_obj_multiSelectOptions();
+    this.clear_obj_singleSelectOptions();
   }
 
   disbleAllFlag() {
@@ -127,19 +128,19 @@ export class questionListComponent implements OnInit {
   setRecordPerPage(event: any): void {
     this.questionModel.pageNumber = 1;
     this.questionModel.pageSize = event.target.value;
-    this.fn_GetQuestionsList();
+    this.getQuestionsList();
   }
 
   pageChanged(event: any): void {
     this.questionModel.pageNumber = parseInt(event.page);
     this.questionModel.pageSize = parseInt(event.itemsPerPage);
-    this.fn_GetQuestionsList();
+    this.getQuestionsList();
   }
   // Searching
   searchRecord(event: any): void { }
 
   // Function to get list of Exam
-  fn_GetQuestionsList() {
+  getQuestionsList() {
     this.CommonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
@@ -150,25 +151,41 @@ export class questionListComponent implements OnInit {
     });
   }
 
-  fn_editQuestions(questionID) {
-    this.fun_resetAll();
-    this.fn_getQuestionDetails(questionID);
+  deleteQuestion(questionID) {
+    this.questionDetailModel.id = questionID;
+    this.CommonService.fn_PostWithData(this.questionDetailModel, this.deleteQuestionUrl).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('Question Deleted Successfully');
+        this.getQuestionsList();
+      }
+      else {
+        this.toastr.error('Failed to Delete Question');
+      }
+    });
+    this.resetAll();
+    this.getQuestionsList();
+  }
+
+  editQuestion(questionID) {
+    this.resetAll();
+    this.getQuestionDetails(questionID);
     this.questionForm.controls.id.setValue(questionID);
   }
-  fn_getQuestionDetails(questionID) {
+  getQuestionDetails(questionID) {
     this.questionDetailModel.id = questionID;
     this.CommonService.fn_PostWithData(this.questionDetailModel, this.questionDetailUrl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionDetail = rs.data;
-        this.fun_setEditValues();
+        this.setEditValues();
       }
       else {
       }
     });
   }
 
-  fun_setEditValues() {
+  setEditValues() {
     this.questionForm.controls.questionCategory.setValue(this.questionDetail.categoryId);
     var array = {
       0: 'SingleSelect',
@@ -188,11 +205,11 @@ export class questionListComponent implements OnInit {
       if (this.questionDetail.questionType == 0) {
         this.singleSelectFlag = true;
         if (item.isCorrect) this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(index.toString());
-        control_obj_singleSelectOptions.push(this.fn_addSubSingleSelectOption(item.option, item.isCorrect, item.optionId));
+        control_obj_singleSelectOptions.push(this.addSubSingleSelectOption(item.option, item.isCorrect, item.optionId));
       }
       else if (this.questionDetail.questionType == 1) {
         this.multipleSelectFlag = true;
-        control_obj_multiSelectOptions.push(this.fn_addSubMultipleSelectOption(item.option, item.isCorrect, item.optionId));
+        control_obj_multiSelectOptions.push(this.addSubMultipleSelectOption(item.option, item.isCorrect, item.optionId));
       }
     });
   }
@@ -200,7 +217,7 @@ export class questionListComponent implements OnInit {
   onSubmit = function (formData) {
     if (this.questionForm.valid) {
       if (formData.value.questionType == 'SingleSelect') {
-        this.fn_clear_obj_multiSelectOptions();
+        this.clear_obj_multiSelectOptions();
         this.formDataCustom.questionType = 0;
         var options = [];
         for (let key in formData.value.obj_singleSelectOptions) {
@@ -211,7 +228,7 @@ export class questionListComponent implements OnInit {
       }
 
       else if (formData.value.questionType == 'multipleSelect') {
-        this.fn_clear_obj_singleSelectOptions();
+        this.clear_obj_singleSelectOptions();
         this.formDataCustom.questionType = 1;
         var options = [];
         for (let key in formData.value.obj_multiSelectOptions) {
@@ -222,8 +239,8 @@ export class questionListComponent implements OnInit {
       }
 
       else {
-        this.fn_clear_obj_singleSelectOptions();
-        this.fn_clear_obj_multiSelectOptions();
+        this.clear_obj_singleSelectOptions();
+        this.clear_obj_multiSelectOptions();
         this.formDataCustom.questionType = 2;
         var options = [];
       }
@@ -253,11 +270,11 @@ export class questionListComponent implements OnInit {
     else {
       return;
     }
-    this.fun_resetAll();
-    this.fn_GetQuestionsList();
+    this.resetAll();
+    this.getQuestionsList();
   }
 
-  fun_resetAll() {
+  resetAll() {
     this.url = "";
     this.questionForm.controls.id.setValue(null);
     this.questionForm.controls.questionCategory.setValue('');
@@ -266,12 +283,12 @@ export class questionListComponent implements OnInit {
     this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(null);
     this.questionForm.controls.obj_multiSelectOptions.reset();
     this.questionForm.controls.obj_singleSelectOptions.reset();
-    this.fn_clear_obj_multiSelectOptions();
-    this.fn_clear_obj_singleSelectOptions();
+    this.clear_obj_multiSelectOptions();
+    this.clear_obj_singleSelectOptions();
     this.disbleAllFlag();
   }
 
-  fn_clear_obj_multiSelectOptions() {
+  clear_obj_multiSelectOptions() {
     const control_obj_multiSelectOptions = <FormArray>(
       this.questionForm.controls["obj_multiSelectOptions"]
     );
@@ -282,7 +299,7 @@ export class questionListComponent implements OnInit {
     }
   }
 
-  fn_clear_obj_singleSelectOptions() {
+  clear_obj_singleSelectOptions() {
     this.singleSelectEdit = false;
     this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(null);
     const control_obj_singleSelectOptions = <FormArray>(
@@ -304,7 +321,7 @@ export class questionListComponent implements OnInit {
         this.toastr.warning('Can add only Max 5 Options');
       }
       else {
-        control.push(this.fn_addSubMultipleSelectOption(null, false, null));
+        control.push(this.addSubMultipleSelectOption(null, false, null));
       }
     }
     if (actionType == 'sub') {
@@ -327,7 +344,7 @@ export class questionListComponent implements OnInit {
         this.toastr.warning('Can add only Max 5 Options');
       }
       else {
-        control.push(this.fn_addSubSingleSelectOption(null, false, null));
+        control.push(this.addSubSingleSelectOption(null, false, null));
       }
     }
     if (actionType == 'sub') {
@@ -348,8 +365,8 @@ export class questionListComponent implements OnInit {
         const control = <FormArray>(
           this.questionForm.controls["obj_multiSelectOptions"]
         );
-        control.push(this.fn_addSubMultipleSelectOption(null, false, null));
-        control.push(this.fn_addSubMultipleSelectOption(null, false, null));
+        control.push(this.addSubMultipleSelectOption(null, false, null));
+        control.push(this.addSubMultipleSelectOption(null, false, null));
         this.multipleSelectEdit = true;
       }
     }
@@ -359,8 +376,8 @@ export class questionListComponent implements OnInit {
         const control = <FormArray>(
           this.questionForm.controls["obj_singleSelectOptions"]
         );
-        control.push(this.fn_addSubSingleSelectOption(null, false, null));
-        control.push(this.fn_addSubSingleSelectOption(null, false, null));
+        control.push(this.addSubSingleSelectOption(null, false, null));
+        control.push(this.addSubSingleSelectOption(null, false, null));
         this.singleSelectEdit = true;
       }
     }
