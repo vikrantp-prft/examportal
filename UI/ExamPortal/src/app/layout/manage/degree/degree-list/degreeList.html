@@ -57,9 +57,13 @@
                       <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_deleteDegree(degree.id)">
                           <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>&nbsp;
-                      <!-- <button class="btn btn-md" type="button" rel="tooltip"  >
-                          <i class="fa fa-toggle-on" aria-hidden="true"></i>
-                      </button> -->
+                      <!-- <span class="btn btn-md" style="background-color:#dddddd;">
+                        <input [checked]="degree.isActive" type="checkbox" class="" id="exampleCheck1" (click)="fn_ChangeStatus(degree.id, degree.isActive)">
+                      </span>  -->
+                      
+                      <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(degree.id, degree.isActive)" >
+                        <i class="fa" [ngClass]="{'fa-toggle-on': degree.isActive, 'fa-toggle-off': !degree.isActive}"  aria-hidden="true"></i>
+                      </button>
                       
                       </td>
                   </tr>

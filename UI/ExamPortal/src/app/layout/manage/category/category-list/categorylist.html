@@ -47,15 +47,15 @@
                     <td> {{ category.description }} </td>
                     <td> {{ category.isActive }}</td>
                     <td>
-                      <button class="btn btn-md" type="button" rel="tooltip"  [routerLink]="['/manage/editCategory', category.id]">
+                    <button class="btn btn-md" type="button" rel="tooltip"  [routerLink]="['/manage/editCategory', category.id]">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>&nbsp;
                     <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_deleteCategory(category.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button> &nbsp;
-                    <!-- <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_ChangeStatus(category.id, category.isActive)">
-                        <i class="fa fa-toggle-on" ></i>
-                    </button> -->
+                    <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(category.id, category.isActive)" >
+                      <i class="fa" [ngClass]="{'fa-toggle-on': category.isActive, 'fa-toggle-off': !category.isActive}"  aria-hidden="true"></i>
+                    </button>
                   </td>
                 </tr>
             </tbody>

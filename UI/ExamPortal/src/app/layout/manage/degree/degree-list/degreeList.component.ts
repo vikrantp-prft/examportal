@@ -31,6 +31,7 @@ export class DegreeListComponent implements OnInit {
   public totalItems = 0;
   public degreeList = [];
   public degreeInfo: any;
+  public statusUrl: any;
   
 
   // Constructor
@@ -132,8 +133,52 @@ export class DegreeListComponent implements OnInit {
   
     
   // function to change isActive status
-  // fn_changeStatus(id, status) {
-  // }
+  fn_ChangeStatus(id,isActive)
+  {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to change the status!',
+      buttonsStyling: true,
+      confirmButtonClass: 'btn btn-success',
+      showCancelButton: true,
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Yes'
+    }).then(x => {
+    if(x.value == true){
+        if(isActive == true){
+          this.statusUrl = 'api/Master/InactivateMaster';
+        }
+        else{
+          this.statusUrl = 'api/Master/ActivateMaster';
+        }
+        const degreeStatusModel = {
+          "id": id,
+          "pageSize": 0,
+          "pageNumber": 0,
+          "totalRecords": 0,
+          "filter": "string",
+          "sortBy": "string",
+          "isDescending": true
+        }
+        this.fn_saveStatusChange(this.statusUrl,degreeStatusModel);
+    }
+    });
+  }
+
+  //function to save status change
+  fn_saveStatusChange(url, data) {
+      this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      // debugger;
+      // console.log(result);
+      const rs = result;
+      if (rs.statusCode == 200) {
+          this.fn_GetDegreeList();
+      }
+      else {
+          
+      }
+  });
+  }
 
 
 }

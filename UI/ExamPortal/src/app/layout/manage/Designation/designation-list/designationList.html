@@ -51,6 +51,9 @@
                             </button>&nbsp;
                             <button type="button" class="btn btn-md" rel="tooltip" (click)="fn_deleteDesignation(designation.id)">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>&nbsp;
+                            <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(designation.id, designation.isActive)" >
+                                <i class="fa" [ngClass]="{'fa-toggle-on': designation.isActive, 'fa-toggle-off': !designation.isActive}"  aria-hidden="true"></i>
                             </button>
                         </td>
                     </tr>
