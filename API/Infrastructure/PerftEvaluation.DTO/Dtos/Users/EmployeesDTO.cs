@@ -31,8 +31,8 @@ namespace PerftEvaluation.DTO.Dtos {
         public List<EducationDetailsDTO> EducationDetails;
 
         public bool IsEmployee { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
 
         public MastersDTO Team { get; set; }
@@ -43,6 +43,7 @@ namespace PerftEvaluation.DTO.Dtos {
 
         public string EducationDetailsId { get; set; }
         public string CourseId { get; set; }
+        public MastersDTO Course { get; set; }
         public int YearOfPassing { get; set; }
         public string Institution { get; set; }
         public double Percentage { get; set; }
