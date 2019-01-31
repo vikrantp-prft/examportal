@@ -10,32 +10,40 @@
             <div class="form-group">
               <label for="sel1">Team</label>
               <select class="form-control" formControlName="teamId" #teamId>
-                <option value="null">--All--</option>
+                <option value="" selected>Select</option>
                 <option *ngFor="let team of teamList" value={{team.id}}>
                   {{team.name}}
                 </option>
               </select>
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'teamId')" errorMsg="Select any Team">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <label for="Question Paper Name">Question Paper Name</label>
               <input type="text" class="form-control" formControlName="title" #title>
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'title')" errorMsg="Enter valid Question Paper Name">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <label for="Description">Description</label>
               <input type="textbox" class="form-control" formControlName="description" #description>
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'description')" errorMsg="Enter Description">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <label for="Exam Duration">Exam Duration</label>
               <div class="row">
                 <div class="col">
                   <select class="form-control" formControlName="examDurationHours" #examDurationHours>
-                    <option>1</option> 
-                    <option>2</option> 
+                    <option>1</option>
+                    <option>2</option>
                     <option>3</option>
                     <option>4</option>
                   </select>
-                </div> 
-                <span class="pt-1">HR</span>
+                  <app-field-error-display [displayError]="isFieldValid(addExamForm, 'examDurationHours')" errorMsg="Select Hours">
+                  </app-field-error-display>
+                </div>
+                <span class="pt-1">Hrs</span>
                 <div class="col">
                   <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
                     <option>00</option>
@@ -51,20 +59,28 @@
                     <option>50</option>
                     <option>55</option>
                   </select>
+                  <app-field-error-display [displayError]="isFieldValid(addExamForm, 'examDurationMinutes')" errorMsg="Select Minutes">
+                  </app-field-error-display>
                 </div> <span class="pt-1 pl-0">Min</span>
               </div>
             </div>
             <div class="form-group">
               <label for="Passing Marks">Passing Marks</label>
               <input type="number" class="form-control" formControlName="passingMarks" #passingMarks>%
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'passingMarks')" errorMsg="Enter Valid Passing Marks">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <label for="Exam Active From">Exam Active From</label>
               <input type="date" class="form-control" formControlName="fromDate" #fromDate>
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'fromDate')" errorMsg="Enter Valid Exam Active From Date">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <label for="Exam Active Till">Exam Active Till</label>
               <input type="date" class="form-control" formControlName="toDate" #toDate>
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'toDate')" errorMsg="Enter Valid Exam Active Till Date">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <label for="Is Active">Is Active</label>
@@ -89,6 +105,8 @@
             <div class="form-group">
               <label for="Total Questions">Total Questions</label>
               <input type="text" class="form-control" formControlName="totalQuestions" #totalQuestions>
+              <app-field-error-display [displayError]="isFieldValid(addExamForm, 'totalQuestions')" errorMsg="Enter Valid Total Questions">
+              </app-field-error-display>
             </div>
             <div class="form-group">
               <input class="" type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
