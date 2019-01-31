@@ -110,7 +110,6 @@ export class AddEmployeeComponent implements OnInit {
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
-      console.log(result);
       if (rs.statusCode === 200) {
         this.toastr.success('Employee details added successfully!');
         this.router.navigate(['user/employeelist']);

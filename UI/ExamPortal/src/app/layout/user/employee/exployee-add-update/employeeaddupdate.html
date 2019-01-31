@@ -10,7 +10,7 @@
             <div class="form-group">
               <label for="sel1">Team</label><span style="color:red">*</span>
               <select class="form-control" formControlName="teamId">
-                <option value="null">--Select--</option>
+                <option value="">--Select--</option>
                 <option *ngFor="let team of teamArray" value={{team.id}}>
                   {{team.name}}
                 </option>
