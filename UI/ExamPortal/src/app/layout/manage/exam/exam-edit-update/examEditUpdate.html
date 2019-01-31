@@ -1,10 +1,12 @@
-<div class="col-md-12">
-  <div class="row">
-    <div class="col-md-12 col-xs-12 col-lg-12 card">
-      <div class="card-header">
-        <h1>Add Exam</h1>
-      </div>
-      <div class="col-md-12 col-xs-12 col-lg-12">
+<div class="card">
+  <div class="card-header">
+    <h4 class="text-center font-weight-bold">
+      Edit Exam
+    </h4>
+  </div>
+  <div class="card-body">
+    <div class="row justify-content-center">
+      <div class="col-6">
         <form [formGroup]="editExamForm" (ngSubmit)="onSubmit(editExamForm.value)">
           <div class="sections">
             <div class="form-group">
@@ -26,26 +28,34 @@
             </div>
             <div class="form-group">
               <label for="Exam Duration">Exam Duration</label>
-              <select class="form-control" formControlName="examDurationHours" #examDurationHours>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
-              <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
-                <option>00</option>
-                <option>05</option>
-                <option>10</option>
-                <option>15</option>
-                <option>20</option>
-                <option>25</option>
-                <option>30</option>
-                <option>35</option>
-                <option>40</option>
-                <option>45</option>
-                <option>50</option>
-                <option>55</option>
-              </select>
+              <div class="row">
+                <div class="col">
+                  <select class="form-control" formControlName="examDurationHours" #examDurationHours>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div> <span class="mt-2">HR</span>
+                <div class="col">
+                  <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
+                    <option>00</option>
+                    <option>05</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option>35</option>
+                    <option>40</option>
+                    <option>45</option>
+                    <option>50</option>
+                    <option>55</option>
+                  </select>
+                </div> <span class="mt-2">MIN</span> 
+              </div>
+
+
             </div>
             <div class="form-group">
               <label for="Passing Marks">Passing Marks</label>
@@ -59,25 +69,28 @@
               <label for="Exam Active Till">Exam Active Till</label>
               <input type="date" class="form-control" formControlName="toDate" #toDate>
             </div>
-            <div class="form-group">
-              <label for="Is Active">Is Active</label>
-              <input type="checkbox" class="form-control" formControlName="isActive" #isActive>
+            <div class="form-group mt-5">
+              <div class="row justify-content-start">
+                <label class="col-6" for="Is Active">Is Active</label>
+                <input class="col-2 mt-2" type="checkbox" formControlName="isActive" #isActive>
+              </div>
+
             </div>
-            <div class="form-group">
-              <label for="Show Result in Front">Show Result in Front</label>
-              <input type="checkbox" class="form-control" formControlName="showResultInFront" #showResultInFront>
+            <div class="form-group row justify-content-start">
+              <label class="col-6" for="Show Result in Front">Show Result in Front</label>
+              <input class="col-2 mt-2" type="checkbox" formControlName="showResultInFront" #showResultInFront>
             </div>
-            <div class="form-group">
-              <label for="Shuffle Question">Shuffle Question</label>
-              <input type="checkbox" class="form-control" formControlName="shuffleQuestions" #shuffleQuestions>
+            <div class="form-group row justify-content-start">
+              <label class="col-6" for="Shuffle Question">Shuffle Question</label>
+              <input class="col-2 mt-2" type="checkbox" formControlName="shuffleQuestions" #shuffleQuestions>
             </div>
-            <div class="form-group">
-              <label for="Shuffle Options">Shuffle Options</label>
-              <input type="checkbox" class="form-control" formControlName="shuffleOptions" #shuffleOptions>
+            <div class="form-group row justify-content-start">
+              <label class="col-6" for="Shuffle Options">Shuffle Options</label>
+              <input class="col-2 mt-2" type="checkbox" formControlName="shuffleOptions" #shuffleOptions>
             </div>
-            <div class="form-group">
-              <label for="Is Paper Public">Is Paper Public</label>
-              <input type="checkbox" class="form-control" formControlName="isPaperPublic" #isPaperPublic>
+            <div class="form-group row justify-content-start mb-5">
+              <label class="col-6" for="Is Paper Public">Is Paper Public</label>
+              <input class="col-2 mt-2" type="checkbox" formControlName="isPaperPublic" #isPaperPublic>
             </div>
             <div class="form-group">
               <label for="Total Questions">Total Questions</label>
@@ -90,7 +103,7 @@
               </button>
             </div>
             <div class="form-group">
-              <button type="submit">Save</button>
+              <button class="btn btn-md btn-success" type="submit">Save</button>
             </div>
           </div>
         </form>

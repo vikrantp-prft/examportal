@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static PerftEvaluation.DTO.Common.CommonEnums;
 
 namespace PerftEvaluation.DTO.Dtos {
@@ -8,13 +9,17 @@ namespace PerftEvaluation.DTO.Dtos {
     /// </summary>
     public class QuestionsDTO {
         public string Id { get; set; }
-        
+
+        [Required]
         public string ExamId { get; set; }
 
+        [Required]
         public string CategoryId { get; set; }
 
+        [Required]
         public QuestionsEnum QuestionType { get; set; }
 
+        [Required]
         public string Question { get; set; }
 
         public bool IsActive { get; set; }
@@ -26,6 +31,7 @@ namespace PerftEvaluation.DTO.Dtos {
     public class OptionsDTO {
         public string OptionId { get; set; }
 
+        [Required]
         public string Option { get; set; }
 
         public string Description { get; set; }

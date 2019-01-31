@@ -1,194 +1,198 @@
-<table>
-  <tr>
-    <td>
-
-      <div>
-        <div class="row">
-          <div class="col col-xl-12 col-lg-12">
-            <div class="card mb-3">
-              <div class="card-header">Question List</div>
-              <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
-                <div class="col-md-3">
-                  <div class="dataTables_length_code">
-                    <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
+<div class="row">
+  <div class="col-8">
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="font-weight-bold">Question List</h4>
+        </div>
+        <div class="card-body">
+          <div class="row justify-content-between">
+            <div class="col-md-3">
+              <div class="">
+                <!-- <label><span>Show</span>
+                      <select name="example_length" (change)="setRecordPerPage($event)">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
-                      </select> entries</label>
-                  </div>
-                </div>
-                <!-- [(ngModel)]="params.searchString" -->
-                <!-- <div class=""> -->
-                <div class="input-group custom-search-form col-md-4" style="display: inline-flex;">
-                  <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-                </div>
-                <!-- </div>    -->
-                <!-- <div class="col-md-2" style="display: inline-block;">
-                  <button [routerLink]="['/manage/addExamQuestion', examID]" class="btn-primary">Add Question</button>
-                </div> -->
-                <div class="col-md-2" style="display: inline-block;">
-                  <button [routerLink]="['/manage/importExamQuestion']" class="btn-primary">Import Questions</button>
-                </div>
+                      </select> entries
+                    </label> -->
+                <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+                  <option selected>Choose</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
               </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th>Sr. No.</th>
-                      <th>Question</th>
-                      <th>Question Type</th>
-                      <!-- <th>Category</th> -->
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- <tr>
-                          <th>Sr. No.</th>
-                          <th>Question</th>
-                          <th>Question Type</th>
-                          <th>Category</th>
-                          <th>
-                            <button type="button" rel="tooltip" (click)="fn_getEmployee(question.id)">
-                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>&nbsp;
-                            <button type="button" rel="tooltip" (click)="fn_deleteEmployee(question.id)">
-                              <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                          </th>
-                        </tr> -->
-                    <tr *ngFor="let question of questionList; let i = index">
-                      <td>{{i + 1}}</td>
-                      <td>{{question.question}}</td>
-                      <td>{{question.questionType}}</td>
-                      <!-- <td>{{question.categoryId}}</td> -->
-                      <td>
-                        <button type="button" rel="tooltip" (click)="editQuestion(question.id)">
-                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </button>&nbsp;
-                        <button type="button" rel="tooltip" (click)="deleteQuestion(question.id)">
-                          <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <pagination class="pull-right" [totalItems]="15" [itemsPerPage]="questionModel.pageSize" (pageChanged)="pageChanged($event)"
-                [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-                lastText="LAST"></pagination>
+            </div>
+            <!-- </div>    -->
+            <!-- <div class="col-md-2" style="display: inline-block;">
+                          <button [routerLink]="['/manage/addExamQuestion', examID]" class="btn-primary">Add Question</button>
+                        </div> -->
+            <div class="">
+              <button [routerLink]="['/manage/importExamQuestion']" class="btn btn-md btn-primary">Import Questions</button>
+            </div>
+            <!-- [(ngModel)]="params.searchString" -->
+            <!-- <div class=""> -->
+            <div class="input-group custom-search-form col-md-4">
+              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
             </div>
           </div>
         </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th>Question</th>
+                <!-- <th style="width:140px;">Question Type</th> -->
+                <!-- <th>Category</th> -->
+                <th style="width:120px">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                                  <th>Sr. No.</th>
+                                  <th>Question</th>
+                                  <th>Question Type</th>
+                                  <th>Category</th>
+                                  <th>
+                                    <button type="button" rel="tooltip" (click)="fn_getEmployee(question.id)">
+                                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </button>&nbsp;
+                                    <button type="button" rel="tooltip" (click)="fn_deleteEmployee(question.id)">
+                                      <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                  </th>
+                                </tr> -->
+              <tr *ngFor="let question of questionList; let i = index">
+                <td>{{(questionModel.pageNumber-1)*10 + i +1 }}</td>
+                <td>{{question.question | slice:0:40 }}...</td>
+                <!-- <td>{{question.questionType}}</td> -->
+                <!-- <td>{{question.categoryId}}</td> -->
+                <td>
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="editQuestion(question.id)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>&nbsp;
+                  <button class="btn btn-md " type="button" rel="tooltip" (click)="deleteQuestion(question.id)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination class="card-body pull-right" [totalItems]="15" [itemsPerPage]="questionModel.pageSize"
+          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+          nextText="NEXT" firstText="FIRST" lastText="LAST">
+        </pagination>
       </div>
-    </td>
-    <td>
-
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-12 col-xs-12 col-lg-12 card">
-            <div class="card-header">
-              <h1>Add Question</h1>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="font-weight-bold">Add Question</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
+          <input type="hidden" formControlName="examID" value="1212121212">
+          <div class="sections">
+            <div class="form-group">
+              <label for="sel1">Question Category</label>
+              <select class="form-control" formControlName="questionCategory" #questionCategory>
+                <option value="">Select</option>
+                <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
+              </select>
             </div>
-            <div class="col-md-12 col-xs-12 col-lg-12">
-              <form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
-                <input type="hidden" formControlName="examID" value="1212121212">
-                <div class="sections">
-                  <div class="form-group">
-                    <label for="sel1">Question Category</label>
-                    <select class="form-control" formControlName="questionCategory" #questionCategory>
-                      <option value="">Select</option>
-                      <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
-                    </select>
+
+            <div class="form-group">
+              <label for="middleName">Question Type</label>
+              <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
+                <option value="">Select</option>
+                <option value="multipleSelect">Multiple Select(Checkbox)</option>
+                <option value="SingleSelect">Single Select(Radio Button)</option>
+                <option value="subjective">Subjective</option>
+              </select> </div>
+            <div class="form-group">
+              <label for="lastName">Question</label>
+              <input type="textarea" formControlName="questionText" class="form-control">
+            </div>
+
+            <div *ngIf="multipleSelectFlag" class="my-4 pt-2">
+              <!-- Answer Options -->
+              <div class="row">
+                <!-- <div class="col">Options</div>
+                <div class="col text-end">Answer</div> -->
+              </div>
+              <div formArrayName="obj_multiSelectOptions">
+
+                <div class="row" *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
+                  <div class="col-1 pt-1">
+                    <label for="lastName">{{i+1}})</label>
                   </div>
-
-                  <div class="form-group">
-                    <label for="middleName">Question Type</label>
-                    <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
-                      <option value="">Select</option>
-                      <option value="multipleSelect">Multiple Select(Checkbox)</option>
-                      <option value="SingleSelect">Single Select(Radio Button)</option>
-                      <option value="subjective">Subjective</option>
-                    </select> </div>
-                  <div class="form-group">
-                    <label for="lastName">Question</label>
-                    <input type="textarea" formControlName="questionText" class="form-control">
-                  </div>
-
-                  <div *ngIf="multipleSelectFlag">
-                    Answer Options
-                    <div>
-                      <div>Options</div>
-                      <div>Correct Answer</div>
-                    </div>
-                    <div formArrayName="obj_multiSelectOptions">
-
-                      <div *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
-                        <div>
-                          <label for="lastName">Option {{i+1}}</label>
-                        </div>
-                        <div [formGroupName]="i">
-                          <div>
-                            <input type="text" formControlName="multipleSelectOptions" class="form-control">
-                          </div>
-                          <div>
-                            <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
-                          </div>
-                        </div>
+                  <div class="col-10" [formGroupName]="i">
+                    <div class="row">
+                      <div class="col-10">
+                        <input type="text" formControlName="multipleSelectOptions" class="form-control form-control-sm">
                       </div>
-                    </div>
-                    <div>
-                      <button type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('add')">
-                        Add More Options
-                      </button>
-                      <button type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')">
-                        Remove Last Options
-                      </button>
-                    </div>
-                  </div>
-
-                  <div *ngIf="singleSelectFlag">
-                    Answer Options
-                    <div>
-                      <div>Options</div>
-                      <div>Correct Answer</div>
-                    </div>
-                    <div>
-                      <div *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
-                        <div>
-                          <label for="lastName">Option {{i+1}}</label>
-                        </div>
-                        <div formArrayName="obj_singleSelectOptions">
-                          <div [formGroupName]="i">
-                            <div>
-                              <input type="text" formControlName="singleSelectOptions" class="form-control">
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}" formControlName="singleSelectOptionsCorrectAns"
-                            class="form-control">
-                        </div>
+                      <div class="col-2  pt-2">
+                        <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
                       </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                      <button type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('add')">
-                        Add More Options
-                      </button>
-                      <button type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('sub')">
-                        Remove Last Options
-                      </button>
                     </div>
                   </div>
                 </div>
-                <button type="submit">Submit</button>
-                <button type="button" (click)="resetAll()">Reset Form</button>
-              </form>
+              </div>
+              <div>
+                <button class="mt-2 btn btn-sm" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('add')">
+                  Add Options
+                </button>
+                <button class="ml-1 mt-2 btn btn-sm" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')">
+                  Remove Last Options
+                </button>
+              </div>
+            </div>
+
+            <div class="my-4" *ngIf="singleSelectFlag">
+              <!-- Answer Options -->
+              <div>
+                <!-- <div>Options</div>
+                <div>Correct Answer</div> -->
+              </div>
+              <div>
+                <div class="row" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
+                  <div class="mt-1 col-1">
+                    <label for="lastName">{{i+1}})</label>
+                  </div>
+                  <div class="col" formArrayName="obj_singleSelectOptions">
+                    <div [formGroupName]="i">
+                      <div>
+                        <input type="text" formControlName="singleSelectOptions" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2 pt-2">
+                    <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}" formControlName="singleSelectOptionsCorrectAns"
+                      class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-2">
+                <button class="btn btn-sm" type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('add')">
+                  Add Options
+                </button>
+                <button class="btn btn-sm ml-1" type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('sub')">
+                  Remove Last Options
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+          <button class="btn btn-sm" type="submit">Submit</button>
+          <button class="btn btn-sm ml-1" type="button" (click)="resetAll()">Reset Form</button>
+        </form>
       </div>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>

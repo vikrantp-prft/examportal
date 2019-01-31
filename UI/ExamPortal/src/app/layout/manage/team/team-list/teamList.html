@@ -39,7 +39,7 @@
                   <th>Sr. No.</th>
                   <th>Team Title</th>
                   <th>Description</th>
-                  <th>Status</th>
+                  <th>IsActive</th>
                   <th>Action</th> 
                 </tr>
               </thead>
@@ -57,9 +57,9 @@
                       <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_deleteTeam(team.id)">
                           <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>&nbsp;
-                      <!-- <button class="btn btn-md" type="button" rel="tooltip"  >
-                          <i class="fa fa-toggle-on" aria-hidden="true"></i>
-                      </button> -->
+                      <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)" >
+                        <i class="fa" [ngClass]="{'fa-toggle-on':team.isActive, 'fa-toggle-off': !team.isActive}"  aria-hidden="true"></i>
+                      </button>
                       
                       </td>
                   </tr>

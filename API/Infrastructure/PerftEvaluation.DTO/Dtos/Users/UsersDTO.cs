@@ -20,7 +20,6 @@ namespace PerftEvaluation.DTO.Dtos {
         [Required]
         public string Password { get; set; }
 
-        [Required]
         public DateTime? DOB { get; set; }
 
         [Required]
@@ -37,6 +36,7 @@ namespace PerftEvaluation.DTO.Dtos {
         public string Pincode { get; set; }
 
         [Required]
+        [EmailAddress (ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
         [Required]

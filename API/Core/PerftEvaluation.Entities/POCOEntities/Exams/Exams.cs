@@ -1,53 +1,60 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using PerftEvaluation.Entities.BaseEntities;
 
-namespace PerftEvaluation.Entities.POCOEntities
-{
-    public class Exams : BaseEntity 
-    {
+namespace PerftEvaluation.Entities.POCOEntities {
+    public class Exams : BaseEntity {
         [BsonExtraElements]
         public static string CollectionName { get { return "exams"; } }
 
-        [BsonElement("title")]
+        [BsonElement ("title")]
+        [Required]
         public string Title { get; set; }
 
-        [BsonElement("teamId"), BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement ("teamId"), BsonRepresentation (BsonType.ObjectId)]
+        [Required]
         public string TeamId { get; set; }
 
-        [BsonElement("description")]
+        [BsonElement ("description")]
         public string Description { get; set; }
 
-        [BsonElement("examDurationHours")]
+        [BsonElement ("examDurationHours")]
+        [Required]
         public int ExamDurationHours { get; set; }
 
-        [BsonElement("examDurationMinutes")]
+        [BsonElement ("examDurationMinutes")]
+        [Required]
         public int ExamDurationMinutes { get; set; }
 
-        [BsonElement("passingMarks")]
+        [BsonElement ("passingMarks")]
+        [Required]
         public int PassingMarks { get; set; }
 
-        [BsonElement("fromDate")]
+        [BsonElement ("fromDate")]
+        [Required]
         public DateTime? FromDate { get; set; }
 
-        [BsonElement("toDate")]
+        [BsonElement ("toDate")]
+        [Required]
         public DateTime? ToDate { get; set; }
 
-        [BsonElement("showResultInFront")]
+        [BsonElement ("showResultInFront")]
         public bool ShowResultInFront { get; set; }
 
-        [BsonElement("shuffleQuestions")]
+        [BsonElement ("shuffleQuestions")]
         public bool ShuffleQuestions { get; set; }
 
-        [BsonElement("shuffleOptions")]
+        [BsonElement ("shuffleOptions")]
         public bool ShuffleOptions { get; set; }
 
-        [BsonElement("isPaperPublic")]
+        [BsonElement ("isPaperPublic")]
         public bool IsPaperPublic { get; set; }
 
-        [BsonElement("totalQuestions")]
+        [BsonElement ("totalQuestions")]
+        [Required]
         public int TotalQuestions { get; set; }
-        
+
     }
 }
