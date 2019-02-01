@@ -80,7 +80,13 @@ export class EmployeeListComponent implements OnInit {
     this.fn_GetEmployeeList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(searchStr: any): void {
+    debugger;
+    this.employeeModel.pageNumber = 1;
+    this.employeeModel.pageSize = 10;
+    this.employeeModel.filter = searchStr.target.value;
+    this.fn_GetEmployeeList();
+  }
 
 
   // Function to get list of employees

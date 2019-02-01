@@ -21,10 +21,11 @@
                 Add
               </button>
             </div>
-            <div class="col-4">
-              <div class="input-group custom-search-form">
-                <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-              </div>
+            <div class="col-md-3">
+              <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+              <a href="#" class="search-icon">
+                <i class="fa fa-search"></i>
+              </a>
             </div>
           </div>
         </div>
