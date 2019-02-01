@@ -37,28 +37,27 @@ namespace PerftEvaluation.BAL.Services {
             var filteredExams = this._examsRepository.GetExams ().AsQueryable ().SortAndFilter (requestModel, DbFilters.ExamFilters);
             //Integrate pagination
             var exams = filteredExams.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            List<ExamsDTO> examJoin = new List<ExamsDTO> ();
+            foreach (var item in exams) {
+                ExamsDTO examsDTO = new ExamsDTO ();
+                examsDTO.Id = item.Id;
+                examsDTO.Title = item.Title;
+                examsDTO.TeamId = item.TeamId;
+                examsDTO.Description = item.Description;
+                examsDTO.ExamDurationHours = item.ExamDurationHours;
+                examsDTO.ExamDurationMinutes = item.ExamDurationMinutes;
+                examsDTO.PassingMarks = item.PassingMarks;
+                examsDTO.FromDate = item.FromDate;
+                examsDTO.ToDate = item.ToDate;
+                examsDTO.ShowResultInFront = item.ShowResultInFront;
+                examsDTO.ShuffleOptions = item.ShuffleOptions;
+                examsDTO.ShuffleQuestions = item.ShuffleQuestions;
+                examsDTO.IsPaperPublic = item.IsPaperPublic;
+                examsDTO.TotalQuestions = item.TotalQuestions;
+                examsDTO.Team = this._mapper.Map<MastersDTO> (_masterRepository.GetAllMasters ().AsQueryable ().Where (x => x.Id == item.TeamId).FirstOrDefault ());
 
-            var examJoin = from p in exams
-                            join o in _masterRepository.GetAllMasters().AsQueryable() on p.TeamId equals o.Id
-                            select new ExamsDTO()
-                            {
-                                Id = p.Id,
-                                Title = p.Title,
-                                TeamId = p.TeamId,
-                                Description = p.Description,
-                                ExamDurationHours = p.ExamDurationHours,
-                                ExamDurationMinutes = p.ExamDurationMinutes,
-                                PassingMarks = p.PassingMarks,
-                                FromDate = p.FromDate,
-                                ToDate = p.ToDate,
-                                ShowResultInFront = p.ShowResultInFront,
-                                ShuffleOptions = p.ShuffleOptions,
-                                ShuffleQuestions = p.ShuffleQuestions,
-                                IsPaperPublic = p.IsPaperPublic,
-                                TotalQuestions = p.TotalQuestions,
-                                Team = new MastersDTO() { Id = o.Id, Name = o.Name, MasterType = o.MasterType, Description = o.Description }
-                            };
-
+                examJoin.Add (examsDTO);
+            }
 
             //return object
             return CommonResponse.OkResponse (requestModel, examJoin, (filteredExams.Count () < 100 ? filteredExams.Count () : 100));

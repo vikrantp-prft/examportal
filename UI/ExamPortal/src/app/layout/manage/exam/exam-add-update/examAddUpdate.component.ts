@@ -27,7 +27,7 @@ export class examAddUpdateComponent implements OnInit {
 
   createForm() {
     this.addExamForm = this.fb.group({
-      title: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(250)]],
+      title: [null, [Validators.required]],
       teamId: [null, [Validators.required]],
       description: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(250)]],
       examDurationHours: [null, [Validators.required]],

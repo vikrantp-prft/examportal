@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-md-12 mt-2">
+        <h3 class="text-center">EDIT STATE</h3>
+    </div>
+    <div class="col-md-7 mt-3">
+        <form class="" [formGroup]="stateForm" (ngSubmit)="fn_saveState(stateForm)">
+            <div *ngIf="stateForm.errors" class="div alert alert-danger">
+                The state title is required
+            </div>
+            
+            <div class="form-group row">
+              <label for="stateTitle" class="col-sm-3 col-form-label">State Title:<span class="text-danger">*</span></label>
+              <div class="col-sm-9">
+                <input 
+                    formControlName="stateTitle"
+                    type="text" 
+                    class="form-control" 
+                    id="stateTitle" 
+                    placeholder="State Name">
+                <div *ngIf="stateTitle.touched && stateTitle.invalid" class="alert alert-danger">State title is required</div>
+              </div>  
+            </div>
+
+            <div class="form-group row">
+                <label for="stateDescription" class="col-sm-3 col-form-label">State Description:<span class="text-danger">*</span></label>
+                <div class="col-sm-9">
+                  <textarea 
+                      formControlName="stateDescription"
+                      class="form-control" 
+                      id="stateDescription" 
+                      placeholder="State Description"></textarea>
+                  <div *ngIf="stateDescription.touched && stateDescription.invalid" class="alert alert-danger">State description is required</div>
+                </div>  
+              </div>
+            
+            
+            <button type="submit" class="btn btn-primary btn-md">Update</button>
+            <button type="reset" class="btn btn-primary btn-md ml-3">Reset</button>
+
+        </form>
+    </div>
+</div>

@@ -18,6 +18,7 @@ export class AddEmployeeComponent implements OnInit {
   public stateArray: any[];
   public courseArray: any[];
   public educationArray: Array<any> = [];
+  //public educationArrayModel: Array<any> = [];
   public employeeId: any;
   selectedCourse: any;
   public yearOfPassingArray: Array<any> = [
@@ -87,16 +88,17 @@ export class AddEmployeeComponent implements OnInit {
         this.toastr.error('Please add education details');
         return false;
       }
-      else if (this.employeeForm.controls.interest == null) {
+      else if (this.employeeForm.controls.interest.value.length == 0) {
         this.toastr.error('Please select atleast 1 interest');
         return false;
       }
       else {
         const saveEmployeeurl = 'api/Employee';
-        this.educationArray.forEach(element => {
+        const educationArrayModel  = Object.assign([], this.educationArray);
+        educationArrayModel.forEach(element => {
           element.course = null;
         });
-        value.value.EducationDetails = this.educationArray;
+        value.value.EducationDetails = educationArrayModel;
         this.fn_saveEmployeefun(value.value, saveEmployeeurl);
       }
     } else {
@@ -116,7 +118,7 @@ export class AddEmployeeComponent implements OnInit {
         this.router.navigate(['user/employeelist']);
         //this.fn_resetEmployeeDetails();
       } else {
-        this.toastr.error('Failed to add Employee details'+ rs);
+        this.toastr.error('Failed to add Employee details' + rs);
       }
     });
   }

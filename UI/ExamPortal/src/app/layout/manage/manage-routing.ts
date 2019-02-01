@@ -18,6 +18,9 @@ import { EditDesignationComponent } from './Designation/designation-edit-update/
 import { DegreeListComponent } from './degree/degree-list/degreeList.component';
 import { AddDegreeComponent } from './degree/degree-add-update/degreeAddUpdate.component';
 import { EditDegreeComponent } from './degree/degree-edit-update/degreeEditUpdate.component';
+import { StateListComponent } from './state/state-list/stateList.component';
+import { AddStateComponent } from './state/state-add-update/stateAddUpdate.component';
+import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.component';
 
 
 
@@ -78,6 +81,15 @@ const routes: Routes = [
             },
             {
                 path: 'editDegree/:id', component: EditDegreeComponent
+            },
+            {
+                path: 'stateList', component: StateListComponent
+            },
+            {
+                path: 'addState', component: AddStateComponent
+            },
+            {
+                path: 'editState/:id', component: EditStateComponent
             }
 
         ]

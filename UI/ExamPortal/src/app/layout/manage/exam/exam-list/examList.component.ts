@@ -5,11 +5,6 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-interface paginationModel {
-  pageNumber: number;
-  pageSize: number;
-  searchString: string;
-}
 
 @Component({
   selector: 'exam-list',
@@ -22,7 +17,7 @@ export class ExamListComponent implements OnInit {
   public params: any = {
     pageNumber: 1,
     pageSize: 10,
-    searchString: ''
+    filter: ''
   };
 
   public i: Number = 0;
@@ -52,27 +47,26 @@ export class ExamListComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log(event);
     this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetExamList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(searchStr: any): void {
+    this.params.pageNumber = 1;
+    this.params.pageSize = 10;
+    this.params.filter = searchStr;
+    this.fn_GetExamList();
+  }
 
-  // Function to get list of employees
-
+  // Function to get list of Exam
   fn_GetExamList() {
-    const prop: paginationModel = {
-      pageNumber: parseInt(this.params.pageNumber),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
     const url = 'api/Exams/GetExams';
     this.CommonService.fn_PostWithData(this.params, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.examList = rs.data;
+        this.totalItems = rs.totalRecords;
       }
       else {
       }

@@ -21,20 +21,20 @@
           </select>
         </div>
         <div class="col align-items-start">
-            <div class="">
-              <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary">Add Exam</button>
-            </div>
+          <div class="">
+            <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary">Add Exam</button>
           </div>
+        </div>
         <div class="col-4 align-items-end">
           <!-- [(ngModel)]="params.searchString" -->
           <!-- <div class=""> -->
           <div class="input-group custom-search-form">
-            <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-            <button class="btn btn-primary btn-md"> Search</button>
+            <input type="text" #searchInput class="form-control search-field" placeholder="search">
+            <button class="btn btn-primary btn-md" (click)="searchRecord(searchInput.value)">Search</button>
           </div>
           <!-- </div>    -->
         </div>
-        
+
       </div>
     </div>
 
@@ -76,10 +76,10 @@
 
 
           <tr *ngFor="let exam of examList; let i = index">
-            <td>{{i + 1}}</td>
+            <td>{{(params.pageNumber-1)*10 + i +1 }}</td>
             <td>{{exam.title | slice:0:35}}</td>
             <!-- <td>{{exam.teamId}}</td> -->
-            <td></td>
+            <td>{{exam.team.name}}</td>
             <td>{{exam.examDurationHours}} Hours {{exam.examDurationMinutes}} Minutes</td>
             <td>{{exam.totalQuestions}}</td>
             <!-- <td></td>
@@ -105,9 +105,9 @@
       </table>
     </div>
 
-    <pagination class="card-body btn btn-md pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-      [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-      lastText="LAST">
+    <pagination class="card-body btn btn-md pull-right" [totalItems]="totalItems" [itemsPerPage]="params.pageSize"
+      (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+      nextText="NEXT" firstText="FIRST" lastText="LAST">
     </pagination>
   </div>
 </div>

@@ -26,7 +26,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Users List</returns>
         public IEnumerable<Users> GetUsers () {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false).AsQueryable ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.IsEmployee == false).AsQueryable ();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -138,8 +138,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool DeleteUsers(string userId)
-        {
+        public bool DeleteUsers (string userId) {
             var filter = Builders<Users>.Filter;
             var filterDef = filter.Eq (c => c.Id, userId);
             var updateQuery = Builders<Users>.Update

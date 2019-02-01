@@ -2,52 +2,56 @@ using System;
 using System.Collections.Generic;
 using PerftEvaluation.DTO;
 
-namespace PerftEvaluation.Helper.Interfaces
-{
+namespace PerftEvaluation.Helper.Interfaces {
     /// <summary>
     /// Dropdowns Interface
     /// </summary>
-    public interface IDropdown
-    {
+    public interface IDropdown {
         /// <summary>
         /// Get dropdown for departments
         /// </summary>
         /// <value></value>
-        IEnumerable<DropdownsDTO> Departments{get;}
+        IEnumerable<DropdownsDTO> Departments { get; }
 
-         /// <summary>
+        /// <summary>
         /// Get dropdown for user groups
         /// </summary>
         /// <value></value>
 
-        IEnumerable<DropdownsDTO> Groups{get;}
+        IEnumerable<DropdownsDTO> Groups { get; }
+
+        /// <summary>
+        /// Get dropdown for Category
+        /// </summary>
+        /// <value></value>
+        IEnumerable<DropdownsDTO> Category { get; }
 
         /// <summary>
         /// Get dropdown for Teams
         /// </summary>
         /// <value></value>
 
-        IEnumerable<DropdownsDTO> Teams{get;}
+        IEnumerable<DropdownsDTO> Teams { get; }
 
-         /// <summary>
+        /// <summary>
         /// Get dropdown for Designations of user/employee
         /// </summary>
         /// <value></value>
 
-        IEnumerable<DropdownsDTO> Designations{get;}
+        IEnumerable<DropdownsDTO> Designations { get; }
 
-          /// <summary>
+        /// <summary>
         /// Get dropdown for Degree of user/employee
         /// </summary>
         /// <value></value>
 
-        IEnumerable<DropdownsDTO> Degrees{get;}
+        IEnumerable<DropdownsDTO> Degrees { get; }
 
         /// <summary>
         /// Get dropdown for States list
         /// </summary>
         /// <value></value>
 
-        IEnumerable<DropdownsDTO> States{get;}
+        IEnumerable<DropdownsDTO> States { get; }
     }
 }

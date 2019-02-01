@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col col-xl-12 col-lg-12">
         <div class="card mb-3">
-          <div class="card-header">Team List</div>
+          <div class="card-header">State List</div>
           <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
             <div class="col-md-3">
               <div class="dataTables_length_code">
@@ -26,7 +26,7 @@
             </div>
             <!-- </div>    -->
             <div class="col-md-2" style="display: inline-block;">
-              <button [routerLink]="['/manage/addTeam']" class="btn btn-md btn-primary">Add Team
+              <button [routerLink]="['/manage/addState']" class="btn btn-md btn-primary">Add State
               </button>
   
   
@@ -37,28 +37,32 @@
               <thead>
                 <tr>
                   <th>Sr. No.</th>
-                  <th>Title</th>
+                  <th>State Title</th>
                   <th>Description</th>
-                  <th>Active</th>
+                  <th>IsActive</th>
                   <th>Action</th> 
                 </tr>
               </thead>
               <tbody>
         
-                  <tr *ngFor="let team of teamList; let i = index">
+                  <tr *ngFor="let state of stateList; let i = index">
                       <td>{{i + 1}}</td>
-                      <td>{{team.name}}</td>
-                      <td>{{team.description}}</td>
-                      <td>{{team.isActive}}</td>
+                      <td>{{state.name}}</td>
+                      <td>{{state.description}}</td>
+                      <td>{{state.isActive}}</td>
                       <td>
-                      <button class="btn btn-md" title="Edit" type="button" rel="tooltip" [routerLink]="['/manage/editTeamList', team.id]">
+                      <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', state.id]">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </button>&nbsp;
-                      <button class="btn btn-md" title="Delete" type="button" rel="tooltip"  (click)="fn_deleteTeam(team.id)">
+                      <button class="btn btn-md" type="button" rel="tooltip"  (click)="fn_deleteState(state.id)">
                           <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>&nbsp;
-                      <button class="btn btn-md" title="Change Status" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)" >
-                        <i class="fa" [ngClass]="{'fa-toggle-on':team.isActive, 'fa-toggle-off': !team.isActive}"  aria-hidden="true"></i>
+                      <!-- <span class="btn btn-md" style="background-color:#dddddd;">
+                        <input [checked]="degree.isActive" type="checkbox" class="" id="exampleCheck1" (click)="fn_ChangeStatus(degree.id, degree.isActive)">
+                      </span>  -->
+                      
+                      <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(state.id, state.isActive)" >
+                        <i class="fa" [ngClass]="{'fa-toggle-on': state.isActive, 'fa-toggle-off': !state.isActive}"  aria-hidden="true"></i>
                       </button>
                       
                       </td>

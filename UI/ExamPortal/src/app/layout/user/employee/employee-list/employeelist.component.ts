@@ -40,7 +40,7 @@ export class EmployeeListComponent implements OnInit {
     // "id": "string",
     // "pageSize": 0,
     // "pageNumber": 0,
-    // "totalRecords": 0,
+    "totalRecords": 0,
     // "filter": "string",
     // "sortBy": "string",
     // "isDescending": true
@@ -53,6 +53,7 @@ export class EmployeeListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public employeeList = [];
+  employeeData : any = {totalRecords : ''};
 
   // Constructor
 
@@ -74,7 +75,6 @@ export class EmployeeListComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log(event);
     this.employeeModel.pageNumber = parseInt(event.page);
     this.employeeModel.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetEmployeeList();
@@ -89,8 +89,8 @@ export class EmployeeListComponent implements OnInit {
     const url = 'api/Employee/GetEmployees';
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
-        // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;
+        this.employeeModel.totalRecords = data.totalRecords;
       },
       err => console.error(err),
       () => { }
@@ -104,6 +104,7 @@ export class EmployeeListComponent implements OnInit {
 
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
+    debugger;
     if (Id != null) {
       swal({
         title: 'Are you sure?',
@@ -115,7 +116,7 @@ export class EmployeeListComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
         if (x.value == true) {
-          const url = 'api/User/InactivateUser';
+          const url = 'api/Employee/DeleteEmployee';
           const model = {
             id: ''
             // deletedBy: 0

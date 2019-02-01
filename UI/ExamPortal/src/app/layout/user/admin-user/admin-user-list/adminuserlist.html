@@ -68,7 +68,7 @@
         </div>
         <!-- [(ngModel)]="params.currentPage" -->
         <!-- [totalItems]="params.totalItems" -->
-        <pagination class="pull-right" [totalItems]="100" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
           [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
           lastText="LAST"></pagination>
       </div>
