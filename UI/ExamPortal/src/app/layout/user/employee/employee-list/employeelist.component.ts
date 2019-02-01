@@ -88,7 +88,6 @@ export class EmployeeListComponent implements OnInit {
     const url = 'api/Employee/GetEmployees';
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
-        // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;
       },
       err => console.error(err),
