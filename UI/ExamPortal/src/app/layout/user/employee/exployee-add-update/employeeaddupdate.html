@@ -10,7 +10,7 @@
             <div class="form-group">
               <label for="sel1">Team</label><span style="color:red">*</span>
               <select class="form-control" formControlName="teamId">
-                <option value="null">--Select--</option>
+                <option value="">--Select--</option>
                 <option *ngFor="let team of teamArray" value={{team.id}}>
                   {{team.name}}
                 </option>
@@ -80,7 +80,7 @@
             <div class="form-group">
               <label for="pincode">Pincode</label><span style="color:red">*</span>
               <input type="text" class="form-control" id="pincode" formControlName="pincode">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter valid permanent pincode">
+              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter valid 6 digit permanent pincode">
               </app-field-error-display>
             </div>
           </div>
@@ -89,20 +89,20 @@
               <h2>Current Address</h2>
             </div>
             <div class="form-group">
-              <label for="Address">Address</label>
+              <label for="Address">Address</label><span style="color:red">*</span>
               <textarea class="form-control" id="currentAddress1" formControlName="currentAddress1"></textarea>
               <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentAddress1')" errorMsg="Enter current address">
               </app-field-error-display>
               <textarea class="form-control" id="currentAddress2" formControlName="currentAddress2"></textarea>
             </div>
             <div class="form-group">
-              <label for="state"> City </label>
+              <label for="state"> City </label><span style="color:red">*</span>
               <input type="text" class="form-control" id="currentCity" formControlName="currentCity">
               <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')" errorMsg="Enter current city">
               </app-field-error-display>
             </div>
             <div class="form-group">
-              <label for="currentStateId">State</label>
+              <label for="currentStateId">State</label><span style="color:red">*</span>
               <select class="form-control" formControlName="currentStateId">
                 <option value="">--Select--</option>
                 <option *ngFor="let state of stateArray" value={{state.id}}>
@@ -113,9 +113,9 @@
               </app-field-error-display>
             </div>
             <div class="form-group">
-              <label for="currentPincode"> Pincode </label>
+              <label for="currentPincode"> Pincode </label><span style="color:red">*</span>
               <input type="text" class="form-control" id="currentPincode" formControlName="currentPincode">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter valid current pincode">
+              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter valid 6 digit current pincode">
               </app-field-error-display>
             </div>
           </div>

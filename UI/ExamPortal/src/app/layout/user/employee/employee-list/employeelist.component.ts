@@ -53,6 +53,7 @@ export class EmployeeListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public employeeList = [];
+  employeeData : any = {totalRecords : ''};
 
   // Constructor
 
@@ -89,6 +90,7 @@ export class EmployeeListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
         this.employeeList = data.data;
+        this.employeeModel.totalRecords = data.totalRecords;
       },
       err => console.error(err),
       () => { }
