@@ -51,14 +51,14 @@
               </i>
             </td>
             <td>
-              <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', state.id]">
+              <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', state.id]">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(state.id, state.isActive)">
+              <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(state.id, state.isActive)">
                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': state.isActive, 'fa-toggle-off text-danger': !state.isActive}"
                   aria-hidden="true"></i>
               </button>
-              <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteState(state.id)">
+              <button title="Delete" class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteState(state.id)">
                 <i class="fa fa-trash text-danger" aria-hidden="true"></i>
               </button>
             </td>
