@@ -83,7 +83,7 @@
             </tbody>
           </table>
         </div>
-        <pagination class="card-body pull-right" [totalItems]="questionModel.totleRecords" [itemsPerPage]="questionModel.pageSize"
+        <pagination class="card-body pull-right" [totalItems]="totalItems" [itemsPerPage]="questionModel.pageSize"
           (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
           nextText="NEXT" firstText="FIRST" lastText="LAST">
         </pagination>
