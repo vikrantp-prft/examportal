@@ -18,7 +18,7 @@ export class AddEmployeeComponent implements OnInit {
   public stateArray: any[];
   public courseArray: any[];
   public educationArray: Array<any> = [];
-  public educationArrayModel: Array<any> = [];
+  //public educationArrayModel: Array<any> = [];
   public employeeId: any;
   selectedCourse: any;
   public yearOfPassingArray: Array<any> = [
@@ -94,11 +94,11 @@ export class AddEmployeeComponent implements OnInit {
       }
       else {
         const saveEmployeeurl = 'api/Employee';
-        this.educationArrayModel = this.educationArray;
-        this.educationArrayModel.forEach(element => {
+        const educationArrayModel  = Object.assign([], this.educationArray);
+        educationArrayModel.forEach(element => {
           element.course = null;
         });
-        value.value.EducationDetails = this.educationArrayModel;
+        value.value.EducationDetails = educationArrayModel;
         this.fn_saveEmployeefun(value.value, saveEmployeeurl);
       }
     } else {

@@ -103,6 +103,7 @@ export class EmployeeListComponent implements OnInit {
 
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
+    debugger;
     if (Id != null) {
       swal({
         title: 'Are you sure?',
@@ -114,7 +115,7 @@ export class EmployeeListComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
         if (x.value == true) {
-          const url = 'api/User/InactivateUser';
+          const url = 'api/Employee/DeleteEmployee';
           const model = {
             id: ''
             // deletedBy: 0
