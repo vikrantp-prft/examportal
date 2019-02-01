@@ -59,7 +59,9 @@ export class examAddUpdateComponent implements OnInit {
       });
     }
     else {
-      return;
+      this.commonService.validateAllFormFields(this.addExamForm);
+      this.toastr.error('Please fill required details');
+      return false;
     }
   }
 
