@@ -26,7 +26,6 @@ export class ExamListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public examList = [];
-  public examData: any = { totalRecords: '' };
 
   // Constructor
 
@@ -48,7 +47,6 @@ export class ExamListComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log(event);
     this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetExamList();
@@ -68,7 +66,7 @@ export class ExamListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.examList = rs.data;
-        this.examData = rs;
+        this.totalItems = rs.totalRecords;
       }
       else {
       }

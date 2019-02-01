@@ -105,7 +105,7 @@
       </table>
     </div>
 
-    <pagination class="card-body btn btn-md pull-right" [totalItems]="examData.totalRecords" [itemsPerPage]="params.pageSize"
+    <pagination class="card-body btn btn-md pull-right" [totalItems]="totalItems" [itemsPerPage]="params.pageSize"
       (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
       nextText="NEXT" firstText="FIRST" lastText="LAST">
     </pagination>
