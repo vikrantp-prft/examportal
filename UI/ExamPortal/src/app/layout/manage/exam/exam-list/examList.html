@@ -21,10 +21,10 @@
           </select>
         </div>
         <div class="col align-items-start">
-            <div class="">
-              <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary">Add Exam</button>
-            </div>
+          <div class="">
+            <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary">Add Exam</button>
           </div>
+        </div>
         <div class="col-4 align-items-end">
           <!-- [(ngModel)]="params.searchString" -->
           <!-- <div class=""> -->
@@ -34,7 +34,7 @@
           </div>
           <!-- </div>    -->
         </div>
-        
+
       </div>
     </div>
 
@@ -79,7 +79,7 @@
             <td>{{i + 1}}</td>
             <td>{{exam.title | slice:0:35}}</td>
             <!-- <td>{{exam.teamId}}</td> -->
-            <td></td>
+            <td>{{exam.team.name}}</td>
             <td>{{exam.examDurationHours}} Hours {{exam.examDurationMinutes}} Minutes</td>
             <td>{{exam.totalQuestions}}</td>
             <!-- <td></td>
@@ -105,9 +105,9 @@
       </table>
     </div>
 
-    <pagination class="card-body btn btn-md pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-      [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-      lastText="LAST">
+    <pagination class="card-body btn btn-md pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize"
+      (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+      nextText="NEXT" firstText="FIRST" lastText="LAST">
     </pagination>
   </div>
 </div>
