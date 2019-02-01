@@ -204,7 +204,7 @@
                 <div *ngFor="let interest of interestArray; let i=index" class="col-md-2">
                   <label>
                     <input type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)" [(ngModel)]="interest.selected"
-                      [ngModelOptions]="{standalone: true}">
+                      [ngModelOptions]="{standalone: true}"> 
                     {{interest.description}}
                   </label>
                 </div>
