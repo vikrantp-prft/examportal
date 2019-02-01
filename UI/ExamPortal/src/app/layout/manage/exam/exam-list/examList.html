@@ -1,19 +1,13 @@
 <div>
   <div class="card">
     <div class="card-header">
-      Exam List
+      <h1 class="font-weight-bold h3">Exams</h1>
     </div>
     <div class="card-body datatable-header">
       <div class="row">
         <div class="col-md-2 align-items-start">
-          <!-- <select name="example_length" (change)="setRecordPerPage($event)">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select> entries -->
           <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
-            <option selected>Choose</option>
+            <option selected>Per Page</option>
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -22,68 +16,36 @@
         </div>
         <div class="col align-items-start">
           <div class="">
-            <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary">Add Exam</button>
+            <button [routerLink]="['/manage/addexam']" class="btn btn-md btn-primary" title="Add Exam">Add</button>
           </div>
         </div>
-        <div class="col-4 align-items-end">
-          <!-- [(ngModel)]="params.searchString" -->
-          <!-- <div class=""> -->
-          <div class="input-group custom-search-form">
-            <input type="text" #searchInput class="form-control search-field" placeholder="search">
-            <button class="btn btn-primary btn-md" (click)="searchRecord(searchInput.value)">Search</button>
-          </div>
-          <!-- </div>    -->
+        <div class="col-md-3">
+          <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+          <a href="#" class="search-icon">
+            <i class="fa fa-search"></i>
+          </a>
         </div>
-
       </div>
     </div>
-
-    <div class="card-body table-responsive ">
+    <div class="card-body pt-0 table-responsive ">
       <table class="table table-hover table-bordered">
         <thead>
           <tr>
-            <th>Sr. No.</th>
+            <th class="th-width">Sr.</th>
             <th>Question Paper</th>
             <th>Team</th>
             <th>Duration</th>
-            <th>Total Question</th>
-            <!-- <th>Total User Assigned</th>
-                <th>Total User Completed</th> -->
-            <th>Action</th>
+            <th class="th-width-action">Total Question</th>
+            <th class="th-width-action">Action</th>
           </tr>
         </thead>
         <tbody>
-
-
-          <!-- <tr>
-                <th>Sr. No.</th>
-                <th>Question Paper</th>
-                <th>Team</th>
-                <th>Duration</th>
-                <th>Total Question</th>
-                <th>Total User Assigned</th>
-                <th>Total User Completed</th>
-                <th>
-                  <a routerLink="/manage/questionList" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                    <i class="fa fa-monument"></i>&nbsp;
-                    <span>{{ 'View Question' }}</span>
-                  </a>
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(exam.id)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
-              </th>
-              </tr> -->
-
-
           <tr *ngFor="let exam of examList; let i = index">
             <td>{{(params.pageNumber-1)*10 + i +1 }}</td>
             <td>{{exam.title | slice:0:35}}</td>
-            <!-- <td>{{exam.teamId}}</td> -->
             <td>{{exam.team.name}}</td>
-            <td>{{exam.examDurationHours}} Hours {{exam.examDurationMinutes}} Minutes</td>
+            <td>{{exam.examDurationHours}} Hrs {{exam.examDurationMinutes}} Mins</td>
             <td>{{exam.totalQuestions}}</td>
-            <!-- <td></td>
-                <td></td> -->
             <td>
               <!-- <a [routerLink]="['/manage/questionList', exam.id]" [routerLinkActive]="['router-link-active']" class="list-group-item">
                     <i class="fa fa-monument"></i>&nbsp;
@@ -105,7 +67,7 @@
       </table>
     </div>
 
-    <pagination class="card-body btn btn-md pull-right" [totalItems]="totalItems" [itemsPerPage]="params.pageSize"
+    <pagination class="pt-0 mt-0 btn btn-md pull-right" [totalItems]="totalItems" [itemsPerPage]="params.pageSize"
       (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
       nextText="NEXT" firstText="FIRST" lastText="LAST">
     </pagination>
