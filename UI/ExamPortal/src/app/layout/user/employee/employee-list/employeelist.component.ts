@@ -17,25 +17,7 @@ interface paginationModel {
   providers: [commonService]
 })
 export class EmployeeListComponent implements OnInit {
-  // Declaration
-
-  // public params: any = {
-  //   pageNumber: 1,
-  //   pageSize: 10,
-  //   searchString: ''
-  // };
-  // public employeeModel: any = {
-  //   "id": null,
-  //   "filter": "string",
-  //   "pageSize": 10,
-  //   "pageNumber": 1,
-  //   "totleRecords": 0,
-  //   "filterBy": "string",
-  //   "sortBy": "string",
-  //   "isDescending": true,
-  //   "searchString":"string"
-  // };
-
+ 
   public employeeModel: any = {
     // "id": "string",
     // "pageSize": 0,
@@ -80,7 +62,13 @@ export class EmployeeListComponent implements OnInit {
     this.fn_GetEmployeeList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(searchStr: any): void {
+    debugger;
+    this.employeeModel.pageNumber = 1;
+    this.employeeModel.pageSize = 10;
+    this.employeeModel.filter = searchStr.target.value;
+    this.fn_GetEmployeeList();
+  }
 
 
   // Function to get list of employees
