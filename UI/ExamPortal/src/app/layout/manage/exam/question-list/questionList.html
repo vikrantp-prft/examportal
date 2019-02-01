@@ -30,9 +30,12 @@
             </div>
             <!-- [(ngModel)]="params.searchString" -->
             <!-- <div class=""> -->
-            <div class="input-group custom-search-form col-md-4">
-              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-            </div>
+              <div class="col-md-3">
+                <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+                <a href="#" class="search-icon">
+                  <i class="fa fa-search"></i>
+                </a>
+              </div>
           </div>
         </div>
         <div class="card-body table-responsive">
