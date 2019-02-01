@@ -1,80 +1,71 @@
-<div>
-    <div class="row">
-      <div class="col col-xl-12 col-lg-12">
-        <div class="card mb-3">
-          <div class="card-header">Team List</div>
-          <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
-            <div class="col-md-3">
-              <div class="dataTables_length_code">
-                <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select> entries</label>
-              </div>
-
-              <div class="dataTables_length_code">
-
-              </div>
-
-            </div>
-            <!-- [(ngModel)]="params.searchString" -->
-            <!-- <div class=""> -->
-            <div class="input-group custom-search-form col-md-4" style="display: inline-flex;">
-              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-            </div>
-            <!-- </div>    -->
-            <div class="col-md-2" style="display: inline-block;">
-              <button [routerLink]="['/manage/addTeam']" class="btn btn-md btn-primary">Add Team
-              </button>
-  
-  
-            </div>
-          </div>
-          <div class="card-body table-responsive">
-            <table class="table table-hover table-striped  table-bordered">
-              <thead>
-                <tr>
-                  <th>Sr. No.</th>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Active</th>
-                  <th>Action</th> 
-                </tr>
-              </thead>
-              <tbody>
-        
-                  <tr *ngFor="let team of teamList; let i = index">
-                      <td>{{i + 1}}</td>
-                      <td>{{team.name}}</td>
-                      <td>{{team.description}}</td>
-                      <td>{{team.isActive}}</td>
-                      <td>
-                      <button class="btn btn-md" title="Edit" type="button" rel="tooltip" [routerLink]="['/manage/editTeamList', team.id]">
-                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                      </button>&nbsp;
-                      <button class="btn btn-md" title="Delete" type="button" rel="tooltip"  (click)="fn_deleteTeam(team.id)">
-                          <i class="fa fa-trash" aria-hidden="true"></i>
-                      </button>&nbsp;
-                      <button class="btn btn-md" title="Change Status" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)" >
-                        <i class="fa" [ngClass]="{'fa-toggle-on':team.isActive, 'fa-toggle-off': !team.isActive}"  aria-hidden="true"></i>
-                      </button>
-                      
-                      </td>
-                  </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- [(ngModel)]="params.currentPage" -->
-          <!-- [totalItems]="params.totalItems" -->
-  
-  
-          <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-            [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-            lastText="LAST"></pagination>
+<div id="teamList">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="font-weight-bold h3 mb-0">Teams</h1>
+    </div>
+    <div class="card-body pb-0">
+      <div class="row justify-content-end">
+        <div class="col-md-2">
+          <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+            <option selected>Per Page</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="col">
+          <button [routerLink]="['/manage/addTeam']" title="Add Team" class="btn btn-md btn-primary">Add
+          </button>
+        </div>
+        <div class="col-md-3">
+          <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+          <a href="#" class="search-icon">
+            <i class="fa fa-search"></i>
+          </a>
         </div>
       </div>
     </div>
+    <div class="card-body pb-0 table-responsive">
+      <table class="table table-hover table-striped  table-bordered">
+        <thead>
+          <tr>
+            <th class="th-width">Sr.</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th class="th-width">Active</th>
+            <th class="th-width-action">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teamList; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{team.name}}</td>
+            <td>{{team.description}}</td>
+            <td>
+              <i class="fa" [ngClass]="{'fa-check text-success': team.isActive, 'fa-times text-danger': !team.isActive}"
+                aria-hidden="true">
+              </i>
+            </td>
+            <td>
+              <button class="btn btn-md" title="Edit" type="button" rel="tooltip" [routerLink]="['/manage/editTeamList', team.id]">
+                <i class="fa text-dark fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-md mx-1" title="Delete" type="button" rel="tooltip" (click)="fn_deleteTeam(team.id)">
+                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-md" title="Change Status" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)">
+                <i class="fa" [ngClass]="{'fa-toggle-on text-success':team.isActive, 'fa-toggle-off text-danger': !team.isActive}"
+                  aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination class="pull-right pr-2" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+      [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+      lastText="LAST">
+    </pagination>
   </div>
-  
+</div>
