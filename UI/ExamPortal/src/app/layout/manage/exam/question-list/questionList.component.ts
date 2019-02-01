@@ -138,7 +138,15 @@ export class questionListComponent implements OnInit {
     this.getQuestionsList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.questionModel.pageNumber = 1;
+      this.questionModel.pageSize = 10;
+      this.questionModel.filter = event.target.value;
+      this.getQuestionsList();
+    }
+
+  }
 
   // Function to get list of Exam
   getQuestionsList() {
