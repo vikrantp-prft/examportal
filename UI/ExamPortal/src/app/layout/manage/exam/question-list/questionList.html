@@ -3,20 +3,15 @@
     <div>
       <div class="card">
         <div class="card-header">
-          <h4 class="font-weight-bold">Question List</h4>
+          <h1 class="h3">Question List</h1>
+          <div class="back-btn">
+            <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>  Back </button>
+          </div>
         </div>
         <div class="card-body">
           <div class="row justify-content-between">
             <div class="col-md-3">
               <div class="">
-                <!-- <label><span>Show</span>
-                      <select name="example_length" (change)="setRecordPerPage($event)">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select> entries
-                    </label> -->
                 <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
                   <option selected>Choose</option>
                   <option value="10">10</option>
