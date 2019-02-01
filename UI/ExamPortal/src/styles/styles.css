@@ -45,3 +45,12 @@ table td{
     display: table-cell;
     vertical-align: middle !important;
 }
+
+h1{
+  display: inline-block;
+}
+
+.back-btn{
+  display: inline-block;
+  float: right;
+}

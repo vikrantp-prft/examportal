@@ -2,7 +2,10 @@
   <div class="row">
     <div class="card col-md-12 col-xs-12 col-lg-12">
       <div class="card-header">
-        <h1>Add Employee</h1>
+        <h1 class="h3">Add Employee</h1>
+        <div class="back-btn">
+          <button [routerLink]="['/user/employeelist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>  Back </button>
+        </div>
       </div>
       <div class="col-md-12 col-xs-12 col-lg-12">
         <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee(employeeForm)">
