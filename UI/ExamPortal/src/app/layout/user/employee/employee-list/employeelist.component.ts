@@ -40,7 +40,7 @@ export class EmployeeListComponent implements OnInit {
     // "id": "string",
     // "pageSize": 0,
     // "pageNumber": 0,
-    // "totalRecords": 0,
+    "totalRecords": 0,
     // "filter": "string",
     // "sortBy": "string",
     // "isDescending": true
@@ -74,7 +74,6 @@ export class EmployeeListComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log(event);
     this.employeeModel.pageNumber = parseInt(event.page);
     this.employeeModel.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetEmployeeList();
