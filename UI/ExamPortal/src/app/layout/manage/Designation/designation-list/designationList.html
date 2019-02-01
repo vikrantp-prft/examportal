@@ -1,13 +1,14 @@
 <div>
     <div class="card mb-3">
-        <div class="card-header">Designation List</div>
+        <div class="card-header">
+            <h1 class="h3 font-weight-bold mb-0">Designations</h1>
+        </div>
         <div class="datatable-header">
             <div class="mx-1 row">
                 <div class="col-md-2">
                     <div class="">
-                        <!-- <label class="" for="inlineFormCustomSelect">Preference</label> -->
                         <select class="custom-select" id="inlineFormCustomSelect">
-                            <option selected>Choose</option>
+                            <option selected>Per Page</option>
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
@@ -16,27 +17,28 @@
                     </div>
                 </div>
                 <div class="col">
-                    <button [routerLink]="['/manage/addDesignation']" class="btn btn-md btn-primary">
-                        Add Designation
+                    <button title="Add Designation" [routerLink]="['/manage/addDesignation']" class="btn btn-md btn-primary">
+                        Add
                     </button>
                 </div>
-                <div class="col-4">
-                    <div class="input-group custom-search-form">
-                        <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-                        <button class="btn btn-md">Search</button>
-                    </div>
+                <div class="col-md-3">
+                    <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+                        class="form-control" />
+                    <a href="#" class="search-icon">
+                        <i class="fa fa-search"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="card-body table-responsive">
+        <div class="card-body pb-0 table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th>Sr. No.</th>
-                        <th>Designation Title</th>
-                        <th>Designation Description</th>
-                        <th>IsActive</th>
-                        <th>Action</th>
+                        <th>Sr.</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th class="th-width">Active</th>
+                        <th class="th-width-action">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,16 +46,21 @@
                         <td>{{i + 1}}</td>
                         <td>{{ designation.name }}</td>
                         <td>{{ designation.description}}</td>
-                        <td>{{ designation.isActive}}</td>
                         <td>
-                            <button type="button" class="btn btn-md" rel="tooltip" [routerLink]="[ '/manage/editDesignation', designation.id ]">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>&nbsp;
-                            <button type="button" class="btn btn-md" rel="tooltip" (click)="fn_deleteDesignation(designation.id)">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>&nbsp;
-                            <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(designation.id, designation.isActive)" >
-                                <i class="fa" [ngClass]="{'fa-toggle-on': designation.isActive, 'fa-toggle-off': !designation.isActive}"  aria-hidden="true"></i>
+                            <i class="fa" [ngClass]="{'fa-check text-success': designation.isActive, 'fa-times text-danger': !designation.isActive}"
+                                aria-hidden="true">
+                            </i>
+                        </td>
+                        <td>
+                            <button title="Edit" type="button" class="btn btn-md" rel="tooltip" [routerLink]="[ '/manage/editDesignation', designation.id ]">
+                                <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
+                            </button>
+                            <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(designation.id, designation.isActive)">
+                                <i class="fa" [ngClass]="{'fa-toggle-on text-success': designation.isActive, 'fa-toggle-off text-danger': !designation.isActive}"
+                                    aria-hidden="true"></i>
+                            </button>
+                            <button title="Delete" class="" type="button" class="btn btn-md" rel="tooltip" (click)="fn_deleteDesignation(designation.id)">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                             </button>
                         </td>
                     </tr>
@@ -61,8 +68,8 @@
             </table>
         </div>
 
-        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-                    [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-                    lastText="LAST"></pagination>
+        <pagination class="pull-right pr-2 " [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+            [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+            lastText="LAST"></pagination>
     </div>
 </div>
