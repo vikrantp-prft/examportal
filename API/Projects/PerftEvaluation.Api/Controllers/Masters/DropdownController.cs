@@ -70,6 +70,20 @@ namespace PerftEvaluation.Api.Controllers.Masters {
             }
         }
 
+        [HttpGet, Route ("Categories")]
+        public IActionResult Categories () {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._dropdown.Category;
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
         // GET api/dropdown/teams
         /// <summary>
         /// Get dropdown for teams

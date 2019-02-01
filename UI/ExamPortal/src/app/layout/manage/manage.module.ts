@@ -25,6 +25,9 @@ import { DegreeListComponent } from './degree/degree-list/degreeList.component';
 import { AddDegreeComponent } from './degree/degree-add-update/degreeAddUpdate.component';
 import { EditDegreeComponent } from './degree/degree-edit-update/degreeEditUpdate.component';
 import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-error-display.module';
+import { StateListComponent } from './state/state-list/stateList.component';
+import { AddStateComponent } from './state/state-add-update/stateAddUpdate.component';
+import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.component';
 
 @NgModule({
     imports: [
@@ -54,7 +57,10 @@ import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-er
         EditTeamComponent,
         DegreeListComponent,
         AddDegreeComponent,
-        EditDegreeComponent
+        EditDegreeComponent,
+        StateListComponent,
+        AddStateComponent,
+        EditStateComponent
     ]
 })
 export class ManageModule { }
