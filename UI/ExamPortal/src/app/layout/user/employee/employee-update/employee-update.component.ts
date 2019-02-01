@@ -78,8 +78,8 @@ export class EmployeeUpdateComponent implements OnInit {
     this.fn_getState();
     this.fn_getCourse();
     this.fn_getEmployeeDetailsById();
-    this.employeeForm.controls.courseId.setValue(null);
-    this.employeeForm.controls.yearOfPassing.setValue(null);
+    this.employeeForm.controls.courseId.setValue("");
+    this.employeeForm.controls.yearOfPassing.setValue("");
   }
 
   // function to display the error message for  validation.
@@ -234,7 +234,7 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   fn_resetEmployeeDetails() {
-    this.employeeForm.controls.teamId.setValue(null);
+    this.employeeForm.controls.teamId.setValue("");
     this.employeeForm.controls.firstName.reset();
     this.employeeForm.controls.middleName.reset();
     this.employeeForm.controls.lastName.reset();
@@ -243,12 +243,12 @@ export class EmployeeUpdateComponent implements OnInit {
     this.employeeForm.controls.address2.reset();
     this.employeeForm.controls.city.reset();
     this.employeeForm.controls.pincode.reset();
-    this.employeeForm.controls.stateId.setValue(null);
+    this.employeeForm.controls.stateId.setValue("");
     this.employeeForm.controls.mobile.reset();
     this.employeeForm.controls.currentAddress1.reset();
     this.employeeForm.controls.currentAddress2.reset();
     this.employeeForm.controls.currentCity.reset();
-    this.employeeForm.controls.currentStateId.setValue(null);
+    this.employeeForm.controls.currentStateId.setValue("");
     this.employeeForm.controls.currentPincode.reset();
     this.employeeForm.controls.email.reset();
     this.employeeForm.controls.password.reset();
@@ -261,7 +261,7 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   fn_resetEducationDetails() {
-    this.employeeForm.controls.courseId.reset();
+    this.employeeForm.controls.courseId.setValue("");
     this.employeeForm.controls.yearOfPassing.reset();
     this.employeeForm.controls.percentage.reset();
     this.employeeForm.controls.institution.reset();
