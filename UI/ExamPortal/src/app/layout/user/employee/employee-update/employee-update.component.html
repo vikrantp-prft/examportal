@@ -1,242 +1,235 @@
-<div class="col-md-12">
-  <div class="row">
-    <div class="card col-md-12 col-xs-12 col-lg-12">
-      <div class="card-header">
-        <h1 class="h3">Update Employee</h1>
-        <div class="back-btn">
-          <button [routerLink]="['/user/employeelist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>  Back </button>
-        </div>
-      </div>
-      <div class="col-md-12 col-xs-12 col-lg-12">
-        <form [formGroup]="employeeForm" (ngSubmit)="fn_updateEmployee(employeeForm)">
-          <div class="sections">
-            <div class="form-group">
-              <label for="sel1">Team</label><span style="color:red">*</span>
-              <select class="form-control" formControlName="teamId">
-                <option value="null">--Select--</option>
-                <option *ngFor="let team of teamArray" value={{team.id}}>
-                  {{team.name}}
-                </option>
-              </select>
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'teamId')" errorMsg="Select team.">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="firstName">First Name</label><span style="color:red">*</span>
-              <input type="text" class="form-control" id="firstName" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && employeeControls.firstName.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="middleName">Middle Name</label><span style="color:red">*</span>
-              <input type="text" class="form-control" id="middleName" formControlName="middleName" [ngClass]="{ 'is-invalid': submitted && employeeControls.middleName.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter valid middle name.">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name</label><span style="color:red">*</span>
-              <input type="text" class="form-control" id="lastName" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && employeeControls.lastName.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter valid last name.">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
-              <input type="date" class="form-control" id="dateOfBirth" formControlName="dob" [ngClass]="{ 'is-invalid': submitted && employeeControls.dob.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'dob')" errorMsg="Enter valid date of birth.">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="mobile">Mobile</label><span style="color:red">*</span>
-              <input type="text" class="form-control" id="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && employeeControls.mobile.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'mobile')" errorMsg="Enter valid mobile number">
-              </app-field-error-display>
-            </div>
-          </div>
-          <div class="sections">
-            <div class="section-heading">
-              <h2>Permanent Address</h2>
-            </div>
-            <div class="form-group">
-              <label for="Address">Address</label><span style="color:red">*</span>
-              <textarea class="form-control" id="address1" formControlName="address1" [ngClass]="{ 'is-invalid': submitted && employeeControls.address1.errors }"></textarea>
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'address1')" errorMsg="Enter permanent address">
-              </app-field-error-display>
-              <textarea class="form-control" id="address2" formControlName="address2"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="city">City</label><span style="color:red">*</span>
-              <input type="text" class="form-control" id="city" formControlName="city" [ngClass]="{ 'is-invalid': submitted && employeeControls.city.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')" errorMsg="Enter permanent city">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="State">State</label><span style="color:red">*</span>
-              <select class="form-control" formControlName="stateId" [ngClass]="{ 'is-invalid': submitted && employeeControls.stateId.errors }">
-                <option value="">--Select--</option>
-                <option *ngFor="let state of stateArray" value={{state.id}}>
-                  {{state.name}}
-                </option>
-              </select>
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'stateId')" errorMsg="Select permanent state">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="pincode">Pincode</label><span style="color:red">*</span>
-              <input type="text" class="form-control" id="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && employeeControls.pincode.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter permanent pincode">
-              </app-field-error-display>
-            </div>
-          </div>
-          <div class="sections">
-            <div class="section-heading">
-              <h2>Current Address</h2>
-            </div>
-            <div class="form-group">
-              <label for="Address">Address</label>
-              <textarea class="form-control" id="currentAddress1" formControlName="currentAddress1"></textarea>
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentAddress1')" errorMsg="Enter current address">
-              </app-field-error-display>
-              <textarea class="form-control" id="currentAddress2" formControlName="currentAddress2"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="state"> City </label>
-              <input type="text" class="form-control" id="currentCity" formControlName="currentCity">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')" errorMsg="Enter current city">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="currentStateId">State</label>
-              <select class="form-control" formControlName="currentStateId">
-                <option value="">--Select--</option>
-                <option *ngFor="let state of stateArray" value={{state.id}}>
-                  {{state.name}}
-                </option>
-              </select>
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentStateId')" errorMsg="Select current state">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="currentPincode"> Pincode </label>
-              <input type="text" class="form-control" id="currentPincode" formControlName="currentPincode">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter current pincode">
-              </app-field-error-display>
-            </div>
-          </div>
-          <div class="sections">
-            <div class="section-heading">
-              <h2>Educational Details</h2>
-            </div>
-            <div class="form-group">
-              <label for="courseId"> Course </label>
-              <select class="form-control" formControlName="courseId" (change)="fn_getSelectedCourse($event)">
-                <option value="">--Select--</option>
-                <option *ngFor="let course of courseArray" value={{course.id}}>
-                  {{course.name}}
-                </option>
-              </select>
-              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'courseId')" errorMsg="Select course">
-              </app-field-error-display> -->
-            </div>
-            <div class="form-group">
-              <label for="yearOfPassing">Year Of Passing </label>
-              <select class="form-control" formControlName="yearOfPassing">
-                <option value="">--Select--</option>
-                <option *ngFor="let passingYear of yearOfPassingArray" value={{passingYear.year}}>
-                  {{passingYear.year}}
-                </option>
-              </select>
-              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'yearOfPassing')" errorMsg="Select year of passing">
-              </app-field-error-display> -->
-            </div>
-            <div class="form-group">
-              <label for="institute"> Institution </label>
-              <input type="text" class="form-control" id="institution" formControlName="institution">
-              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'institution')" errorMsg="Enter institue name">
-              </app-field-error-display> -->
-            </div>
-            <div class="form-group">
-              <label for="institute"> Percentage </label>
-              <input type="text" class="form-control" id="percentage" formControlName="percentage">
-              <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'percentage')" errorMsg="Enter valid percentage">
-              </app-field-error-display> -->
-            </div>
-            <div class="form-group">
-              <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
-            </div>
-            <div class="container">
-              <table class="table" id="educationDetailsTable">
-                <thead>
-                  <tr>
-                    <th hidden="hidden">CourseID</th>
-                    <th>Course</th>
-                    <th>Year of Passing (YYYY)</th>
-                    <th>School/College/University</th>
-                    <th>Percentage %</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let educationField of educationArray; let i = index">
-                    <td hidden="hidden">
-                      <label>{{educationField.courseId}}</label>
-                    </td>
-                    <td>
-                      <label>{{educationField.course.name}}</label>
-                    </td>
-                    <td>
-                      <label>{{educationField.yearOfPassing}}</label>
-                    </td>
-                    <td>
-                      <label>{{educationField.institution}}</label>
-                    </td>
-                    <td>
-                      <label>{{educationField.percentage}}</label>
-                    </td>
-                    <td>
-                      <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="form-group">
-                <label for="Interest">Interest: </label><span style="color:red">*</span>
-                <div *ngFor="let interest of interestArray; let i=index" class="col-md-2">
-                  <label>
-                    <input type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)" [(ngModel)]="interest.selected"
-                      [ngModelOptions]="{standalone: true}">
-                    {{interest.description}}
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="other-details"> Note (If any): </label>
-                <textarea class="form-control" id="note" formControlName="note"></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="sections">
-            <div class="section-heading">
-              <h2>Login Details</h2>
-            </div>
-            <div class="form-group">
-              <label for="email">Email :</label><span style="color:red">*</span>
-              <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && employeeControls.email.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter email id">
-              </app-field-error-display>
-            </div>
-            <div class="form-group">
-              <label for="password">Password :</label><span style="color:red">*</span>
-              <input type="password" class="form-control" id="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && employeeControls.password.errors }">
-              <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter password">
-              </app-field-error-display>
-            </div>
-          </div>
-          <div class="btn-sections">
-            <button class="btn btn-primary btn-md">Submit</button>
-            <button type="button" class="btn btn-default btn-md ml-3" (click)="fn_resetEmployeeDetails()">Reset</button>
-          </div>
-        </form>
-      </div>
+<div class="card">
+  <div class="card-header">
+    <h1 class="h3 font-weight-bold mb-0">
+      Update Employee
+    </h1>
+    <div class="back-btn">
+      <button [routerLink]="['/user/employeelist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
+        Back </button>
     </div>
   </div>
+  <div class="card-body">
+  <div class="col-md-12 col-xs-12 col-lg-12">
+    <form [formGroup]="employeeForm" (ngSubmit)="fn_updateEmployee(employeeForm)">
+      <div class="sections">
+        <div class="form-group">
+          <label for="sel1">Team</label><span style="color:red">*</span>
+          <select class="form-control" formControlName="teamId">
+            <option value="null">--Select--</option>
+            <option *ngFor="let team of teamArray" value={{team.id}}>
+              {{team.name}}
+            </option>
+          </select>
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'teamId')" errorMsg="Select team.">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name</label><span style="color:red">*</span>
+          <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && employeeControls.firstName.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="middleName">Middle Name</label><span style="color:red">*</span>
+          <input type="text" class="form-control" id="middleName" placeholder="Middle Name" formControlName="middleName" [ngClass]="{ 'is-invalid': submitted && employeeControls.middleName.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter valid middle name.">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label><span style="color:red">*</span>
+          <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && employeeControls.lastName.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter valid last name.">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
+          <input type="date" class="form-control" id="dateOfBirth" formControlName="dob" [ngClass]="{ 'is-invalid': submitted && employeeControls.dob.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'dob')" errorMsg="Enter valid date of birth.">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="mobile">Mobile</label><span style="color:red">*</span>
+          <input type="text" class="form-control" id="mobile" placeholder="Mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && employeeControls.mobile.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'mobile')" errorMsg="Enter valid mobile number">
+          </app-field-error-display>
+        </div>
+      </div>
+      <div class="sections">
+        <div class="section-heading">
+          <h4>Permanent Address</h4>
+        </div>
+        <div class="form-group">
+          <label for="Address">Address</label><span style="color:red">*</span>
+          <textarea class="form-control" id="address1" placeholder="Address 1" formControlName="address1" [ngClass]="{ 'is-invalid': submitted && employeeControls.address1.errors }"></textarea>
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'address1')" errorMsg="Enter permanent address">
+          </app-field-error-display>
+          <textarea class="form-control mt-2" id="address2" placeholder="Address 2" formControlName="address2"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label><span style="color:red">*</span>
+          <input type="text" class="form-control" id="city" placeholder="City" formControlName="city" placeholder="City" [ngClass]="{ 'is-invalid': submitted && employeeControls.city.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')" errorMsg="Enter permanent city">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="State">State</label><span style="color:red">*</span>
+          <select class="form-control" formControlName="stateId" [ngClass]="{ 'is-invalid': submitted && employeeControls.stateId.errors }">
+            <option value="">--Select--</option>
+            <option *ngFor="let state of stateArray" value={{state.id}}>
+              {{state.name}}
+            </option>
+          </select>
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'stateId')" errorMsg="Select permanent state">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="pincode">Pincode</label><span style="color:red">*</span>
+          <input type="text" class="form-control" id="pincode" placeholder="Pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && employeeControls.pincode.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter permanent pincode">
+          </app-field-error-display>
+        </div>
+      </div>
+      <div class="sections">
+        <div class="section-heading">
+          <h4>Current Address</h4>
+        </div>
+        <div class="form-group">
+          <label for="Address">Address</label>
+          <textarea class="form-control" id="currentAddress1" placeholder="Address 1" formControlName="currentAddress1"></textarea>
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentAddress1')" errorMsg="Enter current address">
+          </app-field-error-display>
+          <textarea class="form-control mt-2" id="currentAddress2" placeholder="Address 2" formControlName="currentAddress2"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="state"> City </label>
+          <input type="text" class="form-control" id="currentCity" placeholder="City" formControlName="currentCity">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')" errorMsg="Enter current city">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="currentStateId">State</label>
+          <select class="form-control" formControlName="currentStateId">
+            <option value="">--Select--</option>
+            <option *ngFor="let state of stateArray" value={{state.id}}>
+              {{state.name}}
+            </option>
+          </select>
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentStateId')" errorMsg="Select current state">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="currentPincode"> Pincode </label>
+          <input type="text" class="form-control" id="currentPincode" placeholder="Pincode" formControlName="currentPincode">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter current pincode">
+          </app-field-error-display>
+        </div>
+      </div>
+      <div class="sections">
+        <div class="section-heading">
+          <h4>Educational Details</h4>
+        </div>
+        <div class="form-group">
+          <label for="courseId"> Course </label>
+          <select class="form-control" formControlName="courseId" (change)="fn_getSelectedCourse($event)">
+            <option value="">--Select--</option>
+            <option *ngFor="let course of courseArray" value={{course.id}}>
+              {{course.name}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="yearOfPassing">Year Of Passing </label>
+          <select class="form-control" formControlName="yearOfPassing">
+            <option value="">--Select--</option>
+            <option *ngFor="let passingYear of yearOfPassingArray" value={{passingYear.year}}>
+              {{passingYear.year}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="institute"> Institution </label>
+          <input type="text" class="form-control" id="institution" placeholder="Institute" formControlName="institution">
+        </div>
+        <div class="form-group">
+          <label for="institute"> Percentage </label>
+          <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage">
+        </div>
+        <div class="form-group">
+          <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
+        </div>
+        <div>
+            <table class="table table-bordered" id="educationDetailsTable">
+            <thead>
+              <tr>
+                <th hidden="hidden">CourseID</th>
+                <th>Course</th>
+                <th>Year of Passing (YYYY)</th>
+                <th>School/College/University</th>
+                <th>Percentage %</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let educationField of educationArray; let i = index">
+                <td hidden="hidden">
+                  <label>{{educationField.courseId}}</label>
+                </td>
+                <td>
+                  <label>{{educationField.course.name}}</label>
+                </td>
+                <td>
+                  <label>{{educationField.yearOfPassing}}</label>
+                </td>
+                <td>
+                  <label>{{educationField.institution}}</label>
+                </td>
+                <td>
+                  <label>{{educationField.percentage}}</label>
+                </td>
+                <td>
+                  <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="form-group">
+            <label for="Interest">Interest: </label><span style="color:red">*</span>
+            <div *ngFor="let interest of interestArray; let i=index" class="form-check form-check-inline">
+              <label>
+                <input class="mx-1" type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)" [(ngModel)]="interest.selected"
+                  [ngModelOptions]="{standalone: true}">
+                {{interest.description}}
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="other-details"> Note (If any): </label>
+            <textarea class="form-control" id="note" formControlName="note"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="sections">
+        <div class="section-heading">
+          <h4>Login Details</h4>
+        </div>
+        <div class="form-group">
+          <label for="email">Email :</label><span style="color:red">*</span>
+          <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && employeeControls.email.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter email id">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label for="password">Password :</label><span style="color:red">*</span>
+          <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && employeeControls.password.errors }">
+          <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter password">
+          </app-field-error-display>
+        </div>
+      </div>
+      <div class="btn-sections">
+        <button class="btn btn-primary btn-md">Submit</button>
+        <button type="button" class="btn btn-default btn-md ml-3" (click)="fn_resetEmployeeDetails()">Reset</button>
+      </div>
+    </form>
+  </div>
+</div>
 </div>

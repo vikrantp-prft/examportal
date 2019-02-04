@@ -25,19 +25,19 @@
           </div>
           <div class="form-group">
             <label for="firstName">First Name <span class="required">*</span></label>
-            <input type="text" class="form-control " id="firstName" formControlName="firstName" required>
+            <input type="text" class="form-control " id="firstName" formControlName="firstName" placeholder="First Name" required>
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="middleName">Middle Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="middleName" formControlName="middleName">
+            <input type="text" class="form-control" id="middleName" formControlName="middleName" placeholder="Middle Name">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter valid middle name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter valid last name.">
             </app-field-error-display>
           </div>
@@ -49,7 +49,7 @@
           </div>
           <div class="form-group">
             <label for="mobile">Mobile</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="mobile" formControlName="mobile">
+            <input type="text" class="form-control" id="mobile" formControlName="mobile" placeholder="Mobile Number">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'mobile')" errorMsg="Enter valid mobile number">
             </app-field-error-display>
           </div>
@@ -67,7 +67,7 @@
           </div>
           <div class="form-group">
             <label for="city">City</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="city" formControlName="city">
+            <input type="text" class="form-control" id="city" formControlName="city" placeholder="City">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')" errorMsg="Enter permanent city">
             </app-field-error-display>
           </div>
@@ -84,7 +84,7 @@
           </div>
           <div class="form-group">
             <label for="pincode">Pincode</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="pincode" formControlName="pincode">
+            <input type="text" class="form-control" id="pincode" formControlName="pincode" placeholder="Pincode">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter valid 6 digit permanent pincode">
             </app-field-error-display>
           </div>
@@ -102,7 +102,7 @@
           </div>
           <div class="form-group">
             <label for="state"> City </label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="currentCity" formControlName="currentCity">
+            <input type="text" class="form-control" id="currentCity" formControlName="currentCity" placeholder="City">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')" errorMsg="Enter current city">
             </app-field-error-display>
           </div>
@@ -119,7 +119,7 @@
           </div>
           <div class="form-group">
             <label for="currentPincode"> Pincode </label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="currentPincode" formControlName="currentPincode">
+            <input type="text" class="form-control" id="currentPincode" formControlName="currentPincode" placeholder="Pincode">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter valid 6 digit current pincode">
             </app-field-error-display>
           </div>
@@ -127,7 +127,7 @@
 
         <div class="sections">
           <div class="section-heading">
-            <h2>Educational Details</h2>
+            <h4>Educational Details</h4>
           </div>
           <div class="form-group">
             <label for="courseId"> Course </label>
@@ -137,8 +137,6 @@
                 {{course.name}}
               </option>
             </select>
-            <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'courseId')" errorMsg="Select course">
-                    </app-field-error-display> -->
           </div>
           <div class="form-group">
             <label for="yearOfPassing">Year Of Passing </label>
@@ -148,25 +146,19 @@
                 {{passingYear.year}}
               </option>
             </select>
-            <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'yearOfPassing')" errorMsg="Select course">
-                    </app-field-error-display> -->
           </div>
           <div class="form-group">
             <label for="institute"> Institution </label>
-            <input type="text" class="form-control" id="institution" formControlName="institution">
-            <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'institution')" errorMsg="Enter institute anme">
-                    </app-field-error-display> -->
+            <input type="text" class="form-control" id="institution" placeholder="Institute" formControlName="institution">
           </div>
           <div class="form-group">
             <label for="institute"> Percentage </label>
-            <input type="text" class="form-control" id="percentage" formControlName="percentage">
-            <!-- <app-field-error-display [displayError]="isFieldValid(employeeForm, 'percentage')" errorMsg="Enter valid percentage">
-                    </app-field-error-display> -->
+            <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage">
           </div>
           <div class="form-group">
             <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
           </div>
-          <div class="">
+          <div>
             <table class="table table-bordered" id="educationDetailsTable">
               <thead>
                 <tr>
@@ -205,8 +197,8 @@
               <label for="Interest">Interest: </label><span style="color:red">*</span> <br>
               <div *ngFor="let interest of interestArray; let i=index" class="form-check form-check-inline">
                 <label>
-                  <input class="mx-1" type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)" [(ngModel)]="interest.selected"
-                    [ngModelOptions]="{standalone: true}">
+                  <input class="mx-1" type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)"
+                    [(ngModel)]="interest.selected" [ngModelOptions]="{standalone: true}">
                   {{interest.description}}
                 </label>
               </div>
@@ -223,13 +215,13 @@
           </div>
           <div class="form-group">
             <label for="email">Email :</label><span style="color:red">*</span>
-            <input type="email" class="form-control" id="email" formControlName="email">
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter email id">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="password">Password :</label><span style="color:red">*</span>
-            <input type="password" class="form-control" id="password" formControlName="password">
+            <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter password">
             </app-field-error-display>
           </div>
