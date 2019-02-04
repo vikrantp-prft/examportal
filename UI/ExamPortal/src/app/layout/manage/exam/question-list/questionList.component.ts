@@ -18,7 +18,7 @@ export class questionListComponent implements OnInit {
   public url = '';
   public questionForm: FormGroup;
   public categoryList = [];
-  public departmentsUrl = 'api/Dropdown/Departments';
+  public departmentsUrl = 'api/Dropdown/Categories';
 
   singleSelectFlag: boolean;
   multipleSelectFlag: boolean;
@@ -146,12 +146,14 @@ export class questionListComponent implements OnInit {
     if (event.keyCode == 13) {
       this.questionModel.pageNumber = 1;
       this.questionModel.pageSize = 10;
-      this.questionModel.filter = event.target.value;
+      this.questionModel.filter = this.trimming_fn(event.target.value);
       this.getQuestionsList();
     }
 
   }
-
+  trimming_fn(x) {
+    return x ? x.replace(/^\s+|\s+$/gm, '') : '';
+  };
   // Function to get list of Exam
   getQuestionsList() {
     this.CommonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
@@ -166,7 +168,6 @@ export class questionListComponent implements OnInit {
   }
 
   deleteQuestion(questionID) {
-
     if (questionID != null) {
       swal({
         title: 'Are you sure?',
@@ -184,7 +185,6 @@ export class questionListComponent implements OnInit {
     }
   }
   deleteQuestionConfirm(questionID) {
-
     this.questionDetailModel.id = questionID;
     this.CommonService.fn_PostWithData(this.questionDetailModel, this.deleteQuestionUrl).subscribe((result: any) => {
       const rs = result;
@@ -199,7 +199,6 @@ export class questionListComponent implements OnInit {
     this.resetAll();
     this.getQuestionsList();
   }
-
 
   editQuestion(questionID) {
     this.resetAll();
@@ -314,22 +313,7 @@ export class questionListComponent implements OnInit {
         if (rs.statusCode == 200) {
           this.toastr.success(formMsg);
           this.validdationOptionText = false;
-
-          //this.questionForm;
-          // debugger;
-          // this.questionForm.controls.questionCategory.status = 'VALID';
-          // this.questionForm.controls.questionText.status = 'VALID';
-          // this.questionForm.controls.questionType.status = 'VALID';
           this.questionForm.markAsUntouched();
-          //this.questionForm.controls.questionType.touched = false;
-          //this.questionForm.controls.questionText.touched = false;
-          //this.questionForm.controls.questionCategory.touched = false;
-          //this.questionForm.setValue({ 'status': 'VALID' });
-          //this.questionForm.status = 'VALID';
-          //this.questionForm.touched = false;
-          //this.questionForm.setErrors({ 'invalid': false });
-          // this.questionForm;
-          // debugger;
           this.getQuestionsList();
           this.resetAll();
         }
