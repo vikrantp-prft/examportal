@@ -69,13 +69,8 @@ export class StateListComponent implements OnInit {
     const url = 'api/Master/GetMasterByType';
     const stateModel =
        {
-         "filter": "State",
-         "pageSize": 0,
-         "pageNumber": 0,
-         "totleRecords": 0,
-         "filterBy": "string",
-         "sortBy": "string",
-         "isDescending": true
+         "condition": "State",
+         //"pageSize": 10
        };
 
     this.CommonService.fn_PostWithData(stateModel, url).subscribe((result: any) => {

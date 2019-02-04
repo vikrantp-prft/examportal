@@ -6,9 +6,9 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 interface paginationModel {
-  currentPage: number;
-  pageSize: number;
-  searchString: string;
+  pageNumber: number;
+  pageSize: number;
+  searchString: string; 
 }
 
 @Component({
@@ -20,9 +20,16 @@ export class CategoryListComponent implements OnInit {
   // Declaration
 
   public params: any = {
-    currentPage: 1,
+    // "id": "string",
+    // "pageSize": 10,
+    // "pageNumber": 1,
+    // "totalRecords": 0,
+    // "filter": "string",
+    // "sortBy": "string",
+    // "isDescending": true
+    pageNumber: 1,
     pageSize: 10,
-    searchString: ''
+    filter: ''
   };
   public i: Number = 0;
   public startrecordno: Number = 1;
@@ -31,6 +38,13 @@ export class CategoryListComponent implements OnInit {
   public totalItems = 0;
   public categoryList = [];
   public statusUrl: any;
+  public searchValue : string = ' ';
+
+  public categoryModel =
+    {
+      "condition": "Category",
+      //"pageSize": 10
+    };
 
   // Constructor
 
@@ -44,37 +58,66 @@ export class CategoryListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
+    this.params.pageNumber = 1;
     this.params.pageSize = event.target.value;
+    this.fn_GetCategoryList();
   }
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
+    this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetCategoryList();
   }
 
   // Searching
-  searchRecord(event: any): void {}
+  searchRecord(event: any): void {
+    if(event.keyCode == 13) {
+      console.log(this.searchValue);
+      alert('you just clicked enter');
+      // this.params.pageNumber = 1;
+      // this.params.pageSize = 10; 
+      // this.params.filter = this.searchValue;
+      const searchModel=
+      {
+        "id": "string",
+        "condition": "Category",
+        "pageSize": 0,
+        "pageNumber": 0,
+        "totalRecords": 0,
+        "filter": this.searchValue,
+        "sortBy": "string",
+        "isDescending": true
+      }
+      this.fn_GetFilteredList(searchModel);
+    console.log(this.categoryModel);
+
+    }
+  }
+
+  fn_GetFilteredList(data) {
+    const url = 'api/Master/GetMasterByType';
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.categoryList = rs.data;
+        // console.log(rs);
+        // this.totalItems = rs.totalRecords;
+      }
+      else {
+      }
+    });
+  }
 
   fn_GetCategoryList() {
     const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
+      pageNumber: parseInt(this.params.currentPage),
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
     const url = 'api/Master/GetMasterByType';
 
-    const categoryModel =
-    {
-      "filter": "Category",
-      "pageSize": 0,
-      "pageNumber": 0,
-      "totleRecords": 0,
-      "filterBy": "string",
-      "sortBy": "string",
-      "isDescending": true
-    };
+    console.log(this.categoryModel);
 
-    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
        this.categoryList = rs.data;

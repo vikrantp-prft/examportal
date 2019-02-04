@@ -49,14 +49,21 @@ export class TeamListComponent implements OnInit {
   setRecordPerPage(event: any): void {
     this.params.currentPage = 1;
     this.params.pageSize = event.target.value;
+    this.fn_GetTeamList();
   }
   pageChanged(event: any): void {
     this.params.currentPage = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetTeamList();
   }
   
   // Searching
-  searchRecord(event: any): void {}
+  searchRecord(searchStr: any): void {
+    this.params.pageNumber = 1;
+    this.params.pageSize = 10;
+    this.params.filter = searchStr;
+    this.fn_GetTeamList();
+  }
 
   
   // Function to get teamList (GetMasterByType)
@@ -69,13 +76,8 @@ export class TeamListComponent implements OnInit {
     const url = 'api/Master/GetMasterByType';
     const teamModel =
        {
-         "filter": "Team",
-         "pageSize": 0,
-         "pageNumber": 0,
-         "totleRecords": 0,
-         "filterBy": "string",
-         "sortBy": "string",
-         "isDescending": true
+         "condition": "Team",
+         //"pageSize": 10
        };
 
     this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {

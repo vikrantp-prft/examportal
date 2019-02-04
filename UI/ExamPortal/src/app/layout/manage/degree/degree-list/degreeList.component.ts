@@ -69,13 +69,8 @@ export class DegreeListComponent implements OnInit {
     const url = 'api/Master/GetMasterByType';
     const degreeModel =
        {
-         "filter": "Degree",
-         "pageSize": 0,
-         "pageNumber": 0,
-         "totleRecords": 0,
-         "filterBy": "string",
-         "sortBy": "string",
-         "isDescending": true
+         "condition": "Degree",
+         //"pageSize": 10
        };
 
     this.CommonService.fn_PostWithData(degreeModel, url).subscribe((result: any) => {
