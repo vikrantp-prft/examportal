@@ -18,7 +18,7 @@ export class questionListComponent implements OnInit {
   public url = '';
   public questionForm: FormGroup;
   public categoryList = [];
-  public departmentsUrl = 'api/Dropdown/Departments';
+  public departmentsUrl = 'api/Dropdown/Categories';
 
   singleSelectFlag: boolean;
   multipleSelectFlag: boolean;
