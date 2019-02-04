@@ -1,15 +1,15 @@
-<form  class="my-2 my-lg-0" #registerForm="ngForm" (ngSubmit)="registerUser()">
+<form  class="my-2 my-lg-0" [formGroup]="userRegistration" (ngSubmit)="registerUser(userRegistration)">
   <div class="form-group">
     <label for="FirstName">First Name</label>
-    <input type="text" class="form-control" id="FirstName" placeholder="First Name">
+    <input type="text" class="form-control" id="FirstName" formControlName="firstName" placeholder="First Name">
   </div>
   <div class="form-group">
     <label for="MiddleName">Middle Name</label>
-    <input type="text" class="form-control" id="MiddleName" placeholder="Middle Name">
+    <input type="text" class="form-control" id="MiddleName" formControlName="middleName" placeholder="Middle Name">
   </div>
   <div class="form-group">
     <label for="LastName">Last Name</label>
-    <input type="text" class="form-control" id="LastName" placeholder="Last Name">
+    <input type="text" class="form-control" id="LastName" formControlName="lastName" placeholder="Last Name">
   </div>
 
 
