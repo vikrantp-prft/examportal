@@ -25,7 +25,8 @@
           </div>
           <div class="form-group">
             <label for="firstName">First Name <span class="required">*</span></label>
-            <input type="text" class="form-control " id="firstName" formControlName="firstName" placeholder="First Name" required>
+            <input type="text" class="form-control " id="firstName" formControlName="firstName" placeholder="First Name"
+              required>
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
             </app-field-error-display>
           </div>
@@ -215,14 +216,19 @@
           </div>
           <div class="form-group">
             <label for="email">Email :</label><span style="color:red">*</span>
-            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter email id">
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email"
+              (ngModelChange)="fn_checkEmail($event)">
+            <div *ngIf="emailExist; then thenBlock;"> </div>
+            <ng-template #thenBlock>
+              <div><span style="color:red">Email is already exist.</span></div>
+            </ng-template>
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter valid email id">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="password">Password :</label><span style="color:red">*</span>
             <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter password">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter valid password">
             </app-field-error-display>
           </div>
         </div>

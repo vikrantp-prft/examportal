@@ -21,6 +21,7 @@ export class AddEmployeeComponent implements OnInit {
   public newArray = [];
   public employeeId: any;
   selectedCourse: any;
+  public emailExist: boolean = false;
   public yearOfPassingArray: Array<any> = [
     { year: 1991 }, { year: 1992 }, { year: 1993 }, { year: 1994 }, { year: 1995 }, { year: 1996 }, { year: 1997 }, { year: 1998 }, { year: 1999 }, { year: 2000 },
     { year: 2001 }, { year: 2002 }, { year: 2003 }, { year: 2004 }, { year: 2005 }, { year: 2006 }, { year: 2007 }, { year: 2008 }, { year: 2009 }, { year: 2010 },
@@ -90,6 +91,9 @@ export class AddEmployeeComponent implements OnInit {
       }
       else if (this.employeeForm.controls.interest.value.length == 0) {
         this.toastr.error('Please select atleast 1 interest');
+        return false;
+      }
+      else if (this.emailExist == true) {
         return false;
       }
       else {
@@ -275,5 +279,26 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm.controls.institution.reset();
   }
 
+  fn_checkEmail(event) {
+    debugger;
+    var existEmailUrl = "api/User/IsEmailExist";
+    var model =
+    {
+      "condition": event
+    }
+    this.CommonService.fn_PostWithData(model, existEmailUrl).subscribe((result: any) => {
+      const stateResult = result;
+      if (stateResult.statusCode === 200) {
+        if (stateResult.data == true) {
+          console.log('Email address is already exist');
+          this.emailExist = true;
+        }
+        else {
+          console.log('Email address is not exist');
+          this.emailExist = false;
+        }
+      }
+    });
+  }
 }
 
