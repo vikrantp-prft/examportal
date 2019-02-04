@@ -3,6 +3,7 @@ import { AddDesignationComponent } from './Designation/designation-add-update/de
 import { AddCategoryComponent } from './category/category-add-update/categoryaddupdate.component';
 import { CategoryListComponent } from './category/category-list/categorylist.component';
 import { NgModule } from '@angular/core';
+import { RichTextEditorAllModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { CommonModule } from '@angular/common';
 import { ManageComponent } from './manage.component';
 import { ManageRoutingModule } from './manage-routing';
@@ -36,6 +37,7 @@ import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.co
         ReactiveFormsModule,
         ManageRoutingModule,
         ErrorHandlingModule,
+        RichTextEditorAllModule,
         PaginationModule.forRoot()],
     declarations: [
         FileSelectDirective,

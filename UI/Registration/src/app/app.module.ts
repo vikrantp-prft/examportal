@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterService } from './_services/register.service';
 import { RegisterUserComponent } from './register-user/register-user.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
@@ -18,7 +18,8 @@ import { RegisterUserComponent } from './register-user/register-user.component';
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
-      FormsModule
+      FormsModule,
+      ReactiveFormsModule
    ],
    providers: [
       RegisterService

@@ -54,9 +54,39 @@ export class StateListComponent implements OnInit {
     this.params.currentPage = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
   }
+
+  trimming_fn(x) {
+    return x ? x.replace(/^\s+|\s+$/gm, '') : '';
+  }; 
   
   // Searching
-  searchRecord(event: any): void {}
+  searchRecord(event: any): void {
+    const searchModel=
+      {
+        "id": "string",
+        "condition": "State",
+        "pageSize": 0,
+        "pageNumber": 0,
+        "totalRecords": 0,
+        "filter": this.trimming_fn(event.target.value),
+        "sortBy": "string",
+        "isDescending": true
+      }
+      this.fn_GetFilteredList(searchModel);
+  }
+
+  fn_GetFilteredList(data) {
+    const url = 'api/Master/GetMasterByType';
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.stateList = rs.data;
+        // this.totalItems = rs.totalRecords;
+      }
+      else {
+      }
+    });
+  }
 
   
   // Function to get stateList (GetMasterByType)
@@ -148,13 +178,7 @@ export class StateListComponent implements OnInit {
         }
         const stateStatusModel = {
           "id": id,
-          "pageSize": 0,
-          "pageNumber": 0,
-          "totalRecords": 0,
-          "filter": "string",
-          "sortBy": "string",
-          "isDescending": true
-        }
+         }
         this.fn_saveStatusChange(this.statusUrl,stateStatusModel);
     }
     });

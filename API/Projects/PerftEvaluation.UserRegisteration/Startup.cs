@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PerftEvaluation.UserRegisteration.Bal;
+using PerftEvaluation.UserRegisteration.Dal;
+using PerftEvaluation.UserRegisteration.Interfaces;
 
 namespace PerftEvaluation.UserRegisteration
 {
@@ -27,7 +30,8 @@ namespace PerftEvaluation.UserRegisteration
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
-
+            services.AddScoped<IRegistrationBal, RegistrationBal>();
+            services.AddScoped<IRegistrationDal, RegistrationDal>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
