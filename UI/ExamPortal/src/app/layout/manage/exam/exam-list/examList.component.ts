@@ -52,11 +52,14 @@ export class ExamListComponent implements OnInit {
     this.fn_GetExamList();
   }
   // Searching
-  searchRecord(searchStr: any): void {
-    this.params.pageNumber = 1;
-    this.params.pageSize = 10;
-    this.params.filter = searchStr;
-    this.fn_GetExamList();
+  searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.params.pageNumber = 1;
+      this.params.pageSize = 10;
+      this.params.filter = event.target.value;
+      this.fn_GetExamList();
+    }
+
   }
 
   // Function to get list of Exam

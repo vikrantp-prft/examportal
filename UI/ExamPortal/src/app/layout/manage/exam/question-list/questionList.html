@@ -5,7 +5,8 @@
         <div class="card-header">
           <h1 class="h3">Question List</h1>
           <div class="back-btn">
-            <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>  Back </button>
+            <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
+              Back </button>
           </div>
         </div>
         <div class="card-body">
@@ -30,8 +31,12 @@
             </div>
             <!-- [(ngModel)]="params.searchString" -->
             <!-- <div class=""> -->
-            <div class="input-group custom-search-form col-md-4">
-              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
+            <div class="col-md-3">
+              <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+                class="form-control" />
+              <a href="#" class="search-icon">
+                <i class="fa fa-search"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -78,7 +83,7 @@
             </tbody>
           </table>
         </div>
-        <pagination class="card-body pull-right" [totalItems]="questionModel.totleRecords" [itemsPerPage]="questionModel.pageSize"
+        <pagination class="card-body pull-right" [totalItems]="totalItems" [itemsPerPage]="questionModel.pageSize"
           (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
           nextText="NEXT" firstText="FIRST" lastText="LAST">
         </pagination>

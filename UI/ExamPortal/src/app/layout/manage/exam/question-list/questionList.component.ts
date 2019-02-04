@@ -126,8 +126,9 @@ export class questionListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
+    //debugger;
     this.questionModel.pageNumber = 1;
-    this.questionModel.pageSize = event.target.value;
+    this.questionModel.pageSize = parseInt(event.target.value);
     this.getQuestionsList();
   }
 
@@ -137,7 +138,15 @@ export class questionListComponent implements OnInit {
     this.getQuestionsList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.questionModel.pageNumber = 1;
+      this.questionModel.pageSize = 10;
+      this.questionModel.filter = event.target.value;
+      this.getQuestionsList();
+    }
+
+  }
 
   // Function to get list of Exam
   getQuestionsList() {
@@ -145,6 +154,7 @@ export class questionListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionList = rs.data;
+        this.totalItems = rs.totalRecords;
       }
       else {
       }

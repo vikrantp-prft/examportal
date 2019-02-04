@@ -8,5 +8,8 @@ namespace PerftEvaluation.DTO {
     public class RequestModel : FilterModel {
         public string Id { get; set; }
 
+        public string Condition { get; set; }
+
+
     }
 }

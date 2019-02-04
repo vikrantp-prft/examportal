@@ -85,7 +85,26 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <value></value>
         public ExamsDTO GetExamsById (string examId) {
-            return this._mapper.Map<ExamsDTO> (this._examsRepository.GetExamsById (examId));
+            var exam = this._examsRepository.GetExamsById (examId);
+
+            ExamsDTO examsDTO = new ExamsDTO ();
+            examsDTO.Id = exam.Id;
+                examsDTO.Title = exam.Title;
+                examsDTO.TeamId = exam.TeamId;
+                examsDTO.Description = exam.Description;
+                examsDTO.ExamDurationHours = exam.ExamDurationHours;
+                examsDTO.ExamDurationMinutes = exam.ExamDurationMinutes;
+                examsDTO.PassingMarks = exam.PassingMarks;
+                examsDTO.FromDate = exam.FromDate;
+                examsDTO.ToDate = exam.ToDate;
+                examsDTO.ShowResultInFront = exam.ShowResultInFront;
+                examsDTO.ShuffleOptions = exam.ShuffleOptions;
+                examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
+                examsDTO.IsPaperPublic = exam.IsPaperPublic;
+                examsDTO.TotalQuestions = exam.TotalQuestions;
+                examsDTO.Team = exam.TeamId != null? _masterService.GetMasterById (exam.TeamId) : null;
+
+            return examsDTO;
         }
 
         /// <summary>
