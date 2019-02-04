@@ -180,6 +180,25 @@ namespace PerftEvaluation.Api.Controllers {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("IsEmailExist")]
+        public IActionResult IsEmailExist (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.IsEmailExist (requestModel.Condition);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
         #endregion
     }
 }

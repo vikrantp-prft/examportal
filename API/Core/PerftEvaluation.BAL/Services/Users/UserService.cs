@@ -42,7 +42,7 @@ namespace PerftEvaluation.BAL.Services {
             //Integrate pagination
             var user = filteredUser.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<UsersDTO>>(user), (filteredUser.Count () < 100 ? filteredUser.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<UsersDTO>> (user), (filteredUser.Count () < 100 ? filteredUser.Count () : 100));
         }
 
         /// <summary>
@@ -111,6 +111,15 @@ namespace PerftEvaluation.BAL.Services {
         /// <returns></returns>
         public bool DeleteUser (string userId) {
             return this._userRepository.DeleteUsers (userId);
+        }
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool IsEmailExist (string email) {
+            return _userRepository.IsEmailExist (email);
         }
         #endregion
 

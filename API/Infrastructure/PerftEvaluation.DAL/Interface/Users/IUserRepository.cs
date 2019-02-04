@@ -48,7 +48,6 @@ namespace PerftEvaluation.DAL.Interface {
         /// <returns></returns>
         bool ActiveUsers (string userId);
 
-
         /// <summary>
         /// Deleted users detail
         /// </summary>
@@ -61,5 +60,12 @@ namespace PerftEvaluation.DAL.Interface {
         /// </summary>
         /// <returns></returns>
         int UsersCount ();
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        bool IsEmailExist (string email);
     }
 }

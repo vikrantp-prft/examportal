@@ -5,7 +5,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'question-list',
@@ -46,6 +46,10 @@ export class questionListComponent implements OnInit {
   public questionListUrl = 'api/Questions/listQuestionsByExamId';
   public questionDetailUrl = 'api/Questions/GetQuestionById';
   public deleteQuestionUrl = 'api/Questions/DeleteQuestion';
+  public validdationOptionText = false;
+  public validdationOptionIsCorrect = false;
+  public displayErrorOption = false;
+
 
 
   public formDataCustom: any = {
@@ -70,9 +74,9 @@ export class questionListComponent implements OnInit {
 
     this.questionForm = this.fb.group({
       id: new FormControl(null),
-      questionCategory: new FormControl(''),
-      questionType: new FormControl(''),
-      questionText: new FormControl(''),
+      questionCategory: [null, [Validators.required]],
+      questionType: [null, [Validators.required]],
+      questionText: [null, [Validators.required]],
       examID: new FormControl(this.examID),
       singleSelectOptionsCorrectAns: new FormControl(null),
       obj_multiSelectOptions: this.fb.array([this.addSubMultipleSelectOption(null, false, null)]),
@@ -277,6 +281,21 @@ export class questionListComponent implements OnInit {
         var options = [];
       }
 
+      this.validdationOptionText = true;
+      options.forEach(item => {
+        if (item.option == "") {
+          this.validdationOptionText = false;
+        }
+        if (item.isCorrect) {
+          this.validdationOptionIsCorrect = true;
+        }
+      });
+
+      if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
+        this.displayErrorOption = true;
+        return false;
+      }
+
       this.formDataCustom.options = options;
       this.formDataCustom.question = formData.value.questionText;
       this.formDataCustom.categoryId = formData.value.questionCategory;
@@ -288,11 +307,31 @@ export class questionListComponent implements OnInit {
         this.url = "api/Questions/UpdateQuestions";
         formMsg = 'Question Updated successfully!';
       }
+      //this.questionForm.valid = true;
 
       this.CommonService.fn_PostWithData(this.formDataCustom, this.url).subscribe((result: any) => {
         const rs = result;
         if (rs.statusCode == 200) {
           this.toastr.success(formMsg);
+          this.validdationOptionText = false;
+
+          //this.questionForm;
+          // debugger;
+          // this.questionForm.controls.questionCategory.status = 'VALID';
+          // this.questionForm.controls.questionText.status = 'VALID';
+          // this.questionForm.controls.questionType.status = 'VALID';
+          this.questionForm.markAsUntouched();
+          //this.questionForm.controls.questionType.touched = false;
+          //this.questionForm.controls.questionText.touched = false;
+          //this.questionForm.controls.questionCategory.touched = false;
+          //this.questionForm.setValue({ 'status': 'VALID' });
+          //this.questionForm.status = 'VALID';
+          //this.questionForm.touched = false;
+          //this.questionForm.setErrors({ 'invalid': false });
+          // this.questionForm;
+          // debugger;
+          this.getQuestionsList();
+          this.resetAll();
         }
         else {
           this.toastr.error('Failed to Add/Update Question');
@@ -300,13 +339,19 @@ export class questionListComponent implements OnInit {
       });
     }
     else {
-      return;
+      this.CommonService.validateAllFormFields(this.questionForm);
+      this.toastr.error('Please fill required details');
+      return false;
     }
+    this.validdationOptionText = false;
+    this.validdationOptionIsCorrect = false;
     this.resetAll();
     this.getQuestionsList();
   }
 
   resetAll() {
+    this.validdationOptionIsCorrect = false;
+    this.displayErrorOption = false;
     this.url = "";
     this.questionForm.controls.id.setValue(null);
     this.questionForm.controls.questionCategory.setValue('');
@@ -414,4 +459,9 @@ export class questionListComponent implements OnInit {
       }
     }
   }
+
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
+
 }

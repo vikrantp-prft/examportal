@@ -70,7 +70,8 @@ export class DesignationListComponent implements OnInit {
 
     const designationModel =
     {
-      "filter": "Designation",
+         "condition": "Designation",
+         //"pageSize": 10
     };
 
     this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {

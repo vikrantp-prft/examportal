@@ -63,5 +63,12 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// </summary>
         /// <returns></returns>
         DashboardDTO GetDashboardInfo ();
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        bool IsEmailExist (string email);
     }
 }
