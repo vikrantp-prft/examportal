@@ -146,6 +146,15 @@ namespace PerftEvaluation.DAL.Repositories {
 
             return _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
         }
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool IsEmailExist (string email) {
+            return (_db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.Email == email).Count () > 0 ? true : false);
+        }
         #endregion
     }
 }
