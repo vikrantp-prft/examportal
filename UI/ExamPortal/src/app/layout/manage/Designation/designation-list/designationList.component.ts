@@ -56,8 +56,39 @@ export class DesignationListComponent implements OnInit {
     this.params.currentPage = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
   }
+
+  trimming_fn(x) {
+    return x ? x.replace(/^\s+|\s+$/gm, '') : '';
+  }; 
+
   // Searching
-  searchRecord(event: any): void {}
+  searchRecord(event: any): void {
+    const searchModel=
+      {
+        "id": "string",
+        "condition": "Designation",
+        "pageSize": 0,
+        "pageNumber": 0,
+        "totalRecords": 0,
+        "filter": this.trimming_fn(event.target.value),
+        "sortBy": "string",
+        "isDescending": true
+      }
+      this.fn_GetFilteredList(searchModel);
+  }
+
+  fn_GetFilteredList(data) {
+    const url = 'api/Master/GetMasterByType';
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.designationList = rs.data;
+        // this.totalItems = rs.totalRecords;
+      }
+      else {
+      }
+    });
+  }
 
   // Function to get list of employees
   fn_GetDesignationList() {
@@ -118,7 +149,7 @@ export class DesignationListComponent implements OnInit {
         this.fn_GetDesignationList();
       }
       else{
-        this.toastr.error("Not deleted");
+        this.toastr.error("Failed to delete designation");
       }
       
     });
@@ -146,13 +177,7 @@ export class DesignationListComponent implements OnInit {
         }
         const designationStatusModel = {
           "id": id,
-          "pageSize": 0,
-          "pageNumber": 0,
-          "totalRecords": 0,
-          "filter": "string",
-          "sortBy": "string",
-          "isDescending": true
-        }
+         }
         this.fn_saveStatusChange(this.statusUrl,designationStatusModel);
     }
     });
@@ -161,8 +186,6 @@ export class DesignationListComponent implements OnInit {
   //function to save status change
   fn_saveStatusChange(url, data) {
       this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
           this.fn_GetDesignationList();

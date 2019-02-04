@@ -22,7 +22,7 @@ export class TeamListComponent implements OnInit {
   public params: any = {
     currentPage: 1,
     pageSize: 10,
-    searchString: ''
+    filter: ''
   };
   public i: Number = 0;
   public startrecordno: Number = 1;
@@ -56,13 +56,38 @@ export class TeamListComponent implements OnInit {
     this.params.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetTeamList();
   }
+
+  trimming_fn(x) {
+    return x ? x.replace(/^\s+|\s+$/gm, '') : '';
+  }; 
   
   // Searching
-  searchRecord(searchStr: any): void {
-    this.params.pageNumber = 1;
-    this.params.pageSize = 10;
-    this.params.filter = searchStr;
-    this.fn_GetTeamList();
+  searchRecord(event: any): void {
+    const searchModel=
+      {
+        "id": "string",
+        "condition": "Team",
+        "pageSize": 0,
+        "pageNumber": 0,
+        "totalRecords": 0,
+        "filter": this.trimming_fn(event.target.value),
+        "sortBy": "string",
+        "isDescending": true
+      }
+      this.fn_GetFilteredList(searchModel);
+  }
+
+  fn_GetFilteredList(data) {
+    const url = 'api/Master/GetMasterByType';
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.teamList = rs.data;
+        // this.totalItems = rs.totalRecords;
+      }
+      else {
+      }
+    });
   }
 
   
@@ -102,11 +127,8 @@ export class TeamListComponent implements OnInit {
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-        console.log(x);
-        console.log(x.value);
+        
         if (x.value == true) {
-          console.log(x);
-           console.log(x.value);
           const url = 'api/Master/DeleteMaster';
           const model = {
             id: ''
@@ -157,13 +179,7 @@ export class TeamListComponent implements OnInit {
         }
         const teamStatusModel = {
           "id": id,
-          "pageSize": 0,
-          "pageNumber": 0,
-          "totalRecords": 0,
-          "filter": "string",
-          "sortBy": "string",
-          "isDescending": true
-        }
+         }
         this.fn_saveStatusChange(this.statusUrl,teamStatusModel);
     }
     });

@@ -20,17 +20,11 @@ export class CategoryListComponent implements OnInit {
   // Declaration
 
   public params: any = {
-    // "id": "string",
-    // "pageSize": 10,
-    // "pageNumber": 1,
-    // "totalRecords": 0,
-    // "filter": "string",
-    // "sortBy": "string",
-    // "isDescending": true
     pageNumber: 1,
     pageSize: 10,
     filter: ''
   };
+
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -38,8 +32,7 @@ export class CategoryListComponent implements OnInit {
   public totalItems = 0;
   public categoryList = [];
   public statusUrl: any;
-  public searchValue : string = ' ';
-
+  
   public categoryModel =
     {
       "condition": "Category",
@@ -68,14 +61,12 @@ export class CategoryListComponent implements OnInit {
     this.fn_GetCategoryList();
   }
 
+  trimming_fn(x) {
+    return x ? x.replace(/^\s+|\s+$/gm, '') : '';
+  }; 
+
   // Searching
   searchRecord(event: any): void {
-    if(event.keyCode == 13) {
-      console.log(this.searchValue);
-      alert('you just clicked enter');
-      // this.params.pageNumber = 1;
-      // this.params.pageSize = 10; 
-      // this.params.filter = this.searchValue;
       const searchModel=
       {
         "id": "string",
@@ -83,14 +74,12 @@ export class CategoryListComponent implements OnInit {
         "pageSize": 0,
         "pageNumber": 0,
         "totalRecords": 0,
-        "filter": this.searchValue,
+        "filter": this.trimming_fn(event.target.value),
         "sortBy": "string",
         "isDescending": true
       }
       this.fn_GetFilteredList(searchModel);
-    console.log(this.categoryModel);
-
-    }
+    
   }
 
   fn_GetFilteredList(data) {
@@ -99,7 +88,6 @@ export class CategoryListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.categoryList = rs.data;
-        // console.log(rs);
         // this.totalItems = rs.totalRecords;
       }
       else {
@@ -115,9 +103,7 @@ export class CategoryListComponent implements OnInit {
     };
     const url = 'api/Master/GetMasterByType';
 
-    console.log(this.categoryModel);
-
-    this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
+      this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
        this.categoryList = rs.data;
@@ -193,14 +179,8 @@ export class CategoryListComponent implements OnInit {
           this.statusUrl = 'api/Master/ActivateMaster';
         }
         const categoryStatusModel = {
-          "id": id,
-          "pageSize": 0,
-          "pageNumber": 0,
-          "totalRecords": 0,
-          "filter": "string",
-          "sortBy": "string",
-          "isDescending": true
-        }
+          "id": id
+         }
         this.fn_saveStatusChange(this.statusUrl,categoryStatusModel);
     }
     });
@@ -209,8 +189,6 @@ export class CategoryListComponent implements OnInit {
   //function to save status change
   fn_saveStatusChange(url, data) {
       this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
           this.fn_GetCategoryList();

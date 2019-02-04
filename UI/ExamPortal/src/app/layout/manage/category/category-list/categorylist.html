@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="col-md-3">
-        <input (keyup)="searchRecord($event)" type="text" [(ngModel)]="searchValue" id="serach" placeholder="Search" class="form-control" />
+        <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
         <a href="#" class="search-icon">
           <i class="fa fa-search"></i>
         </a>
@@ -64,7 +64,7 @@
       </tbody>
     </table>
   </div>
-  <pagination class="pull-right pr-2" [totalItems]="params.totalRecords" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+  <pagination class="pull-right pr-2" [totalItems]="params.totalRecords" [itemsPerPage]="params .pageSize" (pageChanged)="pageChanged($event)"
     [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
     lastText="LAST"></pagination>
 </div>
