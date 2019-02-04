@@ -63,7 +63,7 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
-        console.log(error);
+        console.log('error : ',error);
         return Observable.throw(error.statusText); }
       });
   }
