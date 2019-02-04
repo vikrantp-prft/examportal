@@ -5,26 +5,22 @@ using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
-namespace PerftEvaluation.Api.Controllers
-{
-    [Route("api/[controller]")]
+namespace PerftEvaluation.Api.Controllers {
+    [Route ("api/[controller]")]
     [ApiController]
     /// <summary>
     /// User API Controller
     /// </summary>
-    public class UserController : ControllerBase
-    {
+    public class UserController : ControllerBase {
         #region Declaration
         protected readonly IUserService _userService;
         private ResponseModel responseModel = null;
         protected readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService UserService, ILogger<UserController> logger = null)
-        {
+        public UserController (IUserService UserService, ILogger<UserController> logger = null) {
             this._userService = UserService;
-            this.responseModel = new ResponseModel();
-            if (null != logger)
-            {
+            this.responseModel = new ResponseModel ();
+            if (null != logger) {
                 this._logger = logger;
             }
         }
@@ -36,21 +32,13 @@ namespace PerftEvaluation.Api.Controllers
         /// Get list of all users
         /// </summary>
         /// <returns></returns>
-        [HttpPost, Route("GetUsers")]
-        public IActionResult Get(RequestModel requestModel)
-        {
-            try
-            {
-                responseModel.StatusCode = 200;
-                responseModel.Message = "Success";
-                responseModel.Data = this._userService.GetUsers(requestModel);
-
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+        [HttpPost, Route ("GetUsers")]
+        public IActionResult Get (RequestModel requestModel) {
+            try {
+                return Ok (this._userService.GetUsers (requestModel));
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -61,20 +49,16 @@ namespace PerftEvaluation.Api.Controllers
         /// <param name="usersDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post(UsersDTO usersDTO)
-        {
-            try
-            {
+        public IActionResult Post (UsersDTO usersDTO) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.SaveUsers(usersDTO);
+                responseModel.Data = this._userService.SaveUsers (usersDTO);
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -84,21 +68,17 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="userDTO"></param>
         /// <returns></returns>
-        [HttpPost, Route("Update")]
-        public IActionResult UpdateUser(UsersDTO userDTO)
-        {
-            try
-            {
+        [HttpPost, Route ("Update")]
+        public IActionResult UpdateUser (UsersDTO userDTO) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.UpdateUser(userDTO);
+                responseModel.Data = this._userService.UpdateUser (userDTO);
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -108,21 +88,17 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("ActivateUser")]
-        public IActionResult ActivateUser(RequestModel requestModel)
-        {
-            try
-            {
+        [HttpPost, Route ("ActivateUser")]
+        public IActionResult ActivateUser (RequestModel requestModel) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.ActivateUser(requestModel.Id);
+                responseModel.Data = this._userService.ActivateUser (requestModel.Id);
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -132,21 +108,17 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("InactivateUser")]
-        public IActionResult InactivateUser(RequestModel requestModel)
-        {
-            try
-            {
+        [HttpPost, Route ("InactivateUser")]
+        public IActionResult InactivateUser (RequestModel requestModel) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.InactivateUser(requestModel.Id);
+                responseModel.Data = this._userService.InactivateUser (requestModel.Id);
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -156,21 +128,17 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("GetUserById")]
-        public IActionResult GetUserById(RequestModel requestModel)
-        {
-            try
-            {
+        [HttpPost, Route ("GetUserById")]
+        public IActionResult GetUserById (RequestModel requestModel) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.GetUserById(requestModel.Id);
+                responseModel.Data = this._userService.GetUserById (requestModel.Id);
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -179,21 +147,17 @@ namespace PerftEvaluation.Api.Controllers
         /// Get dashboard count and required content
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("GetDashboardContent")]
-        public IActionResult GetDashboardContent()
-        {
-            try
-            {
+        [HttpGet, Route ("GetDashboardContent")]
+        public IActionResult GetDashboardContent () {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.GetDashboardInfo();
+                responseModel.Data = this._userService.GetDashboardInfo ();
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -203,21 +167,36 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("DeleteUser")]
-        public IActionResult DeleteUser(RequestModel requestModel)
-        {
-            try
-            {
+        [HttpPost, Route ("DeleteUser")]
+        public IActionResult DeleteUser (RequestModel requestModel) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._userService.DeleteUser(requestModel.Id);
+                responseModel.Data = this._userService.DeleteUser (requestModel.Id);
 
-                return Ok(responseModel);
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+        }
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("IsEmailExist")]
+        public IActionResult IsEmailExist (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.IsEmailExist (requestModel.Condition);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
         #endregion

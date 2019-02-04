@@ -16,7 +16,7 @@ namespace PerftEvaluation.BAL.Interfaces
         /// Get list Exams
         /// </summary>
         /// <value></value>
-        IEnumerable<ExamsDTO> GetExams (RequestModel requestModel);
+        ResponseModel GetExams (RequestModel requestModel);
 
         /// <summary>
         /// Save Exams

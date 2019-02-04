@@ -37,7 +37,7 @@ namespace PerftEvaluation.Helper.Common {
         }
 
         public IEnumerable<MastersDTO> RefreshDropdownMasterCache (string cacheKey, string masterName) {
-            var cacheMaster = this._masterService.GetMasterByType (masterName);
+            var cacheMaster = this._masterService.GetMasterByTypeForCache (masterName);
 
             // Set cache options.
             // var cacheEntryOptions = new MemoryCacheEntryOptions()
@@ -63,5 +63,6 @@ namespace PerftEvaluation.Helper.Common {
         public static string DesignationMaster { get { return "DesignationMaster"; } }
         public static string DegreeMaster { get { return "DegreeMaster"; } }
         public static string StateMaster { get { return "StateMaster"; } }
+        public static string CategoryMaster { get { return "CategoryMaster"; } }
     }
 }

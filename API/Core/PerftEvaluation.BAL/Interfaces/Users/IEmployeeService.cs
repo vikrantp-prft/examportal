@@ -4,18 +4,16 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Interfaces
-{
+namespace PerftEvaluation.BAL.Interfaces {
     /// <summary>
     /// User Service Interface 
     /// </summary>
-    public interface IEmployeeService
-    {
+    public interface IEmployeeService {
         /// <summary>
         /// Get Employees list
         /// </summary>
         /// <value>List of User in DTO</value>
-        IEnumerable<EmployeesDTO> GetEmployees(RequestModel requestModel);
+        ResponseModel GetEmployees (RequestModel requestModel);
 
         /// <summary>
         /// Save Employee Details
@@ -31,7 +29,7 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <returns></returns>
         bool UpdateEmployee (EmployeesDTO employeesDTO);
 
-         /// <summary>
+        /// <summary>
         /// Get Employee Detail by Id
         /// </summary>
         /// <param name="Id"></param>

@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 interface paginationModel {
-  currentPage: number;
+  pageNumber: number;
   pageSize: number;
   searchString: string;
 }
@@ -17,19 +17,25 @@ interface paginationModel {
   providers: [commonService]
 })
 export class EmployeeListComponent implements OnInit {
-  // Declaration
-
-  public params: any = {
-    currentPage: 1,
-    pageSize: 10,
-    searchString: ''
-  };
+ 
+  public employeeModel: any = {
+    // "id": "string",
+    // "pageSize": 0,
+    // "pageNumber": 0,
+    "totalRecords": 0,
+    // "filter": "string",
+    // "sortBy": "string",
+    // "isDescending": true
+    "pageSize": 10,
+    "pageNumber": 1
+  }
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
   public employeeList = [];
+  employeeData : any = {totalRecords : ''};
 
   // Constructor
 
@@ -45,30 +51,34 @@ export class EmployeeListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.employeeModel.pageNumber = 1;
+    this.employeeModel.pageSize = event.target.value;
+    this.fn_GetEmployeeList();
   }
+
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.employeeModel.pageNumber = parseInt(event.page);
+    this.employeeModel.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetEmployeeList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(searchStr: any): void {
+    debugger;
+    this.employeeModel.pageNumber = 1;
+    this.employeeModel.pageSize = 10;
+    this.employeeModel.filter = searchStr.target.value;
+    this.fn_GetEmployeeList();
+  }
+
 
   // Function to get list of employees
 
   fn_GetEmployeeList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
-    const url = 'api/Employee/';
-
-    this.CommonService.fn_Get(url).subscribe(
+    const url = 'api/Employee/GetEmployees';
+    this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
-        // if (data != null && data.statusCode === 200) {
         this.employeeList = data.data;
+        this.employeeModel.totalRecords = data.totalRecords;
       },
       err => console.error(err),
       () => { }
@@ -77,11 +87,12 @@ export class EmployeeListComponent implements OnInit {
 
   // Function to get employee ID
   fn_getEmployee(empid) {
-    this.router.navigate(['/user/updateemployee'],{queryParams:{_empid:empid}});
+    this.router.navigate(['/user/updateemployee'], { queryParams: { _empid: empid } });
   }
 
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
+    debugger;
     if (Id != null) {
       swal({
         title: 'Are you sure?',
@@ -92,8 +103,8 @@ export class EmployeeListComponent implements OnInit {
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-        if (x.value = true) {
-          const url = 'api/User/InactivateUser';
+        if (x.value == true) {
+          const url = 'api/Employee/DeleteEmployee';
           const model = {
             id: ''
             // deletedBy: 0

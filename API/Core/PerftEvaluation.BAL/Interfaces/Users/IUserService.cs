@@ -14,7 +14,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// Get Users list
         /// </summary>
         /// <value>List of User in DTO</value>
-        IEnumerable<UsersDTO> GetUsers (RequestModel requestModel);
+        ResponseModel GetUsers (RequestModel requestModel);
 
         /// <summary>
         /// Save User Details
@@ -51,7 +51,6 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <returns></returns>
         bool InactivateUser (string userId);
 
-
         /// <summary>
         /// Deleted user record
         /// </summary>
@@ -64,5 +63,12 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// </summary>
         /// <returns></returns>
         DashboardDTO GetDashboardInfo ();
+
+        /// <summary>
+        /// Check if the email is already exist
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        bool IsEmailExist (string email);
     }
 }

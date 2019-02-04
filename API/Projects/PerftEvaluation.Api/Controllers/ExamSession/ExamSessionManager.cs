@@ -23,7 +23,7 @@ namespace PerftEvaluation.Api.Controllers.ExamSession
             claim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
         }
 
-        [HttpGet]
+        [HttpGet, Route("InitiateNewExamSession")]
         public IActionResult InitiateNewExamSession(string examId)
         {
             bool isSuccess = false;
@@ -36,7 +36,7 @@ namespace PerftEvaluation.Api.Controllers.ExamSession
                 return BadRequest(userId);
         }
 
-        [HttpGet]
+        [HttpGet, Route("GetUserExamSession")]
         public IActionResult GetUserExamSession(string examId)
         {
             var userId = claim.Value;

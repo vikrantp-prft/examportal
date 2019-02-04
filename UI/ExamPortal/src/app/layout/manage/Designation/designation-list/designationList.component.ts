@@ -30,6 +30,7 @@ export class DesignationListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public designationList = [];
+  public statusUrl: any;
 
   // Constructor
 
@@ -65,15 +66,112 @@ export class DesignationListComponent implements OnInit {
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    const url = 'api/Dropdown/Designations';
+    const url = 'api/Master/GetMasterByType';
 
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.designationList = data.data;
-      },
-      err => console.error(err),
-      () => {}
-    );
+    const designationModel =
+    {
+         "condition": "Designation",
+         //"pageSize": 10
+    };
+
+    this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+       this.designationList = rs.data;
+      }
+      else {
+      }
+    }); 
   }
+
+  fn_deleteDesignation(Id) {
+    if (Id != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the Designation!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        if (x.value == true) {
+          const url = 'api/Master/DeleteMaster';
+          const model = {
+            id: ''
+          };
+          model.id = Id;
+          this.fn_delDesignationFun(url, model);
+        }
+      });
+     
+    }
+  }
+
+  
+  // function for soft deleting the Admin User.
+  fn_delDesignationFun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if ((rs.message == 'Success')) {
+        this.toastr.success('Designation\'s details deleted successfully!');
+        this.fn_GetDesignationList();
+      }
+      else{
+        this.toastr.error("Not deleted");
+      }
+      
+    });
+  }
+
+
+  // function to change isActive status
+  fn_ChangeStatus(id,isActive)
+  {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to change the status!',
+      buttonsStyling: true,
+      confirmButtonClass: 'btn btn-success',
+      showCancelButton: true,
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Yes'
+    }).then(x => {
+    if(x.value == true){
+        if(isActive == true){
+          this.statusUrl = 'api/Master/InactivateMaster';
+        }
+        else{
+          this.statusUrl = 'api/Master/ActivateMaster';
+        }
+        const designationStatusModel = {
+          "id": id,
+          "pageSize": 0,
+          "pageNumber": 0,
+          "totalRecords": 0,
+          "filter": "string",
+          "sortBy": "string",
+          "isDescending": true
+        }
+        this.fn_saveStatusChange(this.statusUrl,designationStatusModel);
+    }
+    });
+  }
+
+  //function to save status change
+  fn_saveStatusChange(url, data) {
+      this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      // debugger;
+      // console.log(result);
+      const rs = result;
+      if (rs.statusCode == 200) {
+          this.fn_GetDesignationList();
+      }
+      else {
+          
+      }
+  });
+  }
+
+
 }

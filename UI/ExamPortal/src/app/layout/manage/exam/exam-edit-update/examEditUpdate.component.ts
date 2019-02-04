@@ -4,6 +4,7 @@ import { FormGroup, FormArray, Validators, FormBuilder, FormControl } from '@ang
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
+import { appConfig } from 'src/app/common/core/app.config';
 
 const URL = 'http://localhost:3000/api/upload';
 
@@ -22,6 +23,9 @@ export class examEditUpdateComponent implements OnInit {
   public examDetailUrl = "api/Exams/GetExamById";
   public examID = "";
   public examDetail: any;
+  public year: any;
+  public month: any;
+  public day: any;
 
   constructor(private route: ActivatedRoute, public router: Router, private fb: FormBuilder, private commonService: commonService, private toastr: ToastrService) {
     this.route.params.subscribe(params => {
@@ -39,7 +43,6 @@ export class examEditUpdateComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.examDetail = rs.data;
-        console.log(this.examDetail);
         this.fn_setEditValues()
       }
       else {
@@ -50,20 +53,20 @@ export class examEditUpdateComponent implements OnInit {
   createForm() {
     this.editExamForm = this.fb.group({
       id: new FormControl(''),
-      title: new FormControl(''),
-      teamId: new FormControl(''),
-      description: new FormControl(''),
-      examDurationHours: new FormControl(0),
-      examDurationMinutes: new FormControl(0),
-      passingMarks: new FormControl(0),
-      fromDate: new FormControl(''),
-      toDate: new FormControl(''),
+      title: [null, [Validators.required]],
+      teamId: [null, [Validators.required]],
+      description: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(250)]],
+      examDurationHours: [null, [Validators.required]],
+      examDurationMinutes: [null, [Validators.required]],
+      passingMarks: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
+      fromDate: [null, [Validators.required]],
+      toDate: [null, [Validators.required]],
       isActive: new FormControl(true),
       showResultInFront: new FormControl(false),
       shuffleQuestions: new FormControl(false),
       shuffleOptions: new FormControl(false),
       isPaperPublic: new FormControl(false),
-      totalQuestions: new FormControl(0)
+      totalQuestions: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
     });
   }
 
@@ -75,8 +78,8 @@ export class examEditUpdateComponent implements OnInit {
     this.editExamForm.controls.examDurationHours.setValue(this.examDetail.examDurationHours);
     this.editExamForm.controls.examDurationMinutes.setValue(this.examDetail.examDurationMinutes);
     this.editExamForm.controls.passingMarks.setValue(this.examDetail.passingMarks);
-    this.editExamForm.controls.fromDate.setValue('2018-01-12');
-    this.editExamForm.controls.toDate.setValue(this.examDetail.toDate);
+    this.editExamForm.controls.fromDate.setValue(this.fn_getDate(this.examDetail.fromDate));
+    this.editExamForm.controls.toDate.setValue(this.fn_getDate(this.examDetail.toDate));
     this.editExamForm.controls.isActive.setValue(this.examDetail.isActive);
     this.editExamForm.controls.showResultInFront.setValue(this.examDetail.showResultInFront);
     this.editExamForm.controls.shuffleQuestions.setValue(this.examDetail.shuffleQuestions);
@@ -85,14 +88,28 @@ export class examEditUpdateComponent implements OnInit {
     this.editExamForm.controls.totalQuestions.setValue(this.examDetail.totalQuestions);
   }
 
+  fn_getDate(inputDate) {
+    var date = new Date(inputDate);
+    this.year = date.getFullYear();
+    this.month = date.getMonth() + 1;
+    this.day = date.getDate();
+    if (this.day < 10) {
+      this.day = '0' + this.day;
+    }
+    if (this.month < 10) {
+      this.month = '0' + this.month;
+    }
+    return this.year + '-' + this.month + '-' + this.day;
+  }
+
+
   onSubmit = function (formData) {
-    console.log(formData);
     if (this.editExamForm.valid) {
       this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {
         const rs = result;
         if (rs.statusCode == 200) {
           this.toastr.success('Exam details Updated successfully!');
-          //this.router.navigate(['manage/examlist']);
+          this.router.navigate(['manage/examlist']);
         }
         else {
           this.toastr.console.error('Failed to Update Exam details');
@@ -100,7 +117,9 @@ export class examEditUpdateComponent implements OnInit {
       });
     }
     else {
-      return;
+      this.commonService.validateAllFormFields(this.editExamForm);
+      this.toastr.error('Please fill required details');
+      return false;
     }
   }
 
@@ -120,4 +139,10 @@ export class examEditUpdateComponent implements OnInit {
       () => { }
     );
   }
+
+  // function to display the error message for  validation.
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
+
 }

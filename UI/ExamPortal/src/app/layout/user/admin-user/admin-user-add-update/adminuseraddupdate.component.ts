@@ -88,6 +88,7 @@ export class AddAdminUserComponent implements OnInit {
       if (rs.statusCode == 200) {
         //console.log("Record saved");
         this.toastr.success('User details added successfully!');
+        //this.router.navigate(['user/adminuserlist']);
       }
       else {
         //console.log("not saved");

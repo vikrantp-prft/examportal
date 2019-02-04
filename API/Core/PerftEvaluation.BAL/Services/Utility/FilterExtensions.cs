@@ -37,11 +37,12 @@ namespace PerftEvaluation.BAL.Services {
 
                     var lExp = Expression.Call (left, toLowerMethod);
                     var rExp = Expression.Call (right, toLowerMethod);
-                    //var exp = Expression.Call (property, property.Type.GetMethod ("Contains", /*Here you need the type parameters*/ ), converted);
-                    //var expr = Expression.Call (lExp, typeof (string).GetMethod ("Contains"), rExp); //If you want to filter by like clause
+
+                    var mtdContains = typeof (string).GetMethod ("Contains", new Type[] { typeof (string) }); //OR property.PropertyType.GetMethods()[120];
+                    var expr = Expression.Call (lExp, mtdContains, rExp); //If you want to filter by like clause
 
                     //var expr = Expression.Call (left, typeof (System.String).GetMethod ("Contains"), right, Expression.Constant (StringComparison.InvariantCultureIgnoreCase)); //If you want to filter by like clause
-                    var expr = Expression.Equal(left, right);//If you want to filter by equals
+                    //var expr = Expression.Equal(left, right);//If you want to filter by equals
 
                     //Before null check
                     //expressions.Push(expr);
@@ -100,7 +101,7 @@ namespace PerftEvaluation.BAL.Services {
                 collection = collection.OrderBy (requestModel.SortBy, requestModel.IsDescending).AsQueryable ();
             }
             //!string.IsNullOrEmpty(extendedClass.SearchText) && 
-            if (filterColumns != null && filterColumns.Count () > 0) {
+            if (filterColumns != null && filterColumns.Count () > 0 && !string.IsNullOrEmpty (requestModel.Filter)) {
                 collection = collection.Filter (filterColumns, requestModel.Filter).AsQueryable ();
             }
             return collection.AsQueryable ();

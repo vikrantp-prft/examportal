@@ -1,5 +1,7 @@
-import { AddCategoryComponent } from './category-add-update/categoryaddupdate.component';
-import { CategoryListComponent } from './category-list/categorylist.component';
+import { CategoryEditUpdateComponent } from './category/category-edit-update/categoryEditUpdate.component';
+import { AddDesignationComponent } from './Designation/designation-add-update/designationAddUpdate.component';
+import { AddCategoryComponent } from './category/category-add-update/categoryaddupdate.component';
+import { CategoryListComponent } from './category/category-list/categorylist.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManageComponent } from './manage.component';
@@ -17,6 +19,15 @@ import { DesignationListComponent } from './Designation/designation-list/designa
 import { AddTeamComponent } from './team/team-add-update/teamaddupdate.component';
 import { TeamListComponent } from './team/team-list/teamList.component';
 import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.component';
+import { EditTeamComponent } from './team/team-edit-update/teamEditUpdate.component';
+import { EditDesignationComponent } from './Designation/designation-edit-update/designationEditUpdate.component';
+import { DegreeListComponent } from './degree/degree-list/degreeList.component';
+import { AddDegreeComponent } from './degree/degree-add-update/degreeAddUpdate.component';
+import { EditDegreeComponent } from './degree/degree-edit-update/degreeEditUpdate.component';
+import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-error-display.module';
+import { StateListComponent } from './state/state-list/stateList.component';
+import { AddStateComponent } from './state/state-add-update/stateAddUpdate.component';
+import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.component';
 
 @NgModule({
     imports: [
@@ -24,6 +35,7 @@ import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.
         FormsModule,
         ReactiveFormsModule,
         ManageRoutingModule,
+        ErrorHandlingModule,
         PaginationModule.forRoot()],
     declarations: [
         FileSelectDirective,
@@ -36,9 +48,19 @@ import { examEditUpdateComponent } from './exam/exam-edit-update/examEditUpdate.
         questionAddUpdateComponent,
         CategoryListComponent,
         AddCategoryComponent,
+        CategoryEditUpdateComponent,
         DesignationListComponent,
+        AddDesignationComponent,
+        EditDesignationComponent,
         TeamListComponent,
-        AddTeamComponent
+        AddTeamComponent,
+        EditTeamComponent,
+        DegreeListComponent,
+        AddDegreeComponent,
+        EditDegreeComponent,
+        StateListComponent,
+        AddStateComponent,
+        EditStateComponent
     ]
 })
 export class ManageModule { }

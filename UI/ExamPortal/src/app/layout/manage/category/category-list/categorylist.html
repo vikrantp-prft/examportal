@@ -1,0 +1,70 @@
+<div class="card">
+  <div class="card-header">
+    <h1 class="font-weight-bold h3">Question Categories</h1>
+  </div>
+  <div class="datatable-header">
+    <div class="mx-1 row justify-content-between">
+      <div class="col-md-2">
+        <div class="">
+          <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+            <option selected>Per Page</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <button [routerLink]="['/manage/addcategory']" title="Add Question" class="btn-primary btn btn-md">Add
+        </button>
+      </div>
+      <div class="col-md-3">
+        <input (keyup)="searchRecord($event)" type="text" [(ngModel)]="searchValue" id="serach" placeholder="Search" class="form-control" />
+        <a href="#" class="search-icon">
+          <i class="fa fa-search"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body pb-0 table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th class="th-width"> Sr.</th>
+          <th> Title</th>
+          <th> Description </th>
+          <th class="th-width"> Active </th>
+          <th class="th-width-action"> Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categoryList; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{ category.name}}</td>
+          <td> {{ category.description }} </td>
+          <td>
+            <i class="fa" [ngClass]="{'fa-check text-success': category.isActive, 'fa-times text-danger': !category.isActive}"
+              aria-hidden="true">
+            </i>
+          </td>
+          <td>
+            <button title="Edit" class=" btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editCategory', category.id]">
+              <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
+            </button>
+            <button title="Change Status" class="mx-1 btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(category.id, category.isActive)">
+              <i class="fa" [ngClass]="{'fa-toggle-on text-success': category.isActive, 'fa-toggle-off text-danger': !category.isActive}"
+                aria-hidden="true"></i>
+            </button>
+            <button title="Delete" class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteCategory(category.id)">
+              <i class="fa text-danger fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination class="pull-right pr-2" [totalItems]="params.totalRecords" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+    [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+    lastText="LAST"></pagination>
+</div>

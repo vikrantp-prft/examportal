@@ -3,7 +3,7 @@
     <div class="col col-xl-12 col-lg-12">
       <div class="card">
         <div class="card-header">
-          <h1>Users</h1>
+          <h1 class="h3">Users</h1>
         </div>
         <div class="col-md-12 col-xs-12 col-lg-12 datatable-header emp-list">
           <div class="add-users-toolbar">
@@ -68,7 +68,7 @@
         </div>
         <!-- [(ngModel)]="params.currentPage" -->
         <!-- [totalItems]="params.totalItems" -->
-        <pagination class="pull-right" [totalItems]="100" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
           [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
           lastText="LAST"></pagination>
       </div>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
@@ -38,8 +39,15 @@ namespace PerftEvaluation.DAL.Repositories {
         public bool SaveEmployee (Users users) {
             try {
                 users.IsEmployee = true;
+                users.IsActive = true;
                 users.CreatedDate = DateTime.Now;
                 users.ModifiedDate = DateTime.Now;
+
+                if (users.EducationDetails != null)
+                {
+                    users.EducationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                }
+
                 _db.Save<Users> (users, Users.CollectionName);
                 return true;
             } catch (Exception ex) {
@@ -128,13 +136,17 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.Email, users.Email)
                 .Set (c => c.Note, users.Note)
                 .Set (c => c.Interest, users.Interest)
-                .Set (c => c.educationDetails, users.educationDetails)
-                .Set (c => c.IsEmployee, users.IsEmployee)
+                .Set (c => c.EducationDetails, users.EducationDetails)
                 .Set (c => c.TeamId, users.TeamId);
 
             try {
                 users.IsEmployee = true;
                 users.ModifiedDate = DateTime.Now;
+                if (users.EducationDetails != null)
+                {
+                    users.EducationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                }
+
                 _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);
                 return true;
             } catch (Exception ex) {

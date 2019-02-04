@@ -5,11 +5,6 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-interface paginationModel {
-  currentPage: number;
-  pageSize: number;
-  searchString: string;
-}
 
 @Component({
   selector: 'exam-list',
@@ -20,10 +15,11 @@ export class ExamListComponent implements OnInit {
   // Declaration
 
   public params: any = {
-    currentPage: 1,
+    pageNumber: 1,
     pageSize: 10,
-    searchString: ''
+    filter: ''
   };
+
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -45,34 +41,47 @@ export class ExamListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
+    this.params.pageNumber = 1;
     this.params.pageSize = event.target.value;
+    this.fn_GetExamList();
   }
+
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
+    this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetExamList();
   }
   // Searching
-  searchRecord(event: any): void { }
+  searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.params.pageNumber = 1;
+      this.params.pageSize = 10;
+      this.params.filter = event.target.value;
+      this.fn_GetExamList();
+    }
 
-  // Function to get list of employees
+  }
 
+  // Function to get list of Exam
   fn_GetExamList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
-    const url = 'api/Exams';
-
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        // if (data != null && data.statusCode === 200) {
-        this.examList = data.data;
-      },
-      err => console.error(err),
-      () => { }
-    );
+    const url = 'api/Exams/GetExams';
+    this.CommonService.fn_PostWithData(this.params, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.examList = rs.data;
+        this.totalItems = rs.totalRecords;
+      }
+      else {
+      }
+    });
+    // this.CommonService.fn_Get(url).subscribe(
+    //   (data: any) => {
+    //     // if (data != null && data.statusCode === 200) {
+    //     this.examList = data.data;
+    //   },
+    //   err => console.error(err),
+    //   () => { }
+    // );
   }
 
   // FUnction to get employee ID
@@ -90,7 +99,7 @@ export class ExamListComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
         if (x.value == true) {
-          const deleteExamUrl = 'api/Exam/deleteExam';
+          const deleteExamUrl = 'api/Exams/deleteExam';
           const model = {
             id: ''
           };
@@ -105,9 +114,12 @@ export class ExamListComponent implements OnInit {
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
-      if ((result.message = 'Success')) {
+      if (rs.statusCode == 200) {
         this.toastr.success('Exam deleted successfully!');
         this.fn_GetExamList();
+      }
+      else {
+        this.toastr.error('Failed to Delete Exam');
       }
     });
   }

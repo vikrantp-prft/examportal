@@ -8,7 +8,7 @@
                 The team title is required
             </div>
             <div class="form-group row">
-              <label for="teamTitle" class="col-sm-3 col-form-label">Team Title:</label>
+              <label for="teamTitle" class="col-sm-3 col-form-label">Team Title:<span class="text-danger">*</span></label>
               <div class="col-sm-9">
                 <input 
                     formControlName="teamTitle"
@@ -20,8 +20,8 @@
               </div>  
             </div>
 
-            <!-- <div class="form-group row">
-                <label for="teamDescription" class="col-sm-3 col-form-label">Description:</label>
+            <div class="form-group row">
+                <label for="teamDescription" class="col-sm-3 col-form-label">Team Description:<span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                   <textarea 
                       formControlName="teamDescription"
@@ -30,16 +30,17 @@
                       placeholder="Team Description"></textarea>
                   <div *ngIf="teamDescription.touched && teamDescription.invalid" class="alert alert-danger">Team description is required</div>
                 </div>  
-              </div> -->
+              </div>
             
-            <div class="form-group row ">
+            <!-- <div class="form-group row ">
                 <label for="isActive" class="col-sm-3 col-form-label">Is Active:</label>
                 <div class="col-sm-9">
                         <input 
                         formControlName="teamisActive"
                         type="checkbox" class="ml-1 form-check-input" id="isACtive">
                 </div>
-            </div>
+            </div> -->
+            
             <button type="submit" class="btn btn-primary btn-md">Submit</button>
             <button type="reset" class="btn btn-primary btn-md ml-3">Reset</button>
 

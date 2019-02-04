@@ -24,8 +24,10 @@ export const appConfig = {
     US_PHONE_NO: /^\+?\d{3}[- ]?\d{3}[- ]?\d{4}$/,
     DECIMAL: /^[0-9]+([,.][0-9]+)?$/,
     DECIMAL_WITHOUTZERO: '^($|)([1-9]d{0,2}(,d{3})*|([1-9]d*))(.d{2})?$',
-    DESCRIPTION: '^[A-Za-z0-9 _@./#&+-;]*[A-Za-z0-9@./#&+-;][A-Za-z0-9 _@./#&+-;]*$'
+    DESCRIPTION: '^[A-Za-z0-9 _@./#&+-;]*[A-Za-z0-9@./#&+-;][A-Za-z0-9 _@./#&+-;]*$',
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _@./#&+-;]*[A-Za-z0-9@./#&+-;][A-Za-z0-9 _@./#&+-;]*$',
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$',
+    PINCODE:/^[1-9][0-9]{5}$/,
+    Year:/^[1-9][0-9]{3}$/
   }
 };

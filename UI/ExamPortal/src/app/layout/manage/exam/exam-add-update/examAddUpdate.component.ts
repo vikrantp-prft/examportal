@@ -4,6 +4,7 @@ import { FormGroup, FormArray, Validators, FormBuilder, FormControl } from '@ang
 import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { appConfig } from 'src/app/common/core/app.config';
 
 const URL = 'http://localhost:3000/api/upload';
 
@@ -26,20 +27,20 @@ export class examAddUpdateComponent implements OnInit {
 
   createForm() {
     this.addExamForm = this.fb.group({
-      title: new FormControl(''),
-      teamId: new FormControl(''),
-      description: new FormControl(''),
-      examDurationHours: new FormControl(0),
-      examDurationMinutes: new FormControl(0),
-      passingMarks: new FormControl(0),
-      fromDate: new FormControl(''),
-      toDate: new FormControl(''),
+      title: [null, [Validators.required]],
+      teamId: [null, [Validators.required]],
+      description: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(250)]],
+      examDurationHours: [null, [Validators.required]],
+      examDurationMinutes: [null, [Validators.required]],
+      passingMarks: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
+      fromDate: [null, [Validators.required]],
+      toDate: [null, [Validators.required]],
       isActive: new FormControl(true),
       showResultInFront: new FormControl(false),
       shuffleQuestions: new FormControl(false),
       shuffleOptions: new FormControl(false),
       isPaperPublic: new FormControl(false),
-      totalQuestions: new FormControl(0)
+      totalQuestions: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
     });
   }
 
@@ -58,21 +59,16 @@ export class examAddUpdateComponent implements OnInit {
       });
     }
     else {
-      return;
+      this.commonService.validateAllFormFields(this.addExamForm);
+      this.toastr.error('Please fill required details');
+      return false;
     }
-
-
-    /*
-    this.empSer.addEmployee(user);
-    setTimeout(
-      (): void => {
-        this.router.navigate(['employee']);
-      },
-      100
-    );
-    */
   }
 
+  // function to display the error message for  validation.
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };

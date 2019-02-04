@@ -8,10 +8,8 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services
-{
-    public class ExamsService : IExamsService
-    {
+namespace PerftEvaluation.BAL.Services {
+    public class ExamsService : IExamsService {
         /// <summary>
         /// Exam Service class
         /// </summary>
@@ -20,28 +18,57 @@ namespace PerftEvaluation.BAL.Services
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
 
-        public ExamsService(IExamsRepository ExamsRepository, IMapper mapper)
-        {
+        protected readonly IMasterRepository _masterRepository;
+        protected readonly IMasterService _masterService;
+
+        public ExamsService (IExamsRepository ExamsRepository, IMapper mapper, IMasterService masterService, IMasterRepository masterRepository) {
             this._examsRepository = ExamsRepository;
             this._mapper = mapper;
+            this._masterService = masterService;
+            this._masterRepository = masterRepository;
         }
 
         /// <summary>
         /// Get list Exams
         /// </summary>
         /// <value></value>
-        public IEnumerable<ExamsDTO> GetExams(RequestModel requestModel)
-        {
-            return this._mapper.Map<IEnumerable<ExamsDTO>>(this._examsRepository.GetExams().AsQueryable().Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable());
+        public ResponseModel GetExams (RequestModel requestModel) {
+            //Filter & sort the data
+            var filteredExams = this._examsRepository.GetExams ().AsQueryable ().SortAndFilter (requestModel, DbFilters.ExamFilters);
+            //Integrate pagination
+            var exams = filteredExams.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            List<ExamsDTO> examJoin = new List<ExamsDTO> ();
+            foreach (var item in exams) {
+                ExamsDTO examsDTO = new ExamsDTO ();
+                examsDTO.Id = item.Id;
+                examsDTO.Title = item.Title;
+                examsDTO.TeamId = item.TeamId;
+                examsDTO.Description = item.Description;
+                examsDTO.ExamDurationHours = item.ExamDurationHours;
+                examsDTO.ExamDurationMinutes = item.ExamDurationMinutes;
+                examsDTO.PassingMarks = item.PassingMarks;
+                examsDTO.FromDate = item.FromDate;
+                examsDTO.ToDate = item.ToDate;
+                examsDTO.ShowResultInFront = item.ShowResultInFront;
+                examsDTO.ShuffleOptions = item.ShuffleOptions;
+                examsDTO.ShuffleQuestions = item.ShuffleQuestions;
+                examsDTO.IsPaperPublic = item.IsPaperPublic;
+                examsDTO.TotalQuestions = item.TotalQuestions;
+                examsDTO.Team = this._mapper.Map<MastersDTO> (_masterRepository.GetAllMasters ().AsQueryable ().Where (x => x.Id == item.TeamId).FirstOrDefault ());
+
+                examJoin.Add (examsDTO);
+            }
+
+            //return object
+            return CommonResponse.OkResponse (requestModel, examJoin, (filteredExams.Count () < 100 ? filteredExams.Count () : 100));
         }
 
         /// <summary>
         /// Get Active Exams
         /// </summary>
         /// <value></value>
-        public bool ActiveExams(string examId)
-        {
-            return this._examsRepository.ActiveExams(examId);
+        public bool ActiveExams (string examId) {
+            return this._examsRepository.ActiveExams (examId);
         }
 
         /// <summary>
@@ -49,45 +76,59 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="examId"></param>
         /// <returns></returns>
-        public bool DeleteExams(string examId)
-        {
-            return this._examsRepository.DeleteExam(examId);
+        public bool DeleteExams (string examId) {
+            return this._examsRepository.DeleteExam (examId);
         }
 
         /// <summary>
         /// Get User By ID
         /// </summary>
         /// <value></value>
-        public ExamsDTO GetExamsById(string examId)
-        {
-            return this._mapper.Map<ExamsDTO>(this._examsRepository.GetExamsById(examId));
+        public ExamsDTO GetExamsById (string examId) {
+            var exam = this._examsRepository.GetExamsById (examId);
+
+            ExamsDTO examsDTO = new ExamsDTO ();
+            examsDTO.Id = exam.Id;
+                examsDTO.Title = exam.Title;
+                examsDTO.TeamId = exam.TeamId;
+                examsDTO.Description = exam.Description;
+                examsDTO.ExamDurationHours = exam.ExamDurationHours;
+                examsDTO.ExamDurationMinutes = exam.ExamDurationMinutes;
+                examsDTO.PassingMarks = exam.PassingMarks;
+                examsDTO.FromDate = exam.FromDate;
+                examsDTO.ToDate = exam.ToDate;
+                examsDTO.ShowResultInFront = exam.ShowResultInFront;
+                examsDTO.ShuffleOptions = exam.ShuffleOptions;
+                examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
+                examsDTO.IsPaperPublic = exam.IsPaperPublic;
+                examsDTO.TotalQuestions = exam.TotalQuestions;
+                examsDTO.Team = exam.TeamId != null? _masterService.GetMasterById (exam.TeamId) : null;
+
+            return examsDTO;
         }
 
         /// <summary>
         /// Get Inactive Exams
         /// </summary>
         /// <value></value>
-        public bool InactiveExams(string examId)
-        {
-            return this._examsRepository.InactivateExams(examId);
+        public bool InactiveExams (string examId) {
+            return this._examsRepository.InactivateExams (examId);
         }
 
         /// <summary>
         /// Save Exams
         /// </summary>
         /// <value></value>
-        public bool SaveExams(ExamsDTO examsDTO)
-        {
-            return this._examsRepository.SaveExams(this._mapper.Map<Exams>(examsDTO));
+        public bool SaveExams (ExamsDTO examsDTO) {
+            return this._examsRepository.SaveExams (this._mapper.Map<Exams> (examsDTO));
         }
 
         /// <summary>
         /// Update Exams
         /// </summary>
         /// <value></value>
-        public bool UpdateExam(ExamsDTO examsDTO)
-        {
-            return this._examsRepository.UpdateExams(this._mapper.Map<Exams>(examsDTO));
+        public bool UpdateExam (ExamsDTO examsDTO) {
+            return this._examsRepository.UpdateExams (this._mapper.Map<Exams> (examsDTO));
         }
     }
 }

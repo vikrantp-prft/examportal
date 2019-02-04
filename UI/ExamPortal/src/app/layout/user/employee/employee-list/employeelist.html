@@ -2,48 +2,47 @@
   <div class="row">
     <div class="col col-xl-12 col-lg-12">
       <div class="card mb-3">
-        <div class="card-header">Employee List</div>
-        <div class="col-md-12 col-xs-12 col-lg-12 datatable-header">
-          <div class="col-md-3">
-            <div class="dataTables_length_code">
-              <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
+        <div class="card-header"><h1 class="h3 font-weight-bold mb-0">Employees</h1></div>
+        <div class="datatable-header">
+          <div class="mx-1 row">
+            <div class="col-md-2">
+              <div class="">
+                <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+                  <option selected>Per Page</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
-                </select> entries</label>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <button [routerLink]="['/user/addemployee']" class="btn btn-md btn-primary" title="Add Employee">
+                Add
+              </button>
+            </div>
+            <div class="col-md-3">
+              <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+              <a href="#" class="search-icon">
+                <i class="fa fa-search"></i>
+              </a>
             </div>
           </div>
-          <!-- [(ngModel)]="params.searchString" -->
-          <!-- <div class=""> -->
-          <div class="input-group custom-search-form col-md-4" style="display: inline-flex;">
-            <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-          </div>
-          <!-- </div>    -->
-          <div class="col-md-2" style="display: inline-block;">
-            <button [routerLink]="['/user/addemployee']" class="btn-primary">Add Employee
-
-            </button>
-
-
-          </div>
         </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover table-striped">
+        <div class="card-body pb-0 table-responsive">
+          <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th>Sr. No.</th>
+                <th>Sr.</th>
                 <th>Name</th>
                 <th>Email</th>
-                 <th>Team</th>
-                <!--<th>Designation</th> -->
+                <th>Team</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-
               <tr *ngFor="let emp of employeeList; let i = index">
-                <td>{{i + 1}}</td>
+                <td>{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
                 <td>{{emp.firstName}} {{emp.lastName}}</td>
                 <td>{{emp.email}}</td>
                 <td>
@@ -52,24 +51,20 @@
                   </div>
                 </td>
                 <td>
-                  <button type="button" rel="tooltip" [routerLink]="['/user/updateemployee', emp.id]">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateemployee', emp.id]" title="Edit Employee">
+                    <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
                   </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)" title="Delete Employee">
+                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- [(ngModel)]="params.currentPage" -->
-        <!-- [totalItems]="params.totalItems" -->
-
-
-        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-          lastText="LAST"></pagination>
+        <pagination class="pull-right pr-2" [totalItems]="employeeModel.totalRecords" [itemsPerPage]="employeeModel.pageSize" (pageChanged)="pageChanged($event)"
+        [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+        lastText="LAST"></pagination>
       </div>
     </div>
   </div>

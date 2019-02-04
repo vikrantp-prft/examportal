@@ -2,10 +2,11 @@ import { Injectable, Inject, EventEmitter } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
- import 'rxjs/Rx';
+import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { appConfig } from '../core/app.config';
+import { FormGroup, FormControl } from '@angular/forms';
 
 declare const $: any;
 @Injectable()
@@ -31,6 +32,7 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }
@@ -44,6 +46,7 @@ export class commonService {
         // solution check for status code 401 before calling fn_log()
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }
@@ -60,6 +63,7 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log('error : ',error);
         return Observable.throw(error.statusText); }
       });
   }
@@ -71,12 +75,12 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
         // this.fn_log(error);
+        console.log(error);
         return Observable.throw(error.statusText); }
       });
   }
   fn_UploadImage(url: string, formData: any) {
-    debugger;
-     const headers_fileUp = new Headers({ 'Content-Type': 'multipart/form-data' });
+    const headers_fileUp = new Headers({ 'Content-Type': 'multipart/form-data' });
     // let headers_fileUp = new Headers({
     //   Authorization: "Bearer " + this.authservice.token
     // });
@@ -86,4 +90,16 @@ export class commonService {
       .map((res: Response) => res.json());
   }
 
-}
+   // Common Function to check for validation(Valid fields)
+
+   validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+ }
