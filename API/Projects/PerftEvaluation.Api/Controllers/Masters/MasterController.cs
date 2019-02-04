@@ -91,11 +91,8 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetMasterByType")]
         public IActionResult GetMasterByType (RequestModel requestModel) {
             try {
-                responseModel.StatusCode = 200;
-                responseModel.Message = "Success";
-                responseModel.Data = this._masterService.GetMasterByType (requestModel.Filter);
-
-                return Ok (responseModel);
+                
+                return Ok (this._masterService.GetMasterByType (requestModel));
             } catch (Exception exception) {
                 _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));

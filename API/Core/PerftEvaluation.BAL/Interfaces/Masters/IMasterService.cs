@@ -26,7 +26,14 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// </summary>
         /// <param name="masterType"></param>
         /// <returns></returns>
-        IEnumerable<MastersDTO> GetMasterByType (string masterType);
+        ResponseModel GetMasterByType (RequestModel requestModel);
+
+        /// <summary>
+        /// Get master by its type for Cache
+        /// </summary>
+        /// <param name="masterType"></param>
+        /// <returns></returns>
+        IEnumerable<MastersDTO> GetMasterByTypeForCache (string masterType);
 
         /// <summary>
         /// Update master details

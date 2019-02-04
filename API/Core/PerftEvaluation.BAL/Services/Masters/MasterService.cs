@@ -57,10 +57,27 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterType"></param>
         /// <returns></returns>
-        public IEnumerable<MastersDTO> GetMasterByType (string masterType) {
+        public ResponseModel GetMasterByType (RequestModel requestModel) {
+            
+            //Filter & sort the data
+            var filteredMasters = this._masterRepository.GetMastersByType (requestModel.Condition).AsQueryable ().SortAndFilter (requestModel, DbFilters.MasterFilters);
+            //Integrate pagination
+            var masters = filteredMasters.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            //return object
+            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<MastersDTO>>(masters), (filteredMasters.Count () < 100 ? filteredMasters.Count () : 100));
+            //return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetMastersByType (masterType));
+        }
+
+        /// <summary>
+        /// Get masters by its type For Cache
+        /// </summary>
+        /// <param name="masterType"></param>
+        /// <returns></returns>
+        public IEnumerable<MastersDTO> GetMasterByTypeForCache (string masterType) {
             return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetMastersByType (masterType));
         }
 
+        
         /// <summary>
         /// Update master detail
         /// </summary>

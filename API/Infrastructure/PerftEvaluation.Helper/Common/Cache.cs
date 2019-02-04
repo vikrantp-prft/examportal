@@ -37,7 +37,7 @@ namespace PerftEvaluation.Helper.Common {
         }
 
         public IEnumerable<MastersDTO> RefreshDropdownMasterCache (string cacheKey, string masterName) {
-            var cacheMaster = this._masterService.GetMasterByType (masterName);
+            var cacheMaster = this._masterService.GetMasterByTypeForCache (masterName);
 
             // Set cache options.
             // var cacheEntryOptions = new MemoryCacheEntryOptions()
