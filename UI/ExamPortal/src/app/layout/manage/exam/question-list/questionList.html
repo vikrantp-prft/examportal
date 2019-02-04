@@ -105,6 +105,8 @@
                 <option value="">Select</option>
                 <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
               </select>
+              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
+              </app-field-error-display>
             </div>
 
             <div class="form-group">
@@ -114,10 +116,15 @@
                 <option value="multipleSelect">Multiple Select(Checkbox)</option>
                 <option value="SingleSelect">Single Select(Radio Button)</option>
                 <option value="subjective">Subjective</option>
-              </select> </div>
+              </select>
+              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')" errorMsg="Select any Question Type">
+              </app-field-error-display>
+            </div>
             <div class="form-group">
               <label for="lastName">Question</label>
               <input type="textarea" formControlName="questionText" class="form-control">
+              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Please enter Question">
+              </app-field-error-display>
             </div>
 
             <div *ngIf="multipleSelectFlag" class="my-4 pt-2">
@@ -188,6 +195,8 @@
                 </button>
               </div>
             </div>
+            <app-field-error-display [displayError]="displayErrorOption" errorMsg="Please Enter/Select Valid Options">
+            </app-field-error-display>
           </div>
           <button class="btn btn-sm" type="submit">Submit</button>
           <button class="btn btn-sm ml-1" type="button" (click)="resetAll()">Reset Form</button>
