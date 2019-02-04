@@ -156,8 +156,11 @@
             <label for="institute"> Percentage </label>
             <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage">
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="addEducationButton">
             <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
+          </div>
+          <div class="form-group" *ngIf="updateEducationButton">
+            <input type="button" class="btn btn-default" id="btnUpdateNewEducationDetails" value="Update" (click)="fn_updateNewCourse()">
           </div>
           <div>
             <table class="table table-bordered" id="educationDetailsTable">
@@ -189,6 +192,7 @@
                     <label>{{educationField.percentage}}</label>
                   </td>
                   <td>
+                    <button class="btn btn-default" type="button" (click)="fn_editCourse(i)">Edit</button>
                     <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
                   </td>
                 </tr>

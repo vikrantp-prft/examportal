@@ -27,6 +27,7 @@ export class EmployeeUpdateComponent implements OnInit {
   public year: any;
   public month: any;
   public day: any;
+  public courseFlag: boolean = false;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
     { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
@@ -64,7 +65,7 @@ export class EmployeeUpdateComponent implements OnInit {
       courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
-      percentage:new FormControl(''),// [null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
+      percentage: new FormControl(''),// [null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
       interest: new FormArray([]),
       educationDetails: new FormArray([])
     });
@@ -299,36 +300,39 @@ export class EmployeeUpdateComponent implements OnInit {
 
   //function to add new course
   fn_addNewCourse() {
-    if(this.fn_validateEducationFields())
-    {
-    let newCourseModel = {
-      courseId: this.employeeForm.controls.courseId.value,
-      course:{
-        name:this.selectedCourse,
-      },
-      yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
-      institution: this.employeeForm.controls.institution.value,
-      percentage: this.employeeForm.controls.percentage.value
-    }
-
-    if (this.educationArray.length != 0) {
-      this.educationArray.forEach(element => {
-        if (element.courseId == newCourseModel.courseId) {
-          this.toastr.error('Course is already added');
-          return false;
-        }
-        else {
+    this.courseFlag = false;
+    if (this.fn_validateEducationFields()) {
+      let newCourseModel = {
+        courseId: this.employeeForm.controls.courseId.value,
+        course: {
+          name: this.selectedCourse,
+        },
+        yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
+        institution: this.employeeForm.controls.institution.value,
+        percentage: this.employeeForm.controls.percentage.value
+      }
+      if (this.educationArray.length != 0) {
+        this.educationArray.forEach(element => {
+          if (element.courseId == newCourseModel.courseId) {
+            this.toastr.error('Course is already added');
+            this.courseFlag = true;
+            this.fn_resetEducationDetails();
+            return false;
+          }
+        });
+        if (this.courseFlag == false) {
           this.educationArray.push(newCourseModel);
           this.fn_resetEducationDetails();
+          return true;
         }
-      });
-    }
-    else {
-      this.educationArray.push(newCourseModel);
-      this.fn_resetEducationDetails();
+      }
+      else {
+        this.educationArray.push(newCourseModel);
+        this.fn_resetEducationDetails();
+        return true;
+      }
     }
   }
-}
 
   //Get selected course value and text
   fn_getSelectedCourse(event: Event) {
