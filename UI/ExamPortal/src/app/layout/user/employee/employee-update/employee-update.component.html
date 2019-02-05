@@ -25,34 +25,31 @@
           </div>
           <div class="form-group">
             <label for="firstName">First Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName"
-              [ngClass]="{ 'is-invalid': submitted && employeeControls.firstName.errors }">
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="middleName">Middle Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="middleName" placeholder="Middle Name" formControlName="middleName"
-              [ngClass]="{ 'is-invalid': submitted && employeeControls.middleName.errors }">
+            <input type="text" class="form-control" id="middleName" placeholder="Middle Name" formControlName="middleName">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter valid middle name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName"
-              [ngClass]="{ 'is-invalid': submitted && employeeControls.lastName.errors }">
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter valid last name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
-            <input type="date" class="form-control" id="dateOfBirth" formControlName="dob" [ngClass]="{ 'is-invalid': submitted && employeeControls.dob.errors }">
+            <input type="date" class="form-control" id="dateOfBirth" formControlName="dob">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'dob')" errorMsg="Enter valid date of birth.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="mobile">Mobile</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="mobile" placeholder="Mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && employeeControls.mobile.errors }">
+            <input type="text" class="form-control" id="mobile" placeholder="Mobile" formControlName="mobile">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'mobile')" errorMsg="Enter valid mobile number">
             </app-field-error-display>
           </div>
@@ -63,21 +60,20 @@
           </div>
           <div class="form-group">
             <label for="Address">Address</label><span style="color:red">*</span>
-            <textarea class="form-control" id="address1" placeholder="Address 1" formControlName="address1" [ngClass]="{ 'is-invalid': submitted && employeeControls.address1.errors }"></textarea>
+            <textarea class="form-control" id="address1" placeholder="Address 1" formControlName="address1"></textarea>
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'address1')" errorMsg="Enter permanent address">
             </app-field-error-display>
             <textarea class="form-control mt-2" id="address2" placeholder="Address 2" formControlName="address2"></textarea>
           </div>
           <div class="form-group">
             <label for="city">City</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="city" placeholder="City" formControlName="city" placeholder="City"
-              [ngClass]="{ 'is-invalid': submitted && employeeControls.city.errors }">
+            <input type="text" class="form-control" id="city" placeholder="City" formControlName="city" placeholder="City">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')" errorMsg="Enter permanent city">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="State">State</label><span style="color:red">*</span>
-            <select class="form-control" formControlName="stateId" [ngClass]="{ 'is-invalid': submitted && employeeControls.stateId.errors }">
+            <select class="form-control" formControlName="stateId">
               <option value="">--Select--</option>
               <option *ngFor="let state of stateArray" value={{state.id}}>
                 {{state.name}}
@@ -88,8 +84,7 @@
           </div>
           <div class="form-group">
             <label for="pincode">Pincode</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="pincode" placeholder="Pincode" formControlName="pincode"
-              [ngClass]="{ 'is-invalid': submitted && employeeControls.pincode.errors }">
+            <input type="text" class="form-control" id="pincode" placeholder="Pincode" formControlName="pincode">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter permanent pincode">
             </app-field-error-display>
           </div>
@@ -195,8 +190,8 @@
                     <label>{{educationField.percentage}}</label>
                   </td>
                   <td>
-                    <button class="btn btn-default" type="button" (click)="fn_editCourse(i)">Edit</button>
-                    <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
+                    <button class="btn btn-default btn-md" type="button" (click)="fn_editCourse(i)">Edit</button>
+                    <button class="btn btn-default btn-md ml-3" type="button" (click)="fn_deleteCourse(i)">Delete</button>
                   </td>
                 </tr>
               </tbody>
@@ -223,14 +218,13 @@
           </div>
           <div class="form-group">
             <label for="email">Email :</label><span style="color:red">*</span>
-            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && employeeControls.email.errors }">
+            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter email id">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="password">Password :</label><span style="color:red">*</span>
-            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password"
-              [ngClass]="{ 'is-invalid': submitted && employeeControls.password.errors }">
+            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter password">
             </app-field-error-display>
           </div>

@@ -5,7 +5,7 @@ export const appConfig = {
   apiUrl: 'http://zil189:90/',
 
   pattern: {
-    NAME: /^[a-zA-Z . \-\']*$/,
+    NAME: /^[^-\s][a-zA-Z . \-\']*$/,
     CITY: /^[a-zA-Z . \-\']*$/,
     EMAIL: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     POSTAL_CODE: /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/, // /(^\d{5}$)|(^\d{5}-\d{4}$)/,
@@ -28,6 +28,7 @@ export const appConfig = {
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _@./#&+-;]*[A-Za-z0-9@./#&+-;][A-Za-z0-9 _@./#&+-;]*$',
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$',
     PINCODE:/^[1-9][0-9]{5}$/,
-    Year:/^[1-9][0-9]{3}$/
+    Year:/^[1-9][0-9]{3}$/,
+    Percentage:/^[^\.]\d{0,1}(\.\d{0,2})?$/
   }
 };
