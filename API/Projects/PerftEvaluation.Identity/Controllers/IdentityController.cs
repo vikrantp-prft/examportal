@@ -27,6 +27,8 @@ namespace PerftEvaluation.Identity.Controllers
         readonly SignInManager<PerfiUser> _signInManager;
         private readonly RoleManager<PerfiRole> _roleManager;
         readonly IConfiguration _configuration;
+        readonly private string[] examRoles;
+        readonly private string[] adminRoles;
 
         public IdentityController(
            UserManager<PerfiUser> userManager,
@@ -38,12 +40,16 @@ namespace PerftEvaluation.Identity.Controllers
             this._signInManager = signInManager;
             this._roleManager = roleManager;
             this._configuration = configuration;
+
+            this.examRoles = GetConfigArray("AllowedRoles:ExamRoles");
+            this.adminRoles = GetConfigArray("AllowedRoles:AdminRoles");
         }
 
+        #region - Currently no in use but may need in future, Make it 'Public' to use -
         [AllowAnonymous]
         [HttpPost]
         [Route("getidentitytoken")]
-        public async Task<IActionResult> CreateToken([FromBody] LoginModel loginModel)
+        private async Task<IActionResult> CreateToken([FromBody] LoginModel loginModel)
         {
             if (ModelState.IsValid)
             {
@@ -62,34 +68,11 @@ namespace PerftEvaluation.Identity.Controllers
 
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("refreshidentitytoken")]
-        public async Task<IActionResult> RefreshToken()
-        {
-            var user = await _userManager.FindByNameAsync(
-                User.Identity.Name ??
-                User.Claims.Where(c => c.Properties.ContainsKey("unique_name")).Select(c => c.Value).FirstOrDefault()
-                );
-            return Ok(GetToken(user));
-
-        }
-
-        [Authorize]
-        [HttpGet]
-        [Route("destroyidentitytoken")]
-        public async Task<IActionResult> DestroyToken()
-        {
-            await _signInManager.SignOutAsync();
-            return Ok("Token destroyed.");
-
-        }
-
         // Reset password directly
         [AllowAnonymous]
         [HttpPost]
         [Route("resetpassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] LoginModel resetPasswordModel)
+        private async Task<IActionResult> ResetPassword([FromBody] LoginModel resetPasswordModel)
         {
             if (ModelState.IsValid)
             {
@@ -111,6 +94,114 @@ namespace PerftEvaluation.Identity.Controllers
                 }
             }
             return BadRequest(ModelState);
+
+        }
+        #endregion
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("LoginUser")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(loginModel.Username);
+                if (user == null)
+                {
+                    return BadRequest("User doese not exist. Please contact system administrator.");
+                }
+
+                var isEligible = false;
+                foreach (var item in this.examRoles)
+                {
+                    var result = await _userManager.IsInRoleAsync(user, item);
+                    if (result) { isEligible = true; break; }
+
+                }
+
+                if (isEligible)
+                {
+                    var loginResult = await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, isPersistent: false, lockoutOnFailure: false);
+
+                    if (!loginResult.Succeeded)
+                    {
+                        return BadRequest("Login failed. Please check your credentials.");
+                    }
+
+                    return Ok(GetToken(user));
+                }
+                else
+                {
+                    return BadRequest("Sorry, You are not allowed to access this portal.");
+                }
+
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("LoginAdministrator")]
+        public async Task<IActionResult> LoginAdministrator([FromBody] LoginModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(loginModel.Username);
+                if (user == null)
+                {
+                    return BadRequest("User doese not exist. Please contact system administrator.");
+                }
+
+                var isEligible = false;
+                foreach (var item in this.adminRoles)
+                {
+                    var result = await _userManager.IsInRoleAsync(user, item);
+                    if (result) { isEligible = true; break; }
+
+                }
+
+                if (isEligible)
+                {
+                    var loginResult = await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, isPersistent: false, lockoutOnFailure: false);
+
+                    if (!loginResult.Succeeded)
+                    {
+                        return BadRequest("Login failed. Please check your credentials.");
+                    }
+
+                    return Ok(GetToken(user));
+                }
+                else
+                {
+                    return BadRequest("Sorry, You are not allowed to access this portal.");
+                }
+
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("refreshidentitytoken")]
+        public async Task<IActionResult> RefreshIdentityToken()
+        {
+            var user = await _userManager.FindByNameAsync(
+                User.Identity.Name ??
+                User.Claims.Where(c => c.Properties.ContainsKey("unique_name")).Select(c => c.Value).FirstOrDefault()
+                );
+            return Ok(GetToken(user));
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("destroyidentitytoken")]
+        public async Task<IActionResult> DestroyIdentityToken()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok("Token destroyed.");
 
         }
 
@@ -142,10 +233,11 @@ namespace PerftEvaluation.Identity.Controllers
 
         }
 
+        // Reset password request
         [AllowAnonymous]
         [HttpPost]
-        [Route("getresetpasswordtoken")]
-        public async Task<IActionResult> CreateResetPasswordToken([FromBody] UsernameModel usernameModel)
+        [Route("RequestResetPassword")]
+        public async Task<IActionResult> RequestResetPassword([FromBody] UsernameModel usernameModel)
         {
             if (ModelState.IsValid)
             {
@@ -155,13 +247,14 @@ namespace PerftEvaluation.Identity.Controllers
                     return BadRequest("User doest not exist.");
                 }
 
+                // TODO: Send Email with reset link
                 return Ok(await _userManager.GeneratePasswordResetTokenAsync(user));
             }
             return BadRequest(ModelState);
 
         }
 
-        //private String GetToken(IdentityUser user)
+        #region Private Methods
         private String GetToken(PerfiUser user)
         {
             var utcNow = DateTime.UtcNow;
@@ -201,6 +294,15 @@ namespace PerftEvaluation.Identity.Controllers
             return new JwtSecurityTokenHandler().WriteToken(jwt);
 
         }
+
+        private string[] GetConfigArray(string configName)
+        {
+            var examRoleSection = this._configuration.GetSection(configName);
+            IEnumerable<IConfigurationSection> examRoleMembers = examRoleSection.GetChildren();
+
+            return (from c in examRoleMembers select c.Value).ToArray();
+        }
+        #endregion
 
         #region User Related Admin Actions
         [HttpPost]
