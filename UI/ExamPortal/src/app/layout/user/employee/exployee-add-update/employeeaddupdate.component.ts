@@ -221,6 +221,8 @@ export class AddEmployeeComponent implements OnInit {
           this.toastr.error('Course is already added');
           this.courseFlag = true;
           this.fn_resetEducationDetails();
+          this.addEducationButton = true;
+          this.updateEducationButton = false;
           return false;
         }
       }
@@ -232,6 +234,8 @@ export class AddEmployeeComponent implements OnInit {
       this.educationArray[this.fetchIndex].institution = oldCourseModel.institution;
       this.educationArray[this.fetchIndex].percentage = oldCourseModel.percentage;
       this.fn_resetEducationDetails();
+      this.addEducationButton = true;
+      this.updateEducationButton = false;
       return true;
     }
 
