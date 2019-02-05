@@ -22,7 +22,7 @@
                     </button>
                 </div>
                 <div class="col-md-3">
-                    <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+                    <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
                         class="form-control" />
                     <a href="#" class="search-icon">
                         <i class="fa fa-search"></i>
