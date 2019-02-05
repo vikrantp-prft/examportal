@@ -7,7 +7,7 @@
             <div class="mx-1 row">
                 <div class="col-md-2">
                     <div class="">
-                        <select class="custom-select" id="inlineFormCustomSelect">
+                        <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
                             <option selected>Per Page</option>
                             <option value="10">10</option>
                             <option value="25">25</option>
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let designation of designationList; let i = index">
-                        <td>{{i + 1}}</td>
+                        <td>{{(designationModel.pageNumber-1)*10 + i +1 }}</td>
                         <td>{{ designation.name }}</td>
                         <td>{{ designation.description}}</td>
                         <td>
@@ -68,7 +68,7 @@
             </table>
         </div>
 
-        <pagination class="pull-right pr-2 " [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+        <pagination class="pull-right pr-2 " [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
             [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
             lastText="LAST"></pagination>
     </div>
