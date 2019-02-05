@@ -93,7 +93,6 @@ export class EmployeeListComponent implements OnInit {
 
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
-    debugger;
     if (Id != null) {
       swal({
         title: 'Are you sure?',
@@ -132,7 +131,6 @@ export class EmployeeListComponent implements OnInit {
 
   // function to change isActive status
   fn_ChangeStatus(id, isActive) {
-    debugger;
     swal({
       title: 'Are you sure?',
       text: 'You want to change the status!',
@@ -160,8 +158,6 @@ export class EmployeeListComponent implements OnInit {
   //function to save status change
   fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
         this.fn_GetEmployeeList();
