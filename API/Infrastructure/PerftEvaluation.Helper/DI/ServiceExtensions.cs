@@ -38,6 +38,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IExamsRepository, ExamsRepository>();
             services.AddTransient<IQuestionsRepository, QuestionsRepository>();
             services.AddTransient<IResultsRepository, ResultsRepository>();
+            services.AddTransient<IAssignedExamsRepository, AssignedExamsRepository>();
             //Cache helpers
             services.AddTransient<ICache, Cache>();
             //services.AddTransient<IFilterExtensions, FilterExtensions>();
