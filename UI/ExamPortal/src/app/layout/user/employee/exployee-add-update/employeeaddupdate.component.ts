@@ -206,6 +206,7 @@ export class AddEmployeeComponent implements OnInit {
     }
   }
 
+  //update selected course
   fn_updateNewCourse() {
     this.courseFlag = false;
     let oldCourseModel = {
@@ -240,6 +241,7 @@ export class AddEmployeeComponent implements OnInit {
     }
 
   }
+
   //Get selected course value and text
   fn_getSelectedCourse(event: Event) {
     let selectedOptions = event.target['options'];
@@ -253,6 +255,7 @@ export class AddEmployeeComponent implements OnInit {
     this.educationArray.splice(index, 1);
   }
 
+  //fetch selected course
   fn_editCourse(index) {
     this.addEducationButton = false;
     this.updateEducationButton = true;
