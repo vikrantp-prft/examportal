@@ -219,13 +219,13 @@
           <div class="form-group">
             <label for="email">Email :</label><span style="color:red">*</span>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter email id">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter valid email id">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="password">Password :</label><span style="color:red">*</span>
             <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter password">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter valid password">
             </app-field-error-display>
           </div>
         </div>
