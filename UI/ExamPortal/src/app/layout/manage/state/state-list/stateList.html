@@ -22,7 +22,7 @@
         </button>
       </div>
       <div class="col-md-3">
-        <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
         <a href="#" class="search-icon">
           <i class="fa fa-search"></i>
         </a>
@@ -42,7 +42,7 @@
         <tbody>
 
           <tr *ngFor="let state of stateList; let i = index">
-            <td>{{i + 1}}</td>
+            <td>{{(stateModel.pageNumber-1)*10 + i +1 }}</td>
             <td>{{state.name}}</td>
             <td>{{state.description}}</td>
             <td>
@@ -66,7 +66,7 @@
         </tbody>
       </table>
     </div>
-    <pagination class="pull-right pr-2" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+    <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
       [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
       lastText="LAST"></pagination>
   </div>

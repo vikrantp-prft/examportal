@@ -6,6 +6,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'employee-add-update',
@@ -22,6 +23,10 @@ export class AddEmployeeComponent implements OnInit {
   public employeeId: any;
   selectedCourse: any;
   public emailExist: boolean = false;
+  public courseFlag: boolean = false;
+  public fetchIndex: any;
+  public updateEducationButton: boolean = false;
+  public addEducationButton: boolean = true;
   public yearOfPassingArray: Array<any> = [
     { year: 1991 }, { year: 1992 }, { year: 1993 }, { year: 1994 }, { year: 1995 }, { year: 1996 }, { year: 1997 }, { year: 1998 }, { year: 1999 }, { year: 2000 },
     { year: 2001 }, { year: 2002 }, { year: 2003 }, { year: 2004 }, { year: 2005 }, { year: 2006 }, { year: 2007 }, { year: 2008 }, { year: 2009 }, { year: 2010 },
@@ -69,6 +74,8 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getTeam();
     this.fn_getState();
     this.fn_getCourse();
+    this.updateEducationButton = false;
+    this.addEducationButton = true;
     this.employeeForm.controls.teamId.setValue("");
     this.employeeForm.controls.courseId.setValue("");
     this.employeeForm.controls.stateId.setValue("");
@@ -167,6 +174,7 @@ export class AddEmployeeComponent implements OnInit {
 
   //function to add new course
   fn_addNewCourse() {
+    this.courseFlag = false;
     if (this.fn_validateEducationFields()) {
       let newCourseModel = {
         courseId: this.employeeForm.controls.courseId.value,
@@ -175,24 +183,63 @@ export class AddEmployeeComponent implements OnInit {
         institution: this.employeeForm.controls.institution.value,
         percentage: this.employeeForm.controls.percentage.value
       }
-
       if (this.educationArray.length != 0) {
         this.educationArray.forEach(element => {
           if (element.courseId == newCourseModel.courseId) {
             this.toastr.error('Course is already added');
+            this.courseFlag = true;
+            this.fn_resetEducationDetails();
             return false;
           }
-          else {
-            this.educationArray.push(newCourseModel);
-            this.fn_resetEducationDetails();
-          }
         });
+        if (this.courseFlag == false) {
+          this.educationArray.push(newCourseModel);
+          this.fn_resetEducationDetails();
+          return true;
+        }
       }
       else {
         this.educationArray.push(newCourseModel);
         this.fn_resetEducationDetails();
+        return true;
       }
     }
+  }
+
+  //update selected course
+  fn_updateNewCourse() {
+    this.courseFlag = false;
+    let oldCourseModel = {
+      courseId: this.employeeForm.controls.courseId.value,
+      course: this.selectedCourse,
+      yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
+      institution: this.employeeForm.controls.institution.value,
+      percentage: this.employeeForm.controls.percentage.value
+    }
+    for (var i = 0; i < this.educationArray.length; i++) {
+      if (i != this.fetchIndex) {
+        if (this.educationArray[i].courseId == oldCourseModel.courseId) {
+          this.toastr.error('Course is already added');
+          this.courseFlag = true;
+          this.fn_resetEducationDetails();
+          this.addEducationButton = true;
+          this.updateEducationButton = false;
+          return false;
+        }
+      }
+    }
+    if (this.courseFlag == false) {
+      this.educationArray[this.fetchIndex].courseId = oldCourseModel.courseId;
+      this.educationArray[this.fetchIndex].course = oldCourseModel.course;
+      this.educationArray[this.fetchIndex].yearOfPassing = oldCourseModel.yearOfPassing;
+      this.educationArray[this.fetchIndex].institution = oldCourseModel.institution;
+      this.educationArray[this.fetchIndex].percentage = oldCourseModel.percentage;
+      this.fn_resetEducationDetails();
+      this.addEducationButton = true;
+      this.updateEducationButton = false;
+      return true;
+    }
+
   }
 
   //Get selected course value and text
@@ -203,8 +250,20 @@ export class AddEmployeeComponent implements OnInit {
     this.selectedCourse = selectElementText;
   }
 
+  //delete course from table
   fn_deleteCourse(index) {
     this.educationArray.splice(index, 1);
+  }
+
+  //fetch selected course
+  fn_editCourse(index) {
+    this.addEducationButton = false;
+    this.updateEducationButton = true;
+    this.fetchIndex = index;
+    this.employeeForm.controls.courseId.setValue(this.educationArray[index].courseId);
+    this.employeeForm.controls.yearOfPassing.setValue(this.educationArray[index].yearOfPassing);
+    this.employeeForm.controls.institution.setValue(this.educationArray[index].institution);
+    this.employeeForm.controls.percentage.setValue(this.educationArray[index].percentage);
   }
 
   fn_validateEducationFields() {

@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="col-md-3">
-        <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
         <a href="#" class="search-icon">
           <i class="fa fa-search"></i>
         </a>
@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="card-body pb-0 table-responsive">
-    <table class="table table-hover table-bordered">
+    <table class="table table-hover table-bordered table-striped">
       <thead>
         <tr>
           <th class="th-width"> Sr.</th>
@@ -40,7 +40,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let category of categoryList; let i = index">
-          <td>{{i + 1}}</td>
+          <td>{{(categoryModel.pageNumber-1)*10 + i +1 }}</td>
           <td>{{ category.name}}</td>
           <td> {{ category.description }} </td>
           <td>
@@ -64,7 +64,8 @@
       </tbody>
     </table>
   </div>
-  <pagination class="pull-right pr-2" [totalItems]="params.totalRecords" [itemsPerPage]="params .pageSize" (pageChanged)="pageChanged($event)"
+  <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
     [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-    lastText="LAST"></pagination>
+    lastText="LAST">
+  </pagination>
 </div>

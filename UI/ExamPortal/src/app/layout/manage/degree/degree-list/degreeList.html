@@ -8,7 +8,7 @@
     <div class="card-body row justify-content-end">
       <div class="col-md-2">
         <div class="">
-          <select class="custom-select" id="inlineFormCustomSelect">
+          <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
             <option selected>Per Page</option>
             <option value="10">10</option>
             <option value="25">25</option>
@@ -22,7 +22,7 @@
         </button>
       </div>
       <div class="col-md-3">
-        <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
         <a href="#" class="search-icon">
           <i class="fa fa-search"></i>
         </a>
@@ -41,7 +41,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let degree of degreeList; let i = index">
-            <td>{{i + 1}}</td>
+            <td>{{(degreeModel.pageNumber-1)*10 + i +1 }}</td>
             <td>{{degree.name | slice:0:20}}</td>
             <td>{{degree.description | slice:0:25}}</td>
             <td>
@@ -65,7 +65,7 @@
         </tbody>
       </table>
     </div>
-    <pagination class="pull-right pr-2" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+    <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
       [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
       lastText="LAST"></pagination>
   </div>

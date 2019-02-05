@@ -1,3 +1,5 @@
+@import url('https://cdn.syncfusion.com/ej2/material.css');
+
 .dataTables_length_code{float:left;width: 100%;}
 .dataTables_length_code label{float:left;width: 100%;}
 .dataTables_length_code label span{float: left;margin-right: 3px;}

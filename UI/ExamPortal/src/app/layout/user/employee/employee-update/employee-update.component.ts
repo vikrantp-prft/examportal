@@ -27,6 +27,10 @@ export class EmployeeUpdateComponent implements OnInit {
   public year: any;
   public month: any;
   public day: any;
+  public courseFlag: boolean = false;
+  public fetchIndex: any;
+  public updateEducationButton: boolean = false;
+  public addEducationButton: boolean = true;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
     { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
@@ -64,7 +68,7 @@ export class EmployeeUpdateComponent implements OnInit {
       courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
-      percentage:new FormControl(''),// [null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
+      percentage: new FormControl(''),// [null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
       interest: new FormArray([]),
       educationDetails: new FormArray([])
     });
@@ -299,36 +303,90 @@ export class EmployeeUpdateComponent implements OnInit {
 
   //function to add new course
   fn_addNewCourse() {
-    if(this.fn_validateEducationFields())
-    {
-    let newCourseModel = {
+    this.courseFlag = false;
+    if (this.fn_validateEducationFields()) {
+      let newCourseModel = {
+        courseId: this.employeeForm.controls.courseId.value,
+        course: {
+          name: this.selectedCourse,
+        },
+        yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
+        institution: this.employeeForm.controls.institution.value,
+        percentage: this.employeeForm.controls.percentage.value
+      }
+      if (this.educationArray.length != 0) {
+        this.educationArray.forEach(element => {
+          if (element.courseId == newCourseModel.courseId) {
+            this.toastr.error('Course is already added');
+            this.courseFlag = true;
+            this.fn_resetEducationDetails();
+            return false;
+          }
+        });
+        if (this.courseFlag == false) {
+          this.educationArray.push(newCourseModel);
+          this.fn_resetEducationDetails();
+          return true;
+        }
+      }
+      else {
+        this.educationArray.push(newCourseModel);
+        this.fn_resetEducationDetails();
+        return true;
+      }
+    }
+  }
+
+  //fetch selected course
+  fn_editCourse(index) {
+    this.addEducationButton = false;
+    this.updateEducationButton = true;
+    this.fetchIndex = index;
+    this.employeeForm.controls.courseId.setValue(this.educationArray[index].courseId);
+    this.employeeForm.controls.yearOfPassing.setValue(this.educationArray[index].yearOfPassing);
+    this.employeeForm.controls.institution.setValue(this.educationArray[index].institution);
+    this.employeeForm.controls.percentage.setValue(this.educationArray[index].percentage);
+  }
+
+  //update selected course
+  fn_updateNewCourse() {
+    this.courseFlag = false;
+    let oldCourseModel = {
       courseId: this.employeeForm.controls.courseId.value,
-      course:{
-        name:this.selectedCourse,
+      course: {
+        name: this.selectedCourse,
       },
       yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
       institution: this.employeeForm.controls.institution.value,
       percentage: this.employeeForm.controls.percentage.value
     }
-
-    if (this.educationArray.length != 0) {
-      this.educationArray.forEach(element => {
-        if (element.courseId == newCourseModel.courseId) {
+    for (var i = 0; i < this.educationArray.length; i++) {
+      if (i != this.fetchIndex) {
+        if (this.educationArray[i].courseId == oldCourseModel.courseId) {
           this.toastr.error('Course is already added');
+          this.courseFlag = true;
+          this.fn_resetEducationDetails();
+          this.addEducationButton = true;
+          this.updateEducationButton = false;
           return false;
         }
-        else {
-          this.educationArray.push(newCourseModel);
-          this.fn_resetEducationDetails();
-        }
-      });
+      }
     }
-    else {
-      this.educationArray.push(newCourseModel);
+    if (this.courseFlag == false) {
+      console.log('this.educationArray',this.educationArray);
+      console.log('this.educationArray[this.fetchIndex].course.name',this.educationArray[this.fetchIndex].course.name);
+      this.educationArray[this.fetchIndex].courseId = oldCourseModel.courseId;
+      this.educationArray[this.fetchIndex].course.name = oldCourseModel.course.name;
+      this.educationArray[this.fetchIndex].yearOfPassing = oldCourseModel.yearOfPassing;
+      this.educationArray[this.fetchIndex].institution = oldCourseModel.institution;
+      this.educationArray[this.fetchIndex].percentage = oldCourseModel.percentage;
       this.fn_resetEducationDetails();
+      this.addEducationButton = true;
+      this.updateEducationButton = false;
+      return true;
     }
-  }
 }
+
 
   //Get selected course value and text
   fn_getSelectedCourse(event: Event) {

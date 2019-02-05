@@ -32,8 +32,14 @@ export class DesignationListComponent implements OnInit {
   public designationList = [];
   public statusUrl: any;
 
-  // Constructor
+  public designationModel =
+    {
+         "condition": "Designation",
+         "pageSize": 10,
+         "pageNumber": 1
+    };
 
+  // Constructor
   constructor(
         public router: Router, 
         private CommonService: commonService, 
@@ -49,12 +55,13 @@ export class DesignationListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.designationModel.pageNumber = 1;
+    this.designationModel.pageSize = event.target.value;
+    this.fn_GetDesignationList();
   }
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.designationModel.pageNumber = event.page;
+    this.fn_GetDesignationList();
   }
 
   trimming_fn(x) {
@@ -92,23 +99,18 @@ export class DesignationListComponent implements OnInit {
 
   // Function to get list of employees
   fn_GetDesignationList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
+    // const prop: paginationModel = {
+    //   currentPage: parseInt(this.params.currentPage),
+    //   pageSize: parseInt(this.params.pageSize),
+    //   searchString: this.params.searchString
+    // };
     const url = 'api/Master/GetMasterByType';
-
-    const designationModel =
-    {
-         "condition": "Designation",
-         //"pageSize": 10
-    };
-
-    this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {
+    
+    this.CommonService.fn_PostWithData(this.designationModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
        this.designationList = rs.data;
+       this.totalItems = rs.totalRecords;
       }
       else {
       }

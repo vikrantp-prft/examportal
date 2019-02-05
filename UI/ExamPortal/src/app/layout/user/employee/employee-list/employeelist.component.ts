@@ -17,7 +17,7 @@ interface paginationModel {
   providers: [commonService]
 })
 export class EmployeeListComponent implements OnInit {
- 
+
   public employeeModel: any = {
     // "id": "string",
     // "pageSize": 0,
@@ -35,7 +35,8 @@ export class EmployeeListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public employeeList = [];
-  employeeData : any = {totalRecords : ''};
+  public statusUrl: any;
+  employeeData: any = { totalRecords: '' };
 
   // Constructor
 
@@ -61,18 +62,18 @@ export class EmployeeListComponent implements OnInit {
     this.employeeModel.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetEmployeeList();
   }
+
   // Searching
-  searchRecord(searchStr: any): void {
-    debugger;
-    this.employeeModel.pageNumber = 1;
-    this.employeeModel.pageSize = 10;
-    this.employeeModel.filter = searchStr.target.value;
-    this.fn_GetEmployeeList();
+  searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.employeeModel.pageNumber = 1;
+      this.employeeModel.pageSize = 10;
+      this.employeeModel.filter = event.target.value;
+      this.fn_GetEmployeeList();
+    }
   }
 
-
   // Function to get list of employees
-
   fn_GetEmployeeList() {
     const url = 'api/Employee/GetEmployees';
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
@@ -92,7 +93,6 @@ export class EmployeeListComponent implements OnInit {
 
   // function to display the alert before deleting the Order.
   fn_deleteEmployee(Id) {
-    debugger;
     if (Id != null) {
       swal({
         title: 'Are you sure?',
@@ -125,6 +125,45 @@ export class EmployeeListComponent implements OnInit {
       if ((result.message = 'Success')) {
         this.toastr.success('Employee details deleted successfully!');
         this.fn_GetEmployeeList();
+      }
+    });
+  }
+
+  // function to change isActive status
+  fn_ChangeStatus(id, isActive) {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to change the status!',
+      buttonsStyling: true,
+      confirmButtonClass: 'btn btn-success',
+      showCancelButton: true,
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Yes'
+    }).then(x => {
+      if (x.value == true) {
+        if (isActive == true) {
+          this.statusUrl = 'api/Employee/InactivateEmployee';
+        }
+        else {
+          this.statusUrl = 'api/Employee/ActivateEmployee';
+        }
+        const employeeStatusModel = {
+          "id": id,
+        }
+        this.fn_saveStatusChange(this.statusUrl, employeeStatusModel);
+      }
+    });
+  }
+
+  //function to save status change
+  fn_saveStatusChange(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.fn_GetEmployeeList();
+      }
+      else {
+
       }
     });
   }

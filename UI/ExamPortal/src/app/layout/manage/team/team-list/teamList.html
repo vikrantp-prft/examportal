@@ -19,7 +19,7 @@
           </button>
         </div>
         <div class="col-md-3">
-          <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+          <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
           <a href="#" class="search-icon">
             <i class="fa fa-search"></i>
           </a>
@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let team of teamList; let i = index">
-            <td>{{i + 1}}</td>
+            <td>{{(teamModel.pageNumber-1)*10 + i +1 }}</td>
             <td>{{team.name}}</td>
             <td>{{team.description}}</td>
             <td>
@@ -51,19 +51,19 @@
               <button class="btn btn-md" title="Edit" type="button" rel="tooltip" [routerLink]="['/manage/editTeamList', team.id]">
                 <i class="fa text-dark fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-md mx-1" title="Delete" type="button" rel="tooltip" (click)="fn_deleteTeam(team.id)">
-                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
-              </button>
-              <button class="btn btn-md" title="Change Status" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)">
+              <button class="btn btn-md mx-1" title="Change Status" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)">
                 <i class="fa" [ngClass]="{'fa-toggle-on text-success':team.isActive, 'fa-toggle-off text-danger': !team.isActive}"
                   aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-md" title="Delete" type="button" rel="tooltip" (click)="fn_deleteTeam(team.id)">
+                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <pagination class="pull-right pr-2" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+    <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
       [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
       lastText="LAST">
     </pagination>
