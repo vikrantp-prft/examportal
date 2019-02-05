@@ -6,9 +6,9 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 interface paginationModel {
-  pageNumber: number;
-  pageSize: number;
-  searchString: string; 
+  pageNumber: number;
+  pageSize: number;
+  searchString: string;
 }
 
 @Component({
@@ -32,16 +32,17 @@ export class CategoryListComponent implements OnInit {
   public totalItems = 0;
   public categoryList = [];
   public statusUrl: any;
-  
-  public categoryModel =
+
+  public categoryModel =
     {
       "condition": "Category",
-      //"pageSize": 10
+      "pageSize": 10,
+      "pageNumber": 1
     };
 
   // Constructor
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {}
+  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   toggle: boolean = true;
   // Lifecycle method
 
@@ -51,35 +52,34 @@ export class CategoryListComponent implements OnInit {
 
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.pageNumber = 1;
-    this.params.pageSize = event.target.value;
+    this.categoryModel.pageNumber = 1;
+    this.categoryModel.pageSize = event.target.value;
     this.fn_GetCategoryList();
   }
   pageChanged(event: any): void {
-    this.params.pageNumber = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.categoryModel.pageNumber = event.page;
     this.fn_GetCategoryList();
   }
 
   trimming_fn(x) {
     return x ? x.replace(/^\s+|\s+$/gm, '') : '';
-  }; 
+  };
 
   // Searching
   searchRecord(event: any): void {
-      const searchModel=
-      {
-        "id": "string",
-        "condition": "Category",
-        "pageSize": 0,
-        "pageNumber": 0,
-        "totalRecords": 0,
-        "filter": this.trimming_fn(event.target.value),
-        "sortBy": "string",
-        "isDescending": true
-      }
-      this.fn_GetFilteredList(searchModel);
-    
+    const searchModel =
+    {
+      "id": "string",
+      "condition": "Category",
+      "pageSize": 10,
+      "pageNumber": 0,
+      "totalRecords": 0,
+      "filter": this.trimming_fn(event.target.value),
+      "sortBy": "string",
+      "isDescending": true
+    }
+    this.fn_GetFilteredList(searchModel);
+
   }
 
   fn_GetFilteredList(data) {
@@ -96,24 +96,25 @@ export class CategoryListComponent implements OnInit {
   }
 
   fn_GetCategoryList() {
-    const prop: paginationModel = {
-      pageNumber: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
+    // const prop: paginationModel = {
+    //   pageNumber: parseInt(this.params.pageNumber),
+    //   pageSize: parseInt(this.params.pageSize),
+    //   searchString: this.params.searchString
+    // };
     const url = 'api/Master/GetMasterByType';
 
-      this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
-      const rs = result;
-      if (rs.statusCode == 200) {
-       this.categoryList = rs.data;
+    this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.categoryList = rs.data;
+        this.totalItems = rs.totalRecords;
       }
-      else {
+      else {
       }
-    }); 
+    });
   }
 
-  
+
 
   // function to display the alert before deleting the Order.
   fn_deleteCategory(Id) {
@@ -160,8 +161,7 @@ export class CategoryListComponent implements OnInit {
 
 
   // function to change isActive status
-  fn_ChangeStatus(id,isActive)
-  {
+  fn_ChangeStatus(id, isActive) {
     swal({
       title: 'Are you sure?',
       text: 'You want to change the status!',
@@ -171,32 +171,32 @@ export class CategoryListComponent implements OnInit {
       cancelButtonClass: 'btn btn-danger',
       confirmButtonText: 'Yes'
     }).then(x => {
-    if(x.value == true){
-        if(isActive == true){
+      if (x.value == true) {
+        if (isActive == true) {
           this.statusUrl = 'api/Master/InactivateMaster';
         }
-        else{
+        else {
           this.statusUrl = 'api/Master/ActivateMaster';
         }
         const categoryStatusModel = {
           "id": id
-         }
-        this.fn_saveStatusChange(this.statusUrl,categoryStatusModel);
-    }
+        }
+        this.fn_saveStatusChange(this.statusUrl, categoryStatusModel);
+      }
     });
   }
 
   //function to save status change
   fn_saveStatusChange(url, data) {
-      this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-          this.fn_GetCategoryList();
+        this.fn_GetCategoryList();
       }
       else {
-          
+
       }
-  });
+    });
   }
 
 

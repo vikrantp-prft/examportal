@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let team of teamList; let i = index">
-            <td>{{i + 1}}</td>
+            <td>{{(teamModel.pageNumber-1)*10 + i +1 }}</td>
             <td>{{team.name}}</td>
             <td>{{team.description}}</td>
             <td>
@@ -63,7 +63,7 @@
         </tbody>
       </table>
     </div>
-    <pagination class="pull-right pr-2" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
+    <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
       [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
       lastText="LAST">
     </pagination>

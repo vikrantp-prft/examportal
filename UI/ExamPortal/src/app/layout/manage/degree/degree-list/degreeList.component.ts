@@ -32,6 +32,13 @@ export class DegreeListComponent implements OnInit {
   public degreeList = [];
   public degreeInfo: any;
   public statusUrl: any;
+
+  public degreeModel =
+       {
+         "condition": "Degree",
+         "pageSize": 10,
+         "pageNumber": 1
+       };
   
 
   // Constructor
@@ -47,12 +54,13 @@ export class DegreeListComponent implements OnInit {
   
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.degreeModel.pageNumber = 1;
+    this.degreeModel.pageSize = event.target.value;
+    this.fn_GetDegreeList();
   }
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.degreeModel.pageNumber = event.page;
+    this.fn_GetDegreeList();
   }
 
   trimming_fn(x) {
@@ -66,7 +74,7 @@ export class DegreeListComponent implements OnInit {
       {
         "id": "string",
         "condition": "Degree",
-        "pageSize": 0,
+        "pageSize": 10,
         "pageNumber": 0,
         "totalRecords": 0,
         "filter": this.trimming_fn(event.target.value),
@@ -92,22 +100,18 @@ export class DegreeListComponent implements OnInit {
   
   // Function to get degreeList (GetMasterByType)
   fn_GetDegreeList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
+    // const prop: paginationModel = {
+    //   currentPage: parseInt(this.params.currentPage),
+    //   pageSize: parseInt(this.params.pageSize),
+    //   searchString: this.params.searchString
+    // };
     const url = 'api/Master/GetMasterByType';
-    const degreeModel =
-       {
-         "condition": "Degree",
-         //"pageSize": 10
-       };
-
-    this.CommonService.fn_PostWithData(degreeModel, url).subscribe((result: any) => {
+    
+    this.CommonService.fn_PostWithData(this.degreeModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.degreeList = rs.data;
+        this.totalItems = rs.totalRecords;
       }
       else {
       }

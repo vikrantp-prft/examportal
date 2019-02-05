@@ -32,6 +32,13 @@ export class TeamListComponent implements OnInit {
   public teamList = [];
   public teamInfo: any;
   public statusUrl: any;
+
+  public teamModel =
+       {
+         "condition": "Team",
+         "pageSize": 10,
+         "pageNumber": 1
+       };
   
 
   // Constructor
@@ -47,13 +54,12 @@ export class TeamListComponent implements OnInit {
   
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.teamModel.pageNumber = 1;
+    this.teamModel.pageSize = event.target.value;
     this.fn_GetTeamList();
   }
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.teamModel.pageNumber = event.page;
     this.fn_GetTeamList();
   }
 
@@ -67,7 +73,7 @@ export class TeamListComponent implements OnInit {
       {
         "id": "string",
         "condition": "Team",
-        "pageSize": 0,
+        "pageSize": 10,
         "pageNumber": 0,
         "totalRecords": 0,
         "filter": this.trimming_fn(event.target.value),
@@ -93,22 +99,18 @@ export class TeamListComponent implements OnInit {
   
   // Function to get teamList (GetMasterByType)
   fn_GetTeamList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
+    // const prop: paginationModel = {
+    //   currentPage: parseInt(this.params.currentPage),
+    //   pageSize: parseInt(this.params.pageSize),
+    //   searchString: this.params.searchString
+    // };
     const url = 'api/Master/GetMasterByType';
-    const teamModel =
-       {
-         "condition": "Team",
-         //"pageSize": 10
-       };
-
-    this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {
+    
+    this.CommonService.fn_PostWithData(this.teamModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.teamList = rs.data;
+        this.totalItems = rs.totalRecords;
       }
       else {
       }

@@ -32,6 +32,13 @@ export class StateListComponent implements OnInit {
   public stateList = [];
   public stateInfo: any;
   public statusUrl: any;
+
+  public stateModel =
+  {
+    "condition": "State",
+    "pageSize": 10,
+    "pageNumber": 1
+  };
   
 
   // Constructor
@@ -47,12 +54,13 @@ export class StateListComponent implements OnInit {
   
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.stateModel.pageNumber = 1;
+    this.stateModel.pageSize = event.target.value;
+    this.fn_GetStateList();
   }
   pageChanged(event: any): void {
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.stateModel.pageNumber = event.page;
+    this.fn_GetStateList();
   }
 
   trimming_fn(x) {
@@ -91,22 +99,18 @@ export class StateListComponent implements OnInit {
   
   // Function to get stateList (GetMasterByType)
   fn_GetStateList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
+    // const prop: paginationModel = {
+    //   currentPage: parseInt(this.params.currentPage),
+    //   pageSize: parseInt(this.params.pageSize),
+    //   searchString: this.params.searchString
+    // };
     const url = 'api/Master/GetMasterByType';
-    const stateModel =
-       {
-         "condition": "State",
-         //"pageSize": 10
-       };
-
-    this.CommonService.fn_PostWithData(stateModel, url).subscribe((result: any) => {
+   
+    this.CommonService.fn_PostWithData(this.stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.stateList = rs.data;
+        this.totalItems = rs.totalRecords;
       }
       else {
       }
