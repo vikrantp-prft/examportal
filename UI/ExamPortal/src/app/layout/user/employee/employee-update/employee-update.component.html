@@ -85,7 +85,7 @@
           <div class="form-group">
             <label for="pincode">Pincode</label><span style="color:red">*</span>
             <input type="text" class="form-control" id="pincode" placeholder="Pincode" formControlName="pincode">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter permanent pincode">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter valid 6 digit pincode">
             </app-field-error-display>
           </div>
         </div>
@@ -120,7 +120,7 @@
           <div class="form-group">
             <label for="currentPincode"> Pincode </label>
             <input type="text" class="form-control" id="currentPincode" placeholder="Pincode" formControlName="currentPincode">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter current pincode">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter valid 6 digit pincode">
             </app-field-error-display>
           </div>
         </div>
@@ -152,7 +152,7 @@
           </div>
           <div class="form-group">
             <label for="institute"> Percentage </label>
-            <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage">
+            <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage" (keyup)="onlyPercentage($event)">
           </div>
           <div class="form-group" *ngIf="addEducationButton">
             <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
