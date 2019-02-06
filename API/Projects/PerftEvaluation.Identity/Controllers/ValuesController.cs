@@ -22,7 +22,7 @@ namespace PerftEvaluation.Identity.Controllers
         {
             this._emailService = EmailService;
         }
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

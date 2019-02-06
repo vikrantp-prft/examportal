@@ -29,7 +29,7 @@ namespace PerftEvaluation.EmailServer
                 client.UseDefaultCredentials = false;
                 client.Credentials = new NetworkCredential(UserName, Password);
                 client.Port = Port;
-                client.EnableSsl = true;
+                //client.EnableSsl = true;
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress(From,DisplayName);
                 
@@ -62,7 +62,11 @@ namespace PerftEvaluation.EmailServer
                 mailMessage.IsBodyHtml = emailDTO.IsHtmlBody;
                 mailMessage.Body = emailDTO.Body;
                 mailMessage.Subject = emailDTO.Subject;
+                client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                client.PickupDirectoryLocation = @"C:\ExamPortal-SentEmails";
                 client.Send(mailMessage);
+
+     
                 return true;
             }
             catch (Exception ex)
