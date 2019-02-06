@@ -26,6 +26,8 @@ namespace PerftEvaluation.DTO.Dtos {
 
         public List<OptionsDTO> Options { get; set; }
         public bool IsDeleted { get; set; }
+
+        public MastersDTO Category { get; set; }
     }
 
     public class OptionsDTO {
