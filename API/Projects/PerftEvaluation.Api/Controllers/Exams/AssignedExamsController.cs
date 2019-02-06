@@ -42,16 +42,32 @@ namespace PerftEvaluation.Api.Controllers
         }
 
 
-        // POST api/exams/IsExamAssigned
+        // POST api/exams/ActiveExamAssigned
         /// <summary>
         /// Assigned exam
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("IsExamAssigned")]
+        [HttpPost, Route ("ActiveExamAssigned")]
         public IActionResult IsExamAssigned (RequestModel requestModel) {
             try {
-                return Ok (_assignedExamsService.IsExamAssigned (requestModel.Id));
+                return Ok (_assignedExamsService.ActiveExamAssigned (requestModel.Id));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
+        // POST api/exams/InactiveExamAssigned
+        /// <summary>
+        /// Assigned exam
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("InactiveExamAssigned")]
+        public IActionResult InactiveExamAssigned (RequestModel requestModel) {
+            try {
+                return Ok (_assignedExamsService.InactiveExamAssigned (requestModel.Id));
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }

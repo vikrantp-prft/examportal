@@ -20,7 +20,12 @@ namespace PerftEvaluation.DAL.Repositories
             this._db = new DBHelper();
         }
 
-        public bool IsExamAssigned(string examId)
+        /// <summary>
+        /// Assigned Exams to an Employee
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        public bool ActiveExamAssigned(string examId)
         {
             var filter = Builders<AssignedExams>.Filter;
             var filterDef = filter.Eq(c => c.Id, examId);
@@ -45,6 +50,22 @@ namespace PerftEvaluation.DAL.Repositories
             { 
                 throw ex;
             }
+        }
+
+
+        /// <summary>
+        /// Unassigned Exams to an Employee
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        public bool InactiveExamAssigned(string examId)
+        {
+            var filter = Builders<AssignedExams>.Filter;
+            var filterDef = filter.Eq(c => c.Id, examId);
+            var updateQuery = Builders<AssignedExams>.Update
+                .Set(c => c.IsActive, false);
+
+            return _db.UpdateOne<AssignedExams>(filterDef, updateQuery, AssignedExams.CollectionName);
         }
     }
 }

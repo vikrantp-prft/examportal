@@ -57,9 +57,14 @@ namespace PerftEvaluation.BAL.Services
             return CommonResponse.OkResponse(requestModel, examJoin, (filteredExams.Count() < 100 ? filteredExams.Count() : 100));
         }
 
-        public bool IsExamAssigned(string examId)
+        public bool ActiveExamAssigned(string examId)
         {
-            return this._assignedExamsRepository.IsExamAssigned (examId);
+            return this._assignedExamsRepository.ActiveExamAssigned (examId);
+        }
+
+        public bool InactiveExamAssigned(string examId)
+        {
+            return this._assignedExamsRepository.InactiveExamAssigned (examId);
         }
     }
 }

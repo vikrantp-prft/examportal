@@ -16,10 +16,17 @@ namespace PerftEvaluation.DAL.Interface
         IEnumerable<AssignedExams> GetAssignedExamsByUserId(string userId);
 
         /// <summary>
-        /// Check whether an exam is assigned to any employee
+        /// Assigned Exams to an Employee
         /// </summary>
         /// <param name="examId"></param>
         /// <returns></returns>
-        bool IsExamAssigned(string examId);
+        bool ActiveExamAssigned(string examId);
+
+        /// <summary>
+        /// Unassigned Exams to an Employee
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        bool InactiveExamAssigned(string examId);
     }
 }

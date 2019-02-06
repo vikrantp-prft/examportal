@@ -14,9 +14,18 @@ namespace PerftEvaluation.BAL.Interfaces
         ResponseModel GetExamsByUserId (RequestModel requestModel);
 
         /// <summary>
-        /// Check whether an exam is assigned to any employee
+        /// Assigned Exams to an Employee
         /// </summary>
-        /// <value></value> 
-        bool IsExamAssigned(string examId);
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        bool ActiveExamAssigned(string examId);
+
+
+        /// <summary>
+        /// Unassigned Exams to an Employee
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        bool InactiveExamAssigned(string examId);
     }
 }
