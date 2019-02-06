@@ -433,9 +433,6 @@ export class EmployeeUpdateComponent implements OnInit {
   //percentage validation
   onlyPercentage(event) {
     debugger;
-    var charCode = (event.which) ? event.which : event.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-    {
     var percentagePattern = appConfig.pattern.PERCENTAGE;
     if (percentagePattern.test(event.target.value)) {
       return true;
@@ -443,6 +440,5 @@ export class EmployeeUpdateComponent implements OnInit {
       this.employeeForm.controls.percentage.setValue("");
       return false;
     }
-  }
   }
 }

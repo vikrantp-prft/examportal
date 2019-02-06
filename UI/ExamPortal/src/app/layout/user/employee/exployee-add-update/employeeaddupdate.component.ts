@@ -303,19 +303,12 @@ export class AddEmployeeComponent implements OnInit {
   //percentage validation
   onlyPercentage(event) {
     debugger;
-    var charCode = (event.which) ? event.which : event.keyCode
-    if (charCode > 31 && (charCode < 46 || charCode > 57)) {
+    var percentagePattern = appConfig.pattern.PERCENTAGE;
+    if (percentagePattern.test(event.target.value)) {
+      return true;
+    } else {
       this.employeeForm.controls.percentage.setValue("");
       return false;
-    }
-    else {
-      var percentagePattern = appConfig.pattern.PERCENTAGE;
-      if (percentagePattern.test(event.target.value)) {
-        return true;
-      } else {
-        this.employeeForm.controls.percentage.setValue("");
-        return false;
-      }
     }
   }
 
