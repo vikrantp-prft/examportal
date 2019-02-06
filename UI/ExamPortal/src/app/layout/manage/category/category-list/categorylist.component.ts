@@ -5,6 +5,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 interface paginationModel {
   pageNumber: number;
   pageSize: number;
@@ -31,6 +32,7 @@ export class CategoryListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public categoryList = [];
+  public editCategoryList: any;
   public statusUrl: any;
 
   public categoryModel =
@@ -48,6 +50,113 @@ export class CategoryListComponent implements OnInit {
 
   ngOnInit() {
     this.fn_GetCategoryList();
+  }
+
+  frmReset() {
+    this.categoryForm.reset();
+  }
+
+  categoryForm = new FormGroup({
+    categoryTitle: new FormControl('', [Validators.required]),
+    categoryDescription: new FormControl('', [Validators.required])
+  });
+
+  get categoryTitle() {
+    return this.categoryForm.get('categoryTitle');
+  }
+
+  get categoryDescription() {
+    return this.categoryForm.get('categoryDescription');
+  }
+
+  fn_saveCategory(data) {
+    const url = 'api/Master';
+    const categoryModel =
+    {
+      // firstName: this.employeeForm.controls.firstName.value,
+      name: data.value.categoryTitle,
+      isActive: true,
+      description: data.value.categoryDescription,
+      masterType: "Category"
+    }
+    this.fn_saveCategoryfun(url, categoryModel);
+  }
+
+  // function for save employee details.
+  fn_saveCategoryfun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('category  added successfully!');
+        this.fn_GetCategoryList();
+        this.frmReset();
+      }
+      else {
+        this.toastr.success('Failed to add category');
+      }
+    });
+  }
+
+  // Get category by id
+  fn_GetCategoryById(categoryID) {
+    const url = 'api/Master/GetMasterById';
+    const categoryModel =
+    {
+      "id": categoryID,
+      "pageSize": 0,
+      "pageNumber": 0,
+      "totleRecords": 0,
+      "filter": "string",
+      "sortBy": "string",
+      "isDescending": true
+    };
+
+    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.editCategoryList = rs.data;
+        this.fn_setEditValues();
+      }
+      else {
+      }
+    });
+
+  }
+
+  // default values
+  fn_setEditValues() {
+    // this.categoryForm.controls.id.setValue(this.examID);
+    this.categoryForm.controls.categoryTitle.setValue(this.editCategoryList.name);
+    this.categoryForm.controls.categoryDescription.setValue(this.editCategoryList.description);
+  }
+
+  // Submit category
+  fn_updateCategory(data) {
+    console.log(data.value)
+    const url = 'api/Master/Update';
+    const categoryModel =
+    {
+      id: this.editCategoryList.id,
+      name: data.value.categoryTitle,
+      description: data.value.categoryDescription,
+      masterType: "Category"
+    }
+    console.log(categoryModel)
+    this.fn_updateCategoryfun(url, categoryModel);
+  }
+
+  // function for save category details.
+  fn_updateCategoryfun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('category  updated successfully!');
+        this.fn_GetCategoryList();
+      }
+      else {
+        this.toastr.success('Failed to update category');
+      }
+    });
   }
 
   // Function for  pagination

@@ -19,7 +19,7 @@ namespace PerftEvaluation.DAL.Repositories
 
         public bool ActiveExams(string examId)
         {
-             var filter = Builders<Exams>.Filter;
+            var filter = Builders<Exams>.Filter;
             var filterDef = filter.Eq(c => c.Id, examId);
             var updateQuery = Builders<Exams>.Update
                 .Set(c => c.IsActive, true);

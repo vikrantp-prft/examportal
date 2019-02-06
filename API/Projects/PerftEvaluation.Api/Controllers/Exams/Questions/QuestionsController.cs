@@ -124,11 +124,7 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetQuestionById")]
         public IActionResult GetQuestionById (RequestModel requestModel) {
             try {
-                responseModel.StatusCode = 200;
-                responseModel.Message = "Success";
-                responseModel.Data = this._questionService.GetQuestionById (requestModel.Id);
-
-                return Ok (responseModel);
+                return Ok (this._questionService.GetQuestionById (requestModel.Id));
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
