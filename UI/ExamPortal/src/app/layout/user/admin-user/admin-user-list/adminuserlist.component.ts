@@ -24,15 +24,13 @@ export class AdminUserListComponent implements OnInit {
     pageSize: 10,
   };
 
-  public url = 'api/User/GetUsers';
-
-
+  public getUserurl = 'api/User/GetUsers';
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
-  public employeeList = [];
+  public userList = [];
   toastr: any;
   constructor(public router: Router, private CommonService: commonService, public http: Http) { }
   // Function for  pagination
@@ -63,22 +61,14 @@ export class AdminUserListComponent implements OnInit {
       pageSize: parseInt(this.params.pageSize),
       searchString: this.params.searchString
     };
-    this.CommonService.fn_PostWithData(this.params, this.url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(this.params, this.getUserurl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.employeeList = rs.data;
+        this.userList = rs.data;
       }
       else {
       }
     });
-
-    // this.CommonService.fn_Get(url).subscribe(
-    //   (data: any) => {
-    //       this.employeeList = data.data;
-    //   },
-    //   err => console.error(err),
-    //   () => {}
-    // );
   }
 
   fn_getEmployee(id) {

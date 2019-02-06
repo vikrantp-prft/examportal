@@ -7,7 +7,7 @@ import { EmployeeListComponent } from './employee/employee-list/employeelist.com
 import { AddEmployeeComponent } from './employee/exployee-add-update/employeeaddupdate.component';
 import { QuickAddEmployeeComponent } from './employee/exployee-add-update/quickemployeeaddupdate.component';
 import { AdminUserListComponent } from './admin-user/admin-user-list/adminuserlist.component';
-import { AddAdminUserComponent } from './admin-user/admin-user-add-update/adminuseraddupdate.component';
+import { AddAdminUserComponent } from './admin-user/admin-user-add/adminuseradd.component';
 import { TraineeListComponent } from './trainee/trainee-list/traineeList.component';
 import { AddTraineeUserComponent } from './trainee/trainee-user-add-update/traineeUserAddUpdate.component';
 import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTraineeAddUpdate.component';
@@ -15,6 +15,7 @@ import { EmployeeUpdateComponent } from './employee/employee-update/employee-upd
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadComponent } from './upload/upload.component';
 import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-error-display.module';
+import { AdminUserUpdateComponent } from './admin-user/admin-user-update/admin-user-update.component';
 
 @NgModule({
     imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot(), FormsModule, ReactiveFormsModule, ErrorHandlingModule],
@@ -28,7 +29,8 @@ import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-er
         AddTraineeUserComponent,
         QuickTraineeAddUpdate,
         EmployeeUpdateComponent,
-        UploadComponent
+        UploadComponent,
+        AdminUserUpdateComponent
     ]
 })
 export class UserModule { }
