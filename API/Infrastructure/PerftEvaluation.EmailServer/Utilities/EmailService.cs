@@ -2,31 +2,37 @@ using System;
 using System.Net;
 using System.Net.Mail;
 using PerftEvaluation.EmailServer.Interfaces;
-//using Microsoft.Extensions.Configuration;
 
 namespace PerftEvaluation.EmailServer
 {
     public class EmailService : IEmailService
     {
-        //readonly IConfiguration _configuration;
-        private const string Host = "localhost";// "smtp.gmail.com";
-        private const string Username = "pallavi.koramkar@gmail.com";
+        #region Declarations
+        #endregion
+         private const int Port = 587;
+     
+        private const string Host = "smtp.gmail.com";
+        private const string UserName = "pallavi.koramkar@gmail.com";
         private const string Password = "";
-        private const string From = "no-reply@perficient.com";
-
-
-
+         private const string From = "no-reply@perficient.com";
+         private const string DisplayName = "Perficient Inc.";
+        /// <summary>
+        /// Send email from system
+        /// </summary>
+        /// <param name="emailDTO"></param>
+        /// <returns></returns>
         public bool Send(EmailDTO emailDTO)
         {
             try
             {
-
                 SmtpClient client = new SmtpClient(Host);
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(Username, Password);
-
+                client.Credentials = new NetworkCredential(UserName, Password);
+                client.Port = Port;
+                client.EnableSsl = true;
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(From);
+                mailMessage.From = new MailAddress(From,DisplayName);
+                
                 if (emailDTO.ToEmails != null)
                 {
                     foreach (var email in emailDTO.ToEmails)
@@ -53,7 +59,7 @@ namespace PerftEvaluation.EmailServer
                             mailMessage.Bcc.Add(new MailAddress(email));
                     }
                 }
-               
+                mailMessage.IsBodyHtml = emailDTO.IsHtmlBody;
                 mailMessage.Body = emailDTO.Body;
                 mailMessage.Subject = emailDTO.Subject;
                 client.Send(mailMessage);

@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\PerfiEvaluation.Identity.Mongo\PerfiEvaluation.Identity.Mongo.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.EmailServer\PerftEvaluation.EmailServer.csproj" />
   </ItemGroup>
 </Project>
