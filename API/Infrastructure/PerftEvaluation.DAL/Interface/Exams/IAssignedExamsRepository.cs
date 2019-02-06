@@ -15,5 +15,11 @@ namespace PerftEvaluation.DAL.Interface
         /// <returns>Exams List</returns>
         IEnumerable<AssignedExams> GetAssignedExamsByUserId(string userId);
 
+        /// <summary>
+        /// Check whether an exam is assigned to any employee
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        bool IsExamAssigned(string examId);
     }
 }

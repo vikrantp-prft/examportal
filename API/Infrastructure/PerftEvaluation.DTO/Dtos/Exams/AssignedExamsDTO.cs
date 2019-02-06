@@ -16,5 +16,11 @@ namespace PerftEvaluation.DTO.Dtos
         public bool IsAttempted { get; set; }
 
         public ExamsDTO Exam { get; set; }
+
+        public EmployeesDTO Employee { get; set; }
+
+         public bool IsDeleted { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

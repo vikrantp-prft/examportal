@@ -20,6 +20,15 @@ namespace PerftEvaluation.DAL.Repositories
             this._db = new DBHelper();
         }
 
+        public bool IsExamAssigned(string examId)
+        {
+            var filter = Builders<AssignedExams>.Filter;
+            var filterDef = filter.Eq(c => c.Id, examId);
+            var updateQuery = Builders<AssignedExams>.Update
+                .Set(c => c.IsActive, true);
+
+            return _db.UpdateOne<AssignedExams>(filterDef, updateQuery, AssignedExams.CollectionName);
+        }
 
 
         /// <summary>
@@ -30,7 +39,7 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                return _db.GetCollection<AssignedExams>(AssignedExams.CollectionName).AsQueryable().Where(x => x.Id == userId).ToList();
+                return _db.GetCollection<AssignedExams>(AssignedExams.CollectionName).AsQueryable().Where(x => x.UserId == userId).ToList();
             }
             catch (Exception ex)
             { 

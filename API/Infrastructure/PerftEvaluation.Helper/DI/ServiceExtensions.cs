@@ -30,6 +30,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IExamsService, ExamsService>();
             services.AddTransient<IQuestionsService, QuestionsService>();
             services.AddTransient<IResultsService, ResultsService>();
+            services.AddTransient<IAssignedExamsService, AssignedExamsService>();
 
             //Projects Repositories
             services.AddTransient<IUserRepository, UserRepository>();
