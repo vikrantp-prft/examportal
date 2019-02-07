@@ -220,10 +220,6 @@ export class EmployeeUpdateComponent implements OnInit {
         this.toastr.error('Please add education details');
         return false;
       }
-      else if (this.employeeForm.controls.interest.value.length == 0) {
-        this.toastr.error('Please select atleast 1 interest');
-        return false;
-      }
       else {
         const updateEmployeeurl = 'api/Employee/updateEmployee';
         const employeeModel = value.value;
