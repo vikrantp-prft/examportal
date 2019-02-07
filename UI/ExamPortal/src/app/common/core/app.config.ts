@@ -29,6 +29,6 @@ export const appConfig = {
     // STRING_WITHOURSPACE:'^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$',
     PINCODE:/^[1-9][0-9]{5}$/,
     YEAR:/^[1-9][0-9]{3}$/,
-    PERCENTAGE:/^[^.#!@$%^&*(/)_:;{,}|[]"?'-+=_]\d{0,1}(\.\d{0,2})?$/
+    PERCENTAGE:/^[^.#!@$%^&*(/)_:;{,}|<>"?'-+=_a-zA-Z]\d{0,1}(\.\d{0,2})*$/
   }
 };

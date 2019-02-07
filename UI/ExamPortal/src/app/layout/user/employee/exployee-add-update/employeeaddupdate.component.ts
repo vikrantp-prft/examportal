@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
 import { $ } from 'protractor';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'employee-add-update',
@@ -48,12 +49,12 @@ export class AddEmployeeComponent implements OnInit {
       lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
       dob: [null, [Validators.required]],
       mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
-      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(100)]],
+      address1: [null, [Validators.required, Validators.maxLength(100)]],
       address2: new FormControl(''),
       city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
       stateId: [null, [Validators.required]],
       pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
-      currentAddress1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(100)]],
+      currentAddress1: [null, [Validators.required, Validators.maxLength(100)]],
       currentAddress2: new FormControl(''),
       currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
       currentStateId: [null, [Validators.required]],
@@ -90,17 +91,16 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   // Save Employee details function
-
   fn_saveEmployee(value) {
     if (this.employeeForm.valid) {
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
         return false;
       }
-      else if (this.employeeForm.controls.interest.value.length == 0) {
-        this.toastr.error('Please select atleast 1 interest');
-        return false;
-      }
+      // else if (this.employeeForm.controls.interest.value.length == 0) {
+      //   this.toastr.error('Please select atleast 1 interest');
+      //   return false;
+      // }
       else if (this.emailExist == true) {
         return false;
       }
@@ -266,12 +266,12 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   //delete course from table
-  fn_deleteCourse(index) {
-    this.educationArray.splice(index, 1);
-    this.addEducationButton = true;
-    this.updateEducationButton = false;
-    this.fn_resetEducationDetails();
-  }
+  // fn_deleteCourse(index) {
+  //   this.educationArray.splice(index, 1);
+  //   this.addEducationButton = true;
+  //   this.updateEducationButton = false;
+  //   this.fn_resetEducationDetails();
+  // }
 
   //fetch selected course
   fn_editCourse(index) {
@@ -389,6 +389,28 @@ export class AddEmployeeComponent implements OnInit {
         }
       }
     });
+  }
+
+  // function to display the alert before deleting the Order.
+  fn_deleteCourse(index) {
+    if (index != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the course!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        if (x.value == true) {
+          this.educationArray.splice(index, 1);
+          this.addEducationButton = true;
+          this.updateEducationButton = false;
+          this.fn_resetEducationDetails();
+        }
+      });
+    }
   }
 }
 

@@ -6,6 +6,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-employee-update',
@@ -52,12 +53,12 @@ export class EmployeeUpdateComponent implements OnInit {
       dob: new FormControl(''),
       //phone: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(20)]],
       mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
-      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(100)]],
+      address1: [null, [Validators.required, Validators.maxLength(100)]],
       address2: new FormControl(''),
       city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
       stateId: new FormControl('', Validators.required),
       pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
-      currentAddress1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(100)]],
+      currentAddress1: [null, [Validators.required, Validators.maxLength(100)]],
       currentAddress2: new FormControl(''),
       currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
       currentStateId: new FormControl(''),
@@ -286,14 +287,6 @@ export class EmployeeUpdateComponent implements OnInit {
     this.employeeForm.controls.institution.reset();
   }
 
-  //delete course from table
-  fn_deleteCourse(index) {
-    this.educationArray.splice(index, 1);
-    this.addEducationButton = true;
-    this.updateEducationButton = false;
-    this.fn_resetEducationDetails();
-  }
-
   //Interest check change function
   fn_onInterestChange(event) {
     /* Selected */
@@ -439,6 +432,28 @@ export class EmployeeUpdateComponent implements OnInit {
     } else {
       this.employeeForm.controls.percentage.setValue("");
       return false;
+    }
+  }
+
+  // function to display the alert before deleting the Order.
+  fn_deleteCourse(index) {
+    if (index != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the course!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        if (x.value == true) {
+          this.educationArray.splice(index, 1);
+          this.addEducationButton = true;
+          this.updateEducationButton = false;
+          this.fn_resetEducationDetails();
+        }
+      });
     }
   }
 }
