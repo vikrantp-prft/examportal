@@ -112,7 +112,7 @@ export class CategoryListComponent implements OnInit {
     this.categoryForm.controls.categoryTitle.setValue(this.editCategoryList.name);
     this.categoryForm.controls.categoryDescription.setValue(this.editCategoryList.description);
   }
-  // Submit category
+  // Update category
   fn_updateCategory(data) {
     const url = 'api/Master/Update';
     const categoryModel =
@@ -122,7 +122,6 @@ export class CategoryListComponent implements OnInit {
       description: data.value.categoryDescription,
       masterType: "Category"
     }
-    console.log(categoryModel)
     this.fn_updateCategoryfun(url, categoryModel);
   }
   // function for save category details.
