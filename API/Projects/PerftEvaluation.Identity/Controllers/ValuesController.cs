@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PerftEvaluation.EmailServer;
 using PerftEvaluation.EmailServer.Interfaces;
+using PerftEvaluation.Identity.Utilies;
 
 namespace PerftEvaluation.Identity.Controllers
 {
@@ -17,7 +20,7 @@ namespace PerftEvaluation.Identity.Controllers
     public class ValuesController : ControllerBase
     {
         protected readonly IEmailService _emailService;
-        
+       
         public ValuesController(IEmailService EmailService)
         {
             this._emailService = EmailService;
@@ -36,8 +39,10 @@ namespace PerftEvaluation.Identity.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+            
+            var userRegemail =  System.IO.File.ReadAllText("UserRegistration.html");
             EmailDTO emailDTO = new EmailDTO();
-            emailDTO.Body = "<b>This is</b> test email";
+            emailDTO.Body = userRegemail;//"<b>This is</b> test email";
             emailDTO.Subject = "Test email subject line";
             emailDTO.ToEmails = new List<string>(){"pallavi.koramkar@perficient.com"};
             emailDTO.IsHtmlBody = true;
