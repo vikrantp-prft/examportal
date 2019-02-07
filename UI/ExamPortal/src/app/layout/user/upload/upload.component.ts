@@ -3,11 +3,12 @@ import { Observable } from 'rxjs';
 import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
+import { GroupByPipe } from 'src/app/common/pipe/customPipe.pipe';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.html',
-  providers: [commonService]
+  providers: [commonService, GroupByPipe]
 })
 export class UploadComponent implements OnInit {
   filedata: string;
@@ -24,19 +25,18 @@ export class UploadComponent implements OnInit {
   public examDetailUrl = "api/Exams/GetExamById";
   public questionListUrl = 'api/Questions/listQuestionsByExamId';
   public questionList: any;
+  public questionList111: any;
+  public currentQueId: any;
+  public currentIndex: number;
+  public optionTypes: string;
 
   public questionModel: any = {
     "id": "",
-    "filter": "string",
     "pageSize": 999,
-    "pageNumber": 1,
-    "totleRecords": 0,
-    "filterBy": "string",
-    "sortBy": "string",
-    "isDescending": true
+    "pageNumber": 1
   }
 
-  constructor(private route: ActivatedRoute, public commonService: commonService, public http: Http) {
+  constructor(public customPipe: GroupByPipe, private route: ActivatedRoute, public commonService: commonService, public http: Http) {
     this.route.params.subscribe(params => {
       this.examID = params['examId'];
     });
@@ -125,19 +125,69 @@ export class UploadComponent implements OnInit {
 
   }
 
+  getQuestion(questionId) {
+    //this.question = this.questionList111[questionId][0];
+    this.currentIndex = this.questionList111.findIndex(x => x.id === questionId)
 
+
+    //console.log(this.currentIndex);
+    this.question = this.questionList111[this.currentIndex];
+    this.loadQuestionType();
+
+
+  }
   fn_GetQuestionsList() {
     this.questionModel.id = this.examID;
     this.commonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.questionList = rs.data;
-        this.question = this.questionList[0];
-        console.log(this.question);
+        //this.questionList = rs.data;
+        //console.log(this.questionList);
+        this.questionList = this.customPipe.transform(rs.data, 'categoryId');
+        this.questionList111 = this.customPipe.customTransform112(this.questionList);
+        //console.log(this.questionList111);
+        this.currentQueId = this.questionList[0].value[0].id;
+        //console.log(this.currentQueId);
+
+        // var item73 = this.questionList111.filter(function(item) {
+        //   //console.log(item);
+        //   return item.key === '5c541a98850872367c796140';
+        // })[0];
+        // console.log(item73.value[0]);
+
+        this.currentIndex = this.questionList111.findIndex(x => x.id === this.currentQueId)
+
+
+        // console.log('------------');
+        // console.log(this.questionList111);
+
+        // console.log('-------%%%%%%%%%%%-----');
+        // console.log(this.currentIndex);
+
+
+        // console.log('------------');
+        //console.log(xx['5c53eaa6ad3abd0eec04b0ac'][0]);
+
+        //console.log(xx);
+        //var myNewList = Array.from(new Set(this.questionList));
+
+        this.question = this.questionList111[this.currentIndex];
+        this.loadQuestionType();
+        //console.log(myNewList);
       }
       else {
       }
     });
+  }
+
+
+  loadQuestionType() {
+    var array = {
+      0: 'radio',
+      1: 'checkbox',
+      2: ''
+    };
+    this.optionTypes = array[this.question.questionType];
   }
 
   getExamDetails() {
@@ -154,27 +204,17 @@ export class UploadComponent implements OnInit {
     });
   }
 
-  // loadQuiz(quizName: string) {
-  //   //   if(this.quizes[0].)
-  //   // this.quizService.get(quizName).subscribe(res => {
-  //     this.quiz = this.quizes[0];
-  //    // this.pager.count = this.quiz.questions.length;
-  //  // });
-  // }
   fn_next() {
-    this.idx = this.idx + 1;
-    this.question = this.x[this.idx];
+    this.currentIndex++;
+    this.question = this.questionList111[this.currentIndex];
+    this.loadQuestionType();
 
-    // for (let i = 0 ; i < this.count; i++) {
 
-    // }
-    // this.x.forEach(element => {
-    //   this.question = element;
-    // });
   }
   fn_previous() {
-    this.idx = this.idx - 1;
-    this.question = this.x[this.idx];
+    this.currentIndex--;
+    this.question = this.questionList111[this.currentIndex];
+    this.loadQuestionType();
 
   }
   fn_submit() {
