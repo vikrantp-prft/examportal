@@ -12,6 +12,7 @@ import { commonService } from './common/services/common.service';
 import { HttpModule } from '@angular/http';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorHandlingModule } from './common/field-error-display/field-error-display.module';
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
 

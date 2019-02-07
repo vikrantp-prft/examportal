@@ -44,7 +44,10 @@ const routes: Routes = [
             },
             {
                 path: 'upload/:examId', component: UploadComponent
-            }
+            },
+            {
+                path: 'updateadmin/:_adminid', component: AdminUserUpdateComponent
+            },
         ]
     }
 ];

@@ -1,3 +1,133 @@
-<p>
-  admin-user-update works!
-</p>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12 col-xs-12 col-lg-12 card">
+      <div class="card-header">
+        <h1 class="h3">Add User</h1>
+        <div class="back-btn">
+          <button [routerLink]="['/user/adminuserlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
+            Back </button>
+        </div>
+      </div>
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <form [formGroup]="adminForm" (ngSubmit)="fn_updateAdmin(adminForm)">
+          <div class="sections">
+            <div class="form-group">
+              <label for="sel1">User group</label><span class="text-danger">*</span>
+              <select class="form-control" formControlName="groupId">
+                <option value="">--Select--</option>
+                <option *ngFor="let group of groupArray" value={{group.id}}>
+                  {{group.name}}
+                </option>
+              </select>
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'groupId')" errorMsg="Select group.">
+              </app-field-error-display>
+            </div>
+             <div class="form-group">
+              <label for="sel1">Team</label><span class="text-danger">*</span>
+              <select class="form-control" formControlName="teamId">
+                <option value="">--Select--</option>
+                <option *ngFor="let team of teamArray" value={{team.id}}>
+                  {{team.name}}
+                </option>
+              </select>
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'teamId')" errorMsg="Select team.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="sel1">Select Designation</label><span class="text-danger">*</span>
+              <select class="form-control" formControlName="designationId">
+                <option value="">--Select--</option>
+                <option *ngFor="let designation of designationArray" value={{designation.id}}>
+                  {{designation.name}}
+                </option>
+              </select>
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'designationId')" errorMsg="Select designation.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="firstName">First Name</label><span class="text-danger">*</span>
+              <input type="text" formControlName="firstName" class="form-control" id="firstName">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'firstName')" errorMsg="Enter first name.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label><span class="text-danger">*</span>
+              <input type="text" formControlName="lastName" class="form-control" id="lastName">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'lastName')" errorMsg="Enter last name.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="dateOfBirth">Date of Birth Name</label><span class="text-danger">*</span>
+              <input type="date" formControlName="dateOfBirth" class="form-control" id="dateOfBirth">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'dateOfBirth')" errorMsg="Enter valid date of birth.">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="sections">
+            <div class="form-group">
+              <label for="address">Address</label><span class="text-danger">*</span>
+              <textarea class="form-control" formControlName="address1" id="address1"></textarea>
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'address1')" errorMsg="Enter address.">
+              </app-field-error-display>
+              <textarea class="form-control" formControlName="address2" id="address2"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="city"> City </label><span class="text-danger">*</span>
+              <input type="text" formControlName="city" class="form-control" id="city">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'city')" errorMsg="Enter city.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="sel1">State</label><span class="text-danger">*</span>
+              <select class="form-control" formControlName="stateId">
+                <option value="">--Select--</option>
+                <option *ngFor="let state of stateArray" value="{{state.id}}">
+                  {{state.name}}
+                </option>
+              </select>
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'stateId')" errorMsg="Select state.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="pincode"> Pincode </label><span class="text-danger">*</span>
+              <input type="text" formControlName="pincode" class="form-control" id="pincode">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'pincode')" errorMsg="Enter pincode.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="mobile">Mobile</label><span class="text-danger">*</span>
+              <input type="text" formControlName="mobile" class="form-control" id="mobile">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'mobile')" errorMsg="Enter mobile no.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="note">Note (if any)</label>
+              <textarea class="form-control" formControlName="note" id="note"></textarea>
+            </div>
+          </div>
+          <div class="sections">
+            <div class="section-heading">
+              <h2>Login Details</h2>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label><span class="text-danger">*</span>
+              <input type="email" formControlName="email" class="form-control" id="email">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'email')" errorMsg="Enter email.">
+              </app-field-error-display>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label><span class="text-danger">*</span>
+              <input type="password" formControlName="password" class="form-control" id="password">
+              <app-field-error-display [displayError]="isFieldValid(adminForm, 'password')" errorMsg="Enter password.">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="btn-sections">
+            <button id="btnSubmit" class="btn btn-primary btn-md">Submit</button>
+            <button type="button" class="btn btn-default btn-md ml-3" (click)="fn_resetUserDetails()">Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

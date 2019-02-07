@@ -46,7 +46,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let user of userList; let i = index">
-                <td>{{i}}</td>
+                <td>{{(adminModel.pageNumber-1)*10 + i +1 }}</td>
                 <td>{{user.firstName}} {{user.lastName}}</td>
                 <td>{{user.email}}</td>
                 <td>
@@ -60,7 +60,7 @@
                   </i>
                 </td>
                 <td>
-                  <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['', user.id]"
+                  <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateadmin', user.id]"
                     title="Edit Admin">
                     <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
                   </button>&nbsp;
@@ -68,7 +68,7 @@
                     <i class="fa" [ngClass]="{'fa-toggle-on text-success': user.isActive, 'fa-toggle-off text-danger': !user.isActive}"
                       aria-hidden="true"></i>
                   </button>
-                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)" title="Delete Admin">
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteAdminUser(user.id)" title="Delete Admin">
                     <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                   </button>
                 </td>
@@ -76,10 +76,10 @@
             </tbody>
           </table>
         </div>
-        <!-- <pagination class="pull-right pr-2" [totalItems]="employeeModel.totalRecords" [itemsPerPage]="employeeModel.pageSize"
-          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
-          nextText="NEXT" firstText="FIRST" lastText="LAST"></pagination> -->
-      </div>
+        <pagination class="pull-right pr-2" [totalItems]="adminModel.totalRecords" [itemsPerPage]="adminModel.pageSize"
+        (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+        nextText="NEXT" firstText="FIRST" lastText="LAST"></pagination>
+    </div>
     </div>
   </div>
 </div>
