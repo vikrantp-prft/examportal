@@ -5,6 +5,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 interface paginationModel {
   currentPage: number;
   pageSize: number;
@@ -39,6 +40,7 @@ export class DegreeListComponent implements OnInit {
          "pageSize": 10,
          "pageNumber": 1
        };
+  editDegreeList: any;
   
 
   // Constructor
@@ -49,6 +51,108 @@ export class DegreeListComponent implements OnInit {
 
   ngOnInit() {
     this.fn_GetDegreeList();
+  }
+
+  degreeForm = new FormGroup({
+    degreeTitle: new FormControl('', Validators.required),
+    degreeDescription: new FormControl('', [Validators.required])
+  });
+  get degreeTitle() {
+    return this.degreeForm.get('degreeTitle');
+  }
+  get degreeDescription() {
+    return this.degreeForm.get('degreeDescription');
+  }
+  frmReset() {
+    this.degreeForm.reset();
+  }
+
+  fn_saveDegree(data) {
+    if (this.degreeForm.invalid) {
+      this.degreeForm.setErrors({
+        Validators
+      })
+    }
+    const url = 'api/Master';
+    const degreeModel =
+    {
+      // firstName: this.employeeForm.controls.firstName.value,
+      name: data.value.degreeTitle,
+      isActive: true,
+      description: data.value.degreeDescription,
+      masterType: "Degree"
+    }
+    this.fn_saveDegreefun(url, degreeModel);
+  }
+  // function for save degree details.
+  fn_saveDegreefun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      // debugger;
+      // console.log(result);
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('Degree  added successfully!');
+        this.fn_GetDegreeList();
+      }
+      else {
+        this.toastr.success('Failed to add degree');
+      }
+    });
+  }
+
+  // Get designation by id
+  fn_GetDegreeById(ID) {
+    const url = 'api/Master/GetMasterById';
+    const degreeModel =
+    {
+      "id": ID,
+      "pageSize": 10,
+      "pageNumber": 1,
+      "totleRecords": 0,
+      "filter": "string",
+      "sortBy": "string",
+      "isDescending": true
+    };
+    this.CommonService.fn_PostWithData(degreeModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.editDegreeList = rs.data;
+        this.fn_setEditValues();
+      }
+      else {
+      }
+    });
+  }
+  // default values
+  fn_setEditValues() {
+    // this.categoryForm.controls.id.setValue(this.examID);
+    this.degreeForm.controls.degreeTitle.setValue(this.editDegreeList.name);
+    this.degreeForm.controls.degreeDescription.setValue(this.editDegreeList.description);
+  }
+
+  fn_updateDegree(data) {
+    const url = 'api/Master/Update';
+    const degreeModel =
+    {
+      id: this.editDegreeList.id,
+      name: data.value.degreeTitle,
+      description: data.value.degreeDescription,
+      masterType: "Degree"
+    }
+    this.fn_updateDegreefun(url, degreeModel);
+  }
+  // function for save degree details.
+  fn_updateDegreefun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('Degree  updated successfully!');
+        this.fn_GetDegreeList();
+      }
+      else {
+        this.toastr.success('Failed to update degree');
+      }
+    });
   }
 
   
