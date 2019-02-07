@@ -7,6 +7,9 @@
             Questions
           </h1>
           <div class="back-btn">
+            <button class="btn btn-md btn-primary mr-2" title="Add new question" (click)="getAddFormTitle()">
+              Add
+            </button>
             <button [routerLink]="['/manage/importExamQuestion']" class="btn btn-md btn-primary mr-2" title="Import Questions">
               Import
             </button>
@@ -93,35 +96,42 @@
       </div>
     </div>
   </div>
+
+
   <div class="col-md-7">
     <div class="card">
       <div class="card-header">
-        <h1 class="font-weight-bold h3 mb-0">Add/Edit</h1>
+        <h1 class="font-weight-bold h3 mb-0">{{formTitle}}</h1>
       </div>
       <div class="card-body">
         <form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
           <input type="hidden" formControlName="examID" value="1212121212">
           <div class="sections">
-            <div class="form-group">
-              <label for="sel1">Question Category</label>
-              <select class="form-control" formControlName="questionCategory" #questionCategory>
-                <option value="">Select</option>
-                <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
-              </select>
-              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
-              </app-field-error-display>
-            </div>
-
-            <div class="form-group">
-              <label for="middleName">Question Type</label>
-              <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
-                <option value="">Select</option>
-                <option value="multipleSelect">Multiple Select(Checkbox)</option>
-                <option value="SingleSelect">Single Select(Radio Button)</option>
-                <option value="subjective">Subjective</option>
-              </select>
-              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')" errorMsg="Select any Question Type">
-              </app-field-error-display>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="sel1">Question Category</label>
+                  <select class="form-control" formControlName="questionCategory" #questionCategory>
+                    <option value="">Select</option>
+                    <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
+                  </select>
+                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
+                  </app-field-error-display>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="middleName">Question Type</label>
+                  <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
+                    <option value="">Select</option>
+                    <option value="multipleSelect">Multiple Select(Checkbox)</option>
+                    <option value="SingleSelect">Single Select(Radio Button)</option>
+                    <option value="subjective">Subjective</option>
+                  </select>
+                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')" errorMsg="Select any Question Type">
+                  </app-field-error-display>
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <label for="lastName">Question</label>
@@ -155,11 +165,13 @@
                 </div>
               </div>
               <div class="no-gutters">
-                <button class=" mt-2 btn btn-sm btn-primary offset-md-1" title="Add Options" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('add')">
+                <button class=" mt-2 btn btn-sm btn-primary offset-md-1" title="Add Options" type="button" rel="tooltip"
+                  (click)="addSubstractMultipleSelectOptions('add')">
                   <!-- Add Options -->
                   <i class="fa fa-plus" title="Add Options" aria-hidden="true"></i>
                 </button>
-                <button class="ml-1 mt-2 btn btn-sm btn-primary" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')" title="Remove Last Option">
+                <button class="ml-1 mt-2 btn btn-sm btn-primary" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')"
+                  title="Remove Last Option">
                   <!-- Remove Last Options -->
                   <i class="fa fa-minus" title="Remove Last Options" aria-hidden="true"></i>
                 </button>
@@ -192,11 +204,13 @@
               </div>
 
               <div class="mt-2  no-gutters">
-                <button title="Add Options" class="btn btn-sm btn-primary offset-md-1" type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('add')">
+                <button title="Add Options" class="btn btn-sm btn-primary offset-md-1" type="button" rel="tooltip"
+                  (click)="addSubstractSingleSelectOptions('add')">
                   <!-- Add Options -->
                   <i class="fa fa-plus" title="Add Options" aria-hidden="true"></i>
                 </button>
-                <button title="Remove Last Options" class="btn btn-sm ml-1 btn-primary offset-md-1" type="button" rel="tooltip" (click)="addSubstractSingleSelectOptions('sub')">
+                <button title="Remove Last Options" class="btn btn-sm ml-1 btn-primary offset-md-1" type="button" rel="tooltip"
+                  (click)="addSubstractSingleSelectOptions('sub')">
                   <!-- Remove Last Options -->
                   <i class="fa fa-minus" title="Remove Last Options" aria-hidden="true"></i>
                 </button>
@@ -205,7 +219,7 @@
             <app-field-error-display [displayError]="displayErrorOption" errorMsg="Please Enter/Select Valid Options">
             </app-field-error-display>
           </div>
-          <button class="btn btn-success btn-md" type="submit">Submit</button>
+          <button class="btn btn-success btn-md" type="submit">Save</button>
           <button class="btn btn-danger ml-1 btn-md" type="button" (click)="resetAll()">Reset Form</button>
         </form>
       </div>
