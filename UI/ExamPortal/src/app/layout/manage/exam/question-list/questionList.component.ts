@@ -19,6 +19,7 @@ export class questionListComponent implements OnInit {
   public questionForm: FormGroup;
   public categoryList = [];
   public departmentsUrl = 'api/Dropdown/Categories';
+  public formTitle: string = "Add";
 
   singleSelectFlag: boolean;
   multipleSelectFlag: boolean;
@@ -167,6 +168,15 @@ export class questionListComponent implements OnInit {
     });
   }
 
+  getAddFormTitle(){
+    this.frmReset();
+    this.formTitle = 'Add';
+  }
+
+  frmReset() {
+    this.questionForm.reset();
+  }
+
   deleteQuestion(questionID) {
     if (questionID != null) {
       swal({
@@ -201,6 +211,7 @@ export class questionListComponent implements OnInit {
   }
 
   editQuestion(questionID) {
+    this.formTitle = "Edit";
     this.resetAll();
     this.getQuestionDetails(questionID);
     this.questionForm.controls.id.setValue(questionID);
