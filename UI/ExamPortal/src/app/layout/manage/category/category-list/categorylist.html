@@ -24,9 +24,7 @@
       <div class="col-md-3">
         <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
           class="form-control" />
-        <a href="#" class="search-icon">
-          <i class="fa fa-search"></i>
-        </a>
+        <i class="fa fa-search search-icon pt-1"></i>
       </div>
     </div>
   </div>
@@ -74,7 +72,6 @@
     lastText="LAST">
   </pagination>
 </div>
-
 <!-- Modal for Add Question Category -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionCategory" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -113,7 +110,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal for Edit Question Category -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editQuestionCategory" aria-hidden="true">
   <div class="modal-dialog" role="document">

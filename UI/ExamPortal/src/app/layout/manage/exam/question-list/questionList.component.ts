@@ -190,6 +190,7 @@ export class questionListComponent implements OnInit {
       }).then(x => {
         if (x.value == true) {
           this.deleteQuestionConfirm(questionID);
+          this.formTitle = "Add";
         }
       });
     }
@@ -201,6 +202,7 @@ export class questionListComponent implements OnInit {
       if (rs.statusCode == 200) {
         this.toastr.success('Question Deleted Successfully');
         this.getQuestionsList();
+        
       }
       else {
         this.toastr.error('Failed to Delete Question');
