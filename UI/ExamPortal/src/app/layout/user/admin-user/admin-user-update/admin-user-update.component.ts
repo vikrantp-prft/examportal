@@ -129,7 +129,6 @@ export class AdminUserUpdateComponent implements OnInit {
 
   //get adminn details by admin Id
   fn_getAdminDetailsById() {
-    debugger;
     const adminUrl = 'api/User/GetUserById';
     const adminModel =
     {
