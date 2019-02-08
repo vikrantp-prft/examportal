@@ -11,7 +11,6 @@ interface paginationModel {
   pageSize: number;
   searchString: string;
 }
-
 @Component({
   selector: 'state-list',
   templateUrl: './stateList.html',
@@ -19,7 +18,6 @@ interface paginationModel {
 })
 export class StateListComponent implements OnInit {
   // Declaration
-
   public params: any = {
     currentPage: 1,
     pageSize: 10,
@@ -33,7 +31,6 @@ export class StateListComponent implements OnInit {
   public stateList = [];
   public stateInfo: any;
   public statusUrl: any;
-
   public stateModel =
     {
       "condition": "State",
@@ -41,14 +38,9 @@ export class StateListComponent implements OnInit {
       "pageNumber": 1
     };
   editStateList: any;
-
-
   // Constructor
-
   constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
-
   // Lifecycle method
-
   ngOnInit() {
     this.fn_GetStateList();
   }
@@ -57,15 +49,12 @@ export class StateListComponent implements OnInit {
     stateDescription: new FormControl('', Validators.required),
     stateisActive: new FormControl('')
   });
-
   get stateTitle() {
     return this.stateForm.get('stateTitle');
   }
-
   get stateDescription() {
     return this.stateForm.get('stateDescription');
   }
-
   frmReset() {
     this.stateForm.reset();
   }
@@ -98,7 +87,7 @@ export class StateListComponent implements OnInit {
   // Get state by id
   fn_GetStateById(ID) {
     const url = 'api/Master/GetMasterById';
-    const categoryModel =
+    const stateModel =
     {
       "id": ID,
       "pageSize": 0,
@@ -108,7 +97,7 @@ export class StateListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editStateList = rs.data;
@@ -133,10 +122,10 @@ export class StateListComponent implements OnInit {
       description: data.value.stateDescription,
       masterType: "State"
     }
-    this.fn_updateCategoryfun(url, stateModel);
+    this.fn_updateStatefun(url, stateModel);
   }
   // function for save state details.
-  fn_updateCategoryfun(url, data) {
+  fn_updateStatefun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
@@ -158,11 +147,9 @@ export class StateListComponent implements OnInit {
     this.stateModel.pageNumber = event.page;
     this.fn_GetStateList();
   }
-
   trimming_fn(x) {
     return x ? x.replace(/^\s+|\s+$/gm, '') : '';
   };
-
   // Searching
   searchRecord(event: any): void {
     const searchModel =
@@ -178,7 +165,6 @@ export class StateListComponent implements OnInit {
     }
     this.fn_GetFilteredList(searchModel);
   }
-
   fn_GetFilteredList(data) {
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
@@ -191,17 +177,9 @@ export class StateListComponent implements OnInit {
       }
     });
   }
-
-
   // Function to get stateList (GetMasterByType)
   fn_GetStateList() {
-    // const prop: paginationModel = {
-    //   currentPage: parseInt(this.params.currentPage),
-    //   pageSize: parseInt(this.params.pageSize),
-    //   searchString: this.params.searchString
-    // };
     const url = 'api/Master/GetMasterByType';
-
     this.CommonService.fn_PostWithData(this.stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
@@ -212,8 +190,6 @@ export class StateListComponent implements OnInit {
       }
     });
   }
-
-
   fn_deleteState(Id) {
     if (Id != null) {
       swal({
@@ -225,7 +201,6 @@ export class StateListComponent implements OnInit {
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-
         if (x.value == true) {
           const url = 'api/Master/DeleteMaster';
           const model = {
@@ -235,11 +210,8 @@ export class StateListComponent implements OnInit {
           this.fn_delStateFun(url, model);
         }
       });
-
     }
   }
-
-
   // function for soft deleting state.
   fn_delStateFun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
@@ -251,12 +223,8 @@ export class StateListComponent implements OnInit {
       else {
         this.toastr.error("Failed to delete state");
       }
-
     });
   }
-
-
-
   // function to change isActive status
   fn_ChangeStatus(id, isActive) {
     swal({
@@ -282,7 +250,6 @@ export class StateListComponent implements OnInit {
       }
     });
   }
-
   //function to save status change
   fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
@@ -293,10 +260,8 @@ export class StateListComponent implements OnInit {
         this.fn_GetStateList();
       }
       else {
-
+        console.log("Something is wrong.")
       }
     });
   }
-
-
 }
