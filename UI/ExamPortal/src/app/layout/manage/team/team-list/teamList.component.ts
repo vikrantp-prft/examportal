@@ -88,7 +88,7 @@ export class TeamListComponent implements OnInit {
   // Get Team by Id
   fn_GetTeamById(ID) {
     const url = 'api/Master/GetMasterById';
-    const categoryModel =
+    const teamModel =
     {
       "id": ID,
       "pageSize": 0,
@@ -98,7 +98,7 @@ export class TeamListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editTeamList = rs.data;
