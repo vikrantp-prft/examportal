@@ -61,9 +61,15 @@ export class AddAdminUserComponent implements OnInit {
   }
   //function to save admin user details
   fn_saveAdminUser(value) {
-    debugger;
-    const url = 'api/User';
-    this.fn_saveUserfun(url, value.value);
+    if (this.adminForm.valid) {
+      const url = 'api/User';
+      this.fn_saveUserfun(url, value.value);
+    }
+    else {
+      this.CommonService.validateAllFormFields(this.adminForm);
+      this.toastr.error('Please fill required details');
+      return false;
+    }
   }
 
   //function to save user details.

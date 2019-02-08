@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadComponent } from './upload/upload.component';
 import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-error-display.module';
 import { AdminUserUpdateComponent } from './admin-user/admin-user-update/admin-user-update.component';
+import { GroupByPipe } from 'src/app/common/pipe/customPipe.pipe';
 
 @NgModule({
     imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot(), FormsModule, ReactiveFormsModule, ErrorHandlingModule],
@@ -30,7 +31,8 @@ import { AdminUserUpdateComponent } from './admin-user/admin-user-update/admin-u
         QuickTraineeAddUpdate,
         EmployeeUpdateComponent,
         UploadComponent,
-        AdminUserUpdateComponent
+        AdminUserUpdateComponent,
+        GroupByPipe
     ]
 })
 export class UserModule { }

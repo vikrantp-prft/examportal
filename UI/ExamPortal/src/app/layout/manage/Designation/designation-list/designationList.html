@@ -17,7 +17,8 @@
                     </div>
                 </div>
                 <div class="col">
-                    <button title="Add Designation" [routerLink]="['/manage/addDesignation']" class="btn btn-md btn-primary">
+                    <button title="Add Designation" data-toggle="modal" data-target="#addModal" class="btn btn-md btn-primary"
+                        (click)="frmReset()">
                         Add
                     </button>
                 </div>
@@ -43,18 +44,21 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let designation of designationList; let i = index">
-                        <td>{{(designationModel.pageNumber-1)*10 + i +1 }}</td>
-                        <td>{{ designation.name }}</td>
-                        <td>{{ designation.description}}</td>
-                        <td>
+                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{(designationModel.pageNumber-1)*10
+                            + i +1 }}</td>
+                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{
+                            designation.name }}</td>
+                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{
+                            designation.description}}</td>
+                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">
                             <i class="fa" [ngClass]="{'fa-check text-success': designation.isActive, 'fa-times text-danger': !designation.isActive}"
                                 aria-hidden="true">
                             </i>
                         </td>
                         <td>
-                            <button title="Edit" type="button" class="btn btn-md" rel="tooltip" [routerLink]="[ '/manage/editDesignation', designation.id ]">
+                            <!-- <button title="Edit" type="button" class="btn btn-md" rel="tooltip" [routerLink]="[ '/manage/editDesignation', designation.id ]">
                                 <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-                            </button>
+                            </button> -->
                             <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(designation.id, designation.isActive)">
                                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': designation.isActive, 'fa-toggle-off text-danger': !designation.isActive}"
                                     aria-hidden="true"></i>
@@ -67,9 +71,85 @@
                 </tbody>
             </table>
         </div>
-
         <pagination class="pull-right pr-2 " [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
             [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-            lastText="LAST"></pagination>
+            lastText="LAST">
+        </pagination>
+    </div>
+</div>
+<!-- Modal for Add Designation Category -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addDesignation" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDesignation">Add Designation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="designationForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="designationTitle">Title</label>
+                        <input formControlName="designationTitle" type="text" class="form-control" id="designationTitle"
+                            aria-describedby="titleHelp" placeholder="Enter Title">
+                        <div *ngIf="designationTitle.touched && designationTitle.errors" class="alert alert-danger">
+                            Designation title is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="designationDescription">Description</label>
+                        <textarea formControlName="designationDescription" type="text" class="form-control" id="designationDescription"
+                            placeholder="Enter Description"></textarea>
+                        <div *ngIf="designationDescription.touched && designationDescription.invalid"   class="alert alert-danger">
+                            Designation description is required
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!designationForm.valid" (click)="fn_saveDesignation(designationForm)"
+                        data-dismiss="modal">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal for Edit Designation Category -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editDesignation" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDesignation">Edit Designation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="designationForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="designationTitle">Title</label>
+                        <input formControlName="designationTitle" type="text" class="form-control" id="designationTitle"
+                            aria-describedby="titleHelp" placeholder="Enter Title">
+                        <div *ngIf="designationTitle.touched && designationTitle.errors" class="alert alert-danger">
+                            Designation title is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="designationDescription">Description</label>
+                        <textarea formControlName="designationDescription" type="text" class="form-control" id="designationDescription"
+                            placeholder="Enter Description"></textarea>
+                        <div *ngIf="designationDescription.touched && designationDescription.invalid"   class="alert alert-danger">
+                            Designation description is required
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!designationForm.valid" (click)="fn_updateDesignation(designationForm)"
+                        data-dismiss="modal">Update</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

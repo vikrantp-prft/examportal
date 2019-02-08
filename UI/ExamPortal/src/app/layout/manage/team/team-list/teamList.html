@@ -15,14 +15,13 @@
           </select>
         </div>
         <div class="col">
-          <button [routerLink]="['/manage/addTeam']" title="Add Team" class="btn btn-md btn-primary">Add
+          <button  (click)="frmReset()" data-toggle="modal" data-target="#addModal" title="Add Team" class="btn btn-md btn-primary">Add
           </button>
         </div>
         <div class="col-md-3">
-          <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
-          <a href="#" class="search-icon">
-            <i class="fa fa-search"></i>
-          </a>
+          <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+            class="form-control" />
+          <i class="fa fa-search search-icon pt-1"></i>
         </div>
       </div>
     </div>
@@ -39,20 +38,23 @@
         </thead>
         <tbody>
           <tr *ngFor="let team of teamList; let i = index">
-            <td>{{(teamModel.pageNumber-1)*10 + i +1 }}</td>
-            <td>{{team.name}}</td>
-            <td>{{team.description}}</td>
-            <td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{(teamModel.pageNumber-1)*10 + i +1 }}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{team.name}}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{team.description}}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">
               <i class="fa" [ngClass]="{'fa-check text-success': team.isActive, 'fa-times text-danger': !team.isActive}"
                 aria-hidden="true">
               </i>
             </td>
             <td>
-              <button class="btn btn-md" title="Edit" type="button" rel="tooltip" [routerLink]="['/manage/editTeamList', team.id]">
+              <!-- <button class="btn btn-md" title="Edit" type="button" rel="tooltip"
+                [routerLink]="['/manage/editTeamList', team.id]">
                 <i class="fa text-dark fa-pencil-square-o" aria-hidden="true"></i>
-              </button>
-              <button class="btn btn-md mx-1" title="Change Status" type="button" rel="tooltip" (click)="fn_ChangeStatus(team.id, team.isActive)">
-                <i class="fa" [ngClass]="{'fa-toggle-on text-success':team.isActive, 'fa-toggle-off text-danger': !team.isActive}"
+              </button> -->
+              <button class="btn btn-md mx-1" title="Change Status" type="button" rel="tooltip"
+                (click)="fn_ChangeStatus(team.id, team.isActive)">
+                <i class="fa"
+                  [ngClass]="{'fa-toggle-on text-success':team.isActive, 'fa-toggle-off text-danger': !team.isActive}"
                   aria-hidden="true"></i>
               </button>
               <button class="btn btn-md" title="Delete" type="button" rel="tooltip" (click)="fn_deleteTeam(team.id)">
@@ -63,9 +65,87 @@
         </tbody>
       </table>
     </div>
-    <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-      [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-      lastText="LAST">
+    <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize"
+      (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+      nextText="NEXT" firstText="FIRST" lastText="LAST">
     </pagination>
+  </div>
+</div>
+<!-- Modal for Add Team -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addTeam"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTeam">Add Team</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="teamForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="teamTitle">Title</label>
+            <input formControlName="teamTitle" type="text" class="form-control" id="teamTitle"
+              aria-describedby="titleHelp" placeholder="Enter Title">
+            <div *ngIf="teamTitle.touched && teamTitle.errors" class="alert alert-danger">
+              Team title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="teamDescription">Description</label>
+            <textarea formControlName="teamDescription" type="text" class="form-control" id="teamDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="teamDescription.touched && teamDescription.invalid"   class="alert alert-danger">
+              Team description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!teamForm.valid"
+            (click)="fn_saveTeam(teamForm)" data-dismiss="modal">Submit</button>
+            <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal for Edit Team -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editTeam"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTeam">Edit Team</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="teamForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="teamTitle">Title</label>
+            <input formControlName="teamTitle" type="text" class="form-control" id="teamTitle"
+              aria-describedby="titleHelp" placeholder="Enter Title">
+            <div *ngIf="teamTitle.touched && teamTitle.errors" class="alert alert-danger">
+              Team title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="teamDescription">Description</label>
+            <textarea formControlName="teamDescription" type="text" class="form-control" id="teamDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="teamDescription.touched && teamDescription.invalid"   class="alert alert-danger">
+              Team description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!teamForm.valid"
+            (click)="fn_updateTeam(teamForm)" data-dismiss="modal">Submit</button>
+          <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

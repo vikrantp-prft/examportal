@@ -26,19 +26,19 @@
           <div class="form-group">
             <label for="firstName">First Name</label><span style="color:red">*</span>
             <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter first name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="middleName">Middle Name</label><span style="color:red">*</span>
             <input type="text" class="form-control" id="middleName" placeholder="Middle Name" formControlName="middleName">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter valid middle name.">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter middle name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label><span style="color:red">*</span>
             <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter valid last name.">
+            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter last name.">
             </app-field-error-display>
           </div>
           <div class="form-group">
@@ -126,7 +126,7 @@
         </div>
         <div class="sections">
           <div class="section-heading">
-            <h4>Educational Details</h4>
+            <h4>Educational Details<span style="color:red;font-size:initial">*</span></h4>
           </div>
           <div class="form-group">
             <label for="courseId"> Course </label>
@@ -219,6 +219,11 @@
           <div class="form-group">
             <label for="email">Email :</label><span style="color:red">*</span>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+            <!-- (ngModelChange)="fn_checkEmail($event)" -->
+            <!-- <div *ngIf="emailExist; then thenBlock;"> </div>
+            <ng-template #thenBlock>
+              <div><span style="color:red">Email is already exist.</span></div>
+            </ng-template> -->
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter valid email id">
             </app-field-error-display>
           </div>

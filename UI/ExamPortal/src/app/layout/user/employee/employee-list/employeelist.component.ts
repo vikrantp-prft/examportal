@@ -19,13 +19,7 @@ interface paginationModel {
 export class EmployeeListComponent implements OnInit {
 
   public employeeModel: any = {
-    // "id": "string",
-    // "pageSize": 0,
-    // "pageNumber": 0,
     "totalRecords": 0,
-    // "filter": "string",
-    // "sortBy": "string",
-    // "isDescending": true
     "pageSize": 10,
     "pageNumber": 1
   }
@@ -84,11 +78,6 @@ export class EmployeeListComponent implements OnInit {
       err => console.error(err),
       () => { }
     );
-  }
-
-  // Function to get employee ID
-  fn_getEmployee(empid) {
-    this.router.navigate(['/user/updateemployee'], { queryParams: { _empid: empid } });
   }
 
   // function to display the alert before deleting the Order.
