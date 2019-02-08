@@ -33,6 +33,7 @@ export class EmployeeUpdateComponent implements OnInit {
   public updateEducationButton: boolean = false;
   public addEducationButton: boolean = true;
   public courseName: any;
+  public emailExist: any;
   public interestArray: Array<any> = [
     { description: 'Quality Assurance (QA)', value: 'Quality Assurance (QA)', selected: false },
     { description: "HTML/CSS", value: 'HTML/CSS', selected: false },
@@ -451,5 +452,28 @@ export class EmployeeUpdateComponent implements OnInit {
         }
       });
     }
+  }
+
+
+  fn_checkEmail(event) {
+    debugger;
+    var existEmailUrl = "api/User/IsEmailExist";
+    var model =
+    {
+      "condition": event
+    }
+    this.CommonService.fn_PostWithData(model, existEmailUrl).subscribe((result: any) => {
+      const stateResult = result;
+      if (stateResult.statusCode === 200) {
+        if (stateResult.data == true) {
+          console.log('Email address is already exist');
+          this.emailExist = true;
+        }
+        else {
+          console.log('Email address is not exist');
+          this.emailExist = false;
+        }
+      }
+    });
   }
 }

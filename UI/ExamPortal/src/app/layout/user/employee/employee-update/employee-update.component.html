@@ -219,6 +219,11 @@
           <div class="form-group">
             <label for="email">Email :</label><span style="color:red">*</span>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+            <!-- (ngModelChange)="fn_checkEmail($event)" -->
+            <!-- <div *ngIf="emailExist; then thenBlock;"> </div>
+            <ng-template #thenBlock>
+              <div><span style="color:red">Email is already exist.</span></div>
+            </ng-template> -->
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter valid email id">
             </app-field-error-display>
           </div>
