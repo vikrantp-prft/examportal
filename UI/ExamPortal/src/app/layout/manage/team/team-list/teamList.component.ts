@@ -40,7 +40,7 @@ export class TeamListComponent implements OnInit {
     };
   editTeamList: any;
   // Constructor
-  constructor(public router: Router,    private ngxService: NgxUiLoaderService, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(public router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetTeamList();

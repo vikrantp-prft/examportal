@@ -38,6 +38,7 @@
     "ngx-toastr": "^9.1.1",
     "ngx-ui-loader": "^7.1.1",
     "node-sass": "^4.11.0",
+    "rxjs": "^6.4.0",
     "rxjs-compat": "^6.3.3",
     "sweetalert2": "^7.33.1",
     "yarn": "1.12.1",

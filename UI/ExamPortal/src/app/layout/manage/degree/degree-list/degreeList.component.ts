@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   currentPage: number;
   pageSize: number;
@@ -35,18 +36,18 @@ export class DegreeListComponent implements OnInit {
   public statusUrl: any;
 
   public degreeModel =
-       {
-         "condition": "Degree",
-         "pageSize": 10,
-         "pageNumber": 1
-       };
+    {
+      "condition": "Degree",
+      "pageSize": 10,
+      "pageNumber": 1
+    };
   editDegreeList: any;
-  
+
 
   // Constructor
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {}
-  
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+
   // Lifecycle method
 
   ngOnInit() {
@@ -155,7 +156,7 @@ export class DegreeListComponent implements OnInit {
     });
   }
 
-  
+
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.degreeModel.pageNumber = 1;
@@ -169,23 +170,23 @@ export class DegreeListComponent implements OnInit {
 
   trimming_fn(x) {
     return x ? x.replace(/^\s+|\s+$/gm, '') : '';
-  }; 
+  };
 
-  
+
   // Searching
   searchRecord(event: any): void {
-    const searchModel=
-      {
-        "id": "string",
-        "condition": "Degree",
-        "pageSize": 10,
-        "pageNumber": 0,
-        "totalRecords": 0,
-        "filter": this.trimming_fn(event.target.value),
-        "sortBy": "string",
-        "isDescending": true
-      }
-      this.fn_GetFilteredList(searchModel);
+    const searchModel =
+    {
+      "id": "string",
+      "condition": "Degree",
+      "pageSize": 10,
+      "pageNumber": 0,
+      "totalRecords": 0,
+      "filter": this.trimming_fn(event.target.value),
+      "sortBy": "string",
+      "isDescending": true
+    }
+    this.fn_GetFilteredList(searchModel);
   }
 
   fn_GetFilteredList(data) {
@@ -201,28 +202,24 @@ export class DegreeListComponent implements OnInit {
     });
   }
 
-  
+
   // Function to get degreeList (GetMasterByType)
   fn_GetDegreeList() {
-    // const prop: paginationModel = {
-    //   currentPage: parseInt(this.params.currentPage),
-    //   pageSize: parseInt(this.params.pageSize),
-    //   searchString: this.params.searchString
-    // };
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
-    
-    this.CommonService.fn_PostWithData(this.degreeModel, url).subscribe((result: any) => {
-      const rs = result;
-      if (rs.statusCode == 200) {
-        this.degreeList = rs.data;
+    this.CommonService.fn_PostWithData(this.degreeModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.ngxService.stop();
+        this.degreeList = rs.data;
         this.totalItems = rs.totalRecords;
       }
-      else {
+      else {
       }
-      }); 
+    });
   }
 
-  
+
   fn_deleteDegree(Id) {
     if (Id != null) {
       swal({
@@ -234,7 +231,7 @@ export class DegreeListComponent implements OnInit {
         cancelButtonClass: 'btn btn-danger',
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
-       
+
         if (x.value == true) {
           const url = 'api/Master/DeleteMaster';
           const model = {
@@ -244,11 +241,11 @@ export class DegreeListComponent implements OnInit {
           this.fn_delDegreeFun(url, model);
         }
       });
-     
+
     }
   }
 
-  
+
   // function for soft deleting degree.
   fn_delDegreeFun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
@@ -257,18 +254,17 @@ export class DegreeListComponent implements OnInit {
         this.toastr.success('Degree\'s details deleted successfully!');
         this.fn_GetDegreeList();
       }
-      else{
+      else {
         this.toastr.error("Failed to delete degree");
       }
-      
+
     });
   }
-  
-  
-    
+
+
+
   // function to change isActive status
-  fn_ChangeStatus(id,isActive)
-  {
+  fn_ChangeStatus(id, isActive) {
     swal({
       title: 'Are you sure?',
       text: 'You want to change the status!',
@@ -278,34 +274,34 @@ export class DegreeListComponent implements OnInit {
       cancelButtonClass: 'btn btn-danger',
       confirmButtonText: 'Yes'
     }).then(x => {
-    if(x.value == true){
-        if(isActive == true){
+      if (x.value == true) {
+        if (isActive == true) {
           this.statusUrl = 'api/Master/InactivateMaster';
         }
-        else{
+        else {
           this.statusUrl = 'api/Master/ActivateMaster';
         }
         const degreeStatusModel = {
           "id": id,
-         }
-        this.fn_saveStatusChange(this.statusUrl,degreeStatusModel);
-    }
+        }
+        this.fn_saveStatusChange(this.statusUrl, degreeStatusModel);
+      }
     });
   }
 
   //function to save status change
   fn_saveStatusChange(url, data) {
-      this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       // debugger;
       // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
-          this.fn_GetDegreeList();
+        this.fn_GetDegreeList();
       }
       else {
-          
+
       }
-  });
+    });
   }
 
 

@@ -43,6 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <ngx-ui-loader></ngx-ui-loader>
                     <tr *ngFor="let designation of designationList; let i = index">
                         <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{(designationModel.pageNumber-1)*10
                             + i +1 }}</td>

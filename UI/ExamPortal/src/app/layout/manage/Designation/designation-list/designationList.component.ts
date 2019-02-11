@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   currentPage: number;
   pageSize: number;
@@ -39,6 +40,7 @@ export class DesignationListComponent implements OnInit {
   editDesignationList: any;
   // Constructor
   constructor(
+    private ngxService: NgxUiLoaderService, 
     public router: Router,
     private CommonService: commonService,
     public http: Http, private toastr: ToastrService) {
@@ -190,15 +192,12 @@ export class DesignationListComponent implements OnInit {
   }
   // Function to get list of employees
   fn_GetDesignationList() {
-    // const prop: paginationModel = {
-    //   currentPage: parseInt(this.params.currentPage),
-    //   pageSize: parseInt(this.params.pageSize),
-    //   searchString: this.params.searchString
-    // };
+    this.ngxService.start()
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(this.designationModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.designationList = rs.data;
         this.totalItems = rs.totalRecords;
       }

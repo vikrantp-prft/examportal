@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   pageNumber: number;
   pageSize: number;
@@ -38,7 +39,7 @@ export class CategoryListComponent implements OnInit {
       "pageNumber": 1
     };
   // Constructor
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   toggle: boolean = true;
   // Lifecycle method
   ngOnInit() {
@@ -57,6 +58,7 @@ export class CategoryListComponent implements OnInit {
   get categoryDescription() {
     return this.categoryForm.get('categoryDescription');
   }
+  // Function to save category
   fn_saveCategory(data) {
     const url = 'api/Master';
     const categoryModel =
@@ -69,7 +71,7 @@ export class CategoryListComponent implements OnInit {
     }
     this.fn_saveCategoryfun(url, categoryModel);
   }
-  // function for save employee details.
+  // function for save question category details.
   fn_saveCategoryfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
@@ -176,12 +178,14 @@ export class CategoryListComponent implements OnInit {
       }
     });
   }
-
+  // Get question category list
   fn_GetCategoryList() {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.categoryList = rs.data;
         this.totalItems = rs.totalRecords;
       }
