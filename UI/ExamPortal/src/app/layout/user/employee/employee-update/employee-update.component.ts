@@ -476,4 +476,17 @@ export class EmployeeUpdateComponent implements OnInit {
       }
     });
   }
+
+  fn_setCurrentAddress(event)
+  {
+    if (event.target.checked) {
+      debugger;
+      console.log(this.employeeForm.controls.address1);
+      this.employeeForm.controls.currentAddress1.setValue(this.employeeForm.controls.address1.value);
+      this.employeeForm.controls.currentAddress2.setValue(this.employeeForm.controls.address2.value);
+      this.employeeForm.controls.currentCity.setValue(this.employeeForm.controls.city.value);
+      this.employeeForm.controls.currentStateId.setValue(this.employeeForm.controls.stateId.value);
+      this.employeeForm.controls.currentPincode.setValue(this.employeeForm.controls.pincode.value);
+    }
+  }
 }
