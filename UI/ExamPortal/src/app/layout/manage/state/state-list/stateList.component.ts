@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   currentPage: number;
   pageSize: number;
@@ -39,7 +40,7 @@ export class StateListComponent implements OnInit {
     };
   editStateList: any;
   // Constructor
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetStateList();
@@ -179,10 +180,12 @@ export class StateListComponent implements OnInit {
   }
   // Function to get stateList (GetMasterByType)
   fn_GetStateList() {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(this.stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.stateList = rs.data;
         this.totalItems = rs.totalRecords;
       }

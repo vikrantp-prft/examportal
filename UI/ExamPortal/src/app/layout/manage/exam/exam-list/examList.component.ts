@@ -5,6 +5,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'exam-list',
@@ -29,7 +30,7 @@ export class ExamListComponent implements OnInit {
 
   // Constructor
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
@@ -64,10 +65,12 @@ export class ExamListComponent implements OnInit {
 
   // Function to get list of Exam
   fn_GetExamList() {
+    this.ngxService.start();
     const url = 'api/Exams/GetExams';
     this.CommonService.fn_PostWithData(this.params, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.examList = rs.data;
         this.totalItems = rs.totalRecords;
       }

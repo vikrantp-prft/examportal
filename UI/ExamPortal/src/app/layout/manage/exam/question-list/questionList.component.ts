@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'question-list',
@@ -68,7 +69,7 @@ export class questionListComponent implements OnInit {
     id: ''
   };
 
-  constructor(public fb: FormBuilder, private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
+  constructor(private ngxService: NgxUiLoaderService, public fb: FormBuilder, private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
     this.route.params.subscribe(params1 => {
       this.examID = params1['id'];
     });
@@ -157,9 +158,11 @@ export class questionListComponent implements OnInit {
   };
   // Function to get list of Exam
   getQuestionsList() {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.questionList = rs.data;
         this.totalItems = rs.totalRecords;
       }

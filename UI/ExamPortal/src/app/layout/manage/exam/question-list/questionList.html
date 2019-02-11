@@ -72,6 +72,7 @@
                                     </button>
                                   </th>
                                 </tr> -->
+              <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let question of questionList; let i = index">
                 <td (click)="editQuestion(question.id)">{{(questionModel.pageNumber-1)*10 + i +1 }}</td>
                 <td (click)="editQuestion(question.id)" title="{{question.question}}" [innerHTML]="question.question | slice:0:40"></td>

@@ -42,6 +42,7 @@
           </tr>
         </thead>
         <tbody>
+          <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let degree of degreeList; let i = index">
             <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{(degreeModel.pageNumber-1)*10 + i +1 }}</td>
             <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.name | slice:0:20}}</td>

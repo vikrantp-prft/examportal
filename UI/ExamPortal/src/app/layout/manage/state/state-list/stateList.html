@@ -40,6 +40,7 @@
           </tr>
         </thead>
         <tbody>
+          <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let state of stateList; let i = index">
             <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{(stateModel.pageNumber-1)*10 + i +1 }}</td>
             <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.name}}</td>
