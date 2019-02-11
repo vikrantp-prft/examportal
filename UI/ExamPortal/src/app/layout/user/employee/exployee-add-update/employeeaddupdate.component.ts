@@ -421,6 +421,13 @@ export class AddEmployeeComponent implements OnInit {
       this.employeeForm.controls.currentStateId.setValue(this.employeeForm.controls.stateId.value);
       this.employeeForm.controls.currentPincode.setValue(this.employeeForm.controls.pincode.value);
     }
+    else{
+      this.employeeForm.controls.currentAddress1.reset();
+      this.employeeForm.controls.currentAddress2.reset();
+      this.employeeForm.controls.currentCity.reset();
+      this.employeeForm.controls.currentStateId.reset();
+      this.employeeForm.controls.currentPincode.reset();
+    }
   }
 }
 
