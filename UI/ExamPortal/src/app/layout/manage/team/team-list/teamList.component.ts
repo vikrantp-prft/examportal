@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   currentPage: number;
   pageSize: number;
@@ -39,7 +40,7 @@ export class TeamListComponent implements OnInit {
     };
   editTeamList: any;
   // Constructor
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(public router: Router,    private ngxService: NgxUiLoaderService, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetTeamList();
@@ -181,11 +182,13 @@ export class TeamListComponent implements OnInit {
   }
   // Function to get teamList (GetMasterByType)
   fn_GetTeamList() {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(this.teamModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.teamList = rs.data;
+        this.ngxService.stop();
         this.totalItems = rs.totalRecords;
       }
       else {

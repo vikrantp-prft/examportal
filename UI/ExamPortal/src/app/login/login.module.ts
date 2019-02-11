@@ -1,3 +1,4 @@
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,7 +10,7 @@ import { LoginComponent } from './login.component';
     imports: [
         CommonModule,
         TranslateModule,
-        LoginRoutingModule],
+        LoginRoutingModule,NgxUiLoaderModule],
     declarations: [LoginComponent]
 })
 export class LoginModule {}

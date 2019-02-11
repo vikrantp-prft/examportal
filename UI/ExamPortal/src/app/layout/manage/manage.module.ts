@@ -29,6 +29,7 @@ import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-er
 import { StateListComponent } from './state/state-list/stateList.component';
 import { AddStateComponent } from './state/state-add-update/stateAddUpdate.component';
 import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.co
         ManageRoutingModule,
         ErrorHandlingModule,
         RichTextEditorAllModule,
+        NgxUiLoaderModule,
         PaginationModule.forRoot()],
     declarations: [
         FileSelectDirective,
