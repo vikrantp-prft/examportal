@@ -98,10 +98,6 @@ export class AddEmployeeComponent implements OnInit {
         this.toastr.error('Please add education details');
         return false;
       }
-      // else if (this.employeeForm.controls.interest.value.length == 0) {
-      //   this.toastr.error('Please select atleast 1 interest');
-      //   return false;
-      // }
       else if (this.emailExist == true) {
         return false;
       }
@@ -411,6 +407,19 @@ export class AddEmployeeComponent implements OnInit {
           this.fn_resetEducationDetails();
         }
       });
+    }
+  }
+
+  fn_setCurrentAddress(event)
+  {
+    if (event.target.checked) {
+      debugger;
+      console.log(this.employeeForm.controls.address1);
+      this.employeeForm.controls.currentAddress1.setValue(this.employeeForm.controls.address1.value);
+      this.employeeForm.controls.currentAddress2.setValue(this.employeeForm.controls.address2.value);
+      this.employeeForm.controls.currentCity.setValue(this.employeeForm.controls.city.value);
+      this.employeeForm.controls.currentStateId.setValue(this.employeeForm.controls.stateId.value);
+      this.employeeForm.controls.currentPincode.setValue(this.employeeForm.controls.pincode.value);
     }
   }
 }
