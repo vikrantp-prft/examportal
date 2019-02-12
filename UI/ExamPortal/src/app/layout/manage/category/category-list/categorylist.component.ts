@@ -5,12 +5,13 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   pageNumber: number;
   pageSize: number;
   searchString: string;
 }
-
 @Component({
   selector: 'category-list',
   templateUrl: './categorylist.html',
@@ -18,38 +19,126 @@ interface paginationModel {
 })
 export class CategoryListComponent implements OnInit {
   // Declaration
-
   public params: any = {
     pageNumber: 1,
     pageSize: 10,
     filter: ''
   };
-
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
   public categoryList = [];
+  public editCategoryList: any;
   public statusUrl: any;
-
   public categoryModel =
     {
       "condition": "Category",
       "pageSize": 10,
       "pageNumber": 1
     };
-
   // Constructor
-
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   toggle: boolean = true;
   // Lifecycle method
-
   ngOnInit() {
     this.fn_GetCategoryList();
   }
-
+  frmReset() {
+    this.categoryForm.reset();
+  }
+  categoryForm = new FormGroup({
+    categoryTitle: new FormControl('', [Validators.required]),
+    categoryDescription: new FormControl('', [Validators.required])
+  });
+  get categoryTitle() {
+    return this.categoryForm.get('categoryTitle');
+  }
+  get categoryDescription() {
+    return this.categoryForm.get('categoryDescription');
+  }
+  // Function to save category
+  fn_saveCategory(data) {
+    const url = 'api/Master';
+    const categoryModel =
+    {
+      // firstName: this.employeeForm.controls.firstName.value,
+      name: data.value.categoryTitle,
+      isActive: true,
+      description: data.value.categoryDescription,
+      masterType: "Category"
+    }
+    this.fn_saveCategoryfun(url, categoryModel);
+  }
+  // function for save question category details.
+  fn_saveCategoryfun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('category  added successfully!');
+        this.fn_GetCategoryList();
+        this.frmReset();
+      }
+      else {
+        this.toastr.success('Failed to add category');
+      }
+    });
+  }
+  // Get category by id
+  fn_GetCategoryById(categoryID) {
+    const url = 'api/Master/GetMasterById';
+    const categoryModel =
+    {
+      "id": categoryID,
+      "pageSize": 0,
+      "pageNumber": 0,
+      "totleRecords": 0,
+      "filter": "string",
+      "sortBy": "string",
+      "isDescending": true
+    };
+    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.editCategoryList = rs.data;
+        this.fn_setEditValues();
+      }
+      else {
+      }
+    });
+  }
+  // default values
+  fn_setEditValues() {
+    // this.categoryForm.controls.id.setValue(this.examID);
+    this.categoryForm.controls.categoryTitle.setValue(this.editCategoryList.name);
+    this.categoryForm.controls.categoryDescription.setValue(this.editCategoryList.description);
+  }
+  // Update category
+  fn_updateCategory(data) {
+    const url = 'api/Master/Update';
+    const categoryModel =
+    {
+      id: this.editCategoryList.id,
+      name: data.value.categoryTitle,
+      description: data.value.categoryDescription,
+      masterType: "Category"
+    }
+    this.fn_updateCategoryfun(url, categoryModel);
+  }
+  // function for save category details.
+  fn_updateCategoryfun(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.toastr.success('category  updated successfully!');
+        this.fn_GetCategoryList();
+      }
+      else {
+        this.toastr.success('Failed to update category');
+      }
+    });
+  }
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.categoryModel.pageNumber = 1;
@@ -60,11 +149,9 @@ export class CategoryListComponent implements OnInit {
     this.categoryModel.pageNumber = event.page;
     this.fn_GetCategoryList();
   }
-
   trimming_fn(x) {
     return x ? x.replace(/^\s+|\s+$/gm, '') : '';
   };
-
   // Searching
   searchRecord(event: any): void {
     const searchModel =
@@ -79,33 +166,26 @@ export class CategoryListComponent implements OnInit {
       "isDescending": true
     }
     this.fn_GetFilteredList(searchModel);
-
   }
-
   fn_GetFilteredList(data) {
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.categoryList = rs.data;
-        // this.totalItems = rs.totalRecords;
       }
       else {
       }
     });
   }
-
+  // Get question category list
   fn_GetCategoryList() {
-    // const prop: paginationModel = {
-    //   pageNumber: parseInt(this.params.pageNumber),
-    //   pageSize: parseInt(this.params.pageSize),
-    //   searchString: this.params.searchString
-    // };
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
-
     this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.categoryList = rs.data;
         this.totalItems = rs.totalRecords;
       }
@@ -113,9 +193,6 @@ export class CategoryListComponent implements OnInit {
       }
     });
   }
-
-
-
   // function to display the alert before deleting the Order.
   fn_deleteCategory(Id) {
     if (Id != null) {
@@ -139,14 +216,12 @@ export class CategoryListComponent implements OnInit {
             "sortBy": "string",
             "isDescending": true
           };
-
           // obj_SearchDetails.deletedBy = 1;
           this.fn_delfun(url, model);
         }
       });
     }
   }
-
   // function for soft deleting the Employee.
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
@@ -155,11 +230,8 @@ export class CategoryListComponent implements OnInit {
         this.toastr.success('Category details deleted successfully!');
         this.fn_GetCategoryList();
       }
-
     });
   }
-
-
   // function to change isActive status
   fn_ChangeStatus(id, isActive) {
     swal({
@@ -185,7 +257,6 @@ export class CategoryListComponent implements OnInit {
       }
     });
   }
-
   //function to save status change
   fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
@@ -194,10 +265,7 @@ export class CategoryListComponent implements OnInit {
         this.fn_GetCategoryList();
       }
       else {
-
       }
     });
   }
-
-
 }

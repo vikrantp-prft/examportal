@@ -17,8 +17,8 @@
           </select>
         </div>
       </div>
-      <div class="col" style="display: inline-block;">
-        <button [routerLink]="['/manage/addState']" class="btn btn-md btn-primary" title="Add State">Add
+      <div class="col">
+        <button (click)="frmReset()" data-toggle="modal" data-target="#addModal" class="btn btn-md btn-primary" title="Add State">Add
         </button>
       </div>
       <div class="col-md-3">
@@ -40,20 +40,20 @@
           </tr>
         </thead>
         <tbody>
-
+          <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let state of stateList; let i = index">
-            <td>{{(stateModel.pageNumber-1)*10 + i +1 }}</td>
-            <td>{{state.name}}</td>
-            <td>{{state.description}}</td>
-            <td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{(stateModel.pageNumber-1)*10 + i +1 }}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.name}}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.description}}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">
               <i class="fa" [ngClass]="{'fa-check text-success': state.isActive, 'fa-times text-danger': !state.isActive}"
                 aria-hidden="true">
               </i>
             </td>
             <td>
-              <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', state.id]">
+              <!-- <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', state.id]">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </button>
+              </button> -->
               <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(state.id, state.isActive)">
                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': state.isActive, 'fa-toggle-off text-danger': !state.isActive}"
                   aria-hidden="true"></i>
@@ -69,5 +69,84 @@
     <pagination class="pull-right pr-2" [totalItems]="totalItems" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
       [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
       lastText="LAST"></pagination>
+  </div>
+</div>
+
+<!-- Modal for Add States -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addState" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addState">Add State</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="stateForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="stateTitle">Title</label>
+            <input formControlName="stateTitle" type="text" class="form-control" id="stateTitle" aria-describedby="titleHelp"
+              placeholder="Enter Title">
+            <div *ngIf="stateTitle.touched && stateTitle.errors" class="alert alert-danger">
+              State title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="stateDescription">Description</label>
+            <textarea formControlName="stateDescription" type="text" class="form-control" id="stateDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="stateDescription.touched && stateDescription.invalid"   class="alert alert-danger">
+              State description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!stateForm.valid" (click)="fn_saveState(stateForm)"
+            data-dismiss="modal">Submit</button>
+          <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for edit States -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editState" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addState">Edit State</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="stateForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="stateTitle">Title</label>
+            <input formControlName="stateTitle" type="text" class="form-control" id="stateTitle" aria-describedby="titleHelp"
+              placeholder="Enter Title">
+            <div *ngIf="stateTitle.touched && stateTitle.errors" class="alert alert-danger">
+              State title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="stateDescription">Description</label>
+            <textarea formControlName="stateDescription" type="text" class="form-control" id="stateDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="stateDescription.touched && stateDescription.invalid"   class="alert alert-danger">
+              State description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!stateForm.valid" (click)="fn_updateState(stateForm)"
+            data-dismiss="modal">Update</button>
+          <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

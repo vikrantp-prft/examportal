@@ -45,25 +45,26 @@
               </tr>
             </thead>
             <tbody>
+              <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let emp of employeeList; let i = index">
-                <td>{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
-                <td>{{emp.firstName}} {{emp.lastName}}</td>
-                <td>{{emp.email}}</td>
-                <td>
+                <td [routerLink]="['/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
+                <td [routerLink]="['/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
+                <td [routerLink]="['/user/updateemployee', emp.id]">{{emp.email}}</td>
+                <td [routerLink]="['/user/updateemployee', emp.id]">
                   <div *ngIf="emp.team!=null">
                     {{emp.team.name}}
                   </div>
                 </td>
-                <td>
+                <td [routerLink]="['/user/updateemployee', emp.id]">
                   <i class="fa" [ngClass]="{'fa-check text-success': emp.isActive, 'fa-times text-danger': !emp.isActive}"
                     aria-hidden="true">
                   </i>
                 </td>
                 <td>
-                  <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateemployee', emp.id]"
+                  <!-- <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateemployee', emp.id]"
                     title="Edit Employee">
                     <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-                  </button>&nbsp;
+                  </button>&nbsp; -->
                   <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(emp.id, emp.isActive)">
                     <i class="fa" [ngClass]="{'fa-toggle-on text-success': emp.isActive, 'fa-toggle-off text-danger': !emp.isActive}"
                       aria-hidden="true"></i>
@@ -78,7 +79,8 @@
         </div>
         <pagination class="pull-right pr-2" [totalItems]="employeeModel.totalRecords" [itemsPerPage]="employeeModel.pageSize"
           (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
-          nextText="NEXT" firstText="FIRST" lastText="LAST"></pagination>
+          nextText="NEXT" firstText="FIRST" lastText="LAST">
+        </pagination>
       </div>
     </div>
   </div>

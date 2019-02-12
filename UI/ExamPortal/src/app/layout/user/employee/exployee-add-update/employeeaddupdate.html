@@ -12,152 +12,209 @@
     <div class="col-md-12 col-xs-12 col-lg-12">
       <form [formGroup]="employeeForm" (ngSubmit)="fn_saveEmployee(employeeForm)">
         <div class="sections">
-          <div class="form-group">
-            <label for="sel1">Team</label><span style="color:red">*</span>
-            <select class="form-control" formControlName="teamId">
-              <option value="">--Select--</option>
-              <option *ngFor="let team of teamArray" value={{team.id}}>
-                {{team.name}}
-              </option>
-            </select>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'teamId')" errorMsg="Select team.">
-            </app-field-error-display>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="firstName">First Name<span class="required">*</span></label>
+                <input type="text" class="form-control " id="firstName" formControlName="firstName" placeholder="First Name"
+                  required>
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter first name.">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="middleName">Middle Name</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="middleName" formControlName="middleName" placeholder="Middle Name">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter middle name.">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="lastName">Last Name</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter last name.">
+                </app-field-error-display>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="firstName">First Name <span class="required">*</span></label>
-            <input type="text" class="form-control " id="firstName" formControlName="firstName" placeholder="First Name"
-              required>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')" errorMsg="Enter valid first name.">
-            </app-field-error-display>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sel1">Team</label><span style="color:red">*</span>
+                <select class="form-control" formControlName="teamId">
+                  <option value="">--Select--</option>
+                  <option *ngFor="let team of teamArray" value={{team.id}}>
+                    {{team.name}}
+                  </option>
+                </select>
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'teamId')" errorMsg="Select team.">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
+                <input type="date" class="form-control" id="dateOfBirth" formControlName="dob">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'dob')" errorMsg="Enter valid date of birth.">
+                </app-field-error-display>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="middleName">Middle Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="middleName" formControlName="middleName" placeholder="Middle Name">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')" errorMsg="Enter valid middle name.">
-            </app-field-error-display>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Email</label><span style="color:red">*</span>
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email"
+                  (ngModelChange)="fn_checkEmail($event)">
+                <div *ngIf="emailExist; then thenBlock;"> </div>
+                <ng-template #thenBlock>
+                  <div><span style="color:red">Email is already exist.</span></div>
+                </ng-template>
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter valid email id">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="mobile">Mobile</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="mobile" formControlName="mobile" placeholder="Mobile Number">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'mobile')" errorMsg="Enter valid mobile number">
+                </app-field-error-display>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="lastName">Last Name</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')" errorMsg="Enter valid last name.">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
-            <input type="date" class="form-control" id="dateOfBirth" formControlName="dob">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'dob')" errorMsg="Enter valid date of birth.">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="mobile">Mobile</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="mobile" formControlName="mobile" placeholder="Mobile Number">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'mobile')" errorMsg="Enter valid mobile number">
-            </app-field-error-display>
-          </div>
+
         </div>
-        <div class="sections">
-          <div class="section-heading">
-            <h4>Permanent Address</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="sections">
+              <div class="section-heading">
+                <h4>Permanent Address</h4>
+              </div>
+              <div class="form-group">
+                <label for="Address">Address</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="address1" formControlName="address1" placeholder="Address 1">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'address1')" errorMsg="Enter permanent address">
+                </app-field-error-display>
+                <input type="text" class="form-control mt-2" id="address2" formControlName="address2" placeholder="Address 2 (optional)">
+              </div>
+              <div class="form-group">
+                <label for="city">City</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="city" formControlName="city" placeholder="City">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')" errorMsg="Enter permanent city">
+                </app-field-error-display>
+              </div>
+              <div class="form-group">
+                <label for="stateId">State</label><span style="color:red">*</span>
+                <select class="form-control" formControlName="stateId">
+                  <option value="">--Select--</option>
+                  <option *ngFor="let state of stateArray" value={{state.id}}>
+                    {{state.name}}
+                  </option>
+                </select>
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'stateId')" errorMsg="Select permanent state">
+                </app-field-error-display>
+              </div>
+              <div class="form-group">
+                <label for="pincode">Pincode</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="pincode" formControlName="pincode" placeholder="Pincode">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter valid 6 digit pincode">
+                </app-field-error-display>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="Address">Address</label><span style="color:red">*</span>
-            <textarea class="form-control" id="address1" formControlName="address1" placeholder="Address 1"></textarea>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'address1')" errorMsg="Enter permanent address">
-            </app-field-error-display>
-            <textarea class="form-control mt-2" id="address2" formControlName="address2" placeholder="Address 2"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="city">City</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="city" formControlName="city" placeholder="City">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')" errorMsg="Enter permanent city">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="stateId">State</label><span style="color:red">*</span>
-            <select class="form-control" formControlName="stateId">
-              <option value="">--Select--</option>
-              <option *ngFor="let state of stateArray" value={{state.id}}>
-                {{state.name}}
-              </option>
-            </select>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'stateId')" errorMsg="Select permanent state">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="pincode">Pincode</label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="pincode" formControlName="pincode" placeholder="Pincode">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'pincode')" errorMsg="Enter valid 6 digit permanent pincode">
-            </app-field-error-display>
-          </div>
-        </div>
-        <div class="sections">
-          <div class="section-heading">
-            <h4>Current Address</h4>
-          </div>
-          <div class="form-group">
-            <label for="Address">Address</label><span style="color:red">*</span>
-            <textarea class="form-control" id="currentAddress1" formControlName="currentAddress1" placeholder="Address 1"></textarea>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentAddress1')" errorMsg="Enter current address">
-            </app-field-error-display>
-            <textarea class="form-control mt-1" id="currentAddress2" formControlName="currentAddress2" placeholder="Address 2"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="state"> City </label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="currentCity" formControlName="currentCity" placeholder="City">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')" errorMsg="Enter current city">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="currentStateId">State</label><span style="color:red">*</span>
-            <select class="form-control" formControlName="currentStateId">
-              <option value="">--Select--</option>
-              <option *ngFor="let state of stateArray" value={{state.id}}>
-                {{state.name}}
-              </option>
-            </select>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentStateId')" errorMsg="Select current state">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="currentPincode"> Pincode </label><span style="color:red">*</span>
-            <input type="text" class="form-control" id="currentPincode" formControlName="currentPincode" placeholder="Pincode">
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter valid 6 digit current pincode">
-            </app-field-error-display>
+          <div class="col-md-6">
+            <div class="sections">
+              <div class="section-heading">
+                <h4>Current Address 
+                  <span>
+                    <label Class="ml-5 mt-1" style="font-size:.6em"> <input type="checkbox" id="currentAddress" (change)="fn_setCurrentAddress($event)"> Same as permanant</label>
+                  </span>
+                </h4>
+                
+              </div>
+              <div class="form-group">
+                <label for="Address">Address</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="currentAddress1" formControlName="currentAddress1" placeholder="Address 1">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentAddress1')" errorMsg="Enter current address">
+                </app-field-error-display>
+                <input type="text" class="form-control mt-1" id="currentAddress2" formControlName="currentAddress2" placeholder="Address 2 (optional)">
+              </div>
+              <div class="form-group">
+                <label for="state"> City </label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="currentCity" formControlName="currentCity" placeholder="City">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')" errorMsg="Enter current city">
+                </app-field-error-display>
+              </div>
+              <div class="form-group">
+                <label for="currentStateId">State</label><span style="color:red">*</span>
+                <select class="form-control" formControlName="currentStateId">
+                  <option value="">--Select--</option>
+                  <option *ngFor="let state of stateArray" value={{state.id}}>
+                    {{state.name}}
+                  </option>
+                </select>
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentStateId')" errorMsg="Select current state">
+                </app-field-error-display>
+              </div>
+              <div class="form-group">
+                <label for="currentPincode"> Pincode </label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="currentPincode" formControlName="currentPincode"
+                  placeholder="Pincode">
+                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentPincode')" errorMsg="Enter valid 6 digit pincode">
+                </app-field-error-display>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="sections">
           <div class="section-heading">
-            <h4>Educational Details</h4>
+            <h4>Educational Details<span style="color:red;font-size:initial">*</span></h4>
           </div>
-          <div class="form-group">
-            <label for="courseId"> Course </label>
-            <select class="form-control" formControlName="courseId" (change)="fn_getSelectedCourse($event)">
-              <option value="">--Select--</option>
-              <option *ngFor="let course of courseArray" value={{course.id}}>
-                {{course.name}}
-              </option>
-            </select>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="courseId"> Course </label>
+                <select class="form-control" formControlName="courseId" (change)="fn_getSelectedCourse($event)">
+                  <option value="">--Select--</option>
+                  <option *ngFor="let course of courseArray" value={{course.id}}>
+                    {{course.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="yearOfPassing">Year of passing </label>
+                <select class="form-control" formControlName="yearOfPassing">
+                  <option value="">--Select--</option>
+                  <option *ngFor="let passingYear of yearOfPassingArray" value={{passingYear.year}}>
+                    {{passingYear.year}}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="yearOfPassing">Year Of Passing </label>
-            <select class="form-control" formControlName="yearOfPassing">
-              <option value="">--Select--</option>
-              <option *ngFor="let passingYear of yearOfPassingArray" value={{passingYear.year}}>
-                {{passingYear.year}}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="institute"> Institution </label>
-            <input type="text" class="form-control" id="institution" placeholder="Institute" formControlName="institution">
-          </div>
-          <div class="form-group">
-            <label for="institute"> Percentage </label>
-            <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="institute"> Institution </label>
+                <input type="text" class="form-control" id="institution" placeholder="Institute" formControlName="institution">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="institute"> Percentage </label>
+                <input type="text" class="form-control" id="percentage" placeholder="Percentage" formControlName="percentage"
+                  (keyup)="onlyPercentage($event)">
+              </div>
+            </div>
           </div>
           <div class="form-group" *ngIf="addEducationButton">
-            <input type="button" class="btn btn-default" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
+            <input type="button" class="btn btn-primary pull-right mb-2" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
           </div>
           <div class="form-group" *ngIf="updateEducationButton">
             <input type="button" class="btn btn-default" id="btnUpdateNewEducationDetails" value="Update" (click)="fn_updateNewCourse()">
@@ -170,7 +227,7 @@
                   <th>Course</th>
                   <th>Year of Passing (YYYY)</th>
                   <th>School/College/University</th>
-                  <th>Percentage %</th>
+                  <th>Percentage (%)</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -192,14 +249,14 @@
                     <label>{{educationField.percentage}}</label>
                   </td>
                   <td>
-                    <button class="btn btn-default" type="button" (click)="fn_editCourse(i)">Edit</button>
-                    <button class="btn btn-default" type="button" (click)="fn_deleteCourse(i)">Delete</button>
+                    <button class="btn btn-default btn-md" type="button" (click)="fn_editCourse(i)">Edit</button>
+                    <button class="btn btn-default btn-md ml-3" type="button" (click)="fn_deleteCourse(i)">Delete</button>
                   </td>
                 </tr>
               </tbody>
             </table>
             <div class="form-group">
-              <label for="Interest">Interest: </label><span style="color:red">*</span> <br>
+              <label for="Interest">Interest</label><span style="color:red">*</span> <br>
               <div *ngFor="let interest of interestArray; let i=index" class="form-check form-check-inline">
                 <label>
                   <input class="mx-1" type="checkbox" [value]="interest.value" (change)="fn_onInterestChange($event)"
@@ -209,36 +266,26 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="other-details"> Note (If any): </label>
+              <label for="other-details"> Note (optional) </label>
               <textarea class="form-control" id="note" formControlName="note"></textarea>
             </div>
           </div>
         </div>
-        <div class="sections">
+        <!-- <div class="sections">
           <div class="section-heading">
             <h4>Login Details</h4>
           </div>
-          <div class="form-group">
-            <label for="email">Email :</label><span style="color:red">*</span>
-            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email"
-              (ngModelChange)="fn_checkEmail($event)">
-            <div *ngIf="emailExist; then thenBlock;"> </div>
-            <ng-template #thenBlock>
-              <div><span style="color:red">Email is already exist.</span></div>
-            </ng-template>
-            <app-field-error-display [displayError]="isFieldValid(employeeForm, 'email')" errorMsg="Enter valid email id">
-            </app-field-error-display>
-          </div>
+
           <div class="form-group">
             <label for="password">Password :</label><span style="color:red">*</span>
             <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
             <app-field-error-display [displayError]="isFieldValid(employeeForm, 'password')" errorMsg="Enter valid password">
             </app-field-error-display>
           </div>
-        </div>
+        </div> -->
         <div class="btn-sections">
-          <button id="btnSubmit" class="btn btn-primary btn-md">Submit</button>
-          <button type="button" class="btn btn-default btn-md ml-3" (click)="fn_resetEmployeeDetails()">Reset</button>
+          <button id="btnSubmit" class="btn btn-primary btn-md pull-right">Save</button>
+          <button type="button" class="btn btn-default btn-md ml-3 pull-right mr-2" (click)="fn_resetEmployeeDetails()">Reset</button>
         </div>
       </form>
     </div>

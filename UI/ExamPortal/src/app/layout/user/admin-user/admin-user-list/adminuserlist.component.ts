@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 interface paginationModel {
   pageNumber: number;
@@ -24,17 +25,26 @@ export class AdminUserListComponent implements OnInit {
     pageSize: 10,
   };
 
-  public url = 'api/User/GetUsers';
+  public adminModel: any = {
+    "totalRecords": 0,
+    "pageSize": 10,
+    "pageNumber": 1
+  }
 
-
+  public getUserurl = 'api/User/GetUsers';
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
-  public employeeList = [];
-  toastr: any;
-  constructor(public router: Router, private CommonService: commonService, public http: Http) { }
+  public userList = [];
+  public statusUrl: any;
+  constructor( private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+
+  ngOnInit() {
+    this.fn_GetAdminUserList();
+  }
+
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.params.pageNumber = 1;
@@ -51,39 +61,54 @@ export class AdminUserListComponent implements OnInit {
 
   // Searching
   searchRecord(event: any): void {
-  }
-
-  ngOnInit() {
-    this.fn_GetAdminUserList();
+    if (event.keyCode == 13) {
+      this.adminModel.pageNumber = 1;
+      this.adminModel.pageSize = 10;
+      this.adminModel.filter = event.target.value;
+      this.fn_GetAdminUserList();
+    }
   }
 
   fn_GetAdminUserList() {
-    const prop: paginationModel = {
-      pageNumber: parseInt(this.params.pageNumber),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
-    this.CommonService.fn_PostWithData(this.params, this.url).subscribe((result: any) => {
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(this.adminModel, this.getUserurl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.employeeList = rs.data;
+        this.ngxService.stop();
+        this.userList = rs.data;
       }
       else {
       }
     });
-
-    // this.CommonService.fn_Get(url).subscribe(
-    //   (data: any) => {
-    //       this.employeeList = data.data;
-    //   },
-    //   err => console.error(err),
-    //   () => {}
-    // );
   }
 
-  fn_getEmployee(id) {
-
+  // function to change isActive status
+  fn_ChangeStatus(id, isActive) {
+    debugger;
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to change the status!',
+      buttonsStyling: true,
+      confirmButtonClass: 'btn btn-success',
+      showCancelButton: true,
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Yes'
+    }).then(x => {
+      if (x.value == true) {
+        if (isActive == true) {
+          this.statusUrl = 'api/User/InactivateUser';
+        }
+        else {
+          this.statusUrl = 'api/User/ActivateUser';
+        }
+        const adminStatusModel = {
+          "id": id,
+        }
+        this.fn_saveStatusChange(this.statusUrl, adminStatusModel);
+      }
+    });
   }
+
   fn_deleteAdminUser(Id) {
     if (Id != null) {
       swal({
@@ -96,7 +121,7 @@ export class AdminUserListComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!'
       }).then(x => {
         if (x.value = true) {
-          const url = 'api/User/InactivateUser';
+          const url = 'api/User/DeleteUser';
           const model = {
             id: ''
           };
@@ -112,8 +137,21 @@ export class AdminUserListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((result.message = 'Success')) {
-        this.toastr.success('User\'s details deleted successfully!');
+        this.toastr.success('Users details deleted successfully!');
         this.fn_GetAdminUserList();
+      }
+    });
+  }
+
+  //function to save status change
+  fn_saveStatusChange(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.fn_GetAdminUserList();
+      }
+      else {
+
       }
     });
   }

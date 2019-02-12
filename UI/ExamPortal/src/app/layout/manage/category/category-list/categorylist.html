@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <h1 class="font-weight-bold h3">Question Categories</h1>
+    <h1 class="font-weight-bold h3 mb-0">Question Categories</h1>
   </div>
   <div class="datatable-header">
     <div class="mx-1 row justify-content-between">
@@ -16,14 +16,15 @@
         </div>
       </div>
       <div class="col">
-        <button [routerLink]="['/manage/addcategory']" title="Add Question" class="btn-primary btn btn-md">Add
+        <button type="button" data-toggle="modal" data-target="#addModal" title="Add Question" class="btn-primary btn btn-md"
+          (click)="frmReset()">
+          Add
         </button>
       </div>
       <div class="col-md-3">
-        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
-        <a href="#" class="search-icon">
-          <i class="fa fa-search"></i>
-        </a>
+        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+          class="form-control" />
+        <i class="fa fa-search search-icon pt-1"></i>
       </div>
     </div>
   </div>
@@ -31,27 +32,30 @@
     <table class="table table-hover table-bordered table-striped">
       <thead>
         <tr>
-          <th class="th-width"> Sr.</th>
+          <th class="th-width" (click)="expression"> Sr.</th>
           <th> Title</th>
           <th> Description </th>
           <th class="th-width"> Active </th>
-          <th class="th-width-action"> Action</th>
+          <th class="th-width-action-2"> Action</th>
         </tr>
       </thead>
       <tbody>
+        <ngx-ui-loader></ngx-ui-loader>
         <tr *ngFor="let category of categoryList; let i = index">
-          <td>{{(categoryModel.pageNumber-1)*10 + i +1 }}</td>
-          <td>{{ category.name}}</td>
-          <td> {{ category.description }} </td>
-          <td>
+          <td data-toggle="modal" data-target="#editModal" (click)="fn_GetCategoryById(category.id)">{{(categoryModel.pageNumber-1)*10
+            + i +1 }}</td>
+          <td class="td-width-title-description" data-toggle="modal" data-target="#editModal" (click)="fn_GetCategoryById(category.id)">{{ category.name}}</td>
+          <td class="td-width-title-description" data-toggle="modal" data-target="#editModal" (click)="fn_GetCategoryById(category.id)"> {{
+            category.description}} </td>
+          <td data-toggle="modal" data-target="#editModal" (click)="fn_GetCategoryById(category.id)">
             <i class="fa" [ngClass]="{'fa-check text-success': category.isActive, 'fa-times text-danger': !category.isActive}"
               aria-hidden="true">
             </i>
           </td>
           <td>
-            <button title="Edit" class=" btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editCategory', category.id]">
+            <!-- <button title="Edit" class=" btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editCategory', category.id]">
               <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-            </button>
+            </button> -->
             <button title="Change Status" class="mx-1 btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(category.id, category.isActive)">
               <i class="fa" [ngClass]="{'fa-toggle-on text-success': category.isActive, 'fa-toggle-off text-danger': !category.isActive}"
                 aria-hidden="true"></i>
@@ -68,4 +72,80 @@
     [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
     lastText="LAST">
   </pagination>
+</div>
+<!-- Modal for Add Question Category -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionCategory" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addQuestionCategory">Add Question Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="categoryForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="categoryTitle">Title</label>
+            <input formControlName="categoryTitle" type="text" class="form-control" id="categoryTitle" aria-describedby="titleHelp"
+              placeholder="Enter Title">
+            <div *ngIf="categoryTitle.touched && categoryTitle.errors" class="alert alert-danger">
+              Question category title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="categoryDescription">Description</label>
+            <textarea formControlName="categoryDescription" type="text" class="form-control" id="categoryDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="categoryDescription.touched && categoryDescription.invalid"   class="alert alert-danger">
+              Question category description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!categoryForm.valid" (click)="fn_saveCategory(categoryForm)"
+            data-dismiss="modal">Submit</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal for Edit Question Category -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editQuestionCategory" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editQuestionCategory">Edit Question Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="categoryForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="categoryTitle">Title</label>
+            <input formControlName="categoryTitle" type="text" class="form-control" id="categoryTitle" aria-describedby="titleHelp"
+              placeholder="Enter Title">
+            <div *ngIf="categoryTitle.touched && categoryTitle.errors" class="alert alert-danger">
+              Question category title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="categoryDescription">Description</label>
+            <textarea formControlName="categoryDescription" type="text" class="form-control" id="categoryDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="categoryDescription.touched && categoryDescription.invalid"   class="alert alert-danger">
+              Question category description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!categoryForm.valid" (click)="fn_updateCategory(categoryForm)"
+            data-dismiss="modal">Update</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

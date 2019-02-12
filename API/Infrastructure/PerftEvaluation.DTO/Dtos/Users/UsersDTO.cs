@@ -51,9 +51,13 @@ namespace PerftEvaluation.DTO.Dtos {
         [Required]
         public string TeamId { get; set; }
         public string Note { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
-        public MastersDTO Masters { get; set; }
+        public MastersDTO Team { get; set; }
+
+        public MastersDTO  Group { get; set; }
+
+        public MastersDTO  Designation { get; set; }
     }
 }

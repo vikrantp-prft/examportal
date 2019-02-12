@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
 import { $ } from 'protractor';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'employee-add-update',
@@ -27,6 +28,8 @@ export class AddEmployeeComponent implements OnInit {
   public fetchIndex: any;
   public updateEducationButton: boolean = false;
   public addEducationButton: boolean = true;
+  public courseName: any;
+  public customPatterns = {'0': { pattern: new RegExp('\[a-zA-Z\]')}};
   public yearOfPassingArray: Array<any> = [
     { year: 1991 }, { year: 1992 }, { year: 1993 }, { year: 1994 }, { year: 1995 }, { year: 1996 }, { year: 1997 }, { year: 1998 }, { year: 1999 }, { year: 2000 },
     { year: 2001 }, { year: 2002 }, { year: 2003 }, { year: 2004 }, { year: 2005 }, { year: 2006 }, { year: 2007 }, { year: 2008 }, { year: 2009 }, { year: 2010 },
@@ -47,14 +50,14 @@ export class AddEmployeeComponent implements OnInit {
       lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
       dob: [null, [Validators.required]],
       mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
-      address1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
+      address1: [null, [Validators.required, Validators.maxLength(100)]],
       address2: new FormControl(''),
-      city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(20)]],
+      city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
       stateId: [null, [Validators.required]],
       pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
-      currentAddress1: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(50)]],
+      currentAddress1: [null, [Validators.required, Validators.maxLength(100)]],
       currentAddress2: new FormControl(''),
-      currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(20)]],
+      currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
       currentStateId: [null, [Validators.required]],
       currentPincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
       note: new FormControl(''),
@@ -89,15 +92,10 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   // Save Employee details function
-
   fn_saveEmployee(value) {
     if (this.employeeForm.valid) {
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
-        return false;
-      }
-      else if (this.employeeForm.controls.interest.value.length == 0) {
-        this.toastr.error('Please select atleast 1 interest');
         return false;
       }
       else if (this.emailExist == true) {
@@ -153,8 +151,19 @@ export class AddEmployeeComponent implements OnInit {
       const courseResult = result;
       if (courseResult.statusCode === 200) {
         this.courseArray = courseResult.data;
+        console.log('this.courseArray', this.courseArray);
       } else {
         this.courseArray = null;
+      }
+    });
+  }
+
+  //get course name by courseId
+  fn_getCourseNameById(courseId) {
+    this.courseArray.forEach(element => {
+      if (element.id == courseId) {
+        this.courseName = element.name;
+        return true;
       }
     });
   }
@@ -175,10 +184,11 @@ export class AddEmployeeComponent implements OnInit {
   //function to add new course
   fn_addNewCourse() {
     this.courseFlag = false;
+    this.fn_getCourseNameById(this.employeeForm.controls.courseId.value);
     if (this.fn_validateEducationFields()) {
       let newCourseModel = {
         courseId: this.employeeForm.controls.courseId.value,
-        course: this.selectedCourse,
+        course: this.courseName,
         yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
         institution: this.employeeForm.controls.institution.value,
         percentage: this.employeeForm.controls.percentage.value
@@ -209,37 +219,39 @@ export class AddEmployeeComponent implements OnInit {
   //update selected course
   fn_updateNewCourse() {
     this.courseFlag = false;
-    let oldCourseModel = {
-      courseId: this.employeeForm.controls.courseId.value,
-      course: this.selectedCourse,
-      yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
-      institution: this.employeeForm.controls.institution.value,
-      percentage: this.employeeForm.controls.percentage.value
-    }
-    for (var i = 0; i < this.educationArray.length; i++) {
-      if (i != this.fetchIndex) {
-        if (this.educationArray[i].courseId == oldCourseModel.courseId) {
-          this.toastr.error('Course is already added');
-          this.courseFlag = true;
-          this.fn_resetEducationDetails();
-          this.addEducationButton = true;
-          this.updateEducationButton = false;
-          return false;
+    this.fn_getCourseNameById(this.employeeForm.controls.courseId.value);
+    if (this.fn_validateEducationFields()) {
+      let oldCourseModel = {
+        courseId: this.employeeForm.controls.courseId.value,
+        course: this.courseName,
+        yearOfPassing: this.employeeForm.controls.yearOfPassing.value,
+        institution: this.employeeForm.controls.institution.value,
+        percentage: this.employeeForm.controls.percentage.value
+      }
+      for (var i = 0; i < this.educationArray.length; i++) {
+        if (i != this.fetchIndex) {
+          if (this.educationArray[i].courseId == oldCourseModel.courseId) {
+            this.toastr.error('Course is already added');
+            this.courseFlag = true;
+            this.fn_resetEducationDetails();
+            this.addEducationButton = true;
+            this.updateEducationButton = false;
+            return false;
+          }
         }
       }
+      if (this.courseFlag == false) {
+        this.educationArray[this.fetchIndex].courseId = oldCourseModel.courseId;
+        this.educationArray[this.fetchIndex].course = oldCourseModel.course;
+        this.educationArray[this.fetchIndex].yearOfPassing = oldCourseModel.yearOfPassing;
+        this.educationArray[this.fetchIndex].institution = oldCourseModel.institution;
+        this.educationArray[this.fetchIndex].percentage = oldCourseModel.percentage;
+        this.fn_resetEducationDetails();
+        this.addEducationButton = true;
+        this.updateEducationButton = false;
+        return true;
+      }
     }
-    if (this.courseFlag == false) {
-      this.educationArray[this.fetchIndex].courseId = oldCourseModel.courseId;
-      this.educationArray[this.fetchIndex].course = oldCourseModel.course;
-      this.educationArray[this.fetchIndex].yearOfPassing = oldCourseModel.yearOfPassing;
-      this.educationArray[this.fetchIndex].institution = oldCourseModel.institution;
-      this.educationArray[this.fetchIndex].percentage = oldCourseModel.percentage;
-      this.fn_resetEducationDetails();
-      this.addEducationButton = true;
-      this.updateEducationButton = false;
-      return true;
-    }
-
   }
 
   //Get selected course value and text
@@ -251,9 +263,12 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   //delete course from table
-  fn_deleteCourse(index) {
-    this.educationArray.splice(index, 1);
-  }
+  // fn_deleteCourse(index) {
+  //   this.educationArray.splice(index, 1);
+  //   this.addEducationButton = true;
+  //   this.updateEducationButton = false;
+  //   this.fn_resetEducationDetails();
+  // }
 
   //fetch selected course
   fn_editCourse(index) {
@@ -266,13 +281,15 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm.controls.percentage.setValue(this.educationArray[index].percentage);
   }
 
+  //validate educartional details
   fn_validateEducationFields() {
-    if (this.employeeForm.controls.courseId.value == null
-      || (this.employeeForm.controls.yearOfPassing.value == null)
-      || (this.employeeForm.controls.institution.invalid == true)
-      || (this.employeeForm.controls.percentage.invalid == true)
+    if (this.employeeForm.controls.courseId.value == ""
+      || this.employeeForm.controls.yearOfPassing.value == ""
+      || (this.employeeForm.controls.institution.value == "" || this.employeeForm.controls.institution.value == null)
+      || (this.employeeForm.controls.percentage.value == "" || this.employeeForm.controls.institution.value == null)
     ) {
       this.toastr.error('Enter valid all educational details');
+      //this.fn_resetEducationDetails();
       return false;
     }
     else {
@@ -280,9 +297,20 @@ export class AddEmployeeComponent implements OnInit {
     }
   }
 
+  //percentage validation
+  onlyPercentage(event) {
+    debugger;
+    var percentagePattern = appConfig.pattern.PERCENTAGE;
+    if (percentagePattern.test(event.target.value)) {
+      return true;
+    } else {
+      this.employeeForm.controls.percentage.setValue("");
+      return false;
+    }
+  }
+
   // Interest check change function
   fn_onInterestChange(event) {
-
     const checkedInterestArray: FormArray = this.employeeForm.get('interest') as FormArray;
     /* Selected */
     if (event.target.checked) {
@@ -333,7 +361,7 @@ export class AddEmployeeComponent implements OnInit {
 
   fn_resetEducationDetails() {
     this.employeeForm.controls.courseId.setValue("");
-    this.employeeForm.controls.yearOfPassing.reset();
+    this.employeeForm.controls.yearOfPassing.setValue("");
     this.employeeForm.controls.percentage.reset();
     this.employeeForm.controls.institution.reset();
   }
@@ -358,6 +386,48 @@ export class AddEmployeeComponent implements OnInit {
         }
       }
     });
+  }
+
+  // function to display the alert before deleting the Order.
+  fn_deleteCourse(index) {
+    if (index != null) {
+      swal({
+        title: 'Are you sure?',
+        text: 'You want to delete the course!',
+        buttonsStyling: true,
+        confirmButtonClass: 'btn btn-success',
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(x => {
+        if (x.value == true) {
+          this.educationArray.splice(index, 1);
+          this.addEducationButton = true;
+          this.updateEducationButton = false;
+          this.fn_resetEducationDetails();
+        }
+      });
+    }
+  }
+
+  fn_setCurrentAddress(event)
+  {
+    if (event.target.checked) {
+      debugger;
+      console.log(this.employeeForm.controls.address1);
+      this.employeeForm.controls.currentAddress1.setValue(this.employeeForm.controls.address1.value);
+      this.employeeForm.controls.currentAddress2.setValue(this.employeeForm.controls.address2.value);
+      this.employeeForm.controls.currentCity.setValue(this.employeeForm.controls.city.value);
+      this.employeeForm.controls.currentStateId.setValue(this.employeeForm.controls.stateId.value);
+      this.employeeForm.controls.currentPincode.setValue(this.employeeForm.controls.pincode.value);
+    }
+    else{
+      this.employeeForm.controls.currentAddress1.reset();
+      this.employeeForm.controls.currentAddress2.reset();
+      this.employeeForm.controls.currentCity.reset();
+      this.employeeForm.controls.currentStateId.reset();
+      this.employeeForm.controls.currentPincode.reset();
+    }
   }
 }
 

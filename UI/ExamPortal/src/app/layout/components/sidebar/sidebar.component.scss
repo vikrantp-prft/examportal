@@ -1,13 +1,12 @@
 $topnav-background-color: #222;
 .sidebar {
     border-radius: 0;
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     top: 102px;
     left: 235px;
     width: 235px;
     margin-left: -235px;
-    margin-bottom: 48px;
     border: none;
     border-radius: 0;
     overflow-y: auto;
@@ -161,7 +160,7 @@ $topnav-background-color: #222;
 }
 
 .toggle-button {
-    position: fixed;
+    position: absolute;
     width: 236px;
     cursor: pointer;
     padding: 12px;

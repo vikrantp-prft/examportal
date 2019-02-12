@@ -1,77 +1,86 @@
 <div>
   <div class="row">
     <div class="col col-xl-12 col-lg-12">
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-header">
-          <h1 class="h3">Users</h1>
+          <h1 class="h3 font-weight-bold mb-0">Users</h1>
         </div>
-        <div class="col-md-12 col-xs-12 col-lg-12 datatable-header emp-list">
-          <div class="add-users-toolbar">
-
-            <div class="add-users">
-              <button [routerLink]="['/user/addadminuser']" class="btn-primary">Add New</button>
-            </div>
-            <!-- [(ngModel)]="params.searchString" -->
-            <!-- <div class=""> -->
-            <div class="input-group custom-search-form col-md-4 add-users-search">
-              <input type="text" class="form-control search-field" placeholder="search" (keyup)="searchRecord($event)">
-            </div>
-            <!-- </div>    -->
-
-            <div class="dataTables_length_code add-users">
-              <label><span>Show</span><select name="example_length" (change)="setRecordPerPage($event)">
+        <div class="datatable-header">
+          <div class="mx-1 row">
+            <div class="col-md-2">
+              <div class="">
+                <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
+                  <option selected>Per Page</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
-                </select> entries</label>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <button [routerLink]="['/user/addadminuser']" class="btn btn-md btn-primary" title="Add User">
+                Add
+              </button>
+            </div>
+            <div class="col-md-3">
+              <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+                class="form-control" />
+              <a href="#" class="search-icon">
+                <i class="fa fa-search"></i>
+              </a>
             </div>
           </div>
-
         </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover table-striped">
+        <div class="card-body pb-0 table-responsive">
+          <table class="table table-hover table-striped  table-bordered">
             <thead>
               <tr>
-                <th>SR. NO.</th>
+                <th>Sr.</th>
                 <th>Name</th>
-                <th>User Name</th>
-                <th>User Group</th>
                 <th>Email</th>
-                <th>Mobile</th>
+                <th>Team</th>
+                <th>Active</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody *ngFor="let admin of employeeList let i=index">
-              <tr>
-                <td>{{i+1}}</td>
-                <td>{{admin.firstName}} {{admin.lastName}}</td>
-                <td>{{admin.email}}</td>
-                <td>{{admin.group}}</td>
-                <td>{{admin.email}}</td>
-                <td>{{admin.mobile}}</td>
+            <tbody>
+              <ngx-ui-loader></ngx-ui-loader>
+              <tr *ngFor="let user of userList; let i = index">
+                <td [routerLink]="['/user/updateadmin', user.id]">{{(adminModel.pageNumber-1)*10 + i +1 }}</td>
+                <td [routerLink]="['/user/updateadmin', user.id]">{{user.firstName}} {{user.lastName}}</td>
+                <td [routerLink]="['/user/updateadmin', user.id]">{{user.email}}</td>
+                <td [routerLink]="['/user/updateadmin', user.id]">
+                  <!--<div *ngIf="emp.team!=null">
+                    {{user.team.name}}
+                  </div> -->
+                </td>
+                <td [routerLink]="['/user/updateadmin', user.id]">
+                  <i class="fa" [ngClass]="{'fa-check text-success': user.isActive, 'fa-times text-danger': !user.isActive}"
+                    aria-hidden="true">
+                  </i>
+                </td>
                 <td>
-                  <span>
-                    <button type="button" rel="tooltip">
-                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    </button>
-                  </span>
-                  <span>
-                    <button type="button" rel="tooltip" (click)="fn_deleteAdminUser(admin.id)">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                  </span>
+                  <!-- <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateadmin', user.id]"
+                    title="Edit Admin">
+                    <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
+                  </button>&nbsp; -->
+                  <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(user.id, user.isActive)">
+                    <i class="fa" [ngClass]="{'fa-toggle-on text-success': user.isActive, 'fa-toggle-off text-danger': !user.isActive}"
+                      aria-hidden="true"></i>
+                  </button>
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteAdminUser(user.id)" title="Delete Admin">
+                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- [(ngModel)]="params.currentPage" -->
-        <!-- [totalItems]="params.totalItems" -->
-        <pagination class="pull-right" [totalItems]="10" [itemsPerPage]="params.pageSize" (pageChanged)="pageChanged($event)"
-          [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
-          lastText="LAST"></pagination>
-      </div>
+        <pagination class="pull-right pr-2" [totalItems]="adminModel.totalRecords" [itemsPerPage]="adminModel.pageSize"
+        (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+        nextText="NEXT" firstText="FIRST" lastText="LAST"></pagination>
+    </div>
     </div>
   </div>
 </div>

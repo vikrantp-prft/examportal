@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'question-list',
@@ -19,6 +20,7 @@ export class questionListComponent implements OnInit {
   public questionForm: FormGroup;
   public categoryList = [];
   public departmentsUrl = 'api/Dropdown/Categories';
+  public formTitle: string = "Add";
 
   singleSelectFlag: boolean;
   multipleSelectFlag: boolean;
@@ -67,7 +69,7 @@ export class questionListComponent implements OnInit {
     id: ''
   };
 
-  constructor(public fb: FormBuilder, private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
+  constructor(private ngxService: NgxUiLoaderService, public fb: FormBuilder, private route: ActivatedRoute, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) {
     this.route.params.subscribe(params1 => {
       this.examID = params1['id'];
     });
@@ -156,15 +158,26 @@ export class questionListComponent implements OnInit {
   };
   // Function to get list of Exam
   getQuestionsList() {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(this.questionModel, this.questionListUrl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.questionList = rs.data;
         this.totalItems = rs.totalRecords;
       }
       else {
       }
     });
+  }
+
+  getAddFormTitle(){
+    this.frmReset();
+    this.formTitle = 'Add';
+  }
+
+  frmReset() {
+    this.questionForm.reset();
   }
 
   deleteQuestion(questionID) {
@@ -180,6 +193,7 @@ export class questionListComponent implements OnInit {
       }).then(x => {
         if (x.value == true) {
           this.deleteQuestionConfirm(questionID);
+          this.formTitle = "Add";
         }
       });
     }
@@ -191,6 +205,7 @@ export class questionListComponent implements OnInit {
       if (rs.statusCode == 200) {
         this.toastr.success('Question Deleted Successfully');
         this.getQuestionsList();
+        
       }
       else {
         this.toastr.error('Failed to Delete Question');
@@ -201,6 +216,7 @@ export class questionListComponent implements OnInit {
   }
 
   editQuestion(questionID) {
+    this.formTitle = "Edit";
     this.resetAll();
     this.getQuestionDetails(questionID);
     this.questionForm.controls.id.setValue(questionID);

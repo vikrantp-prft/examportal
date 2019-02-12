@@ -5,6 +5,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface paginationModel {
   pageNumber: number;
   pageSize: number;
@@ -19,13 +20,7 @@ interface paginationModel {
 export class EmployeeListComponent implements OnInit {
 
   public employeeModel: any = {
-    // "id": "string",
-    // "pageSize": 0,
-    // "pageNumber": 0,
     "totalRecords": 0,
-    // "filter": "string",
-    // "sortBy": "string",
-    // "isDescending": true
     "pageSize": 10,
     "pageNumber": 1
   }
@@ -40,7 +35,7 @@ export class EmployeeListComponent implements OnInit {
 
   // Constructor
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor( private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
@@ -75,20 +70,17 @@ export class EmployeeListComponent implements OnInit {
 
   // Function to get list of employees
   fn_GetEmployeeList() {
+    this.ngxService.start();
     const url = 'api/Employee/GetEmployees';
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
         this.employeeList = data.data;
+        this.ngxService.stop();
         this.employeeModel.totalRecords = data.totalRecords;
       },
       err => console.error(err),
       () => { }
     );
-  }
-
-  // Function to get employee ID
-  fn_getEmployee(empid) {
-    this.router.navigate(['/user/updateemployee'], { queryParams: { _empid: empid } });
   }
 
   // function to display the alert before deleting the Order.

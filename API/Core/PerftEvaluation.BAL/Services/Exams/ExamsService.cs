@@ -54,7 +54,7 @@ namespace PerftEvaluation.BAL.Services {
                 examsDTO.ShuffleQuestions = item.ShuffleQuestions;
                 examsDTO.IsPaperPublic = item.IsPaperPublic;
                 examsDTO.TotalQuestions = item.TotalQuestions;
-                examsDTO.Team = this._mapper.Map<MastersDTO> (_masterRepository.GetAllMasters ().AsQueryable ().Where (x => x.Id == item.TeamId).FirstOrDefault ());
+                examsDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
 
                 examJoin.Add (examsDTO);
             }

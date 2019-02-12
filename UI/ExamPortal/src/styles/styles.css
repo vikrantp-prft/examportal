@@ -1,13 +1,48 @@
 @import url('https://cdn.syncfusion.com/ej2/material.css');
 
-.dataTables_length_code{float:left;width: 100%;}
-.dataTables_length_code label{float:left;width: 100%;}
-.dataTables_length_code label span{float: left;margin-right: 3px;}
-.dataTables_length_code select{float:left;margin-top:0px !important;color:#000;border-top: none;border-left: none;border-right: none;width: 75px;-webkit-appearance: none;-moz-appearance: none; padding-left: 25px;}
-.datatable-header{padding-top: 20px;}
-.prft-logo { width: 48%;height: auto;}
-.required {color: red;}
-.is-invalid{}
+.dataTables_length_code {
+  float: left;
+  width: 100%;
+}
+
+.dataTables_length_code label {
+  float: left;
+  width: 100%;
+}
+
+.dataTables_length_code label span {
+  float: left;
+  margin-right: 3px;
+}
+
+.dataTables_length_code select {
+  float: left;
+  margin-top: 0px !important;
+  color: #000;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 75px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-left: 25px;
+}
+
+.datatable-header {
+  padding-top: 20px;
+}
+
+.prft-logo {
+  width: 48%;
+  height: auto;
+}
+
+.required {
+  color: red;
+}
+
+.is-invalid {}
+
 /*Show red border if kept the input empty after touching*/
 /* .ng-touched.ng-invalid-required {
 	border-color: red;
@@ -25,7 +60,7 @@
 } */
 
 .ng-invalid.ng-touched {
-    border-color: red;
+  border-color: red;
 }
 
 .search-icon {
@@ -33,26 +68,31 @@
   top: 40%;
   right: 25px;
   margin-top: -10px;
+  color: lightblue;
 }
 
 .th-width {
   width: 50px;
 }
 
-.th-width-action{
+.th-width-action {
   width: 165px;
 }
 
-table td{
-    display: table-cell;
-    vertical-align: middle !important;
+table td {
+  display: table-cell;
+  vertical-align: middle !important;
 }
 
-h1{
+h1 {
   display: inline-block;
 }
 
-.back-btn{
+.back-btn {
   display: inline-block;
   float: right;
+}
+
+.question-upload {
+  padding-top: 39px;
 }

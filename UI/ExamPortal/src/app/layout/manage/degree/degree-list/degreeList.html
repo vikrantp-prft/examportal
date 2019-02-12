@@ -18,11 +18,13 @@
         </div>
       </div>
       <div class="col">
-        <button title="Add Degree" [routerLink]="['/manage/addDegree']" class="btn btn-md btn-primary">Add
+        <button title="Add Degree" data-toggle="modal" data-target="#addModal" class="btn btn-md btn-primary" 
+          (click)="frmReset()">Add
         </button>
       </div>
       <div class="col-md-3">
-        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search" class="form-control" />
+        <input (keyup.enter)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
+          class="form-control" />
         <a href="#" class="search-icon">
           <i class="fa fa-search"></i>
         </a>
@@ -40,19 +42,20 @@
           </tr>
         </thead>
         <tbody>
+          <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let degree of degreeList; let i = index">
-            <td>{{(degreeModel.pageNumber-1)*10 + i +1 }}</td>
-            <td>{{degree.name | slice:0:20}}</td>
-            <td>{{degree.description | slice:0:25}}</td>
-            <td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{(degreeModel.pageNumber-1)*10 + i +1 }}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.name | slice:0:20}}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.description | slice:0:25}}</td>
+            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">
               <i class="fa" [ngClass]="{'fa-check text-success': degree.isActive, 'fa-times text-danger': !degree.isActive}"
                 aria-hidden="true">
               </i>
             </td>
             <td>
-              <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', degree.id]">
+              <!-- <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', degree.id]">
                 <i class="fa fa-pencil-square-o text-datk" aria-hidden="true"></i>
-              </button>
+              </button> -->
               <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(degree.id, degree.isActive)">
                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': degree.isActive, 'fa-toggle-off text-danger': !degree.isActive}"
                   aria-hidden="true"></i>
@@ -69,4 +72,82 @@
       [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
       lastText="LAST"></pagination>
   </div>
+</div>
+
+<!-- Modal for Add Degree Category -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addDegree" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDegree">Add Degree</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="degreeForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="degreeTitle">Title</label>
+            <input formControlName="degreeTitle" type="text" class="form-control" id="degreeTitle" aria-describedby="titleHelp"
+              placeholder="Enter Title">
+            <div *ngIf="degreeTitle.touched && degreeTitle.errors" class="alert alert-danger">
+              Degree title is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="degreeDescription">Description</label>
+            <textarea formControlName="degreeDescription" type="text" class="form-control" id="degreeDescription"
+              placeholder="Enter Description"></textarea>
+            <div *ngIf="degreeDescription.touched && degreeDescription.invalid"   class="alert alert-danger">
+              Degree description is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!degreeForm.valid" (click)="fn_saveDegree(degreeForm)"
+            data-dismiss="modal">Submit</button>
+          <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Edit Degree Category -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editDegree" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDegree">Edit Degree</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="degreeForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="degreeTitle">Title</label>
+                        <input formControlName="degreeTitle" type="text" class="form-control" id="degreeTitle"
+                            aria-describedby="titleHelp" placeholder="Enter Title">
+                        <div *ngIf="degreeTitle.touched && degreeTitle.errors" class="alert alert-danger">
+                           Degree title is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="degreeDescription">Description</label>
+                        <textarea formControlName="degreeDescription" type="text" class="form-control" id="degreeDescription"
+                            placeholder="Enter Description"></textarea>
+                        <div *ngIf="degreeDescription.touched && degreeDescription.invalid"   class="alert alert-danger">
+                            Degree description is required
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!degreeForm.valid" (click)="fn_updateDegree(degreeForm)"
+                        data-dismiss="modal">Update</button>
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

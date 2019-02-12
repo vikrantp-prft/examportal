@@ -40,10 +40,11 @@
           </tr>
         </thead>
         <tbody>
+          <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let exam of examList; let i = index">
             <td>{{(params.pageNumber-1)*10 + i +1 }}</td>
             <td>{{exam.title | slice:0:35}}</td>
-            <td>{{exam.team.name}}</td>
+            <td>{{exam.team==null? 'All':exam.team.name}}</td>
             <td>{{exam.examDurationHours}} Hrs {{exam.examDurationMinutes}} Mins</td>
             <td>{{exam.totalQuestions}}</td>
             <td>

@@ -16,34 +16,42 @@
 </div> -->
 <!-- {{question |json}} -->
 <!-- <div *ngFor="let question of quizes;" let i="index"> -->
-    <!-- <div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}.</div> -->
-    <form>
-        <!-- <div class="row">
+<!-- <div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}.</div> -->
+<form>
+  <!-- <div class="row">
             <div class="card col-md-12 col-xs-12 col-lg-12"> -->
-              <div class="card-header">
-                <h1>{{examDetail.title}}</h1>
-              </div>
-              
-    <h2 style="padding-top: 20px">
-      <!-- {{pager.index + 1}}. -->
-       <span [innerHTML]="question.question"></span></h2>
-    <div class="row text-left options">
-      <div class="col-md-6" *ngFor="let element of question.options">
-        <div class="option">
-          <label class="" [attr.for]="element.option">
-              <input id="{{element.option}}" type="checkbox"  />
-              {{element.option}}
-          </label>
-        </div>
+  <div class="card-header">
+    <h1>{{examDetail.title}}</h1>
+  </div>
+
+  <h2 style="padding-top: 20px">
+    <!-- {{pager.index + 1}}. -->
+    <ul *ngFor="let object of questionList">
+      <li>{{object.key}}
+        <div class="btn-link" *ngFor="let item of object.value; let i = index" (click)="getQuestion(item.id)">{{i+1}}</div>
+      </li>
+    </ul>
+
+    <span [innerHTML]="question.question"></span>
+  </h2>
+  <div class="row text-left options">
+    <div class="col-md-6" *ngFor="let element of question.options">
+      <div class="option">
+        <label class="" [attr.for]="element.option">
+          <input id="{{element.option}}" type="{{optionTypes}}" />
+          {{element.option}}
+        </label>
       </div>
     </div>
-    <div style="padding-top: 20px">
-    <button (click) = "fn_previous()">< Previous</button>&nbsp;
-    <button (click) = "fn_next()">Save & Next ></button>&nbsp;
-    <button (click) = "fn_submit()">End Exam</button>
   </div>
-  </form>
+  <div style="padding-top: 20px">
+    <button (click)="fn_previous()">
+      < Previous</button>&nbsp; <button (click)="fn_next()">Save & Next >
+    </button>&nbsp;
+    <button (click)="fn_submit()">End Exam</button>
+  </div>
+</form>
 
-  <!-- [(ngModel)]="option.Selected"  -->
-  <!-- </div> -->
-  <!-- (change)="onSelect(question, option);" -->
+<!-- [(ngModel)]="option.Selected"  -->
+<!-- </div> -->
+<!-- (change)="onSelect(question, option);" -->

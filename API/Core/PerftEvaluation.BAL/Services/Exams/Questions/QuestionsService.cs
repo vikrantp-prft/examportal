@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -17,18 +18,41 @@ namespace PerftEvaluation.BAL.Services {
 
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
+        protected readonly IMasterRepository _masterRepository;
+        protected readonly IMasterService _masterService;
 
-        public QuestionsService (IQuestionsRepository questionsRepository, IMapper mapper) {
+        public QuestionsService (IQuestionsRepository questionsRepository, 
+                                IMapper mapper,
+                                IMasterRepository masterRepository,
+                                IMasterService masterService) {
             this._questionsRepository = questionsRepository;
             this._mapper = mapper;
+            this._masterRepository = masterRepository;
+            this._masterService = masterService;
         }
         public ResponseModel GetQuestionsByExamId (string examId, RequestModel requestModel) {
             //Filter & sort the data
             var filteredQuestions = this._questionsRepository.GetQuestionsByExamId (examId).AsQueryable ().SortAndFilter (requestModel, DbFilters.QuestionFilters);
             //Integrate pagination
             var questions = filteredQuestions.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+
+            List<QuestionsDTO> questionsJoin = new List<QuestionsDTO> ();
+            foreach (var item in questions) {
+                QuestionsDTO questionsDTO = new QuestionsDTO ();
+                questionsDTO.Id = item.Id;
+                questionsDTO.ExamId = item.ExamId;
+                questionsDTO.CategoryId = item.CategoryId;
+                questionsDTO.QuestionType = item.QuestionType;
+                questionsDTO.IsActive = item.IsActive;
+                questionsDTO.Question = item.Question;
+                questionsDTO.Options =  this._mapper.Map<List<OptionsDTO>>(item.Options);
+                questionsDTO.IsDeleted = item.IsDeleted;
+                questionsDTO.Category = _masterService.GetMasterById (item.CategoryId);
+
+                questionsJoin.Add (questionsDTO);
+            }
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<QuestionsDTO>> (questions), (filteredQuestions.Count () < 100 ? filteredQuestions.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, questionsJoin, (filteredQuestions.Count () < 100 ? filteredQuestions.Count () : 100));
         }
 
         public bool ActiveQuestions (string questionId) {
@@ -36,7 +60,21 @@ namespace PerftEvaluation.BAL.Services {
         }
 
         public QuestionsDTO GetQuestionById (string questionsId) {
-            return this._mapper.Map<QuestionsDTO> (this._questionsRepository.GetQuestionsById (questionsId));
+            var questions = this._questionsRepository.GetQuestionsById (questionsId);
+
+            QuestionsDTO questionsDTO = new QuestionsDTO ();
+                questionsDTO.Id = questions.Id;
+                questionsDTO.ExamId = questions.ExamId;
+                questionsDTO.CategoryId = questions.CategoryId;
+                questionsDTO.QuestionType = questions.QuestionType;
+                questionsDTO.IsActive = questions.IsActive;
+                questionsDTO.Question = questions.Question;
+                questionsDTO.Options = this._mapper.Map<List<OptionsDTO>>(questions.Options);;
+                questionsDTO.IsDeleted = questions.IsDeleted;
+                questionsDTO.Category = _masterService.GetMasterById (questions.CategoryId);
+
+            return questionsDTO;
+            
         }
 
         public bool InactiveQuestions (string questionId) {
