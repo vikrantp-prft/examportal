@@ -8,7 +8,7 @@ namespace PerftEvaluation.EmailServer.DI
     /// <summary>
     /// Dependency Injection Extension Class
     /// </summary>
-    public static class ServiceExtensions
+    public static class ServiceEmailExtensions
     {
         /// <summary>
         /// Register all the dependency classes
