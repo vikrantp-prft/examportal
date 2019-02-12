@@ -45,6 +45,7 @@
               </tr>
             </thead>
             <tbody>
+              <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let emp of employeeList; let i = index">
                 <td>{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
                 <td>{{emp.firstName}} {{emp.lastName}}</td>
@@ -78,7 +79,8 @@
         </div>
         <pagination class="pull-right pr-2" [totalItems]="employeeModel.totalRecords" [itemsPerPage]="employeeModel.pageSize"
           (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
-          nextText="NEXT" firstText="FIRST" lastText="LAST"></pagination>
+          nextText="NEXT" firstText="FIRST" lastText="LAST">
+        </pagination>
       </div>
     </div>
   </div>

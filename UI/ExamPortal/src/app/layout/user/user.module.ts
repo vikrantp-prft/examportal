@@ -17,9 +17,18 @@ import { UploadComponent } from './upload/upload.component';
 import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-error-display.module';
 import { AdminUserUpdateComponent } from './admin-user/admin-user-update/admin-user-update.component';
 import { GroupByPipe } from 'src/app/common/pipe/customPipe.pipe';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
-    imports: [CommonModule, UserRoutingModule, PaginationModule.forRoot(), FormsModule, ReactiveFormsModule, ErrorHandlingModule],
+    imports: [
+        CommonModule, 
+        UserRoutingModule, 
+        PaginationModule.forRoot(), 
+        FormsModule, 
+        ReactiveFormsModule, 
+        ErrorHandlingModule,
+        NgxUiLoaderModule
+    ],
     declarations: [UserComponent,
         EmployeeListComponent,
         AddEmployeeComponent,

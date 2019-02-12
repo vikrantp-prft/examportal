@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { commonService } from 'src/app/common/services/common.service';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 interface paginationModel {
   pageNumber: number;
@@ -38,7 +39,7 @@ export class AdminUserListComponent implements OnInit {
   public totalItems = 0;
   public userList = [];
   public statusUrl: any;
-  constructor(public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor( private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.fn_GetAdminUserList();
@@ -69,9 +70,11 @@ export class AdminUserListComponent implements OnInit {
   }
 
   fn_GetAdminUserList() {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(this.adminModel, this.getUserurl).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.userList = rs.data;
       }
       else {
