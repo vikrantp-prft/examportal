@@ -42,6 +42,21 @@ namespace PerftEvaluation.Api.Controllers
         }
 
 
+        //POST api/exams/GetUsersByExamId
+        /// <summary>
+        /// Get list of all Employees depending upon Exam ID
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route ("ListEmployeesByExamId")]
+        public IActionResult GetUsersByExamId (RequestModel requestModel) {
+            try {
+                return Ok (this._assignedExamsService.GetUsersByExamId (requestModel));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
         // POST api/exams/ActiveExamAssigned
         /// <summary>
         /// Assigned exam

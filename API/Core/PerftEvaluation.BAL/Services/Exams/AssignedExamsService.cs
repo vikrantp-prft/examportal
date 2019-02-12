@@ -14,6 +14,8 @@ namespace PerftEvaluation.BAL.Services
         protected readonly IAssignedExamsRepository _assignedExamsRepository;
         protected readonly IExamsRepository _examsRepository;
 
+        protected readonly IExamsService _examsService;
+
         protected readonly IEmployeeRepository _employeeRepository;
         protected readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
@@ -21,13 +23,15 @@ namespace PerftEvaluation.BAL.Services
                                     IAssignedExamsRepository assignedExamsRepository,
                                     IExamsRepository examsRepository,
                                     IEmployeeRepository employeeRepository,
-                                    IEmployeeService employeeService)
+                                    IEmployeeService employeeService,
+                                    IExamsService examsService)
         {
             this._mapper = mapper;
             this._assignedExamsRepository = assignedExamsRepository;
             this._examsRepository = examsRepository;
             this._employeeRepository = employeeRepository;
             this._employeeService = employeeService;
+            this._examsService = examsService;
         }
 
 
@@ -47,7 +51,9 @@ namespace PerftEvaluation.BAL.Services
                 examsDTO.ExamId = item.ExamId;
                 examsDTO.IsActive = item.IsActive;
                 examsDTO.IsDeleted = item.IsDeleted;
-                examsDTO.Exam = this._mapper.Map<ExamsDTO>(_examsRepository.GetExams().AsQueryable().Where(e => e.Id == item.ExamId).FirstOrDefault());
+                examsDTO.IsExamAssignedToEmployee = item.IsExamAssignedToEmployee;
+                examsDTO.IsEmployeeAssignedToExam = item.IsEmployeeAssignedToExam;
+                examsDTO.Exam = _examsService.GetExamsById(item.ExamId);
                 examsDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
 
                 examJoin.Add(examsDTO);
@@ -65,6 +71,38 @@ namespace PerftEvaluation.BAL.Services
         public bool InactiveExamAssigned(string examId)
         {
             return this._assignedExamsRepository.InactiveExamAssigned (examId);
+        }
+
+
+        /// <summary>
+        /// List of Employees that has been assigned to Exam
+        /// </summary>
+        public ResponseModel GetUsersByExamId(RequestModel requestModel)
+        {
+           //Filter & sort the data
+            var filteredUsers = this._assignedExamsRepository.GetAssignedUsersByExamId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.UserFilters);
+            //Integrate pagination
+            var users = filteredUsers.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+
+            List<AssignedExamsDTO> userJoin = new List<AssignedExamsDTO>();
+            foreach (var item in users)
+            {
+                AssignedExamsDTO usersDTO = new AssignedExamsDTO();
+                usersDTO.Id = item.Id;
+                usersDTO.UserId = item.UserId;
+                usersDTO.ExamId = item.ExamId;
+                usersDTO.IsActive = item.IsActive;
+                usersDTO.IsDeleted = item.IsDeleted;
+                usersDTO.IsExamAssignedToEmployee = item.IsExamAssignedToEmployee;
+                usersDTO.IsEmployeeAssignedToExam = item.IsEmployeeAssignedToExam;
+                usersDTO.Exam = _examsService.GetExamsById(item.ExamId);
+                usersDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
+
+                userJoin.Add(usersDTO);
+            }
+
+            //return object
+            return CommonResponse.OkResponse(requestModel, userJoin, (filteredUsers.Count() < 100 ? filteredUsers.Count() : 100));
         }
     }
 }

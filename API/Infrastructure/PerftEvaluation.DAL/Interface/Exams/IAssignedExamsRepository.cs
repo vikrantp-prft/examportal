@@ -10,10 +10,19 @@ namespace PerftEvaluation.DAL.Interface
     public interface IAssignedExamsRepository
     {
         /// <summary>
-        /// List of Exams by User ID
+        /// List of Exams by Employee ID
         /// </summary>
         /// <returns>Exams List</returns>
         IEnumerable<AssignedExams> GetAssignedExamsByUserId(string userId);
+
+
+        /// <summary>
+        /// List of Employees by Exam ID
+        /// </summary>
+        /// <returns>Employee List</returns>
+        IEnumerable<AssignedExams> GetAssignedUsersByExamId(string examId);
+
+
 
         /// <summary>
         /// Assigned Exams to an Employee
@@ -27,6 +36,6 @@ namespace PerftEvaluation.DAL.Interface
         /// </summary>
         /// <param name="examId"></param>
         /// <returns></returns>
-        bool InactiveExamAssigned(string examId);
+        bool InactiveExamAssigned(string examId);        
     }
 }

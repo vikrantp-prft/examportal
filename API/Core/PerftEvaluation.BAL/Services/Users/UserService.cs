@@ -79,9 +79,9 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.CreatedDate = item.CreatedDate;
                 usersDTO.ModifiedDate = item.ModifiedDate;
                 usersDTO.IsDeleted = item.IsDeleted;
-                usersDTO.Team = this._mapper.Map<MastersDTO>(_masterRepository.GetAllMasters().AsQueryable().Where(e => e.Id == item.TeamId).FirstOrDefault());
-                usersDTO.Group = this._mapper.Map<MastersDTO>(_masterRepository.GetAllMasters().AsQueryable().Where(e => e.Id == item.GroupId).FirstOrDefault());
-                usersDTO.Designation = this._mapper.Map<MastersDTO>(_masterRepository.GetAllMasters().AsQueryable().Where(e => e.Id == item.DesignationId).FirstOrDefault());
+                usersDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
+                usersDTO.Group = item.GroupId != null? _masterService.GetMasterById (item.GroupId) : null;
+                usersDTO.Designation = item.DesignationId != null? _masterService.GetMasterById (item.DesignationId) : null;
                 userJoin.Add(usersDTO);
             }
             //return object
@@ -132,10 +132,10 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.CreatedDate = user.CreatedDate;
                 usersDTO.ModifiedDate = user.ModifiedDate;
                 usersDTO.IsDeleted = user.IsDeleted;
-                usersDTO.Team = this._mapper.Map<MastersDTO>(_masterRepository.GetAllMasters().AsQueryable().Where(e => e.Id == user.TeamId).FirstOrDefault());
-                usersDTO.Group = this._mapper.Map<MastersDTO>(_masterRepository.GetAllMasters().AsQueryable().Where(e => e.Id == user.GroupId).FirstOrDefault());
-                usersDTO.Designation = this._mapper.Map<MastersDTO>(_masterRepository.GetAllMasters().AsQueryable().Where(e => e.Id == user.DesignationId).FirstOrDefault());
-            
+                usersDTO.Team = user.TeamId != null? _masterService.GetMasterById (user.TeamId) : null;
+                usersDTO.Group = user.GroupId != null? _masterService.GetMasterById (user.GroupId) : null;
+                usersDTO.Designation = user.DesignationId != null? _masterService.GetMasterById (user.DesignationId) : null;
+
                 return usersDTO;
         }
 

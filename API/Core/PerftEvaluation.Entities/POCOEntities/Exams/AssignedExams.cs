@@ -25,5 +25,16 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonDefaultValue(false)]
         [BsonElement ("isAttempted")]
         public bool IsAttempted { get; set; }
+
+        
+        [BsonDefaultValue(false)]
+        [BsonElement ("isExamAssignedToEmployee")]
+        public bool IsExamAssignedToEmployee { get; set; }
+
+
+        
+        [BsonDefaultValue(false)]
+        [BsonElement ("isEmployeeAssignedToExam")]
+        public bool IsEmployeeAssignedToExam { get; set; }
     }
 }

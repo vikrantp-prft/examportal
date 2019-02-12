@@ -14,6 +14,11 @@ namespace PerftEvaluation.BAL.Interfaces
         ResponseModel GetExamsByUserId (RequestModel requestModel);
 
         /// <summary>
+        /// List of Employees that has been assigned to Exam
+        /// </summary>
+        ResponseModel GetUsersByExamId (RequestModel requestModel);
+
+        /// <summary>
         /// Assigned Exams to an Employee
         /// </summary>
         /// <param name="examId"></param>

@@ -22,5 +22,9 @@ namespace PerftEvaluation.DTO.Dtos
          public bool IsDeleted { get; set; }
 
         public bool IsActive { get; set; }
+
+        public bool IsExamAssignedToEmployee { get; set; }
+
+        public bool IsEmployeeAssignedToExam { get; set; }
     }
 }
