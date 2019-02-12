@@ -22,11 +22,11 @@ namespace PerftEvaluation.UserRegisteration.Controllers
             _bal.RegisterNewUser(user);
         }
 
-        //  // GET api/values
-        // [HttpGet]
-        // public ActionResult<IEnumerable<string>> Get()
-        // {
-        //     return new string[] { "value1", "value2" };
-        // }
+         // GET api/values
+        [HttpGet]
+        public ActionResult<IEnumerable<string>> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
     }
 }

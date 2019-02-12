@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from '../_services/register.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
-import { appConfig } from '../common/core/app.config';
+import { appConfig } from '../Common/core/app.config';
 
 @Component({
   selector: 'app-register-user',
