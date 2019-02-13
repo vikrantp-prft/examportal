@@ -66,5 +66,4 @@ export class ExamComponent implements OnInit {
         this.questionCategory = this.questionCategory.filter(distinct);
         console.log(this.questionCategory)
     }
-    y
 }
