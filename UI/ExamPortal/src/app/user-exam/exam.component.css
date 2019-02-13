@@ -4,5 +4,9 @@
 }
 
 hr{
-    border-top: 45px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-pills .nav-link {
+    border-radius: 0;
 }
