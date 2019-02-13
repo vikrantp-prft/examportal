@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
 .logo{
     max-width: 16%;
     height: auto;
@@ -9,4 +11,8 @@ hr{
 
 .nav-pills .nav-link {
     border-radius: 0;
+}
+
+.myRoboto {
+    font-family: 'Roboto', sans-serif;
 }
