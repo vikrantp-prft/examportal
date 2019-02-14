@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegisterService } from './_services/register.service';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ErrorHandlingModule } from './Common/field-error-display/field-error-display.module';
 
 @NgModule({
    declarations: [
@@ -19,10 +20,13 @@ import { ReactiveFormsModule } from '@angular/forms';
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
+      ErrorHandlingModule,
       ReactiveFormsModule
+      //TranslateModule
    ],
    providers: [
-      RegisterService
+      RegisterService,
+      //TranslateService
    ],
    bootstrap: [
       AppComponent
