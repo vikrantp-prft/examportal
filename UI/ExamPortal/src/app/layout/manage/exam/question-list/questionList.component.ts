@@ -218,8 +218,10 @@ export class questionListComponent implements OnInit {
   editQuestion(questionID) {
     this.formTitle = "Edit";
     this.resetAll();
+    this.ngxService.start();
     this.getQuestionDetails(questionID);
     this.questionForm.controls.id.setValue(questionID);
+    this.ngxService.stop();
   }
   getQuestionDetails(questionID) {
     this.questionDetailModel.id = questionID;
