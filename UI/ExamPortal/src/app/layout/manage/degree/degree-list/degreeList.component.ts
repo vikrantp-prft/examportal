@@ -56,7 +56,7 @@ export class DegreeListComponent implements OnInit {
 
   degreeForm = new FormGroup({
     degreeTitle: new FormControl('', Validators.required),
-    degreeDescription: new FormControl('', [Validators.required])
+    degreeDescription: new FormControl('')
   });
   get degreeTitle() {
     return this.degreeForm.get('degreeTitle');

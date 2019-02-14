@@ -47,8 +47,7 @@ export class TeamListComponent implements OnInit {
   }
   teamForm = new FormGroup({
     teamTitle: new FormControl('', Validators.required),
-    teamDescription: new FormControl('', Validators.required),
-    teamisActive: new FormControl('')
+    teamDescription: new FormControl('')
   });
   get teamTitle() {
     return this.teamForm.get('teamTitle');

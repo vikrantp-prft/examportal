@@ -51,7 +51,7 @@ export class DesignationListComponent implements OnInit {
   }
   designationForm = new FormGroup({
     designationTitle: new FormControl('', Validators.required),
-    designationDescription: new FormControl('', [Validators.required])
+    designationDescription: new FormControl('')
   });
   get designationTitle() {
     return this.designationForm.get('designationTitle');

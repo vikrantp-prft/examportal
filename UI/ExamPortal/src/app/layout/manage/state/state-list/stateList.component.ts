@@ -47,8 +47,7 @@ export class StateListComponent implements OnInit {
   }
   stateForm = new FormGroup({
     stateTitle: new FormControl('', Validators.required),
-    stateDescription: new FormControl('', Validators.required),
-    stateisActive: new FormControl('')
+    stateDescription: new FormControl('')
   });
   get stateTitle() {
     return this.stateForm.get('stateTitle');

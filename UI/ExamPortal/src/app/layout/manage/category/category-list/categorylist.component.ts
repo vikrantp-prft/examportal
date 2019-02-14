@@ -50,7 +50,7 @@ export class CategoryListComponent implements OnInit {
   }
   categoryForm = new FormGroup({
     categoryTitle: new FormControl('', [Validators.required]),
-    categoryDescription: new FormControl('', [Validators.required])
+    categoryDescription: new FormControl('',)
   });
   get categoryTitle() {
     return this.categoryForm.get('categoryTitle');
