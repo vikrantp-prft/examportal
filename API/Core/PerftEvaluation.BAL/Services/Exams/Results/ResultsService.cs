@@ -15,12 +15,32 @@ namespace PerftEvaluation.BAL.Services {
     public class ResultsService : IResultsService {
         protected readonly IResultsRepository _resultsRepository;
 
+        protected readonly IExamsRepository _examsRepository;
+
+        protected readonly IExamsService _examsService;
+
+        protected readonly IEmployeeRepository _employeeRepository;
+        protected readonly IEmployeeService _employeeService;
+
+        protected readonly IQuestionsService _questionsService;
+
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
 
-        public ResultsService (IResultsRepository resultsRepository, IMapper mapper) {
+        public ResultsService (IResultsRepository resultsRepository, 
+                               IMapper mapper,
+                               IExamsRepository examsRepository,
+                               IExamsService examsService,
+                               IEmployeeRepository employeeRepository,
+                               IEmployeeService employeeService,
+                               IQuestionsService questionsService) {
             this._resultsRepository = resultsRepository;
             this._mapper = mapper;
+            this._examsRepository = examsRepository;
+            this._examsService = examsService;
+            this._employeeRepository = employeeRepository;
+            this._employeeService = employeeService;
+            this._questionsService = questionsService;
         }
 
         /// <summary>
@@ -41,8 +61,44 @@ namespace PerftEvaluation.BAL.Services {
             var filteredResults = this._resultsRepository.GetResultsByExamsId (requestModel.Id).AsQueryable ().SortAndFilter (requestModel, DbFilters.ResultFilters);
             //Integrate pagination
             var results = filteredResults.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<ResultsDTO>> (results), (filteredResults.Count () < 100 ? filteredResults.Count () : 100));
+            List<ResultsDTO> resultJoin = new List<ResultsDTO>();
+            foreach (var item in results)
+            {
+                ResultsDTO resultsDTO = new ResultsDTO();
+                resultsDTO.Id = item.Id;
+                resultsDTO.UserId = item.UserId;
+                resultsDTO.ExamId = item.ExamId;
+                resultsDTO.QuestionsAttempted = item.QuestionsAttempted;
+                resultsDTO.TotalMarks = item.TotalMarks;
+                resultsDTO.ObtainedMarks = item.ObtainedMarks;
+                resultsDTO.Duration = item.Duration;
+                resultsDTO.TimeConsumed = item.TimeConsumed;
+                resultsDTO.StartTime = item.StartTime;
+                resultsDTO.EndTime = item.EndTime;
+                resultsDTO.IsDeleted = item.IsDeleted;
+                resultsDTO.IsActive = item.IsActive;
+                resultsDTO.Exam = _examsService.GetExamsById(item.ExamId);
+                resultsDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
+                resultsDTO.AttemptedQuestions = this._mapper.Map<List<AttemptedQuestionDTO>>(item.AttemptedQuestions);
+
+                // resultsDTO.AttemptedQuestions.Select (e => new AttemptedQuestionDTO {
+                // QuestionsId = e.QuestionsId,
+                // selectedOptionId = e.selectedOptionId,
+                // Marks = e.Marks,
+                // IsAttempted = e.IsAttempted,
+                // IsCorrect = e.IsCorrect,
+                // QuestionsDetails = _questionsService.GetQuestionById (e.QuestionsId)
+                // });
+
+
+                resultJoin.Add(resultsDTO);
+            }
+
+            //return object
+            return CommonResponse.OkResponse(requestModel, resultJoin, (filteredResults.Count() < 100 ? filteredResults.Count() : 100));
+
         }
 
         /// <summary>

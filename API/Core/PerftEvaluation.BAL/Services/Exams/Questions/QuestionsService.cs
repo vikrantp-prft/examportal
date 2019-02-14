@@ -69,7 +69,7 @@ namespace PerftEvaluation.BAL.Services {
                 questionsDTO.QuestionType = questions.QuestionType;
                 questionsDTO.IsActive = questions.IsActive;
                 questionsDTO.Question = questions.Question;
-                questionsDTO.Options = this._mapper.Map<List<OptionsDTO>>(questions.Options);;
+                questionsDTO.Options = this._mapper.Map<List<OptionsDTO>>(questions.Options);
                 questionsDTO.IsDeleted = questions.IsDeleted;
                 questionsDTO.Category = _masterService.GetMasterById (questions.CategoryId);
 

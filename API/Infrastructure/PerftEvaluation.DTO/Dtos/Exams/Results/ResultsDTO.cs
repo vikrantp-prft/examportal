@@ -7,39 +7,62 @@ namespace PerftEvaluation.DTO.Dtos {
     /// Result's DTO Class
     /// </summary>
     public class ResultsDTO {
+
+        public string Id { get; set; }
+        
         [Required]
         public string ExamId { get; set; }
+
 
         [Required]
         public string UserId { get; set; }
 
-        public int QuestionsAttempted { get; set; }
 
         [Required]
+        public int QuestionsAttempted { get; set; }
+
+        
         public int TotalMarks { get; set; }
 
+        
         [Required]
         public int ObtainedMarks { get; set; }
 
+        
         public int Duration { get; set; }
 
+        
         [Required]
         public int TimeConsumed { get; set; }
 
-        [Required]
+        
         public DateTime? StartTime { get; set; }
 
-        [Required]
         public DateTime? EndTime { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public List<QuestionDTO> Question { get; set; }
+        public bool IsActive { get; set; }
+
+        public ExamsDTO Exam { get; set; }
+
+        public EmployeesDTO Employee { get; set; }
+
+        public List<AttemptedQuestionDTO> AttemptedQuestions { get; set; }
     }
 
-    public class QuestionDTO {
+    public class AttemptedQuestionDTO {
+
+        public string AttemptedQuestionId { get; set; }
+
+
         [Required]
-        public string QuestionId { get; set; }
+        public string QuestionsId { get; set; }
+
+
+        [Required]
+        public string selectedOptionId { get; set; }
+
 
         [Required]
         public int Marks { get; set; }
@@ -47,6 +70,8 @@ namespace PerftEvaluation.DTO.Dtos {
         public bool IsCorrect { get; set; }
 
         public bool IsAttempted { get; set; }
+
+        public QuestionsDTO QuestionsDetails { get; set; }
     }
 
 }

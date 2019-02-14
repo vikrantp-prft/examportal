@@ -30,7 +30,6 @@ export class ExamComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
         });
-        // console.log(this.questionType[0])
     }
     ngOnInit() {
         this.getExamDetails();
@@ -58,14 +57,13 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
-                // console.log(this.question[0].options[0].option)
                 this.getAllQuestionCategory();
+                console.log(this.question[this.currentQuestionIndex -1].options)
                 this.fn_next();
             }
         });
     }
     getAllQuestionCategory(){
-        console.log(this.question.length)
         const distinct = ( value, index, self) => {
             return self.indexOf(value) === index;
         }
@@ -77,7 +75,6 @@ export class ExamComponent implements OnInit {
     fn_next(){
         if(this.currentQuestionIndex < this.question.length){
             this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
-            console.log(this.currentQuestion)
         }
     }
     incrementCurrentQuestionIndex(){
@@ -85,8 +82,7 @@ export class ExamComponent implements OnInit {
         this.fn_next();
     }
     jumpToQuestion(id){
-        console.log(id);
         this.currentQuestion = this.question[id].question;
-        this.currentQuestionIndex = id + 1;
+        this.currentQuestionIndex = id + 1;        
     }
 }
