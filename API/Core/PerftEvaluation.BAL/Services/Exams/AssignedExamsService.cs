@@ -51,8 +51,6 @@ namespace PerftEvaluation.BAL.Services
                 examsDTO.ExamId = item.ExamId;
                 examsDTO.IsActive = item.IsActive;
                 examsDTO.IsDeleted = item.IsDeleted;
-                examsDTO.IsExamAssignedToEmployee = item.IsExamAssignedToEmployee;
-                examsDTO.IsEmployeeAssignedToExam = item.IsEmployeeAssignedToExam;
                 examsDTO.Exam = _examsService.GetExamsById(item.ExamId);
                 examsDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
 
@@ -93,8 +91,6 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.ExamId = item.ExamId;
                 usersDTO.IsActive = item.IsActive;
                 usersDTO.IsDeleted = item.IsDeleted;
-                usersDTO.IsExamAssignedToEmployee = item.IsExamAssignedToEmployee;
-                usersDTO.IsEmployeeAssignedToExam = item.IsEmployeeAssignedToExam;
                 usersDTO.Exam = _examsService.GetExamsById(item.ExamId);
                 usersDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
 
