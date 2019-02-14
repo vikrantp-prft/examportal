@@ -1,136 +1,328 @@
-<form  class="my-2 my-lg-0" [formGroup]="userRegistration" (ngSubmit)="registerUser(userRegistration)">
-  <div class="form-group">
-    <label for="FirstName">First Name</label>
-    <input type="text" class="form-control" id="FirstName" formControlName="firstName" placeholder="First Name">
+<section id="main">
+  <div class="container">
+    <div class="card my-3">
+      <div class="card-header">
+        <h1 class="h3 font-weight-bold mb-0">
+          User Registration
+        </h1>
+      </div>
+      <div class="card-body">
+        <div class="col-md-12 col-xs-12 col-lg-12">
+          <form [formGroup]="userRegistration" (ngSubmit)="registerUser(userRegistration)">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="FirstName">First Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="FirstName" formControlName="firstName"
+                    placeholder="First Name">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'firstName')"
+                    errorMsg="Enter first name.">
+                  </app-field-error-display>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="MiddleName">Middle Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="MiddleName" formControlName="middleName"
+                    placeholder="Middle Name">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'middleName')"
+                    errorMsg="Enter middle name.">
+                  </app-field-error-display>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="LastName">Last Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="LastName" formControlName="lastName"
+                    placeholder="Last Name">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'lastName')"
+                    errorMsg="Enter last name.">
+                  </app-field-error-display>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="DateOfBirth">Date of Birth<span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="DateOfBirth" formControlName="dob"
+                    placeholder="Date of Birth">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'dob')"
+                    errorMsg="Required Field">
+                  </app-field-error-display>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="Email1">Email address<span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp"
+                    formControlName="email" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'email')"
+                    errorMsg="Enter valid email id">
+                  </app-field-error-display>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="Mobile">Mobile<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="Mobile" formControlName="mobile" placeholder="Mobile">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'mobile')"
+                    errorMsg="Required Field">
+                  </app-field-error-display>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="section-heading">
+                  <h4>Current Address<span class="text-danger">*</span></h4>
+                </div>
+                <div class="form-group">
+                  <label for="Address">Address</label>
+                  <input type="text" class="form-control" id="Address" formControlName="currentAddress"
+                    placeholder="Address">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'currentAddress')"
+                    errorMsg="Required Field">
+                  </app-field-error-display>
+                </div>
+                <div class="form-group">
+                    <label for="Address">Address 2</label>
+                    <input type="text" class="form-control" id="Address 2" formControlName="currentAddress2"
+                      placeholder="Address (optional)">
+                </div>
+
+                <div class="form-group">
+                  <label for="City">City</label>
+                  <input type="text" class="form-control" id="City" formControlName="currentCity" placeholder="City">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'currentCity')"
+                    errorMsg="Enter current city">
+                  </app-field-error-display>
+                </div>
+
+                <div class="form-group">
+                  <label for="State">State</label>
+                  <input type="text" class="form-control" id="State" formControlName="currentState" placeholder="State">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'currentState')"
+                    errorMsg="Required Field">
+                  </app-field-error-display>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="section-heading">
+                  <h4>Permanant Address<span class="text-danger">*</span></h4>
+                </div>
+                <div class="form-group">
+                  <label for="Address">Address</label>
+                  <input type="text" class="form-control" id="Address" formControlName="permanantAddress"
+                    placeholder="Address">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'permanantAddress')"
+                    errorMsg="Required Field">
+                  </app-field-error-display>
+                </div>
+                <div class="form-group">
+                    <label for="Address">Address 2</label>
+                    <input type="text" class="form-control" id="Address 2" formControlName="permanantAddress2"
+                      placeholder="Address (optional)">
+                </div>
+
+                <div class="form-group">
+                  <label for="City">City</label>
+                  <input type="text" class="form-control" id="City" formControlName="permanantCity" placeholder="City">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'currentCity')"
+                    errorMsg="Enter permanant city">
+                  </app-field-error-display>
+                </div>
+
+                <div class="form-group">
+                  <label for="State">State</label>
+                  <input type="text" class="form-control" id="State" formControlName="permanantState"
+                    placeholder="State">
+                  <app-field-error-display [displayError]="isFieldValid(userRegistration, 'permanantState')"
+                    errorMsg="Required Field">
+                  </app-field-error-display>
+                </div>
+              </div>
+            </div>
+
+            <div class="sections">
+              <div class="section-heading">
+                <h4>Educational Details<span class="text-danger">*</span></h4>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="degree"> Course </label>
+                    <input type="degree" class="form-control" formControlName="course" placeholder="Course">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="yearOfPassing">Year of passing </label>
+                    <input type="number" class="form-control" formControlName="yearOfPassing"
+                      placeholder="Year of passing">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="institute"> Institution </label>
+                    <input type="text" class="form-control" id="institution" placeholder="Institute"
+                      formControlName="institution">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="institute"> Percentage </label>
+                    <input type="text" class="form-control" id="percentage" placeholder="Percentage"
+                      formControlName="percentage">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="addEducationButton">
+                <input type="button" class="btn btn-primary pull-right mb-2" id="btnAddNewEducationDetails" value="Add"
+                  (click)="fn_addNewCourse()">
+              </div>
+              <div class="form-group" *ngIf="updateEducationButton">
+                <input type="button" class="btn btn-default" id="btnUpdateNewEducationDetails" value="Update"
+                  (click)="fn_updateNewCourse()">
+              </div>
+              <div>
+                <table class="table table-bordered" id="educationDetailsTable">
+                  <thead>
+                    <tr>
+                      <th hidden="hidden">CourseID</th>
+                      <th>Course</th>
+                      <th>Year of Passing (YYYY)</th>
+                      <th>School/College/University</th>
+                      <th>Percentage (%)</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let educationField of educationArray; let i = index">
+                      <td hidden="hidden">
+                        <label>{{educationField.courseId}}</label>
+                      </td>
+                      <td>
+                        <label>{{educationField.course}}</label>
+                      </td>
+                      <td>
+                        <label>{{educationField.yearOfPassing}}</label>
+                      </td>
+                      <td>
+                        <label>{{educationField.institution}}</label>
+                      </td>
+                      <td>
+                        <label>{{educationField.percentage}}</label>
+                      </td>
+                      <td>
+                        <button class="btn btn-secondary btn-md" type="button" (click)="fn_editCourse(i)">Edit</button>
+                        <button class="btn btn-secondary btn-md ml-3" type="button"
+                          (click)="fn_deleteCourse(i)">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-heading">
+                <h4>Job Experience</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Experience">Experience</label>
+                    <input type="text" class="form-control" id="Experience" formControlName="experience"
+                      placeholder="Experience">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="CompanyName">Company Name</label>
+                    <input type="text" class="form-control" id="CompanyName" formControlName="companyName"
+                      placeholder="Company Name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="text" class="form-control" id="startDate" formControlName="startDate"
+                      placeholder="Start Date">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="text" class="form-control" id="endDate" formControlName="endDate"
+                      placeholder="End Date">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="addExperienceButton">
+                <input type="button" class="btn btn-primary pull-right mb-2" id="btnAddNewExperienceDetails" value="Add"
+                  (click)="fn_addNewExperience()">
+              </div>
+              <div class="form-group" *ngIf="updateExperienceButton">
+                <input type="button" class="btn btn-default" id="btnUpdateNewExperienceDetails" value="Update"
+                  (click)="fn_updateNewExperience()">
+              </div>
+              <div>
+                <table class="table table-bordered" id="experienceDetailsTable">
+                  <thead>
+                    <tr>
+                      <th hidden="hidden">ExperienceID</th>
+                      <th>Experience</th>
+                      <th>Company Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let experienceField of experienceArray; let i = index">
+                      <td hidden="hidden">
+                        <label>{{experienceField.ExperienceID}}</label>
+                      </td>
+                      <td>
+                        <label>{{experienceField.experience}}</label>
+                      </td>
+                      <td>
+                        <label>{{experienceField.companyName}}</label>
+                      </td>
+                      <td>
+                        <label>{{experienceField.startDate}}</label>
+                      </td>
+                      <td>
+                        <label>{{experienceField.endDate}}</label>
+                      </td>
+                      <td>
+                        <button class="btn btn-secondary btn-md" type="button" (click)="fn_editCourse(i)">Edit</button>
+                        <button class="btn btn-secondary btn-md ml-3" type="button"
+                          (click)="fn_deleteCourse(i)">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="MiddleName">Middle Name</label>
-    <input type="text" class="form-control" id="MiddleName" formControlName="middleName" placeholder="Middle Name">
-  </div>
-  <div class="form-group">
-    <label for="LastName">Last Name</label>
-    <input type="text" class="form-control" id="LastName" formControlName="lastName" placeholder="Last Name">
-  </div>
-
-
-  <div class="form-group">
-    <label for="Email1">Email address</label>
-    <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  
-
-  <div class="form-group">
-    <label for="DateOfBirth">Date of Birth</label>
-    <input type="text" class="form-control" id="DateOfBirth" placeholder="Date of Birth">
-  </div>
-
-  <div class="form-group">
-    <label for="Phone">Phone</label>
-    <input type="text" class="form-control" id="Phone" placeholder="Phone">
-  </div>
-
-
-  <div class="form-group">
-    <label for="Mobile">Mobile</label>
-    <input type="text" class="form-control" id="Mobile" placeholder="Mobile">
-  </div>
-
-
-  <div class="form-group">
-    <label for="City">City</label>
-    <input type="text" class="form-control" id="City" placeholder="City">
-  </div>
-
-  <div class="form-group">
-    <label for="State">State</label>
-    <input type="text" class="form-control" id="State" placeholder="State">
-  </div>
-
-
-  <div class="form-group">
-    <label for="PermanentCity">Permanent City</label>
-    <input type="text" class="form-control" id="PermanentCity" placeholder="Permanent City">
-  </div>
-
-  <div class="form-group">
-    <label for="PermanentState">Permanent State</label>
-    <input type="text" class="form-control" id="PermanentState" placeholder="Permanent State">
-  </div>
-
-  
-  <div class="form-group">
-    <label for="SSCYear">SSC - Year of Passing</label>
-    <input type="text" class="form-control" id="SSCYear" placeholder="SSC - Year of Passing">
-  </div>
-
-  <div class="form-group">
-    <label for="SSCMarks">SSC - Marks</label>
-    <input type="text" class="form-control" id="SCCMarks" placeholder="SCC - Marks">
-  </div>
-
-  <div class="form-group">
-    <label for="HSSCYear">HSSC - Year of Passing</label>
-    <input type="text" class="form-control" id="HSSCYear" placeholder="HSSC - Year of Passing">
-  </div>
-
-
-  <div class="form-group">
-    <label for="HSSCMarks">HSSC - Marks</label>
-    <input type="text" class="form-control" id="HSCCMarks" placeholder="HSCC - Marks">
-  </div>
-
-  <div class="form-group">
-    <label for="Degree">Degree</label>
-    <input type="text" class="form-control" id="Degree" placeholder="Degree">
-  </div>
-
-  <div class="form-group">
-    <label for="DegreeYear">Degree - Year of Passing</label>
-    <input type="text" class="form-control" id="DegreeYear" placeholder="Degree - Year of Passing">
-  </div>
-
-  
-
-  
-  <div class="form-group">
-    <label for="University">College/University</label>
-    <input type="text" class="form-control" id="University" placeholder="College/University">
-  </div>
-
-  <div class="form-group">
-    <label for="DegreeMarks">Marks</label>
-    <input type="text" class="form-control" id="DegreeMarks" placeholder="Marks">
-  </div>
-
-  
-  <div class="form-group">
-    <label for="Experience">Experience</label>
-    <input type="text" class="form-control" id="Experience" placeholder="Experience">
-  </div>
-
-  <div class="form-group">
-    <label for="CurrentEmployer">Current Employer</label>
-    <input type="text" class="form-control" id="CurrentEmployer" placeholder="Current Employer">
-  </div>
-
-  <div class="form-group">
-    <label for="JobLocation">Job Location</label>
-    <input type="text" class="form-control" id="JobLocation" placeholder="Job Location">
-  </div>
-
-  <div class="form-group">
-    <label for="OtherDetails">Other Details</label>
-    <input type="text" class="form-control" id="OtherDetails" placeholder="Other Details">
-  </div>
-  <div class="form-group">
-    <label for="ExamAssigned">Exam Assigned</label>
-    <input type="text" class="form-control" id="ExamAssigned" placeholder="Exam Assigned">
-  </div>
-
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary" >Submit</button>
-</form>
+</section>
