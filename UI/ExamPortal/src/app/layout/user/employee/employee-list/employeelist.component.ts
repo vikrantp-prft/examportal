@@ -135,9 +135,11 @@ export class EmployeeListComponent implements OnInit {
       if (x.value == true) {
         if (isActive == true) {
           this.statusUrl = 'api/Employee/InactivateEmployee';
+          this.toastr.success('Inactivated employee details');
         }
         else {
           this.statusUrl = 'api/Employee/ActivateEmployee';
+          this.toastr.success('Activated employee details');
         }
         const employeeStatusModel = {
           "id": id,

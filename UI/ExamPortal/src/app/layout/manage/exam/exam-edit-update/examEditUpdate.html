@@ -103,7 +103,7 @@
                   <span class="text-danger">*</span>
                   <input type="date" class="form-control" formControlName="fromDate" #fromDate>
                   <app-field-error-display [displayError]="isFieldValid(editExamForm, 'fromDate')"
-                    errorMsg="Enter date">
+                    errorMsg="Enter valid date">
                   </app-field-error-display>
                 </div>
               </div>
@@ -112,7 +112,7 @@
                   <label for="Exam Active Till">To (DD/MM/YYYY)</label>
                   <span class="text-danger">*</span>
                   <input type="date" class="form-control" formControlName="toDate" #toDate>
-                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'toDate')" errorMsg="Enter date">
+                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'toDate')" errorMsg="Enter valid date">
                   </app-field-error-display>
                 </div>
               </div>
