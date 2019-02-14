@@ -17,10 +17,20 @@ export class ExamComponent implements OnInit {
     examName: any;
     question = [];
     questionCategory = [];
+    totalQuestion: number;
+    currentQuestion: any;
+    currentQuestionIndex: number = 1;
+    questionType: object = {
+        0: 'radio',
+        1: 'checkbox',
+        2: ''
+    }
+ 
     constructor(private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
         });
+        // console.log(this.questionType[0])
     }
     ngOnInit() {
         this.getExamDetails();
@@ -36,7 +46,6 @@ export class ExamComponent implements OnInit {
             if (rs.statusCode === 200) {
                 this.examDetail = rs.data;
                 this.examName = rs.data.title;
-                console.log(this.examName)
             }
         });
     }
@@ -47,11 +56,11 @@ export class ExamComponent implements OnInit {
         };
         this.CommonService.fn_PostWithData(questionModel, url).subscribe((result: any) => {
             const rs = result;
-            console.log(rs.data)
             if (rs.statusCode == 200) {
                 this.question = rs.data;
-                console.log()
+                // console.log(this.question[0].options[0].option)
                 this.getAllQuestionCategory();
+                this.fn_next();
             }
         });
     }
@@ -64,6 +73,20 @@ export class ExamComponent implements OnInit {
             this.questionCategory[i] = this.question[i].category.name;
         }
         this.questionCategory = this.questionCategory.filter(distinct);
-        console.log(this.questionCategory)
+    }
+    fn_next(){
+        if(this.currentQuestionIndex < this.question.length){
+            this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
+            console.log(this.currentQuestion)
+        }
+    }
+    incrementCurrentQuestionIndex(){
+        this.currentQuestionIndex++;
+        this.fn_next();
+    }
+    jumpToQuestion(id){
+        console.log(id);
+        this.currentQuestion = this.question[id].question;
+        this.currentQuestionIndex = id + 1;
     }
 }
