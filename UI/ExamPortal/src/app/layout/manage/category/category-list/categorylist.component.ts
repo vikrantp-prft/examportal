@@ -73,9 +73,11 @@ export class CategoryListComponent implements OnInit {
   }
   // function for save question category details.
   fn_saveCategoryfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('category  added successfully!');
         this.fn_GetCategoryList();
         this.frmReset();
@@ -87,6 +89,7 @@ export class CategoryListComponent implements OnInit {
   }
   // Get category by id
   fn_GetCategoryById(categoryID) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterById';
     const categoryModel =
     {
@@ -101,6 +104,7 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.editCategoryList = rs.data;
         this.fn_setEditValues();
       }
@@ -128,9 +132,11 @@ export class CategoryListComponent implements OnInit {
   }
   // function for save category details.
   fn_updateCategoryfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('category  updated successfully!');
         this.fn_GetCategoryList();
       }
@@ -168,10 +174,12 @@ export class CategoryListComponent implements OnInit {
     this.fn_GetFilteredList(searchModel);
   }
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.categoryList = rs.data;
       }
       else {
@@ -224,9 +232,11 @@ export class CategoryListComponent implements OnInit {
   }
   // function for soft deleting the Employee.
   fn_delfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((result.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Category details deleted successfully!');
         this.fn_GetCategoryList();
       }
@@ -259,12 +269,12 @@ export class CategoryListComponent implements OnInit {
   }
   //function to save status change
   fn_saveStatusChange(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.fn_GetCategoryList();
-      }
-      else {
       }
     });
   }
