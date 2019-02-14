@@ -28,8 +28,8 @@ export class examAddUpdateComponent implements OnInit {
   createForm() {
     this.addExamForm = this.fb.group({
       title: [null, [Validators.required]],
-      teamId: [null, [Validators.required]],
-      description: [null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(250)]],
+      teamId: new FormControl(''),
+      description: new FormControl(''),
       examDurationHours: [null, [Validators.required]],
       examDurationMinutes: [null, [Validators.required]],
       passingMarks: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
@@ -40,7 +40,7 @@ export class examAddUpdateComponent implements OnInit {
       shuffleQuestions: new FormControl(false),
       shuffleOptions: new FormControl(false),
       isPaperPublic: new FormControl(false),
-      totalQuestions: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
+      totalQuestions: new FormControl(''),
     });
   }
 
