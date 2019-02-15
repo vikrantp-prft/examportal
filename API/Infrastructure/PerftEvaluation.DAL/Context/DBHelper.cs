@@ -1,17 +1,15 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using MongoDbGenericRepository;
 using MongoDB.Driver;
 using PerftEvaluation.Entities.POCOEntities;
-using System.Reflection;
 
-namespace PerftEvaluation.DAL.Context
-{
+namespace PerftEvaluation.DAL.Context {
     /// <summary>
     /// Manage database connection with MongoDB
     /// </summary>
-    public class DBHelper
-    {
+    public class DBHelper {
         #region--Variable declaration--
         /// <summary>
         /// The IMongoClient from the official MongoDB driver
@@ -23,36 +21,40 @@ namespace PerftEvaluation.DAL.Context
         /// <summary>
         /// Class Constructor
         /// </summary>
-        public DBHelper()
-        {
+        public DBHelper () {
             //access db without username and password
             // _client = new MongoClient ("mongodb://ZIL395:27017");
             //// _client = new MongoClient ("mongodb://localhost:27017");
             // _db = _client.GetDatabase ("PerftEvaluation");
 
-            
             //Connection with username and password
             string username = "mDbAdmin";
             string password = "mDbAdmin@321";
             string mongoHost = "ZIL189";
             string mongoDbAuthMechanism = "SCRAM-SHA-1";
-            string dbName = "PerftEvaluation";
-            MongoInternalIdentity internalIdentity =
-                    new MongoInternalIdentity("admin", username);
-            PasswordEvidence passwordEvidence = new PasswordEvidence(password);
-            MongoCredential mongoCredential =
-                new MongoCredential(mongoDbAuthMechanism,
-                        internalIdentity, passwordEvidence);
 
-            MongoClientSettings settings = new MongoClientSettings();
+            //Development Database
+            string dbName = "PerftEvaluation";
+
+            //Production Database
+            //string dbName = "PerftEvaluation_Prod";
+
+            MongoInternalIdentity internalIdentity =
+                new MongoInternalIdentity ("admin", username);
+            PasswordEvidence passwordEvidence = new PasswordEvidence (password);
+            MongoCredential mongoCredential =
+                new MongoCredential (mongoDbAuthMechanism,
+                    internalIdentity, passwordEvidence);
+
+            MongoClientSettings settings = new MongoClientSettings ();
             // comment this line below if your mongo doesn't run on secured mode
             settings.Credential = mongoCredential;
-            
-            MongoServerAddress address = new MongoServerAddress(mongoHost);
+
+            MongoServerAddress address = new MongoServerAddress (mongoHost);
             settings.Server = address;
             // _client = new MongoClient ("mongodb://ZIL395:27017");
-            _client = new MongoClient(settings);
-            _db = _client.GetDatabase(dbName);
+            _client = new MongoClient (settings);
+            _db = _client.GetDatabase (dbName);
 
         }
         #endregion
@@ -64,13 +66,12 @@ namespace PerftEvaluation.DAL.Context
         /// <param name="strCollectionName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns>list</returns>
-        public IMongoCollection<T> GetCollection<T>(string strCollectionName)
-        {
-             PropertyInfo[] propInfos = typeof(T).GetProperties();
-             var propInfo = propInfos.ToList().Where(p => p.Name == "CollectionName").FirstOrDefault();
+        public IMongoCollection<T> GetCollection<T> (string strCollectionName) {
+            PropertyInfo[] propInfos = typeof (T).GetProperties ();
+            var propInfo = propInfos.ToList ().Where (p => p.Name == "CollectionName").FirstOrDefault ();
 
-            string collectionName = propInfo.GetValue("CollectionName").ToString();
-            return _db.GetCollection<T>(collectionName);
+            string collectionName = propInfo.GetValue ("CollectionName").ToString ();
+            return _db.GetCollection<T> (collectionName);
         }
 
         /// <summary>
@@ -79,9 +80,8 @@ namespace PerftEvaluation.DAL.Context
         /// <param name="TEntity">Entity Object</param>
         /// <param name="strCollectionName"></param>
         /// <typeparam name="T">Void</typeparam>
-        public void Save<T>(T TEntity, string strCollectionName)
-        {
-            _db.GetCollection<T>(strCollectionName).InsertOneAsync(TEntity);
+        public void Save<T> (T TEntity, string strCollectionName) {
+            _db.GetCollection<T> (strCollectionName).InsertOneAsync (TEntity);
         }
 
         /// <summary>
@@ -92,12 +92,10 @@ namespace PerftEvaluation.DAL.Context
         /// <param name="strCollectionName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool UpdateOne<T>(FilterDefinition<T> filterDefinition, UpdateDefinition<T> updateDefinition, string strCollectionName)
-        {
-           
-           var updateResult = _db.GetCollection<T>(strCollectionName).UpdateOne(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = false });
-            if (updateResult.ModifiedCount > 0 || updateResult.IsAcknowledged)
-            {
+        public bool UpdateOne<T> (FilterDefinition<T> filterDefinition, UpdateDefinition<T> updateDefinition, string strCollectionName) {
+
+            var updateResult = _db.GetCollection<T> (strCollectionName).UpdateOne (filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = false });
+            if (updateResult.ModifiedCount > 0 || updateResult.IsAcknowledged) {
                 return true;
             }
             return false;

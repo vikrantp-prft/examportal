@@ -20,11 +20,8 @@ export class ExamComponent implements OnInit {
     totalQuestion: number;
     currentQuestion: any;
     currentQuestionIndex: number = 1;
-    questionType: object = {
-        0: 'radio',
-        1: 'checkbox',
-        2: ''
-    }
+    currentQuestionQuestionType: number; 
+    currentQuestionOptionType = [];
  
     constructor(private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
@@ -57,8 +54,11 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
+                console.log(this.question)
+                this.currentQuestionQuestionType = this.question[0].questionType;
+                this.currentQuestionOptionType = this.question[0].options;
+                console.log(this.currentQuestionOptionType)
                 this.getAllQuestionCategory();
-                console.log(this.question[this.currentQuestionIndex -1].options)
                 this.fn_next();
             }
         });
@@ -82,6 +82,8 @@ export class ExamComponent implements OnInit {
         this.fn_next();
     }
     jumpToQuestion(id){
+        this.currentQuestionQuestionType = this.question[id].questionType;
+        this.currentQuestionOptionType = this.question[id].options;
         this.currentQuestion = this.question[id].question;
         this.currentQuestionIndex = id + 1;        
     }

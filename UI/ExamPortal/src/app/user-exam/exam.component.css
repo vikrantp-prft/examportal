@@ -15,3 +15,8 @@ hr{
 .myRoboto {
     font-family: 'Roboto', sans-serif;
 }
+
+.core-pre {
+    border: 1px dashed #93b7d5;
+    background-color: #f8f8f8;
+}
