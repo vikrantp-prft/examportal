@@ -54,12 +54,10 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
-                console.log(this.question)
+                this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
-                console.log(this.currentQuestionOptionType)
                 this.getAllQuestionCategory();
-                this.fn_next();
             }
         });
     }
@@ -72,19 +70,41 @@ export class ExamComponent implements OnInit {
         }
         this.questionCategory = this.questionCategory.filter(distinct);
     }
-    fn_next(){
-        if(this.currentQuestionIndex < this.question.length){
+    setCurrentQuestion(questionId){
+        this.currentQuestion = this.question[questionId].question;
+    }
+    setCurrentQuestionQuestionType(questionId){
+        this.currentQuestionQuestionType = this.question[questionId].questionType;
+    }
+    setCurrentQuestionOptionType(questionId){
+        this.currentQuestionOptionType = this.question[questionId].options;
+    }
+    setCurrentQuestionAndOption(){
+        if (this.currentQuestionIndex == 0) {
+            this.currentQuestionIndex = this.question.length;
+        }
+        if(this.currentQuestionIndex == (this.question.length + 1))
+        {
+            this.currentQuestionIndex = 1;
+        }
+        if(this.currentQuestionIndex < (this.question.length + 1)){
             this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
+            this.currentQuestionQuestionType = this.question[this.currentQuestionIndex -1].questionType;
+            this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
         }
     }
-    incrementCurrentQuestionIndex(){
+    fn_previous(){
+        this.currentQuestionIndex--;
+        this.setCurrentQuestionAndOption();
+    }
+    fn_next(){
         this.currentQuestionIndex++;
-        this.fn_next();
+        this.setCurrentQuestionAndOption();
     }
     jumpToQuestion(id){
-        this.currentQuestionQuestionType = this.question[id].questionType;
-        this.currentQuestionOptionType = this.question[id].options;
-        this.currentQuestion = this.question[id].question;
+        this.setCurrentQuestion(id);
+        this.setCurrentQuestionQuestionType(id);
+        this.setCurrentQuestionOptionType(id);
         this.currentQuestionIndex = id + 1;        
     }
 }
