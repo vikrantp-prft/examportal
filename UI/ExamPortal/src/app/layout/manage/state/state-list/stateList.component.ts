@@ -262,10 +262,11 @@ export class StateListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.ngxService.stop();
+        this.toastr.success('State\'s status changes successfully!');
         this.fn_GetStateList();
       }
       else {
-        console.log("Something is wrong.")
+        this.toastr.success('Failed to change state\'s status');
       }
     });
   }

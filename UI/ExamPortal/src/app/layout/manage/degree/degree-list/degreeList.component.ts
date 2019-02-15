@@ -276,10 +276,11 @@ export class DegreeListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.ngxService.stop();
+        this.toastr.success('Degree\'s status changes successfully!');
         this.fn_GetDegreeList();
       }
       else {
-
+        this.toastr.success('Failded to change category status');
       }
     });
   }

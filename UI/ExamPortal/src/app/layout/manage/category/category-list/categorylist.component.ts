@@ -197,8 +197,6 @@ export class CategoryListComponent implements OnInit {
         this.categoryList = rs.data;
         this.totalItems = rs.totalRecords;
       }
-      else {
-      }
     });
   }
   // function to display the alert before deleting the Order.
@@ -240,6 +238,9 @@ export class CategoryListComponent implements OnInit {
         this.toastr.success('Category details deleted successfully!');
         this.fn_GetCategoryList();
       }
+      else {
+        this.toastr.success('Failded to delete category');
+      }
     });
   }
   // function to change isActive status
@@ -273,8 +274,12 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
+        this.toastr.success('Category status changes successfully!');
         this.fn_GetCategoryList();
+        this.ngxService.stop();
+      }
+      else{
+        this.toastr.success('Failed to change status');
       }
     });
   }

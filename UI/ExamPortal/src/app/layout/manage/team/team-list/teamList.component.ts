@@ -263,10 +263,11 @@ export class TeamListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.ngxService.stop();
+        this.toastr.success('Team\'s status changes successfully!');
         this.fn_GetTeamList();
       }
       else {
-        console.log("Something is wrong.")
+        this.toastr.success('Failed to change team\'s status');
       }
     });
   }

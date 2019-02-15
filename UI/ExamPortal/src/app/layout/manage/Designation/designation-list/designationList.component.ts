@@ -271,7 +271,11 @@ export class DesignationListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.ngxService.stop();
+        this.toastr.success('Designation\'s status changes successfully!');
         this.fn_GetDesignationList();
+      }
+      else{
+        this.toastr.success('Failed to change designation\'s status');
       }
     });
   }
