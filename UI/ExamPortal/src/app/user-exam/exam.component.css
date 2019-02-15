@@ -1,4 +1,4 @@
-
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|Quicksand|Roboto");
 .logo{
     max-width: 16%;
     height: auto;
@@ -14,6 +14,10 @@ hr{
 
 .myRoboto {
     font-family: 'Roboto', sans-serif;
+}
+div {
+    /* font-family: 'Fira Sans', sans-serif; */
+    font-family: 'Quicksand', sans-serif;
 }
 
 .core-pre {
