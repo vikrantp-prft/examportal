@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.UserRegiste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.EmailServer", "Infrastructure\PerftEvaluation.EmailServer\PerftEvaluation.EmailServer.csproj", "{4AADFA85-25E1-4C53-9F06-1705173BD12E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.ExcelUtility", "Infrastructure\Perft.Evaluation.ExcelUtility\PerftEvaluation.ExcelUtility.csproj", "{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -194,6 +196,18 @@ Global
 		{4AADFA85-25E1-4C53-9F06-1705173BD12E}.Release|x64.Build.0 = Release|Any CPU
 		{4AADFA85-25E1-4C53-9F06-1705173BD12E}.Release|x86.ActiveCfg = Release|Any CPU
 		{4AADFA85-25E1-4C53-9F06-1705173BD12E}.Release|x86.Build.0 = Release|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Debug|x64.Build.0 = Debug|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Debug|x86.Build.0 = Debug|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Release|x64.ActiveCfg = Release|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Release|x64.Build.0 = Release|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Release|x86.ActiveCfg = Release|Any CPU
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{47D5E9F0-1E27-11E9-9482-D34970154766} = {BC056F7E-B06C-4CA1-A4F9-DA253175AA5E}
@@ -209,5 +223,6 @@ Global
 		{69955811-797C-4766-A1C3-EAAAB8918761} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 		{6F7926A6-DA53-45EC-AFDE-44A5B904AC89} = {244843E0-188A-11E9-81C1-091B403C5783}
 		{4AADFA85-25E1-4C53-9F06-1705173BD12E} = {1FDAB090-188A-11E9-81C1-091B403C5783}
+		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 	EndGlobalSection
 EndGlobal

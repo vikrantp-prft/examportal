@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Core\PerftEvaluation.BAL\PerftEvaluation.BAL.csproj" />
     <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj" />
     <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.Helper\PerftEvaluation.Helper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Perft.Evaluation.ExcelUtility\PerftEvaluation.ExcelUtility.csproj" />
   </ItemGroup>
 
 </Project>
