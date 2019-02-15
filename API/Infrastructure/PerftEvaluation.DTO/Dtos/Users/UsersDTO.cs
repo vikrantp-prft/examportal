@@ -17,7 +17,6 @@ namespace PerftEvaluation.DTO.Dtos {
         public string LastName { get; set; }
         public bool IsActive { get; set; }
 
-        [Required]
         public string Password { get; set; }
 
         public DateTime? DOB { get; set; }

@@ -63,7 +63,7 @@ export class AddEmployeeComponent implements OnInit {
       note: new FormControl(''),
       teamId: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
-      password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD), Validators.maxLength(20)]],
+     // password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD), Validators.maxLength(20)]],
       courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
@@ -93,7 +93,10 @@ export class AddEmployeeComponent implements OnInit {
 
   // Save Employee details function
   fn_saveEmployee(value) {
+
+    console.log(value);
     if (this.employeeForm.valid) {
+
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
         return false;

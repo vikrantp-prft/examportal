@@ -27,7 +27,6 @@ namespace PerftEvaluation.Entities.POCOEntities {
         [BsonElement ("lastName")]
         public string LastName { get; set; }
 
-        [Required]
         [BsonElement ("password")]
         public string Password { get; set; }
 

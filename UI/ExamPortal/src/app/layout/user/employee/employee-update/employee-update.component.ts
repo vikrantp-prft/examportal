@@ -67,7 +67,7 @@ export class EmployeeUpdateComponent implements OnInit {
       note: new FormControl(''),
       teamId: new FormControl('', Validators.required),
       email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
-      password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD)]],
+      //password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD)]],
       courseId: new FormControl(''),
       yearOfPassing: new FormControl(''),
       institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
