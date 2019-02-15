@@ -3,6 +3,7 @@ import { routerTransition } from '../router.animations';
 import { TranslateService } from '@ngx-translate/core';
 import { commonService } from '../common/services/common.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
     selector: 'app-exam',
@@ -23,7 +24,7 @@ export class ExamComponent implements OnInit {
     currentQuestionQuestionType: number; 
     currentQuestionOptionType = [];
  
-    constructor(private CommonService: commonService, private route: ActivatedRoute) {
+    constructor(private ngxService: NgxUiLoaderService,private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
         });
@@ -34,18 +35,21 @@ export class ExamComponent implements OnInit {
     }
 
     getExamDetails() {
+        this.ngxService.start();
         const examDetailModel = {
             "id": this.examID
         }
         this.CommonService.fn_PostWithData(examDetailModel, this.examDetailUrl).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode === 200) {
+                this.ngxService.stop();
                 this.examDetail = rs.data;
                 this.examName = rs.data.title;
             }
         });
     }
     getQuestionList() {
+        this.ngxService.start();
         const url = 'api/Questions/listQuestionsByExamId';
         const questionModel = {
             "id": this.examID
@@ -53,6 +57,7 @@ export class ExamComponent implements OnInit {
         this.CommonService.fn_PostWithData(questionModel, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
+                this.ngxService.stop();
                 this.question = rs.data;
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
