@@ -72,9 +72,11 @@ export class StateListComponent implements OnInit {
   }
   // function for save employee details.
   fn_saveStatefun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('State  added successfully!');
         this.fn_GetStateList();
         this.frmReset();
@@ -86,6 +88,7 @@ export class StateListComponent implements OnInit {
   }
   // Get state by id
   fn_GetStateById(ID) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterById';
     const stateModel =
     {
@@ -100,10 +103,9 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.editStateList = rs.data;
         this.fn_setEditValues();
-      }
-      else {
       }
     });
   }
@@ -126,9 +128,11 @@ export class StateListComponent implements OnInit {
   }
   // function for save state details.
   fn_updateStatefun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('State  updated successfully!');
         this.fn_GetStateList();
       }
@@ -166,14 +170,13 @@ export class StateListComponent implements OnInit {
     this.fn_GetFilteredList(searchModel);
   }
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.stateList = rs.data;
-        // this.totalItems = rs.totalRecords;
-      }
-      else {
       }
     });
   }
@@ -187,8 +190,6 @@ export class StateListComponent implements OnInit {
         this.ngxService.stop();
         this.stateList = rs.data;
         this.totalItems = rs.totalRecords;
-      }
-      else {
       }
     });
   }
@@ -216,9 +217,11 @@ export class StateListComponent implements OnInit {
   }
   // function for soft deleting state.
   fn_delStateFun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('State\'s details deleted successfully!');
         this.fn_GetStateList();
       }
@@ -255,10 +258,10 @@ export class StateListComponent implements OnInit {
   //function to save status change
   fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
+      this.ngxService.start();
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.fn_GetStateList();
       }
       else {

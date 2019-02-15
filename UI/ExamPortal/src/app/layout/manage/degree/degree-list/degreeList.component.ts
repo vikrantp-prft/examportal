@@ -20,7 +20,6 @@ interface paginationModel {
 })
 export class DegreeListComponent implements OnInit {
   // Declaration
-
   public params: any = {
     currentPage: 1,
     pageSize: 10,
@@ -42,18 +41,12 @@ export class DegreeListComponent implements OnInit {
       "pageNumber": 1
     };
   editDegreeList: any;
-
-
   // Constructor
-
   constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
-
   // Lifecycle method
-
   ngOnInit() {
     this.fn_GetDegreeList();
   }
-
   degreeForm = new FormGroup({
     degreeTitle: new FormControl('', Validators.required),
     degreeDescription: new FormControl('')
@@ -87,11 +80,11 @@ export class DegreeListComponent implements OnInit {
   }
   // function for save degree details.
   fn_saveDegreefun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Degree  added successfully!');
         this.fn_GetDegreeList();
       }
@@ -100,7 +93,6 @@ export class DegreeListComponent implements OnInit {
       }
     });
   }
-
   // Get designation by id
   fn_GetDegreeById(ID) {
     const url = 'api/Master/GetMasterById';
@@ -114,9 +106,11 @@ export class DegreeListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(degreeModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.editDegreeList = rs.data;
         this.fn_setEditValues();
       }
@@ -130,7 +124,6 @@ export class DegreeListComponent implements OnInit {
     this.degreeForm.controls.degreeTitle.setValue(this.editDegreeList.name);
     this.degreeForm.controls.degreeDescription.setValue(this.editDegreeList.description);
   }
-
   fn_updateDegree(data) {
     const url = 'api/Master/Update';
     const degreeModel =
@@ -144,9 +137,11 @@ export class DegreeListComponent implements OnInit {
   }
   // function for save degree details.
   fn_updateDegreefun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Degree  updated successfully!');
         this.fn_GetDegreeList();
       }
@@ -155,8 +150,6 @@ export class DegreeListComponent implements OnInit {
       }
     });
   }
-
-
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.degreeModel.pageNumber = 1;
@@ -167,12 +160,9 @@ export class DegreeListComponent implements OnInit {
     this.degreeModel.pageNumber = event.page;
     this.fn_GetDegreeList();
   }
-
   trimming_fn(x) {
     return x ? x.replace(/^\s+|\s+$/gm, '') : '';
   };
-
-
   // Searching
   searchRecord(event: any): void {
     const searchModel =
@@ -188,21 +178,19 @@ export class DegreeListComponent implements OnInit {
     }
     this.fn_GetFilteredList(searchModel);
   }
-
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.degreeList = rs.data;
-        // this.totalItems = rs.totalRecords;
       }
       else {
       }
     });
   }
-
-
   // Function to get degreeList (GetMasterByType)
   fn_GetDegreeList() {
     this.ngxService.start();
@@ -214,12 +202,8 @@ export class DegreeListComponent implements OnInit {
         this.degreeList = rs.data;
         this.totalItems = rs.totalRecords;
       }
-      else {
-      }
     });
   }
-
-
   fn_deleteDegree(Id) {
     if (Id != null) {
       swal({
@@ -244,13 +228,13 @@ export class DegreeListComponent implements OnInit {
 
     }
   }
-
-
   // function for soft deleting degree.
   fn_delDegreeFun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Degree\'s details deleted successfully!');
         this.fn_GetDegreeList();
       }
@@ -260,9 +244,6 @@ export class DegreeListComponent implements OnInit {
 
     });
   }
-
-
-
   // function to change isActive status
   fn_ChangeStatus(id, isActive) {
     swal({
@@ -288,14 +269,13 @@ export class DegreeListComponent implements OnInit {
       }
     });
   }
-
   //function to save status change
   fn_saveStatusChange(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.fn_GetDegreeList();
       }
       else {
@@ -303,6 +283,4 @@ export class DegreeListComponent implements OnInit {
       }
     });
   }
-
-
 }

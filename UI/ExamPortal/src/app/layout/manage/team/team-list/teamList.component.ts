@@ -71,11 +71,11 @@ export class TeamListComponent implements OnInit {
     this.fn_saveTeamfun(url, teamModel);
   }
   fn_saveTeamfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Team added successfully!');
         this.fn_GetTeamList();
       }
@@ -84,9 +84,9 @@ export class TeamListComponent implements OnInit {
       }
     });
   }
-
   // Get Team by Id
   fn_GetTeamById(ID) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterById';
     const teamModel =
     {
@@ -101,10 +101,9 @@ export class TeamListComponent implements OnInit {
     this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.editTeamList = rs.data;
         this.fn_setEditValues();
-      }
-      else {
       }
     });
   }
@@ -128,9 +127,11 @@ export class TeamListComponent implements OnInit {
   }
   // function for save team details.
   fn_updateTeamfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Team  updated successfully!');
         this.fn_GetTeamList();
       }
@@ -168,14 +169,13 @@ export class TeamListComponent implements OnInit {
     this.fn_GetFilteredList(searchModel);
   }
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.teamList = rs.data;
-        // this.totalItems = rs.totalRecords;
-      }
-      else {
       }
     });
   }
@@ -189,8 +189,6 @@ export class TeamListComponent implements OnInit {
         this.teamList = rs.data;
         this.ngxService.stop();
         this.totalItems = rs.totalRecords;
-      }
-      else {
       }
     });
   }
@@ -220,9 +218,11 @@ export class TeamListComponent implements OnInit {
   }
   // function for soft deleting the Ad Team
   fn_delTeamFun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Team\'s details deleted successfully!');
         this.fn_GetTeamList();
       }
@@ -258,11 +258,11 @@ export class TeamListComponent implements OnInit {
   }
   //function to save status change
   fn_saveStatusChange(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.fn_GetTeamList();
       }
       else {
