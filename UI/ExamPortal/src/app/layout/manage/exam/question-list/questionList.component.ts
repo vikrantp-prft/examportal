@@ -171,9 +171,16 @@ export class questionListComponent implements OnInit {
     });
   }
 
-  getAddFormTitle(){
+  loadQuestionForm(){
+    this.ngxService.start();
     this.frmReset();
     this.formTitle = 'Add';
+    this.disbleAllFlag();
+    this.multipleSelectEdit = false;
+    this.singleSelectEdit = false;
+    this.clear_obj_multiSelectOptions();
+    this.clear_obj_singleSelectOptions();
+    this.ngxService.stop();
   }
 
   frmReset() {
