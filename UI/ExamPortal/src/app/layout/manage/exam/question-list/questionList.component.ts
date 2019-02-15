@@ -223,6 +223,7 @@ export class questionListComponent implements OnInit {
     this.questionForm.controls.id.setValue(questionID);
     this.ngxService.stop();
   }
+  
   getQuestionDetails(questionID) {
     this.questionDetailModel.id = questionID;
     this.CommonService.fn_PostWithData(this.questionDetailModel, this.questionDetailUrl).subscribe((result: any) => {
