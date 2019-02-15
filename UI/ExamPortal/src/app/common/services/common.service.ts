@@ -12,7 +12,7 @@ declare const $: any;
 @Injectable()
 export class commonService {
   public headers: Headers;
-   constructor(
+  constructor(
     @Inject(Http) public http: Http,
     public router: Router
   ) {
@@ -31,9 +31,10 @@ export class commonService {
       .map((res: Response) => res.json())
       .catch((error: any) => {
         if (error.status === 401) {
-        // this.fn_log(error);
-        console.log(error);
-        return Observable.throw(error.statusText); }
+          // this.fn_log(error);
+          console.log(error);
+          return Observable.throw(error.statusText);
+        }
       });
   }
 
@@ -45,9 +46,10 @@ export class commonService {
       .catch((error: any) => {
         // solution check for status code 401 before calling fn_log()
         if (error.status === 401) {
-        // this.fn_log(error);
-        console.log(error);
-        return Observable.throw(error.statusText); }
+          // this.fn_log(error);
+          console.log(error);
+          return Observable.throw(error.statusText);
+        }
       });
   }
 
@@ -62,9 +64,10 @@ export class commonService {
       .map((res: Response) => res.json())
       .catch((error: any) => {
         if (error.status === 401) {
-        // this.fn_log(error);
-        console.log('error : ',error);
-        return Observable.throw(error.statusText); }
+          // this.fn_log(error);
+          console.log('error : ', error);
+          return Observable.throw(error.statusText);
+        }
       });
   }
   fn_Post(url: string) {
@@ -74,25 +77,27 @@ export class commonService {
       .map((res: Response) => res.json())
       .catch((error: any) => {
         if (error.status === 401) {
-        // this.fn_log(error);
-        console.log(error);
-        return Observable.throw(error.statusText); }
+          // this.fn_log(error);
+          console.log(error);
+          return Observable.throw(error.statusText);
+        }
       });
   }
+
   fn_UploadImage(url: string, formData: any) {
     const headers_fileUp = new Headers({ 'Content-Type': 'multipart/form-data' });
     // let headers_fileUp = new Headers({
     //   Authorization: "Bearer " + this.authservice.token
     // });
     return this.http
-      .post(appConfig.apiUrl + url, formData, {headers : headers_fileUp})
+      .post(appConfig.apiUrl + url, formData)
 
       .map((res: Response) => res.json());
   }
 
-   // Common Function to check for validation(Valid fields)
+  // Common Function to check for validation(Valid fields)
 
-   validateAllFormFields(formGroup: FormGroup) {
+  validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
@@ -102,4 +107,4 @@ export class commonService {
       }
     });
   }
- }
+}

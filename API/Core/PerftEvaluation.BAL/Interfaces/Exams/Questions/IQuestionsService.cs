@@ -51,5 +51,11 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="questionId"></param>
         /// <returns></returns>
         bool DeleteQuestions (string questionId);
+
+        /// <summary>
+        /// Upload file 
+        /// </summary>
+        /// <value></value> 
+        bool ExcelUpload(string filename);
     }
 }

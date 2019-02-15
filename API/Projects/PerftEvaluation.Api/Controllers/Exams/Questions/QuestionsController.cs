@@ -1,9 +1,12 @@
 using System;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PerftEvaluation.Api.Controllers {
     [Route ("api/[controller]")]
@@ -16,9 +19,13 @@ namespace PerftEvaluation.Api.Controllers {
         private ResponseModel responseModel = null;
 
         protected readonly ILogger<MasterController> _logger;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public QuestionsController (IQuestionsService questionsService, ILogger<MasterController> logger = null) {
+        public QuestionsController (IQuestionsService questionsService, 
+                                    IHostingEnvironment hostingEnvironment,
+                                    ILogger<MasterController> logger = null) {
             this._questionService = questionsService;
+            this._hostingEnvironment = hostingEnvironment;
             this.responseModel = new ResponseModel ();
             if (null != logger) {
                 this._logger = logger;
@@ -151,6 +158,53 @@ namespace PerftEvaluation.Api.Controllers {
                 _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
+        }
+
+        // POST api/Questions/ImportCsv
+        /// <summary>
+        /// Import CSV
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("ImportCsv")]
+        public IActionResult Post()
+        {
+            try
+            {
+                IFormFile file = Request.Form.Files[0];
+                string contentRootPath="";
+                var ActualFileName = Path.GetFileName(file.FileName);
+                string ext = Path.GetExtension(ActualFileName);
+                if (ext == ".csv" || ext == ".xls" || ext == ".xlsx" || ext == ".ods")
+                {
+                var fileName = DateTime.Now.ToString("yymmddhhss") + ActualFileName;
+                var PathWithFolderName = "/Uploads/QuestionUploads";
+                if (!Directory.Exists(PathWithFolderName))
+                 {
+                        // Try to create the directory.
+                     DirectoryInfo di = Directory.CreateDirectory(PathWithFolderName);
+                }
+                    if (file.Length > 0)
+                    {
+                        string path = _hostingEnvironment.WebRootPath;
+                        contentRootPath=_hostingEnvironment.ContentRootPath;
+                        var paths=contentRootPath + PathWithFolderName + '/' + fileName;
+                        // var filePath = filepath + PathWithFolderName + '/' + fileName;
+                        using (FileStream fileStream = new FileStream(paths, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                          var res = this._questionService.ExcelUpload(paths);
+                      }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw(ex);
+            }
+            return null;
         }
     }
 }

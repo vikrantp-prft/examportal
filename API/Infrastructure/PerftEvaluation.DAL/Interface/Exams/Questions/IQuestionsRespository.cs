@@ -57,5 +57,11 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="questionId"></param>
         /// <returns></returns>
         bool DeleteQuestion (string questionId);
+
+
+        /// <summary>
+        /// Upload Excel
+        /// </summary>
+       bool UploadExcel(string filesname);
     }
 }

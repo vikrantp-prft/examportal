@@ -92,5 +92,9 @@ namespace PerftEvaluation.BAL.Services {
         public bool DeleteQuestions (string questionId) {
             return this._questionsRepository.DeleteQuestion (questionId);
         }
+
+        public bool ExcelUpload(string filename){
+            return this._questionsRepository.UploadExcel(filename);
+        }
     }
 }
