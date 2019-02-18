@@ -164,14 +164,7 @@ export class EmployeeUpdateComponent implements OnInit {
     const employeeUrl = 'api/Employee/GetEmployeeById';
     const employeeModel =
     {
-      "id": this.employeeId,
-      "filter": "string",
-      "pageSize": 0,
-      "pageNumber": 0,
-      "totleRecords": 0,
-      "filterBy": "string",
-      "sortBy": "string",
-      "isDescending": true
+      "id": this.employeeId
     }
 
     this.CommonService.fn_PostWithData(employeeModel, employeeUrl).subscribe((result: any) => {
@@ -190,7 +183,7 @@ export class EmployeeUpdateComponent implements OnInit {
           this.employeeForm.controls.currentStateId.setValue(employeeResult.data.currentStateId);
           this.employeeForm.controls.stateId.setValue(employeeResult.data.stateId);
           this.employeeForm.controls.email.setValue(employeeResult.data.email);
-          this.employeeForm.controls.password.setValue(employeeResult.data.password);
+          // this.employeeForm.controls.password.setValue(employeeResult.data.password);
           this.employeeForm.controls.teamId.setValue(employeeResult.data.teamId);
           this.employeeForm.controls.mobile.setValue(employeeResult.data.mobile);
           this.employeeForm.controls.note.setValue(employeeResult.data.note);
