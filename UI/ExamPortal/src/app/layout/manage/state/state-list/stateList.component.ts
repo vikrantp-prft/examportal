@@ -32,15 +32,20 @@ export class StateListComponent implements OnInit {
   public stateList = [];
   public stateInfo: any;
   public statusUrl: any;
+  public editStateList: any;
   public stateModel =
     {
       "condition": "State",
       "pageSize": 10,
       "pageNumber": 1
     };
-  editStateList: any;
   // Constructor
-  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(
+    private ngxService: NgxUiLoaderService, 
+    public router: Router, 
+    private CommonService: commonService, 
+    public http: Http, 
+    private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetStateList();
@@ -76,10 +81,10 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.toastr.success('State  added successfully!');
         this.fn_GetStateList();
         this.frmReset();
+        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to add state');
@@ -88,7 +93,6 @@ export class StateListComponent implements OnInit {
   }
   // Get state by id
   fn_GetStateById(ID) {
-    this.ngxService.start();
     const url = 'api/Master/GetMasterById';
     const stateModel =
     {
@@ -100,12 +104,16 @@ export class StateListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(stateModel, url).subscribe((result: any) => {
+    this.fn_GetStateByIdFun(url, stateModel);
+  }
+  fn_GetStateByIdFun(url, model){
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.editStateList = rs.data;
         this.fn_setEditValues();
+        this.ngxService.stop();
       }
     });
   }
@@ -132,9 +140,9 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.toastr.success('State  updated successfully!');
         this.fn_GetStateList();
+        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to update state');
@@ -156,6 +164,7 @@ export class StateListComponent implements OnInit {
   };
   // Searching
   searchRecord(event: any): void {
+    const url = 'api/Master/GetMasterByType';
     const searchModel =
     {
       "id": "string",
@@ -167,16 +176,15 @@ export class StateListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     }
-    this.fn_GetFilteredList(searchModel);
+    this.fn_GetFilteredList(url, searchModel);
   }
-  fn_GetFilteredList(data) {
+  fn_GetFilteredList(url, data) {
     this.ngxService.start();
-    const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.stateList = rs.data;
+        this.ngxService.stop();
       }
     });
   }
@@ -187,9 +195,9 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.stateList = rs.data;
         this.totalItems = rs.totalRecords;
+        this.ngxService.stop();
       }
     });
   }
@@ -221,9 +229,9 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
-        this.ngxService.stop();
         this.toastr.success('State\'s details deleted successfully!');
         this.fn_GetStateList();
+        this.ngxService.stop();
       }
       else {
         this.toastr.error("Failed to delete state");
@@ -261,9 +269,9 @@ export class StateListComponent implements OnInit {
       this.ngxService.start();
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.toastr.success('State\'s status changes successfully!');
         this.fn_GetStateList();
+        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to change state\'s status');

@@ -32,6 +32,7 @@ export class CategoryListComponent implements OnInit {
   public categoryList = [];
   public editCategoryList: any;
   public statusUrl: any;
+  public toggle: boolean = true;
   public categoryModel =
     {
       "condition": "Category",
@@ -39,8 +40,12 @@ export class CategoryListComponent implements OnInit {
       "pageNumber": 1
     };
   // Constructor
-  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
-  toggle: boolean = true;
+  constructor(
+    private ngxService: NgxUiLoaderService, 
+    public router: Router, 
+    private CommonService: commonService, 
+    public http: Http, 
+    private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetCategoryList();
@@ -77,10 +82,10 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.toastr.success('category  added successfully!');
         this.fn_GetCategoryList();
         this.frmReset();
+        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to add category');
@@ -89,7 +94,6 @@ export class CategoryListComponent implements OnInit {
   }
   // Get category by id
   fn_GetCategoryById(categoryID) {
-    this.ngxService.start();
     const url = 'api/Master/GetMasterById';
     const categoryModel =
     {
@@ -101,14 +105,16 @@ export class CategoryListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+    this.GetCategoryById(categoryModel, url);
+  }
+  GetCategoryById(model, url){
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.editCategoryList = rs.data;
         this.fn_setEditValues();
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
