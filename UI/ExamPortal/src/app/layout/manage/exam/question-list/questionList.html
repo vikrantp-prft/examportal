@@ -51,7 +51,7 @@
             <thead>
               <tr>
                 <th>Sr.</th>
-                <th>Question</th>
+                <th>Questions</th>
                 <!-- <th style="width:140px;">Question Type</th> -->
                 <!-- <th>Category</th> -->
                 <th>Action</th>
@@ -113,7 +113,7 @@
                 <div class="form-group"> 
                   <label for="sel1">Question Category</label>
                   <select class="form-control" formControlName="questionCategory" #questionCategory>
-                    <option selected="selected" value="">Select</option>
+                    <option selected="selected" value="">--Select--</option>
                     <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
                   </select>
                   <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
@@ -124,7 +124,7 @@
                 <div class="form-group">
                   <label for="middleName">Question Type</label>
                   <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
-                    <option value="">Select</option>
+                    <option value="">--Select--</option>
                     <option value="multipleSelect">Multiple Select(Checkbox)</option>
                     <option value="SingleSelect">Single Select(Radio Button)</option>
                     <option value="subjective">Subjective</option>
