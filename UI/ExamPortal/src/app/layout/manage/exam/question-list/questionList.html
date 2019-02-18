@@ -113,7 +113,7 @@
                 <div class="form-group"> 
                   <label for="sel1">Question Category</label>
                   <select class="form-control" formControlName="questionCategory" #questionCategory>
-                    <option value="">Select</option>
+                    <option selected="selected" value="">Select</option>
                     <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
                   </select>
                   <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
