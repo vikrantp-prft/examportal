@@ -14,7 +14,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class ExamComponent implements OnInit {
     examID: any;
     public examDetail: object;
-    public examDetailUrl = "api/Exams/GetExamById";
+    
     examName: any;
     question = [];
     questionCategory = [];
@@ -33,36 +33,42 @@ export class ExamComponent implements OnInit {
         this.getExamDetails();
         this.getQuestionList();
     }
-
     getExamDetails() {
-        this.ngxService.start();
         const examDetailModel = {
             "id": this.examID
         }
-        this.CommonService.fn_PostWithData(examDetailModel, this.examDetailUrl).subscribe((result: any) => {
+        const examDetailUrl = "api/Exams/GetExamById";
+        this.fn_getExamDetails(examDetailModel, examDetailUrl);
+    }
+    fn_getExamDetails(model, url){
+        this.ngxService.start();
+        this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode === 200) {
-                this.ngxService.stop();
                 this.examDetail = rs.data;
                 this.examName = rs.data.title;
+                this.ngxService.stop();
             }
         });
     }
     getQuestionList() {
-        this.ngxService.start();
         const url = 'api/Questions/listQuestionsByExamId';
         const questionModel = {
             "id": this.examID
         };
-        this.CommonService.fn_PostWithData(questionModel, url).subscribe((result: any) => {
+        this.fn_getQuestionList(questionModel,url);
+    }
+    fn_getQuestionList(model,url){
+        this.ngxService.start();
+        this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
-                this.ngxService.stop();
                 this.question = rs.data;
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
                 this.getAllQuestionCategory();
+                this.ngxService.stop();
             }
         });
     }

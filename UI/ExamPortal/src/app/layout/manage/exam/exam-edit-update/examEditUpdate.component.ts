@@ -5,6 +5,7 @@ import { commonService } from 'src/app/common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 const URL = 'http://localhost:3000/api/upload';
 
@@ -14,47 +15,52 @@ const URL = 'http://localhost:3000/api/upload';
   providers: [commonService]
 })
 export class examEditUpdateComponent implements OnInit {
-
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
   public editExamForm: FormGroup;
   public url = 'api/Exams/Update';
   public teamList = [];
   public teamUrl = 'api/Dropdown/Teams';
-  public examDetailUrl = "api/Exams/GetExamById";
   public examID = "";
   public examDetail: any;
   public year: any;
   public month: any;
   public day: any;
-
-  constructor(private route: ActivatedRoute, public router: Router, private fb: FormBuilder, private commonService: commonService, private toastr: ToastrService) {
+  constructor(
+    private ngxService: NgxUiLoaderService, 
+    private route: ActivatedRoute, 
+    public router: Router, 
+    private fb: FormBuilder, 
+    private commonService: commonService, 
+    private toastr: ToastrService) {
     this.route.params.subscribe(params => {
       this.examID = params['id'];
     });
     this.getExamDetails();
     this.createForm();
   }
-
   getExamDetails() {
     const examDetailModel = {
       "id": this.examID
     }
-    this.commonService.fn_PostWithData(examDetailModel, this.examDetailUrl).subscribe((result: any) => {
+    const examDetailUrl = "api/Exams/GetExamById";
+    this.fn_getExamDetails(examDetailModel, examDetailUrl)
+  }
+  fn_getExamDetails(model, url){
+    this.ngxService.start();
+    this.commonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.examDetail = rs.data;
         this.fn_setEditValues()
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
-
   createForm() {
     this.editExamForm = this.fb.group({
       id: new FormControl(''),
       title: [null, [Validators.required]],
-      teamId: new FormControl(''),
+      teamId: [null],
       description: new FormControl(''),
       examDurationHours: [null, [Validators.required]],
       examDurationMinutes: [null, [Validators.required]],
@@ -69,7 +75,6 @@ export class examEditUpdateComponent implements OnInit {
       totalQuestions: new FormControl('')
     });
   }
-
   fn_setEditValues() {
     this.editExamForm.controls.id.setValue(this.examID);
     this.editExamForm.controls.title.setValue(this.examDetail.title);
@@ -87,7 +92,6 @@ export class examEditUpdateComponent implements OnInit {
     this.editExamForm.controls.isPaperPublic.setValue(this.examDetail.isPaperPublic);
     this.editExamForm.controls.totalQuestions.setValue(this.examDetail.totalQuestions);
   }
-
   fn_getDate(inputDate) {
     var date = new Date(inputDate);
     this.year = date.getFullYear();
@@ -101,8 +105,6 @@ export class examEditUpdateComponent implements OnInit {
     }
     return this.year + '-' + this.month + '-' + this.day;
   }
-
-
   onSubmit = function (formData) {
     if (this.editExamForm.valid) {
       this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {
@@ -122,24 +124,25 @@ export class examEditUpdateComponent implements OnInit {
       return false;
     }
   }
-
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log('ImageUpload:uploaded:', item, status, response);
       alert('File uploaded successfully');
     };
-
+    this.fn_getTeamForDropdown();
+  }
+  fn_getTeamForDropdown(){
+    this.ngxService.start();
     this.commonService.fn_Get(this.teamUrl).subscribe(
       (data: any) => {
-        // if (data != null && data.statusCode === 200) {
         this.teamList = data.data;
+        this.ngxService.stop();
       },
       err => console.error(err),
       () => { }
     );
   }
-
   // function to display the error message for  validation.
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;

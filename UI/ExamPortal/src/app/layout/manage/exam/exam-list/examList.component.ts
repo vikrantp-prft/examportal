@@ -6,7 +6,6 @@ import { Http } from '@angular/http';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-
 @Component({
   selector: 'exam-list',
   templateUrl: './examList.html',
@@ -14,39 +13,33 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ExamListComponent implements OnInit {
   // Declaration
-
   public params: any = {
     pageNumber: 1,
     pageSize: 10,
     filter: ''
   };
-
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
   public recordno = 0;
   public totalItems = 0;
   public examList = [];
-
   // Constructor
-
-  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
-  }
+  constructor(
+    private ngxService: NgxUiLoaderService, 
+    public router: Router, 
+    private CommonService: commonService, 
+    public http: Http, private toastr: ToastrService) { }
   // Lifecycle method
-
   ngOnInit() {
     this.fn_GetExamList();
   }
-
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.params.pageNumber = 1;
     this.params.pageSize = event.target.value;
     this.fn_GetExamList();
   }
-
   pageChanged(event: any): void {
     this.params.pageNumber = parseInt(event.page);
     this.params.pageSize = parseInt(event.itemsPerPage);
@@ -60,9 +53,7 @@ export class ExamListComponent implements OnInit {
       this.params.filter = event.target.value;
       this.fn_GetExamList();
     }
-
   }
-
   // Function to get list of Exam
   fn_GetExamList() {
     this.ngxService.start();
@@ -70,23 +61,12 @@ export class ExamListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.params, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.examList = rs.data;
         this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
-    // this.CommonService.fn_Get(url).subscribe(
-    //   (data: any) => {
-    //     // if (data != null && data.statusCode === 200) {
-    //     this.examList = data.data;
-    //   },
-    //   err => console.error(err),
-    //   () => { }
-    // );
   }
-
   // FUnction to get employee ID
   fn_getEmployee(empid) { }
   // function to display the alert before deleting the Order.
@@ -112,14 +92,15 @@ export class ExamListComponent implements OnInit {
       });
     }
   }
-
   // function for soft deleting the Exam.
   fn_delfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.toastr.success('Exam deleted successfully!');
         this.fn_GetExamList();
+        this.ngxService.stop();
       }
       else {
         this.toastr.error('Failed to Delete Exam');

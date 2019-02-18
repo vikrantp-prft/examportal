@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card-body">
-
+        <ngx-ui-loader></ngx-ui-loader>
         <form [formGroup]="editExamForm" (ngSubmit)="onSubmit(editExamForm.value)">
           <div class="sections">
             <div class="row">
@@ -18,8 +18,8 @@
                 <div class="form-group">
                   <label for="sel1">Team</label>
                   <select class="form-control" formControlName="teamId" #teamId>
-                    <option value="" selected>Select</option>
-                    <option *ngFor="let team of teamList" value={{team.id}}>
+                    <option  value="" >Select</option>
+                    <option  *ngFor="let team of teamList" value={{team.id}}>
                       {{team.name}}
                     </option>
                   </select>
