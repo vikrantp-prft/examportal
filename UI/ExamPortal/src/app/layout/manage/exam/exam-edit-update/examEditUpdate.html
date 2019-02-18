@@ -4,8 +4,7 @@
       <div class="card-header">
         <h1 class="h3">Edit Exam</h1>
         <div class="back-btn">
-          <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i
-                class="fa fa-arrow-left"></i></span>
+          <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
             Back </button>
         </div>
       </div>
@@ -18,8 +17,8 @@
                 <div class="form-group">
                   <label for="sel1">Team</label>
                   <select class="form-control" formControlName="teamId" #teamId>
-                    <option  value="" >Select</option>
-                    <option  *ngFor="let team of teamList" value={{team.id}}>
+                    <option value="">--Select--</option>
+                    <option *ngFor="let team of teamList" value={{team.id}}>
                       {{team.name}}
                     </option>
                   </select>
@@ -29,9 +28,9 @@
                 <div class="form-group">
                   <label for="Question Paper Name">Question Paper Name</label>
                   <span class="text-danger">*</span>
-                  <input type="text" class="form-control" formControlName="title" #title>
-                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'title')"
-                    errorMsg="Enter question paper name">
+                  <input type="text" class="form-control" formControlName="title" placeholder="Question Paper Name"
+                    #title>
+                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'title')" errorMsg="Enter question paper name">
                   </app-field-error-display>
                 </div>
               </div>
@@ -44,6 +43,7 @@
                   <div class="row">
                     <div class="col">
                       <select class="form-control" formControlName="examDurationHours" #examDurationHours>
+                        <option value="">--Select--</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -56,6 +56,7 @@
                     <span class="pt-2">:</span>
                     <div class="col">
                       <select class="form-control" formControlName="examDurationMinutes" #examDurationMinutes>
+                        <option value="">--Select--</option>
                         <option>00</option>
                         <option>05</option>
                         <option>10</option>
@@ -83,16 +84,15 @@
                 <div class="form-group">
                   <label for="Passing Marks">Passing Marks(%)</label>
                   <span class="text-danger">*</span>
-                  <input type="number" class="form-control" formControlName="passingMarks" #passingMarks>
-                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'passingMarks')"
-                    errorMsg="Enter passing marks">
+                  <input type="number" class="form-control" formControlName="passingMarks" placeholder="Passing Marks (%)" #passingMarks>
+                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'passingMarks')" errorMsg="Enter passing marks">
                   </app-field-error-display>
                 </div>
               </div>
               <div class="col-3">
                 <div class="form-group">
                   <label for="Total Questions">Total Questions</label>
-                  <input type="text" class="form-control" formControlName="totalQuestions" #totalQuestions>
+                  <input type="text" class="form-control" formControlName="totalQuestions" placeholder="Total Questins (Optional)" #totalQuestions>
                 </div>
               </div>
             </div>
@@ -102,8 +102,7 @@
                   <label for="Exam Active From">Active From (DD/MM/YYYY)</label>
                   <span class="text-danger">*</span>
                   <input type="date" class="form-control" formControlName="fromDate" #fromDate>
-                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'fromDate')"
-                    errorMsg="Enter valid date">
+                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'fromDate')" errorMsg="Enter valid date">
                   </app-field-error-display>
                 </div>
               </div>
@@ -156,14 +155,13 @@
               <div class="col-6 pt-2">
                 <div class="form-group">
                   <label for="Description">Description</label>
-                  <textarea type="text" class="form-control" formControlName="description" #description></textarea>
+                  <textarea type="text" class="form-control" formControlName="description" placeholder="Description" #description></textarea>
                 </div>
               </div>
               <div class="col-6 question-upload">
                 <div class="form-control">
                   <input class="" type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
-                  <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
-                    [disabled]="!uploader.getNotUploadedItems().length">
+                  <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     Upload File
                   </button>
                 </div>
