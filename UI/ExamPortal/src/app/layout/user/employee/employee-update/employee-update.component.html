@@ -241,7 +241,7 @@
               (click)="fn_addNewCourse()">
           </div>
           <div class="form-group" *ngIf="updateEducationButton">
-            <input type="button" class="btn btn-default" id="btnUpdateNewEducationDetails" value="Update"
+            <input type="button" class="btn btn-secondary" id="btnUpdateNewEducationDetails" value="Update"
               (click)="fn_updateNewCourse()">
           </div>
           <div>
@@ -261,22 +261,23 @@
                   <td hidden="hidden">
                     <label>{{educationField.courseId}}</label>
                   </td>
-                  <td>
+                  <td (click)="fn_editCourse(i)">
                     <label>{{educationField.course.name}}</label>
                   </td>
-                  <td>
+                  <td (click)="fn_editCourse(i)">
                     <label>{{educationField.yearOfPassing}}</label>
                   </td>
-                  <td>
+                  <td (click)="fn_editCourse(i)">
                     <label>{{educationField.institution}}</label>
                   </td>
-                  <td>
+                  <td (click)="fn_editCourse(i)">
                     <label>{{educationField.percentage}}</label>
                   </td>
                   <td>
-                    <button class="btn btn-default btn-md" type="button" (click)="fn_editCourse(i)">Edit</button>
-                    <button class="btn btn-default btn-md ml-3" type="button"
-                      (click)="fn_deleteCourse(i)">Delete</button>
+                    <!-- <button class="btn btn-default btn-md" type="button" (click)="fn_editCourse(i)">Edit</button> -->
+                    <button class="btn btn-default btn-md ml-3" type="button" (click)="fn_deleteCourse(i)">
+                      <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>

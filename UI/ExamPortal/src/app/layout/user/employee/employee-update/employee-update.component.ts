@@ -452,6 +452,7 @@ export class EmployeeUpdateComponent implements OnInit {
           this.addEducationButton = true;
           this.updateEducationButton = false;
           this.fn_resetEducationDetails();
+          this.toastr.success("Educational details deleted successfully")
         }
       });
     }
