@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
 import swal from 'sweetalert2';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-employee-update',
@@ -46,7 +47,7 @@ export class EmployeeUpdateComponent implements OnInit {
     { year: 2011 }, { year: 2012 }, { year: 2013 }, { year: 2014 }, { year: 2015 }, { year: 2016 }, { year: 2017 }, { year: 2018 }
   ]
 
-  constructor(public router: Router, private CommonService: commonService, private formBuilder: FormBuilder, private route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, private formBuilder: FormBuilder, private route: ActivatedRoute, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
       middleName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
@@ -97,9 +98,11 @@ export class EmployeeUpdateComponent implements OnInit {
   fn_getTeam() {
     const teamUrl = 'api/Dropdown/Teams';
     this.CommonService.fn_Get(teamUrl).subscribe((result: any) => {
+      this.ngxService.start();
       const teamResult = result;
       if (teamResult.statusCode == 200) {
         this.teamArray = teamResult.data;
+        this.ngxService.stop();
       }
       else {
         this.teamArray = null;
@@ -111,9 +114,11 @@ export class EmployeeUpdateComponent implements OnInit {
   fn_getState() {
     const stateUrl = 'api/Dropdown/States';
     this.CommonService.fn_Get(stateUrl).subscribe((result: any) => {
+      this.ngxService.start();
       const stateResult = result;
       if (stateResult.statusCode == 200) {
         this.stateArray = stateResult.data;
+        this.ngxService.stop();
       }
       else {
         this.stateArray = null;
@@ -135,9 +140,11 @@ export class EmployeeUpdateComponent implements OnInit {
   fn_getCourse() {
     const degreeUrl = 'api/Dropdown/Degrees';
     this.CommonService.fn_Get(degreeUrl).subscribe((result: any) => {
+      this.ngxService.start();
       const courseResult = result;
       if (courseResult.statusCode == 200) {
         this.courseArray = courseResult.data;
+        this.ngxService.stop();
       }
       else {
         this.courseArray = null;
@@ -168,6 +175,7 @@ export class EmployeeUpdateComponent implements OnInit {
     }
 
     this.CommonService.fn_PostWithData(employeeModel, employeeUrl).subscribe((result: any) => {
+      this.ngxService.start();
       const employeeResult = result;
       if (employeeResult.statusCode == 200) {
         if (employeeResult.data != null) {
@@ -203,6 +211,7 @@ export class EmployeeUpdateComponent implements OnInit {
             });
           });
         }
+        this.ngxService.stop();
       }
     });
   }
@@ -232,8 +241,10 @@ export class EmployeeUpdateComponent implements OnInit {
   // function for update employee details.
   fn_updateEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Employee details updated successfully!');
         this.router.navigate(['user/employeelist']);
       }
@@ -374,8 +385,7 @@ export class EmployeeUpdateComponent implements OnInit {
         }
       }
       if (this.courseFlag == false) {
-        console.log('this.educationArray', this.educationArray);
-        console.log('this.educationArray[this.fetchIndex].course.name', this.educationArray[this.fetchIndex].course.name);
+       
         this.educationArray[this.fetchIndex].courseId = oldCourseModel.courseId;
         this.educationArray[this.fetchIndex].course.name = oldCourseModel.course.name;
         this.educationArray[this.fetchIndex].yearOfPassing = oldCourseModel.yearOfPassing;
@@ -456,14 +466,14 @@ export class EmployeeUpdateComponent implements OnInit {
       "condition": event
     }
     this.CommonService.fn_PostWithData(model, existEmailUrl).subscribe((result: any) => {
+      this.ngxService.start();
       const stateResult = result;
       if (stateResult.statusCode === 200) {
         if (stateResult.data == true) {
-          console.log('Email address is already exist');
+          this.ngxService.stop();
           this.emailExist = true;
         }
         else {
-          console.log('Email address is not exist');
           this.emailExist = false;
         }
       }
@@ -474,7 +484,6 @@ export class EmployeeUpdateComponent implements OnInit {
   {
     if (event.target.checked) {
       debugger;
-      console.log(this.employeeForm.controls.address1);
       this.employeeForm.controls.currentAddress1.setValue(this.employeeForm.controls.address1.value);
       this.employeeForm.controls.currentAddress2.setValue(this.employeeForm.controls.address2.value);
       this.employeeForm.controls.currentCity.setValue(this.employeeForm.controls.city.value);
