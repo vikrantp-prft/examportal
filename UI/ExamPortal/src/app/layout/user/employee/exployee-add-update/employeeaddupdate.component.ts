@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { appConfig } from 'src/app/common/core/app.config';
 import { $ } from 'protractor';
 import swal from 'sweetalert2';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'employee-add-update',
@@ -42,7 +43,7 @@ export class AddEmployeeComponent implements OnInit {
     { description: 'Design', value: 'Design', selected: false }
   ];
 
-  constructor(public router: Router, private CommonService: commonService, public http: Http,
+  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http,
     private formBuilder: FormBuilder, private toastr: ToastrService) {
     this.employeeForm = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
@@ -53,15 +54,15 @@ export class AddEmployeeComponent implements OnInit {
       address1: [null, [Validators.required, Validators.maxLength(100)]],
       address2: new FormControl(''),
       city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
-      stateId: [null, [Validators.required]],
+      stateId: ["", [Validators.required]],
       pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
       currentAddress1: [null, [Validators.required, Validators.maxLength(100)]],
       currentAddress2: new FormControl(''),
       currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
-      currentStateId: [null, [Validators.required]],
+      currentStateId: ["", [Validators.required]],
       currentPincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
       note: new FormControl(''),
-      teamId: [null, [Validators.required]],
+      teamId: ["", [Validators.required]],
       email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
      // password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD), Validators.maxLength(20)]],
       courseId: new FormControl(''),
@@ -79,11 +80,11 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getCourse();
     this.updateEducationButton = false;
     this.addEducationButton = true;
-    this.employeeForm.controls.teamId.setValue("");
-    this.employeeForm.controls.courseId.setValue("");
-    this.employeeForm.controls.stateId.setValue("");
-    this.employeeForm.controls.currentStateId.setValue("");
-    this.employeeForm.controls.yearOfPassing.setValue("");
+    // this.employeeForm.controls.teamId.setValue("");
+    // this.employeeForm.controls.courseId.setValue("");
+    // this.employeeForm.controls.stateId.setValue("");
+    // this.employeeForm.controls.currentStateId.setValue("");
+    // this.employeeForm.controls.yearOfPassing.setValue("");
   }
 
   // function to display the error message for  validation.
@@ -123,9 +124,10 @@ export class AddEmployeeComponent implements OnInit {
   // function for save employee details.
   fn_saveEmployeefun(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
       const rs = result;
-      console.log(result);
       if (rs.statusCode === 200) {
+        this.ngxService.stop();
         this.toastr.success('Employee details added successfully!');
         this.router.navigate(['user/employeelist']);
       } else {
@@ -137,10 +139,12 @@ export class AddEmployeeComponent implements OnInit {
   // function to get teams
   fn_getTeam() {
     const teamUrl = 'api/Dropdown/Teams';
+    this.ngxService.start();
     this.CommonService.fn_Get(teamUrl).subscribe((result: any) => {
       const teamResult = result;
       if (teamResult.statusCode === 200) {
         this.teamArray = teamResult.data;
+        this.ngxService.stop();
       } else {
         this.teamArray = null;
       }
@@ -150,11 +154,12 @@ export class AddEmployeeComponent implements OnInit {
   //function to get course
   fn_getCourse() {
     const url = 'api/Dropdown/Degrees';
+    this.ngxService.start();
     this.CommonService.fn_Get(url).subscribe((result: any) => {
       const courseResult = result;
       if (courseResult.statusCode === 200) {
         this.courseArray = courseResult.data;
-        console.log('this.courseArray', this.courseArray);
+        this.ngxService.stop();
       } else {
         this.courseArray = null;
       }
@@ -174,11 +179,13 @@ export class AddEmployeeComponent implements OnInit {
   //function to get state
   fn_getState() {
     const stateUrl = 'api/Dropdown/States';
+    this.ngxService.start();
     this.CommonService.fn_Get(stateUrl).subscribe((result: any) => {
       const stateResult = result;
       if (stateResult.statusCode === 200) {
         this.stateArray = stateResult.data;
-      } else {
+        this.ngxService.stop();
+        } else {
         this.stateArray = null;
       }
     });
@@ -377,14 +384,14 @@ export class AddEmployeeComponent implements OnInit {
       "condition": event
     }
     this.CommonService.fn_PostWithData(model, existEmailUrl).subscribe((result: any) => {
+      this.ngxService.start();
       const stateResult = result;
       if (stateResult.statusCode === 200) {
         if (stateResult.data == true) {
-          console.log('Email address is already exist');
+          this.ngxService.stop();
           this.emailExist = true;
         }
         else {
-          console.log('Email address is not exist');
           this.emailExist = false;
         }
       }
