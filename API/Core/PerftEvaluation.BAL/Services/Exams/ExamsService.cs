@@ -54,6 +54,7 @@ namespace PerftEvaluation.BAL.Services {
                 examsDTO.ShuffleQuestions = item.ShuffleQuestions;
                 examsDTO.IsPaperPublic = item.IsPaperPublic;
                 examsDTO.TotalQuestions = item.TotalQuestions;
+                examsDTO.IsActive = item.IsActive;
                 examsDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
 
                 examJoin.Add (examsDTO);
@@ -89,20 +90,22 @@ namespace PerftEvaluation.BAL.Services {
 
             ExamsDTO examsDTO = new ExamsDTO ();
             examsDTO.Id = exam.Id;
-                examsDTO.Title = exam.Title;
-                examsDTO.TeamId = exam.TeamId;
-                examsDTO.Description = exam.Description;
-                examsDTO.ExamDurationHours = exam.ExamDurationHours;
-                examsDTO.ExamDurationMinutes = exam.ExamDurationMinutes;
-                examsDTO.PassingMarks = exam.PassingMarks;
-                examsDTO.FromDate = exam.FromDate;
-                examsDTO.ToDate = exam.ToDate;
-                examsDTO.ShowResultInFront = exam.ShowResultInFront;
-                examsDTO.ShuffleOptions = exam.ShuffleOptions;
-                examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
-                examsDTO.IsPaperPublic = exam.IsPaperPublic;
-                examsDTO.TotalQuestions = exam.TotalQuestions;
-                examsDTO.Team = exam.TeamId != null? _masterService.GetMasterById (exam.TeamId) : null;
+            examsDTO.Title = exam.Title;
+            examsDTO.TeamId = exam.TeamId;
+            examsDTO.Description = exam.Description;
+            examsDTO.ExamDurationHours = exam.ExamDurationHours;
+            examsDTO.ExamDurationMinutes = exam.ExamDurationMinutes;
+            examsDTO.PassingMarks = exam.PassingMarks;
+            examsDTO.FromDate = exam.FromDate;
+            examsDTO.ToDate = exam.ToDate;
+            examsDTO.ShowResultInFront = exam.ShowResultInFront;
+            examsDTO.ShuffleOptions = exam.ShuffleOptions;
+            examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
+            examsDTO.IsPaperPublic = exam.IsPaperPublic;
+            examsDTO.TotalQuestions = exam.TotalQuestions;
+            examsDTO.IsActive = exam.IsActive;
+            examsDTO.IsDeleted = exam.IsDeleted;
+            examsDTO.Team = exam.TeamId != null? _masterService.GetMasterById (exam.TeamId) : null;
 
             return examsDTO;
         }
