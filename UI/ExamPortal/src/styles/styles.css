@@ -1,5 +1,9 @@
 @import url('https://cdn.syncfusion.com/ej2/material.css');
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|Quicksand|Roboto|Raleway");
 
+body{
+  font-family: 'Raleway', sans-serif;
+}
 .dataTables_length_code {
   float: left;
   width: 100%;

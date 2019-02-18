@@ -67,8 +67,6 @@ export class ExamListComponent implements OnInit {
       }
     });
   }
-  // FUnction to get employee ID
-  fn_getEmployee(empid) { }
   // function to display the alert before deleting the Order.
   fn_deleteExam(Id) {
     if (Id != null) {
@@ -103,7 +101,7 @@ export class ExamListComponent implements OnInit {
         this.ngxService.stop();
       }
       else {
-        this.toastr.error('Failed to Delete Exam');
+        this.toastr.success('Failed to Delete Exam');
       }
     });
   }
