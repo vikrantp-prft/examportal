@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label for="sel1">Team</label><span style="color:red">*</span>
                 <select class="form-control" formControlName="teamId">
-                  <option value="" selected>Select</option>
+                  <option value="" selected>--Select--</option>
                   <option *ngFor="let team of teamArray" value={{team.id}}>
                     {{team.name}}
                   </option>
@@ -109,7 +109,7 @@
               <div class="form-group">
                 <label for="stateId">State</label><span style="color:red">*</span>
                 <select class="form-control" formControlName="stateId">
-                  <option value="" selected>Select</option>
+                  <option value="" selected>--Select--</option>
                   <option *ngFor="let state of stateArray" value={{state.id}}>
                     {{state.name}}
                   </option>
@@ -151,7 +151,7 @@
               <div class="form-group">
                 <label for="currentStateId">State</label><span style="color:red">*</span>
                 <select class="form-control" formControlName="currentStateId">
-                  <option value="" selected>Select</option>
+                  <option value="" selected>--Select--</option>
                   <option *ngFor="let state of stateArray" value={{state.id}}>
                     {{state.name}}
                   </option>
@@ -179,7 +179,7 @@
               <div class="form-group">
                 <label for="courseId"> Course </label>
                 <select class="form-control" formControlName="courseId" (change)="fn_getSelectedCourse($event)">
-                  <option value="" selected>Select</option>
+                  <option value="" selected>--Select--</option>
                   <option *ngFor="let course of courseArray" value={{course.id}}>
                     {{course.name}}
                   </option>
@@ -190,7 +190,7 @@
               <div class="form-group">
                 <label for="yearOfPassing">Year of passing </label>
                 <select class="form-control" formControlName="yearOfPassing">
-                  <option value="" selected>Select</option>
+                  <option value="" selected>--Select--</option>
                   <option *ngFor="let passingYear of yearOfPassingArray" value={{passingYear.year}}>
                     {{passingYear.year}}
                   </option>
