@@ -112,8 +112,8 @@ export class StateListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editStateList = rs.data;
-        this.fn_setEditValues();
         this.ngxService.stop();
+        this.fn_setEditValues();
       }
     });
   }
@@ -140,9 +140,9 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('State  updated successfully!');
         this.fn_GetStateList();
-        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to update state');

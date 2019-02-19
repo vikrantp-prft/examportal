@@ -107,12 +107,15 @@ export class DesignationListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
+    this.getDesignationByIdFunu(url, designationModel)
+  }
+  getDesignationByIdFunu(url, model){
     this.ngxService.start();
-    this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.editDesignationList = rs.data;
+        this.ngxService.stop();
         this.fn_setEditValues();
       }
     });
@@ -184,8 +187,8 @@ export class DesignationListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.designationList = rs.data;
+        this.ngxService.stop();
       }
     });
   }
@@ -196,9 +199,9 @@ export class DesignationListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.designationModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.designationList = rs.data;
         this.totalItems = rs.totalRecords;
+        this.ngxService.stop();
       }
     });
   }
