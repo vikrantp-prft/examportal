@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.IO;
+using PerftEvaluation.Api.Controllers;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.ExcelUtility;
 using Xunit;
@@ -40,5 +41,19 @@ namespace PerftEvaluation.Test
             }
             Assert.True(result);
         }
+
+
+
+        #region Integration Test 
+
+        [Fact]
+        public void QuestionController_ImportQuestions_Success()
+        {
+            // IQuestionsService questionsService = null;
+            // QuestionsController questions = new QuestionsController(questionsService, null);
+        }
+
+        #endregion Integration Test
+
     }
 }

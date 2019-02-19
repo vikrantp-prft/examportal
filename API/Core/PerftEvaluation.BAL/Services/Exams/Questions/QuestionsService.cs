@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -10,6 +10,7 @@ using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
+using static PerftEvaluation.DTO.Common.CommonEnums;
 
 namespace PerftEvaluation.BAL.Services
 {
@@ -114,7 +115,7 @@ namespace PerftEvaluation.BAL.Services
             return this._questionsRepository.UploadExcel(filename);
         }
 
-        public bool ExcelUpload(Stream fileStream)
+        public bool ExcelUpload(Stream fileStream, string examId)
         {
             bool isSuccess = false;
             DataSet ds = _importExportUtil.ReadExcel(fileStream, false);
@@ -125,20 +126,96 @@ namespace PerftEvaluation.BAL.Services
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    // ToDo-Kapil: Read all the parameters that are reuired to store in database. 
                     questionDto = new QuestionsDTO();
+                    questionDto.QuestionType = GetQuestionTypeFromStringValue(row["Question Type"].ToString());
                     questionDto.Question = row["Question"].ToString();
-                    // questionDto.IsActive = "";
+                    questionDto.Options = GetOptions(row);
+                    questionDto.CategoryId = GetCategoryIdFromStringValue(row["Category"].ToString());
+                    questionDto.ExamId = examId;
+                    questionDto.IsActive = true;
+                    questionDto.IsDeleted = false;
 
-                    // questionsDTO.Question
-                    // ToDO : Validate the model before sending that to database. 
-                    isSuccess = true; //= SaveQuestions(questionDto);
+                    // ToDO : Move validation code to some generic method. 
+                    var context = new System.ComponentModel.DataAnnotations.ValidationContext(questionDto);
+                    var results = new List<ValidationResult>();
+
+                    var isValid = Validator.TryValidateObject(questionDto, context, results);
+
+                    if (!isValid)
+                    {
+                        string failedResult = String.Empty;
+
+                        foreach (var item in results)
+                        {
+                            failedResult = failedResult + item.ErrorMessage + "\n";
+                        }
+
+                        throw new DataException("Failed to validate model annotations for : " + failedResult);
+                    }
+
+                    isSuccess = SaveQuestions(questionDto);
                 }
-
-
             }
 
             return isSuccess;
         }
+
+        private string GetCategoryIdFromStringValue(string value)
+        {
+            MastersDTO categoryMaster = value != null ? _masterService.GetMasterByName(value) : null;
+
+            if (categoryMaster == null)
+            {
+                throw new KeyNotFoundException($"Category with Id \"{value}\" not found.");
+            }
+
+            return categoryMaster.Id;
+        }
+
+        private QuestionsEnum GetQuestionTypeFromStringValue(string value)
+        {
+            value = value.ToLower();
+
+            // ToDo : Is it possible to remove hard code mapping ?
+            if (value == "multiplechoice")
+                return QuestionsEnum.multipleChoice;
+            else if (value == "singlechoice")
+                return QuestionsEnum.singleChoice;
+
+            return QuestionsEnum.theory;
+        }
+
+        private List<OptionsDTO> GetOptions(DataRow row)
+        {
+            List<OptionsDTO> allOptions = new List<OptionsDTO>();
+            OptionsDTO option;
+            short correctOption = 0;
+
+            // Get the index of correct answer. 
+            Int16.TryParse(row["Correct"].ToString(), out correctOption);
+
+            for (int i = 1; i <= 10; i++)
+            {
+                if (!row.Table.Columns.Contains("Option" + i))
+                {
+                    break;
+                }
+                option = new OptionsDTO()
+                {
+                    Option = row["Option" + i].ToString()
+                };
+
+                // Check and set the if the index of correct answer is same as mentioned in options collection.
+                if (correctOption == i)
+                {
+                    option.IsCorrect = true;
+                }
+
+                allOptions.Add(option);
+            }
+
+            return allOptions;
+        }
+
     }
 }

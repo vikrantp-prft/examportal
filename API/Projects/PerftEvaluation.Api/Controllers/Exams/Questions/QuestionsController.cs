@@ -7,6 +7,7 @@ using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using Microsoft.AspNetCore.Hosting;
+using System.Threading.Tasks;
 
 namespace PerftEvaluation.Api.Controllers
 {
@@ -200,46 +201,40 @@ namespace PerftEvaluation.Api.Controllers
         /// <param name="requestModel"></param>
         /// <returns></returns>
 
-        [HttpGet]
-        [Route("ImportCsv")]
-        public IActionResult Post()
+        [HttpPost]
+        
+        [Route("ImportQuestions")]
+        //[Consumes("multipart/form-data")]
+        public async Task<IActionResult> Post(string examId)
         {
-            // ToDo-Kapil:Do not save file to any folder, store direct stream to database. 
+            bool isSuccess = false;
             try
             {
-                IFormFile file = Request.Form.Files[0];
-                string contentRootPath = "";
-                var ActualFileName = Path.GetFileName(file.FileName);
-                string ext = Path.GetExtension(ActualFileName);
-                if (ext == ".csv" || ext == ".xls" || ext == ".xlsx" || ext == ".ods")
+                if (Request.Form.Files.Count < 0 && Request.Form.Files[0] == null)
                 {
-                    var fileName = DateTime.Now.ToString("yymmddhhss") + ActualFileName;
-                    var PathWithFolderName = "/Uploads/QuestionUploads";
-                    if (!Directory.Exists(PathWithFolderName))
-                    {
-                        // Try to create the directory.
-                        DirectoryInfo di = Directory.CreateDirectory(PathWithFolderName);
-                    }
-                    if (file.Length > 0)
-                    {
-                        string path = _hostingEnvironment.WebRootPath;
-                        contentRootPath = _hostingEnvironment.ContentRootPath;
-                        var paths = contentRootPath + PathWithFolderName + '/' + fileName;
-                        // var filePath = filepath + PathWithFolderName + '/' + fileName;
-                        using (FileStream fileStream = new FileStream(paths, FileMode.Create))
-                        {
-                            file.CopyTo(fileStream);
-                        }
-                        // ToDo - use overload function to pass stream.
-                        var res = this._questionService.ExcelUpload(paths);
-                    }
+                    return NoContent();
+                }
+
+                IFormFile file = Request.Form.Files[0];
+
+                if (!file.FileName.Contains(".xlsx"))
+                {
+                    return new UnsupportedMediaTypeResult();
+                }
+
+                using (Stream fileStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(fileStream);
+                    isSuccess = _questionService.ExcelUpload(fileStream, examId);
                 }
             }
             catch (Exception ex)
             {
-                throw (ex);
+                // _logger.LogInformation($"MESSAGE: {ex.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(ex));
             }
-            return null;
+            
+            return Ok(isSuccess);
         }
     }
 }

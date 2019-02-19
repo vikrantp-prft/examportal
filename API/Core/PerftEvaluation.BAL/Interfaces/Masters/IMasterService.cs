@@ -70,5 +70,12 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <returns></returns>
         MastersDTO GetMasterById (string masterId);
 
+        /// <summary>
+        /// Gets the master record based on the Name which includes ID. 
+        /// </summary>
+        /// <param name="name">Name of record that need to search.</param>
+        /// <returns></returns>
+        MastersDTO GetMasterByName (string name);
+
     }
 }

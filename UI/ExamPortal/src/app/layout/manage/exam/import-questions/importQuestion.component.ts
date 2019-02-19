@@ -32,7 +32,7 @@ export class importQuestionComponent implements OnInit {
       const file: File = fileList[0];
       const formData = new FormData();
       formData.append('uploadFile', file, file.name);
-      const apiUrl = 'api/Questions/ImportCsv';
+      const apiUrl = 'api/Questions/ImportQuestions';
       this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(
         (result: any) => {
           const rs = result;

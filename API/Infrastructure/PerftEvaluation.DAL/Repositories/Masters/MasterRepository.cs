@@ -6,16 +6,19 @@ using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.DAL.Repositories {
+namespace PerftEvaluation.DAL.Repositories
+{
     /// <summary>
     /// Master Repository
     /// </summary>
-    public class MasterRepository : IMasterRepository {
+    public class MasterRepository : IMasterRepository
+    {
         #region Declaration
         protected readonly DBHelper _db = null;
 
-        public MasterRepository () {
-            this._db = new DBHelper ();
+        public MasterRepository()
+        {
+            this._db = new DBHelper();
         }
         #endregion
 
@@ -24,8 +27,9 @@ namespace PerftEvaluation.DAL.Repositories {
         /// Get all activated master details
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Masters> GetAllMasters () {
-            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false);
+        public IEnumerable<Masters> GetAllMasters()
+        {
+            return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.IsDeleted == false);
         }
 
         /// <summary>
@@ -33,8 +37,9 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masters"></param>
         /// <returns></returns>
-        public bool SaveMaster (Masters masters) {
-            _db.Save<Masters> (masters, Masters.CollectionName);
+        public bool SaveMaster(Masters masters)
+        {
+            _db.Save<Masters>(masters, Masters.CollectionName);
             return true;
         }
 
@@ -43,8 +48,9 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masterType"></param>
         /// <returns></returns>
-        public IEnumerable<Masters> GetMastersByType (string masterType) {
-            return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.MasterType == masterType && x.IsDeleted == false).ToList ();
+        public IEnumerable<Masters> GetMastersByType(string masterType)
+        {
+            return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.MasterType == masterType && x.IsDeleted == false).ToList();
         }
 
         /// <summary>
@@ -52,16 +58,17 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masters"></param>
         /// <returns></returns>
-        public bool UpdateMaster (Masters masters) {
+        public bool UpdateMaster(Masters masters)
+        {
             var filter = Builders<Masters>.Filter;
-            var filterDef = filter.Eq (c => c.Id, masters.Id);
+            var filterDef = filter.Eq(c => c.Id, masters.Id);
 
             var updateQuery = Builders<Masters>.Update
-                .Set (c => c.Description, masters.Description)
-                .Set (c => c.Name, masters.Name)
-                .Set (c => c.MasterType, masters.MasterType);
+                .Set(c => c.Description, masters.Description)
+                .Set(c => c.Name, masters.Name)
+                .Set(c => c.MasterType, masters.MasterType);
 
-            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+            return _db.UpdateOne<Masters>(filterDef, updateQuery, Masters.CollectionName);
         }
 
         /// <summary>
@@ -69,13 +76,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool InactivateMaster (string masterId) {
+        public bool InactivateMaster(string masterId)
+        {
             var filter = Builders<Masters>.Filter;
-            var filterDef = filter.Eq (c => c.Id, masterId);
+            var filterDef = filter.Eq(c => c.Id, masterId);
             var updateQuery = Builders<Masters>.Update
-                .Set (c => c.IsActive, false);
+                .Set(c => c.IsActive, false);
 
-            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+            return _db.UpdateOne<Masters>(filterDef, updateQuery, Masters.CollectionName);
         }
 
         /// <summary>
@@ -83,13 +91,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool ActivateMaster (string masterId) {
+        public bool ActivateMaster(string masterId)
+        {
             var filter = Builders<Masters>.Filter;
-            var filterDef = filter.Eq (c => c.Id, masterId);
+            var filterDef = filter.Eq(c => c.Id, masterId);
             var updateQuery = Builders<Masters>.Update
-                .Set (c => c.IsActive, true);
+                .Set(c => c.IsActive, true);
 
-            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+            return _db.UpdateOne<Masters>(filterDef, updateQuery, Masters.CollectionName);
         }
 
         /// <summary>
@@ -97,13 +106,14 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool DeleteMaster (string masterId) {
+        public bool DeleteMaster(string masterId)
+        {
             var filter = Builders<Masters>.Filter;
-            var filterDef = filter.Eq (c => c.Id, masterId);
+            var filterDef = filter.Eq(c => c.Id, masterId);
             var updateQuery = Builders<Masters>.Update
-                .Set (c => c.IsDeleted, true);
+                .Set(c => c.IsDeleted, true);
 
-            return _db.UpdateOne<Masters> (filterDef, updateQuery, Masters.CollectionName);
+            return _db.UpdateOne<Masters>(filterDef, updateQuery, Masters.CollectionName);
         }
 
         /// <summary>
@@ -111,11 +121,31 @@ namespace PerftEvaluation.DAL.Repositories {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public Masters GetMasterById (string masterId) {
-            try {
-                return _db.GetCollection<Masters> (Masters.CollectionName).AsQueryable ().Where (x => x.Id == masterId).FirstOrDefault ();
-            } catch (Exception ex) {
+        public Masters GetMasterById(string masterId)
+        {
+            try
+            {
+                return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.Id == masterId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
                 throw ex;
+            }
+        }
+        /// <summary>
+        /// Gets the DTo object with Id based on Name
+        /// </summary>
+        /// <param name="name">Name of the master record.</param>
+        /// <returns></returns>
+        public Masters GetMasterByName(string name)
+        {
+            try
+            {
+                return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.Name == name).FirstOrDefault();
+            }
+            catch 
+            {
+                throw;
             }
         }
         #endregion

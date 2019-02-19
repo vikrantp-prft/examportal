@@ -122,6 +122,15 @@ namespace PerftEvaluation.BAL.Services {
         public MastersDTO GetMasterById (string masterId) {
             return this._mapper.Map<MastersDTO> (this._masterRepository.GetMasterById (masterId));
         }
+
+        /// <summary>
+        /// Gets the master record based on the Name which includes ID. 
+        /// </summary>
+        /// <param name="name">Name of record that need to search.</param>
+        /// <returns></returns>
+        public MastersDTO GetMasterByName (string name) {
+            return this._mapper.Map<MastersDTO> (this._masterRepository.GetMasterByName (name));
+        }
         #endregion
     }
 }

@@ -35,7 +35,9 @@ namespace PerftEvaluation.ExcelUtility
                     IEnumerable<Sheet> sheets = spreadSheetDocument.WorkbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>();
                     string relationshipId = sheets.First().Id.Value;
                     WorksheetPart worksheetPart = (WorksheetPart)spreadSheetDocument.WorkbookPart.GetPartById(relationshipId);
-                    Worksheet workSheet = worksheetPart.Worksheet;
+                    
+                    // Get the valid sheets with data.
+                    IEnumerable<OpenXmlElement> workSheet = worksheetPart.Worksheet.Where(w=> w.GetType() == typeof(SheetData));
 
                     foreach (SheetData currentSheet in workSheet)
                     {
