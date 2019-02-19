@@ -7,7 +7,7 @@
             Questions
           </h1>
           <div class="back-btn">
-            <button class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
+            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
               Add
             </button>
             <button [routerLink]="['/manage/importExamQuestion']" class="btn btn-md btn-primary mr-2" title="Import Questions">
@@ -113,7 +113,7 @@
                 <div class="form-group"> 
                   <label for="sel1">Question Category</label>
                   <select class="form-control" formControlName="questionCategory" #questionCategory>
-                    <option selected="selected" value="">--Select--</option>
+                    <option value="" selected>--Select--</option>
                     <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
                   </select>
                   <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
@@ -124,7 +124,7 @@
                 <div class="form-group">
                   <label for="middleName">Question Type</label>
                   <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
-                    <option value="">--Select--</option>
+                    <option value="" selected>--Select--</option>
                     <option value="multipleSelect">Multiple Select(Checkbox)</option>
                     <option value="SingleSelect">Single Select(Radio Button)</option>
                     <option value="subjective">Subjective</option>
@@ -219,6 +219,7 @@
                 </button>
               </div>
             </div>
+
             <app-field-error-display [displayError]="displayErrorOption" errorMsg="Please Enter/Select Valid Options">
             </app-field-error-display>
           </div>

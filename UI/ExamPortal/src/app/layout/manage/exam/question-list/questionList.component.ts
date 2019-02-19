@@ -191,6 +191,9 @@ export class questionListComponent implements OnInit {
   }
   frmReset() {
     this.questionForm.reset();
+    this.questionForm.controls.questionCategory.setValue("");
+    this.questionForm.controls.questionType.setValue("");
+
   }
   deleteQuestion(questionID) {
     if (questionID != null) {
@@ -228,6 +231,7 @@ export class questionListComponent implements OnInit {
     this.getQuestionsList();
   }
   editQuestion(questionID) {
+    debugger;
     this.resetAll();
     this.ngxService.start();
     this.getQuestionDetails(questionID);
@@ -264,6 +268,7 @@ export class questionListComponent implements OnInit {
     this.questionForm.controls.questionText.setValue(
       this.questionDetail.question
     );
+
     this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(null);
     const control_obj_singleSelectOptions = <FormArray>(
       this.questionForm.controls["obj_singleSelectOptions"]
@@ -297,6 +302,7 @@ export class questionListComponent implements OnInit {
           )
         );
       }
+    
     });
   }
   onSubmit = function(formData) {
@@ -362,11 +368,10 @@ export class questionListComponent implements OnInit {
         }
       });
 
-      if ( !this.subjectiveFlag )
+      if ( formData.value.questionType != "subjective" )
       {
         debugger;
         if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
-          debugger;
           this.displayErrorOption = true;
           return false;
         }
