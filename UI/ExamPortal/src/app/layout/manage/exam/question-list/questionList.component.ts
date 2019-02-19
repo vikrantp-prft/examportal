@@ -27,9 +27,10 @@ export class questionListComponent implements OnInit {
   public departmentsUrl = "api/Dropdown/Categories";
   public formTitle: string = "Add";
   public singleSelectFlag: boolean;
+  public singleSelectEdit: boolean;
   public multipleSelectFlag: boolean;
   public multipleSelectEdit: boolean;
-  public singleSelectEdit: boolean;
+  public subjectiveFlag: boolean;
   public questionModel: any = {
     id: this.examID,
     filter: "string",
@@ -136,6 +137,7 @@ export class questionListComponent implements OnInit {
   disbleAllFlag() {
     this.singleSelectFlag = false;
     this.multipleSelectFlag = false;
+    this.subjectiveFlag = false;
   }
   // Function for  pagination
   setRecordPerPage(event: any): void {
@@ -169,8 +171,8 @@ export class questionListComponent implements OnInit {
     ).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.questionList = rs.data;
+        this.ngxService.stop();
         this.totalItems = rs.totalRecords;
       } else {
       }
@@ -360,9 +362,14 @@ export class questionListComponent implements OnInit {
         }
       });
 
-      if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
-        this.displayErrorOption = true;
-        return false;
+      if ( !this.subjectiveFlag )
+      {
+        debugger;
+        if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
+          debugger;
+          this.displayErrorOption = true;
+          return false;
+        }
       }
 
       this.formDataCustom.options = options;
@@ -508,6 +515,9 @@ export class questionListComponent implements OnInit {
         control.push(this.addSubSingleSelectOption(null, false, null));
         this.singleSelectEdit = true;
       }
+    }
+    if (questionTypeValue == "subjective") {
+      this.subjectiveFlag = true;
     }
   }
   isFieldValid(form: FormGroup, field: string) {

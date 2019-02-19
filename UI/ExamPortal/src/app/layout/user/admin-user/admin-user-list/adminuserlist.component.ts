@@ -97,9 +97,11 @@ export class AdminUserListComponent implements OnInit {
       if (x.value == true) {
         if (isActive == true) {
           this.statusUrl = 'api/User/InactivateUser';
+          this.toastr.success('Inactivated admin details');
         }
         else {
           this.statusUrl = 'api/User/ActivateUser';
+          this.toastr.success('Activated admin details');
         }
         const adminStatusModel = {
           "id": id,
@@ -135,8 +137,10 @@ export class AdminUserListComponent implements OnInit {
   // function for soft deleting the Admin User.
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
       const rs = result;
       if ((result.message = 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Users details deleted successfully!');
         this.fn_GetAdminUserList();
       }
@@ -146,8 +150,10 @@ export class AdminUserListComponent implements OnInit {
   //function to save status change
   fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.fn_GetAdminUserList();
       }
       else {
