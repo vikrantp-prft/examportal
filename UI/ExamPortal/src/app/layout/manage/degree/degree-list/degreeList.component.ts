@@ -110,11 +110,9 @@ export class DegreeListComponent implements OnInit {
     this.CommonService.fn_PostWithData(degreeModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.editDegreeList = rs.data;
+        this.ngxService.stop();
         this.fn_setEditValues();
-      }
-      else {
       }
     });
   }
@@ -184,10 +182,8 @@ export class DegreeListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.degreeList = rs.data;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -198,9 +194,9 @@ export class DegreeListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.degreeModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.degreeList = rs.data;
         this.totalItems = rs.totalRecords;
+        this.ngxService.stop();
       }
     });
   }

@@ -185,10 +185,8 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.categoryList = rs.data;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -199,9 +197,9 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.categoryList = rs.data;
         this.totalItems = rs.totalRecords;
+        this.ngxService.stop();
       }
     });
   }
@@ -280,9 +278,9 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Category status changes successfully!');
         this.fn_GetCategoryList();
-        this.ngxService.stop();
       }
       else{
         this.toastr.success('Failed to change status');

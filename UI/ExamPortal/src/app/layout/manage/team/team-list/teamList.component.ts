@@ -98,15 +98,19 @@ export class TeamListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {
+    this.getTeamByIdFun(url, teamModel);
+  }
+  getTeamByIdFun(url, model) {
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.editTeamList = rs.data;
+        this.ngxService.stop();
         this.fn_setEditValues();
       }
     });
   }
+
   // default values
   fn_setEditValues() {
     // this.categoryForm.controls.id.setValue(this.examID);
@@ -174,8 +178,8 @@ export class TeamListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.teamList = rs.data;
+        this.ngxService.stop();
       }
     });
   }
@@ -187,8 +191,8 @@ export class TeamListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.teamList = rs.data;
-        this.ngxService.stop();
         this.totalItems = rs.totalRecords;
+        this.ngxService.stop();
       }
     });
   }
