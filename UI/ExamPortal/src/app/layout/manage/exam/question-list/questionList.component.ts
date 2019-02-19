@@ -26,12 +26,11 @@ export class questionListComponent implements OnInit {
   public categoryList = [];
   public departmentsUrl = "api/Dropdown/Categories";
   public formTitle: string = "Add";
-
-  singleSelectFlag: boolean;
-  multipleSelectFlag: boolean;
-  multipleSelectEdit: boolean;
-  singleSelectEdit: boolean;
-
+  public singleSelectFlag: boolean;
+  public singleSelectEdit: boolean;
+  public multipleSelectFlag: boolean;
+  public multipleSelectEdit: boolean;
+  public subjectiveFlag: boolean;
   public questionModel: any = {
     id: this.examID,
     filter: "string",
@@ -42,7 +41,6 @@ export class questionListComponent implements OnInit {
     sortBy: "string",
     isDescending: true
   };
-
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -56,7 +54,6 @@ export class questionListComponent implements OnInit {
   public validdationOptionText = false;
   public validdationOptionIsCorrect = false;
   public displayErrorOption = false;
-
   public formDataCustom: any = {
     id: null,
     examId: "",
@@ -67,11 +64,9 @@ export class questionListComponent implements OnInit {
     options: [],
     isDeleted: false
   };
-
   public questionDetailModel: any = {
     id: ""
   };
-
   constructor(
     private ngxService: NgxUiLoaderService,
     public fb: FormBuilder,
@@ -84,7 +79,6 @@ export class questionListComponent implements OnInit {
     this.route.params.subscribe(params1 => {
       this.examID = params1["id"];
     });
-
     this.questionForm = this.fb.group({
       id: new FormControl(null),
       questionCategory: ["", [Validators.required]],
@@ -100,7 +94,6 @@ export class questionListComponent implements OnInit {
       ])
     });
   }
-
   addSubMultipleSelectOption(param, flag, optionID) {
     return this.fb.group({
       multipleSelectOptionsID: optionID,
@@ -116,7 +109,6 @@ export class questionListComponent implements OnInit {
       singleSelectOptionsCorrectAns: flag
     });
   }
-
   ngOnInit() {
     this.questionModel = {
       id: this.examID,
@@ -131,7 +123,6 @@ export class questionListComponent implements OnInit {
     this.clear_obj_multiSelectOptions();
     this.clear_obj_singleSelectOptions();
   }
-
   fn_bindCategories() {
     this.ngxService.start();
     this.CommonService.fn_Get(this.departmentsUrl).subscribe(
@@ -143,20 +134,17 @@ export class questionListComponent implements OnInit {
       () => {}
     );
   }
-
   disbleAllFlag() {
     this.singleSelectFlag = false;
     this.multipleSelectFlag = false;
+    this.subjectiveFlag = false;
   }
-
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    //debugger;
     this.questionModel.pageNumber = 1;
     this.questionModel.pageSize = parseInt(event.target.value);
     this.getQuestionsList();
   }
-
   pageChanged(event: any): void {
     this.questionModel.pageNumber = parseInt(event.page);
     this.questionModel.pageSize = parseInt(event.itemsPerPage);
@@ -183,14 +171,13 @@ export class questionListComponent implements OnInit {
     ).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.questionList = rs.data;
+        this.ngxService.stop();
         this.totalItems = rs.totalRecords;
       } else {
       }
     });
   }
-
   loadQuestionForm() {
     this.ngxService.start();
     this.frmReset();
@@ -202,11 +189,12 @@ export class questionListComponent implements OnInit {
     this.clear_obj_singleSelectOptions();
     this.ngxService.stop();
   }
-
   frmReset() {
     this.questionForm.reset();
-  }
+    this.questionForm.controls.questionCategory.setValue("");
+    this.questionForm.controls.questionType.setValue("");
 
+  }
   deleteQuestion(questionID) {
     if (questionID != null) {
       swal({
@@ -242,8 +230,8 @@ export class questionListComponent implements OnInit {
     this.resetAll();
     this.getQuestionsList();
   }
-
   editQuestion(questionID) {
+    debugger;
     this.resetAll();
     this.ngxService.start();
     this.getQuestionDetails(questionID);
@@ -251,7 +239,6 @@ export class questionListComponent implements OnInit {
     this.formTitle = "Edit";
     this.ngxService.stop();
   }
-
   getQuestionDetails(questionID) {
     this.questionDetailModel.id = questionID;
     this.CommonService.fn_PostWithData(
@@ -266,7 +253,6 @@ export class questionListComponent implements OnInit {
       }
     });
   }
-
   setEditValues() {
     this.questionForm.controls.questionCategory.setValue(
       this.questionDetail.categoryId
@@ -282,6 +268,7 @@ export class questionListComponent implements OnInit {
     this.questionForm.controls.questionText.setValue(
       this.questionDetail.question
     );
+
     this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(null);
     const control_obj_singleSelectOptions = <FormArray>(
       this.questionForm.controls["obj_singleSelectOptions"]
@@ -315,9 +302,9 @@ export class questionListComponent implements OnInit {
           )
         );
       }
+    
     });
   }
-
   onSubmit = function(formData) {
     if (this.questionForm.valid) {
       if (formData.value.questionType == "SingleSelect") {
@@ -381,9 +368,13 @@ export class questionListComponent implements OnInit {
         }
       });
 
-      if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
-        this.displayErrorOption = true;
-        return false;
+      if ( formData.value.questionType != "subjective" )
+      {
+        debugger;
+        if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
+          this.displayErrorOption = true;
+          return false;
+        }
       }
 
       this.formDataCustom.options = options;
@@ -425,7 +416,6 @@ export class questionListComponent implements OnInit {
     this.resetAll();
     this.getQuestionsList();
   };
-
   resetAll() {
     this.validdationOptionIsCorrect = false;
     this.displayErrorOption = false;
@@ -442,7 +432,6 @@ export class questionListComponent implements OnInit {
     this.disbleAllFlag();
     this.formTitle = "Add";
   }
-
   clear_obj_multiSelectOptions() {
     const control_obj_multiSelectOptions = <FormArray>(
       this.questionForm.controls["obj_multiSelectOptions"]
@@ -455,7 +444,6 @@ export class questionListComponent implements OnInit {
       );
     }
   }
-
   clear_obj_singleSelectOptions() {
     this.singleSelectEdit = false;
     this.questionForm.controls.singleSelectOptionsCorrectAns.setValue(null);
@@ -469,7 +457,6 @@ export class questionListComponent implements OnInit {
       );
     }
   }
-
   addSubstractMultipleSelectOptions(actionType) {
     const control = <FormArray>(
       this.questionForm.controls["obj_multiSelectOptions"]
@@ -490,7 +477,6 @@ export class questionListComponent implements OnInit {
       }
     }
   }
-
   addSubstractSingleSelectOptions(actionType) {
     const control = <FormArray>(
       this.questionForm.controls["obj_singleSelectOptions"]
@@ -511,7 +497,6 @@ export class questionListComponent implements OnInit {
       }
     }
   }
-
   loadOptions(questionTypeValue) {
     this.disbleAllFlag();
     if (questionTypeValue == "multipleSelect") {
@@ -536,8 +521,10 @@ export class questionListComponent implements OnInit {
         this.singleSelectEdit = true;
       }
     }
+    if (questionTypeValue == "subjective") {
+      this.subjectiveFlag = true;
+    }
   }
-
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
   }

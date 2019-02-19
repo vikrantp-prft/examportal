@@ -95,7 +95,6 @@ export class AddEmployeeComponent implements OnInit {
   // Save Employee details function
   fn_saveEmployee(value) {
 
-    console.log(value);
     if (this.employeeForm.valid) {
 
       if (this.educationArray.length === 0) {
@@ -415,6 +414,7 @@ export class AddEmployeeComponent implements OnInit {
           this.addEducationButton = true;
           this.updateEducationButton = false;
           this.fn_resetEducationDetails();
+          this.toastr.success("Educational details deleted successfully")
         }
       });
     }
@@ -424,7 +424,6 @@ export class AddEmployeeComponent implements OnInit {
   {
     if (event.target.checked) {
       debugger;
-      console.log(this.employeeForm.controls.address1);
       this.employeeForm.controls.currentAddress1.setValue(this.employeeForm.controls.address1.value);
       this.employeeForm.controls.currentAddress2.setValue(this.employeeForm.controls.address2.value);
       this.employeeForm.controls.currentCity.setValue(this.employeeForm.controls.city.value);
