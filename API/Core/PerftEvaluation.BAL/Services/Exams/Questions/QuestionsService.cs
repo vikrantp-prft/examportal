@@ -110,6 +110,12 @@ namespace PerftEvaluation.BAL.Services
             return this._questionsRepository.DeleteQuestion(questionId);
         }
 
+        /// <summary>
+        /// Uploads bulk questions to database.
+        /// </summary>
+        /// <param name="fileStream">stream of questions file.</param>
+        /// <param name="examId">Exam agains which all the questions should be uploaded.</param>
+        /// <returns></returns>
         public bool ExcelUpload(Stream fileStream, string examId)
         {
             bool isSuccess = false;
@@ -131,6 +137,8 @@ namespace PerftEvaluation.BAL.Services
                     questionDto.IsDeleted = false;
 
                     // ToDO : Move validation code to some generic method. 
+
+                    // Validate the model explicitly before storing question to database
                     var context = new System.ComponentModel.DataAnnotations.ValidationContext(questionDto);
                     var results = new List<ValidationResult>();
 
@@ -140,6 +148,7 @@ namespace PerftEvaluation.BAL.Services
                     {
                         string failedResult = String.Empty;
 
+                        // Iterate through all the validation errors from model based on data annotations.
                         foreach (var item in results)
                         {
                             failedResult = failedResult + item.ErrorMessage + "\n";
@@ -159,6 +168,7 @@ namespace PerftEvaluation.BAL.Services
         {
             MastersDTO categoryMaster = value != null ? _masterService.GetMasterByName(value) : null;
 
+            // throw exception if the category from excel does not exist in database. 
             if (categoryMaster == null)
             {
                 throw new KeyNotFoundException($"Category with Id \"{value}\" not found.");
@@ -191,10 +201,18 @@ namespace PerftEvaluation.BAL.Services
 
             for (int i = 1; i <= 10; i++)
             {
+                // if there are no more options columns in excel then move to next question.
                 if (!row.Table.Columns.Contains("Option" + i))
                 {
                     break;
                 }
+
+                // if there are values in options then skip and go to next option.
+                if (String.IsNullOrEmpty(row["Option" + i].ToString().Trim()))
+                {
+                    continue;
+                }
+
                 option = new OptionsDTO()
                 {
                     Option = row["Option" + i].ToString()

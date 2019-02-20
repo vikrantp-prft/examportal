@@ -35,9 +35,9 @@ namespace PerftEvaluation.ExcelUtility
                     IEnumerable<Sheet> sheets = spreadSheetDocument.WorkbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>();
                     string relationshipId = sheets.First().Id.Value;
                     WorksheetPart worksheetPart = (WorksheetPart)spreadSheetDocument.WorkbookPart.GetPartById(relationshipId);
-                    
+
                     // Get the valid sheets with data.
-                    IEnumerable<OpenXmlElement> workSheet = worksheetPart.Worksheet.Where(w=> w.GetType() == typeof(SheetData));
+                    IEnumerable<OpenXmlElement> workSheet = worksheetPart.Worksheet.Where(w => w.GetType() == typeof(SheetData));
 
                     foreach (SheetData currentSheet in workSheet)
                     {
@@ -164,6 +164,7 @@ namespace PerftEvaluation.ExcelUtility
                 }
                 catch (DuplicateNameException ex) // if there are columns with same name then create new column with different name
                 {
+                    Console.WriteLine("Warning for duplicate column : " + ex.StackTrace);
                     dt.Columns.Add(columnName + columnIndex++); // Add incremental column name just to keep some uniqueness. 
                 }
                 catch { }
