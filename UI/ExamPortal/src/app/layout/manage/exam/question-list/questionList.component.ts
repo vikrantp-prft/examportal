@@ -14,7 +14,7 @@ import {
 } from "@angular/forms";
 import { NgxUiLoaderService } from "ngx-ui-loader";
 import { FileUploader } from "ng2-file-upload";
-const URL = 'http://localhost:3000/api/upload';
+// const URL = '';
 
 @Component({
   selector: "question-list",
@@ -73,7 +73,7 @@ export class questionListComponent implements OnInit {
 
   // for import file
   filedata: string;
-  public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
+  //public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
 
   // Constructor
   constructor(
@@ -133,11 +133,11 @@ export class questionListComponent implements OnInit {
     this.clear_obj_singleSelectOptions();
 
     // import question file
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      console.log('ImageUpload:uploaded:', item, status, response);
-      alert('File uploaded successfully');
-    };
+    // this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    // this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+    //   console.log('ImageUpload:uploaded:', item, status, response);
+    //   alert('File uploaded successfully');
+    // };
   }
   fn_bindCategories() {
     this.ngxService.start();
@@ -557,6 +557,14 @@ export class questionListComponent implements OnInit {
       this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(
         (result: any) => {
           const rs = result;
+          // console.log(rs)
+          if(rs == true){
+            this.toastr.success('Questions imported successfully!');
+            this.getQuestionsList();
+          }
+          else{
+            this.toastr.success('Failed to import questions!');
+          }
         }
       );
     }
