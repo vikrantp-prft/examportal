@@ -16,7 +16,7 @@ export class ExamComponent implements OnInit {
     public examDetail: object;
     
     examName: any;
-    question = [];
+    question: any[];
     questionCategory = [];
     totalQuestion: number;
     currentQuestion: any;
@@ -54,7 +54,8 @@ export class ExamComponent implements OnInit {
     getQuestionList() {
         const url = 'api/Questions/listQuestionsByExamId';
         const questionModel = {
-            "id": this.examID
+            "id": this.examID,
+            "pageSize": 200
         };
         this.fn_getQuestionList(questionModel,url);
     }
@@ -64,6 +65,7 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
+                console.log(this.question)
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
