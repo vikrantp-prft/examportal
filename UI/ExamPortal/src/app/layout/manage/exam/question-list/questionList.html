@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-md-5">
+<div class="row no-gutters">
+  <div class="col-md-5 pr-2">
     <div>
       <div class="card">
         <div class="card-header">
@@ -7,12 +7,16 @@
             Questions
           </h1>
           <div class="back-btn">
-            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
+            <button type="reset" class="btn btn-md btn-primary" title="Add new question" (click)="loadQuestionForm()">
               Add
             </button>
-            <button [routerLink]="['/manage/importExamQuestion']" class="btn btn-md btn-primary mr-2" title="Import Questions">
+            <!-- <button class="btn btn-md btn-primary mx-2" title="Add new question" data-toggle="modal" data-target="#importQuestion">
               Import
-            </button>
+            </button> -->
+            <div class="upload-btn-wrapper">
+              <button class="btn btn-primary mx-2" title="Import Question">Import</button>
+              <input (change)="fn_fileChange($event)" type="file" name="myfile" />
+            </div>
             <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
               Back
             </button>
@@ -110,7 +114,7 @@
           <div class="sections">
             <div class="row">
               <div class="col-6">
-                <div class="form-group"> 
+                <div class="form-group">
                   <label for="sel1">Question Category</label>
                   <select class="form-control" formControlName="questionCategory" #questionCategory>
                     <option value="" selected>--Select--</option>
@@ -180,12 +184,7 @@
               </div>
             </div>
 
-            <div class="pl-4 py-4 mb-4" style="border:1px solid lightgray" *ngIf="singleSelectFlag">
-              <!-- Answer Options -->
-              <div>
-                <!-- <div>Options</div>
-                <div>Correct Answer</div> -->
-              </div>
+            <div *ngIf="singleSelectFlag" class="pl-4 py-4 mb-4" style="border:1px solid lightgray" >
               <div>
                 <div class="row no-gutters" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
                   <div class="mt-1 col-1">
@@ -195,7 +194,7 @@
                     <div [formGroupName]="i">
                       <div>
                         <!-- <input type="text" formControlName="singleSelectOptions" class="form-control form-control-sm"> -->
-                        <ejs-richtexteditor formControlName="singleSelectOptions" class="mt-1"></ejs-richtexteditor>                        
+                        <ejs-richtexteditor formControlName="singleSelectOptions" class="mt-1"></ejs-richtexteditor>
                       </div>
                     </div>
                   </div>
@@ -230,3 +229,20 @@
     </div>
   </div>
 </div>
+
+<!-- Import Question Modal -->
+<!-- <div class="modal fade" id="importQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div> -->

@@ -13,10 +13,13 @@ import {
   Validators
 } from "@angular/forms";
 import { NgxUiLoaderService } from "ngx-ui-loader";
+import { FileUploader } from "ng2-file-upload";
+const URL = 'http://localhost:3000/api/upload';
 
 @Component({
   selector: "question-list",
   templateUrl: "./questionList.html",
+  styleUrls:['./questionList.component.css'],
   providers: [commonService]
 })
 export class questionListComponent implements OnInit {
@@ -67,6 +70,12 @@ export class questionListComponent implements OnInit {
   public questionDetailModel: any = {
     id: ""
   };
+
+  // for import file
+  filedata: string;
+  public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'fileUpload' });
+
+  // Constructor
   constructor(
     private ngxService: NgxUiLoaderService,
     public fb: FormBuilder,
@@ -122,6 +131,13 @@ export class questionListComponent implements OnInit {
     this.fn_bindCategories();
     this.clear_obj_multiSelectOptions();
     this.clear_obj_singleSelectOptions();
+
+    // import question file
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      console.log('ImageUpload:uploaded:', item, status, response);
+      alert('File uploaded successfully');
+    };
   }
   fn_bindCategories() {
     this.ngxService.start();
@@ -527,5 +543,22 @@ export class questionListComponent implements OnInit {
   }
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
+  }
+
+  fn_fileChange(event) {
+    const fileList: FileList = event.target.files;
+    this.filedata = event.target.files[0].name;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData = new FormData();
+      formData.set('examId', this.examID);
+      formData.append('uploadFile', file, file.name);
+      const apiUrl = 'api/Questions/ImportQuestions';
+      this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(
+        (result: any) => {
+          const rs = result;
+        }
+      );
+    }
   }
 }
