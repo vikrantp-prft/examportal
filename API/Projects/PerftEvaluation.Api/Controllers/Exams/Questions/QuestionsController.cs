@@ -8,6 +8,7 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 
 namespace PerftEvaluation.Api.Controllers
 {
@@ -202,18 +203,34 @@ namespace PerftEvaluation.Api.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        
+
         [Route("ImportQuestions")]
         //[Consumes("multipart/form-data")]
-        public async Task<IActionResult> Post(string examId)
+        public async Task<IActionResult> Post()
         {
             bool isSuccess = false;
+            StringValues formValues;
+            string examId = String.Empty;
+            
             try
             {
+                #region Validate Model
+
                 if (Request.Form.Files.Count < 0 && Request.Form.Files[0] == null)
                 {
                     return NoContent();
                 }
+
+                if (!Request.Form.TryGetValue("examId", out formValues))
+                {
+                    return BadRequest(formValues);
+                }
+
+                if (formValues.Count == 0 || String.IsNullOrEmpty(formValues[0]))
+                {
+                    return BadRequest(formValues);
+                }
+                examId = formValues[0];
 
                 IFormFile file = Request.Form.Files[0];
 
@@ -221,6 +238,8 @@ namespace PerftEvaluation.Api.Controllers
                 {
                     return new UnsupportedMediaTypeResult();
                 }
+
+                #endregion Validate Model
 
                 using (Stream fileStream = new MemoryStream())
                 {
@@ -233,7 +252,7 @@ namespace PerftEvaluation.Api.Controllers
                 // _logger.LogInformation($"MESSAGE: {ex.Message}");
                 return BadRequest(CommonResponse.ExceptionResponse(ex));
             }
-            
+
             return Ok(isSuccess);
         }
     }

@@ -31,6 +31,7 @@ export class importQuestionComponent implements OnInit {
     if (fileList.length > 0) {
       const file: File = fileList[0];
       const formData = new FormData();
+      formData.set('examId', '5c4eb23a4732952c9c7fcfc3');
       formData.append('uploadFile', file, file.name);
       const apiUrl = 'api/Questions/ImportQuestions';
       this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(

@@ -28,7 +28,7 @@ namespace PerftEvaluation.DAL.Context
         {
             //access db without username and password
             // _client = new MongoClient ("mongodb://ZIL395:27017");
-            //// _client = new MongoClient ("mongodb://localhost:27017");
+            // _client = new MongoClient ("mongodb://localhost:27017");
             // _db = _client.GetDatabase ("PerftEvaluation");
 
             //Connection with username and password
@@ -56,8 +56,8 @@ namespace PerftEvaluation.DAL.Context
 
             MongoServerAddress address = new MongoServerAddress(mongoHost);
             settings.Server = address;
-            // _client = new MongoClient("mongodb://locahost:27017");
-            _client = new MongoClient(settings);
+            _client = new MongoClient("mongodb://localhost:27017");
+            // _client = new MongoClient(settings);
             _db = _client.GetDatabase(dbName);
 
         }

@@ -54,12 +54,6 @@ namespace PerftEvaluation.BAL.Interfaces {
         bool DeleteQuestions (string questionId);
 
         /// <summary>
-        /// Upload file 
-        /// </summary>
-        /// <value></value> 
-        bool ExcelUpload(string filename);
-
-        /// <summary>
         /// Uploads the bulk of questions information from file to database for the mentioned exam 
         /// </summary>
         /// <param name="fileStream">Binary stream of xlsx file with the redefined template.</param>

@@ -110,11 +110,6 @@ namespace PerftEvaluation.BAL.Services
             return this._questionsRepository.DeleteQuestion(questionId);
         }
 
-        public bool ExcelUpload(string filename)
-        {
-            return this._questionsRepository.UploadExcel(filename);
-        }
-
         public bool ExcelUpload(Stream fileStream, string examId)
         {
             bool isSuccess = false;
