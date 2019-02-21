@@ -7,7 +7,8 @@
             Questions
           </h1>
           <div class="back-btn">
-            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
+            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question"
+              (click)="loadQuestionForm()">
               Add
             </button>
             <!-- <button class="btn btn-md btn-primary mx-2" title="Add new question" data-toggle="modal" data-target="#importQuestion">
@@ -17,7 +18,8 @@
               <button class="btn btn-primary " title="Import Question">Import</button>
               <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:72px;" />
             </div>
-            <button [routerLink]="['/manage/examlist']" class="btn btn-primary ml-2"><span><i class="fa fa-arrow-left"></i></span>
+            <button [routerLink]="['/manage/examlist']" class="btn btn-primary ml-2"><span><i
+                  class="fa fa-arrow-left"></i></span>
               Back
             </button>
           </div>
@@ -79,7 +81,8 @@
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let question of questionList; let i = index">
                 <td (click)="editQuestion(question.id)">{{(questionModel.pageNumber-1)*10 + i +1 }}</td>
-                <td (click)="editQuestion(question.id)" title="{{question.question}}" [innerHTML]="question.question | slice:0:40"></td>
+                <td (click)="editQuestion(question.id)" title="{{question.question}}"
+                  [innerHTML]="question.question | slice:0:40"></td>
                 <!-- <td>{{question.questionType}}</td> -->
                 <!-- <td>{{question.categoryId}}</td> -->
                 <td>
@@ -95,8 +98,8 @@
           </table>
         </div>
         <pagination class="mr-2 pull-right" [totalItems]="totalItems" [itemsPerPage]="questionModel.pageSize"
-          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
-          nextText="NEXT" firstText="FIRST" lastText="LAST">
+          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false"
+          previousText="PREVIOUS" nextText="NEXT" firstText="FIRST" lastText="LAST">
         </pagination>
       </div>
     </div>
@@ -118,22 +121,26 @@
                   <label for="sel1">Question Category</label>
                   <select class="form-control" formControlName="questionCategory" #questionCategory>
                     <option value="" selected>--Select--</option>
-                    <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">{{category.name}}</option>
+                    <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">
+                      {{category.name}}</option>
                   </select>
-                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
+                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')"
+                    errorMsg="Select any Question Category">
                   </app-field-error-display>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
                   <label for="middleName">Question Type</label>
-                  <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
+                  <select formControlName="questionType" class="form-control"
+                    (change)="loadOptions($event.target.value)">
                     <option value="" selected>--Select--</option>
                     <option value="multipleSelect">Multiple Select(Checkbox)</option>
                     <option value="SingleSelect">Single Select(Radio Button)</option>
                     <option value="subjective">Subjective</option>
                   </select>
-                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')" errorMsg="Select any Question Type">
+                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')"
+                    errorMsg="Select any Question Type">
                   </app-field-error-display>
                 </div>
               </div>
@@ -142,7 +149,8 @@
               <label for="lastName">Question</label>
               <ejs-richtexteditor formControlName="questionText"></ejs-richtexteditor>
               <!-- <input type="textarea" formControlName="questionText" class="form-control"> -->
-              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Please enter Question">
+              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')"
+                errorMsg="Please enter Question">
               </app-field-error-display>
             </div>
             <div *ngIf="multipleSelectFlag" class="pl-4 py-4 mb-4" style="border:1px solid lightgray">
@@ -153,20 +161,25 @@
               </div>
               <div formArrayName="obj_multiSelectOptions">
 
-                <div class="row no-gutters" *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
-                  <div class="col-1 pt-1">
-                    <label for="lastName">{{i+1}})</label>
-                  </div>
-                  <div class="col-10" [formGroupName]="i">
-                    <div class="row no-gutters">
-                      <div class="col-11">
-                        <!-- <input type="text" formControlName="multipleSelectOptions" class="form-control form-control-sm"> -->
-                        <ejs-richtexteditor formControlName="multipleSelectOptions" class="mt-1"></ejs-richtexteditor>
-                      </div>
-                      <div class="col-1  pt-2">
-                        <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
-                      </div>
+                <div class=""
+                  *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label class="mb-0 pb-0" for="lastName">{{i+1}}) </label>
                     </div>
+                    <div class="col-md-2 mt-2">
+                      <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns"
+                        class="form-control mt-0">
+                    </div>
+                  </div>
+                  <div class="row no-gutters mr-1" [formGroupName]="i">
+                    <div class="col-12">
+                      <!-- <input type="text" formControlName="multipleSelectOptions" class="form-control form-control-sm"> -->
+                      <ejs-richtexteditor formControlName="multipleSelectOptions" class="mt-1"></ejs-richtexteditor>
+                    </div>
+                    <!-- <div class="col-1  pt-2">
+                      <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -176,32 +189,39 @@
                   <!-- Add Options -->
                   <i class="fa fa-plus" title="Add Options" aria-hidden="true"></i>
                 </button>
-                <button class="ml-1 mt-2 btn btn-sm btn-primary" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')"
-                  title="Remove Last Option">
+                <button class="ml-1 mt-2 btn btn-sm btn-primary" type="button" rel="tooltip"
+                  (click)="addSubstractMultipleSelectOptions('sub')" title="Remove Last Option">
                   <!-- Remove Last Options -->
                   <i class="fa fa-minus" title="Remove Last Options" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
 
-            <div *ngIf="singleSelectFlag" class="pl-4 py-4 mb-4" style="border:1px solid lightgray" >
+            <div *ngIf="singleSelectFlag" class="pl-4 py-4 mb-4" style="border:1px solid lightgray">
               <div>
-                <div class="row no-gutters" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
-                  <div class="mt-1 col-1">
-                    <label for="lastName">{{i+1}})</label>
+                <div class=""
+                  *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label for="lastName">{{i+1}})</label>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}"
+                        formControlName="singleSelectOptionsCorrectAns" class="form-control">
+                    </div>
                   </div>
-                  <div class="col-9" formArrayName="obj_singleSelectOptions">
-                    <div [formGroupName]="i">
-                      <div>
+                  <div class="row no-gutters mr-1" formArrayName="obj_singleSelectOptions">
+                    <div class="col-12" [formGroupName]="i">
+                      <div class="col-12">
                         <!-- <input type="text" formControlName="singleSelectOptions" class="form-control form-control-sm"> -->
                         <ejs-richtexteditor formControlName="singleSelectOptions" class="mt-1"></ejs-richtexteditor>
                       </div>
                     </div>
                   </div>
-                  <div class="col-2 pt-2">
-                    <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}" formControlName="singleSelectOptionsCorrectAns"
-                      class="form-control">
-                  </div>
+                  <!-- <div class="col-2 pt-2">
+                    <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}"
+                      formControlName="singleSelectOptionsCorrectAns" class="form-control">
+                  </div> -->
                 </div>
               </div>
 
@@ -211,8 +231,8 @@
                   <!-- Add Options -->
                   <i class="fa fa-plus" title="Add Options" aria-hidden="true"></i>
                 </button>
-                <button title="Remove Last Options" class="btn btn-sm ml-1 btn-primary offset-md-1" type="button" rel="tooltip"
-                  (click)="addSubstractSingleSelectOptions('sub')">
+                <button title="Remove Last Options" class="btn btn-sm ml-1 btn-primary offset-md-1" type="button"
+                  rel="tooltip" (click)="addSubstractSingleSelectOptions('sub')">
                   <!-- Remove Last Options -->
                   <i class="fa fa-minus" title="Remove Last Options" aria-hidden="true"></i>
                 </button>
