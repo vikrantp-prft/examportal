@@ -133,5 +133,41 @@ namespace PerftEvaluation.BAL.Services {
         public bool UpdateExam (ExamsDTO examsDTO) {
             return this._examsRepository.UpdateExams (this._mapper.Map<Exams> (examsDTO));
         }
+
+        /// <summary>
+        /// SetActiveInactive Exams
+        /// </summary>
+        /// <param name="examDTO"></param>
+        /// <returns></returns>
+        public bool SetActiveInactive(ExamsDTO examsDTO)
+        {
+            DateTime start = examsDTO.FromDate.Value;
+            DateTime current = DateTime.Now;
+            DateTime end = examsDTO.ToDate.Value;
+
+            int activeExam = DateTime.Compare(start, current);
+            int inactiveExam = DateTime.Compare(start, end);
+
+            if (activeExam < 0){
+                this.InactiveExams(examsDTO.Id);
+                return false;
+            }
+            else if(activeExam == 0){
+                if(inactiveExam < 0){
+                    this.ActiveExams(examsDTO.Id);
+                    return true;
+                }
+                else if(inactiveExam == 0){
+                    this.InactiveExams(examsDTO.Id);
+                }
+                else{
+                    this.InactiveExams(examsDTO.Id);
+                }
+            }
+            else{
+                this.InactiveExams(examsDTO.Id);
+                return false;
+            }
+        }
     }
 }

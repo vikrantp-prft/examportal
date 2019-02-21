@@ -58,9 +58,10 @@ namespace PerftEvaluation.BAL.Interfaces
 
 
         /// <summary>
-        /// Get the dashboard count and content
+        /// SetActiveInactive Exams
         /// </summary>
+        /// <param name="examDTO"></param>
         /// <returns></returns>
-        // DashboardDTO GetDashboardInfo();
+        bool SetActiveInactive(ExamsDTO examsDTO);
     }
 }
