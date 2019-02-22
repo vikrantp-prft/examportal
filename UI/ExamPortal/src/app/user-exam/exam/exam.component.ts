@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../router.animations';
+import { routerTransition } from 'src/app/router.animations';
 import { TranslateService } from '@ngx-translate/core';
-import { commonService } from '../common/services/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { commonService } from 'src/app/common/services/common.service';
+
 
 @Component({
     selector: 'app-exam',
@@ -62,8 +63,6 @@ export class ExamComponent implements OnInit {
                 //  this.examDurationMinutes = 1;
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;
                 this.totalSecond = this.totalMinute * 60 ;
-                // console.log(this.totalMinute);
-                // console.log(this.totalSecond)
                 this.startCountdown(this.totalSecond);
                 this.ngxService.stop();
             }
