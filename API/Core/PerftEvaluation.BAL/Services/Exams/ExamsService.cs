@@ -159,9 +159,11 @@ namespace PerftEvaluation.BAL.Services {
                 }
                 else if(inactiveExam == 0){
                     this.InactiveExams(examsDTO.Id);
+                    return false;
                 }
                 else{
                     this.InactiveExams(examsDTO.Id);
+                    return false;
                 }
             }
             else{

@@ -1,12 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PerftEvaluation.DTO.Dtos
-{
-    public class AssignedExamsDTO
-    {
+namespace PerftEvaluation.DTO.Dtos {
+    public class AssignedExamsDTO {
         public string Id { get; set; }
-        
+
         [Required]
         public string ExamId { get; set; }
 
@@ -19,12 +17,8 @@ namespace PerftEvaluation.DTO.Dtos
 
         public EmployeesDTO Employee { get; set; }
 
-         public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         public bool IsActive { get; set; }
-
-        public bool IsExamAssignedToEmployee { get; set; }
-
-        public bool IsEmployeeAssignedToExam { get; set; }
     }
 }
