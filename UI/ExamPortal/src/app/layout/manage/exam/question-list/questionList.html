@@ -153,31 +153,35 @@
                 errorMsg="Please enter Question">
               </app-field-error-display>
             </div>
+
             <div *ngIf="multipleSelectFlag" class="pl-4 py-4 mb-4" style="border:1px solid lightgray">
               <!-- Answer Options -->
               <div class="row no-gutters">
                 <!-- <div class="col">Options</div>
-                <div class="col text-end">Answer</div> -->
+                  <div class="col text-end">Answer</div> -->
               </div>
               <div formArrayName="obj_multiSelectOptions">
 
-                <div class=""
+                <div class="row no-gutters"
                   *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
-                  <div class="row">
-                    <div class="col-md-1">
-                      <label class="mb-0 pb-0" for="lastName">{{i+1}}) </label>
-                    </div>
-                    <div class="col-md-2 mt-2">
-                      <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns"
-                        class="form-control mt-0">
-                    </div>
-                  </div>
-                  <div class="row no-gutters mr-1" [formGroupName]="i">
+                                      
+                    <!-- <div class="col-md-2">
+                      <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
+                    </div> -->
+                  <div class="col-12" [formGroupName]="i">
+                    <div class="row">
+                      <div class="col-md-1">
+                          <label for="lastName">{{i+1}})</label>
+                        </div>
+                      <div class="col-1 mt-2">
+                          <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
+                        </div>
+                      </div>
                     <div class="col-12">
                       <!-- <input type="text" formControlName="multipleSelectOptions" class="form-control form-control-sm"> -->
                       <ejs-richtexteditor formControlName="multipleSelectOptions" class="mt-1"></ejs-richtexteditor>
                     </div>
-                    <!-- <div class="col-1  pt-2">
+                    <!-- <div class="col-1">
                       <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
                     </div> -->
                   </div>
@@ -206,7 +210,7 @@
                       <label for="lastName">{{i+1}})</label>
                     </div>
                     <div class="col-md-2 mt-2">
-                        <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}"
+                      <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}"
                         formControlName="singleSelectOptionsCorrectAns" class="form-control">
                     </div>
                   </div>
