@@ -58,6 +58,8 @@ export class ExamComponent implements OnInit {
                 this.examName = rs.data.title;
                 this.examDurationHours = rs.data.examDurationHours;
                 this.examDurationMinutes = rs.data.examDurationMinutes;
+                // this.examDurationHours = 0;
+                // this.examDurationMinutes = 1;
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;
                 this.totalSecond = this.totalMinute * 60 ;
                 // console.log(this.totalMinute);
@@ -140,13 +142,12 @@ export class ExamComponent implements OnInit {
             this.hours = Math.floor(this.counter / 3600);
             this.minute = Math.floor((this.counter % 3600) / 60);
             this.second = this.counter % 60;
-            console.log(this.second);
             this.counter--;
             if (this.counter < 0) {
                 // The code here will run when
                 // the timer has reached zero.
                 clearInterval(interval);
-                console.log('Ding!');
+                window.location.href = "http://localhost:4200/login";
             };
         }, 1000);
     };
