@@ -136,10 +136,10 @@ export class ExamComponent implements OnInit {
     }
     startCountdown(seconds) {
         this.counter = seconds;
-        this.second = 60
         var interval = setInterval(() => {
-            this.hours = Math.floor(this.counter / 3660);
-            this.minute = Math.floor((this.counter / 60) % 60);
+            this.hours = Math.floor(this.counter / 3600);
+            this.minute = Math.floor((this.counter % 3600) / 60);
+            this.second = this.counter % 60;
             console.log(this.second);
             this.counter--;
             if (this.counter < 0) {

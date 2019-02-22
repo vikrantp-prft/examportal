@@ -24,7 +24,7 @@
     <div class="card">
       <div class="card-header ">
         <span class="mb-0 font-weight-bol h4">{{ examName }}</span>
-        <span class="mb-0 font-weight-bol pull-right h4">{{hours}} HR : {{minute}} MIN</span>
+        <span class="mb-0 font-weight-bol pull-right h4">{{hours}}:{{minute}}:{{second}}</span>
       </div>
       <div class="card-body mt-2">
         <div class="row">
@@ -57,7 +57,7 @@
                 <div class="" *ngIf="currentQuestionQuestionType == 2">
                   <div class="form-group">
                     <label for="exampleFormControlTextarea1">Ans.</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your answer"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"></textarea>
                   </div>
                 </div>
               </div>
