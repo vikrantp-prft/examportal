@@ -1,32 +1,34 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
+using PerftEvaluation.DTO.Dtos;
 
-namespace PerftEvaluation.Api.Controllers
-{
+namespace PerftEvaluation.Api.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     /// <summary>
     /// Assigned Exams to User
     /// </summary>
-    public class AssignedExamsController : ControllerBase
-    {
+    public class AssignedExamsController : ControllerBase {
+        #region Declaration
         protected readonly IAssignedExamsService _assignedExamsService;
         private ResponseModel responseModel = null;
 
         protected readonly ILogger<MasterController> _logger;
 
-        public AssignedExamsController(IAssignedExamsService assignedExamsService, ILogger<MasterController> logger = null)
-        {
+        public AssignedExamsController (IAssignedExamsService assignedExamsService, ILogger<MasterController> logger = null) {
             this._assignedExamsService = assignedExamsService;
             this.responseModel = new ResponseModel ();
             if (null != logger) {
                 this._logger = logger;
             }
         }
+        #endregion
 
+        #region Class Methods
         //POST api/exams/GetExamsByUserId
         /// <summary>
         /// Get list of all Exams depending upon User ID
@@ -41,7 +43,6 @@ namespace PerftEvaluation.Api.Controllers
             }
         }
 
-
         //POST api/exams/GetUsersByExamId
         /// <summary>
         /// Get list of all Employees depending upon Exam ID
@@ -55,7 +56,6 @@ namespace PerftEvaluation.Api.Controllers
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
-
 
         // POST api/exams/ActiveExamAssigned
         /// <summary>
@@ -72,7 +72,6 @@ namespace PerftEvaluation.Api.Controllers
             }
         }
 
-
         // POST api/exams/InactiveExamAssigned
         /// <summary>
         /// Assigned exam
@@ -87,5 +86,20 @@ namespace PerftEvaluation.Api.Controllers
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
+        // POST api/exams/examassignment
+        /// <summary>
+        /// Add assignment between users and exams 
+        /// </summary>
+        /// <param name="assignedExamsDTOs"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("ExamAssignment")]
+        public IActionResult ExamAssignment (List<AssignedExamsDTO> assignedExamsDTOs) {
+            try {
+                return Ok (_assignedExamsService.ExamAssignment (assignedExamsDTOs));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+        #endregion
     }
 }
