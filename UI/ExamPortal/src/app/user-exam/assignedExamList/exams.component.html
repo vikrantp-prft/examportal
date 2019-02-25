@@ -63,8 +63,9 @@
                 </i>
               </td>
               <td>
-                <button [routerLink]="[ '/instruction']" class="btn btn-md btn-primary">Start
-                  test</button>
+                <button [disabled]="item?.isAttempted" [routerLink]="[ '/instruction']" class="btn btn-md btn-primary">
+                  Start test
+                </button>
               </td>
             </tr>
           </tbody>
