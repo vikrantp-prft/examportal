@@ -140,7 +140,7 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.TeamId, users.TeamId);
 
             try {
-                users.IsEmployee = true;
+                //users.IsEmployee = true;
                 users.ModifiedDate = DateTime.Now;
                 if (users.EducationDetails != null)
                 {

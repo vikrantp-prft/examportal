@@ -78,7 +78,7 @@ namespace PerftEvaluation.BAL.Services
                 employeesDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
                 employeesDTO.Note = item.Note;
                 employeesDTO.IsDeleted = item.IsDeleted;
-                employeesDTO.IsEmployee = item.IsEmployee;
+                //employeesDTO.IsEmployee = item.IsEmployee;
                 employeesDTO.CreatedDate = item.CreatedDate;
                 employeesDTO.ModifiedDate = item.ModifiedDate;
                 employeesDTO.EducationDetails = item.EducationDetails.Select(x => new EducationDetailsDTO()
@@ -143,7 +143,7 @@ namespace PerftEvaluation.BAL.Services
             employeesDTO.TeamId = employee.TeamId; employeesDTO.Team = employee.TeamId != null ? _masterService.GetMasterById(employee.TeamId) : null;
             employeesDTO.Note = employee.Note;
             employeesDTO.IsDeleted = employee.IsDeleted;
-            employeesDTO.IsEmployee = employee.IsEmployee;
+            //employeesDTO.IsEmployee = employee.IsEmployee;
             employeesDTO.CreatedDate = employee.CreatedDate;
             employeesDTO.ModifiedDate = employee.ModifiedDate;
             employeesDTO.EducationDetails = employee.EducationDetails.Select(x => new EducationDetailsDTO()
