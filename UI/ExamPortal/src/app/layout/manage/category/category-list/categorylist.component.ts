@@ -19,7 +19,7 @@ interface paginationModel {
 })
 export class CategoryListComponent implements OnInit {
   // Declaration
-  public params: any = {
+  public params = {
     pageNumber: 1,
     pageSize: 10,
     filter: ''
@@ -30,8 +30,8 @@ export class CategoryListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public categoryList = [];
-  public editCategoryList: any;
-  public statusUrl: any;
+  public editCategoryList;
+  public statusUrl: string;
   public toggle: boolean = true;
   public categoryModel =
     {
@@ -113,6 +113,7 @@ export class CategoryListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editCategoryList = rs.data;
+        console.log(this.editCategoryList);
         this.fn_setEditValues();
         this.ngxService.stop();
       }

@@ -14,7 +14,7 @@ import { commonService } from 'src/app/common/services/common.service';
 })
 export class ExamComponent implements OnInit {
     public examID: string;
-    public examDetail: object;
+    public examDetail;
 
     public examName: string;
     public question = [];
