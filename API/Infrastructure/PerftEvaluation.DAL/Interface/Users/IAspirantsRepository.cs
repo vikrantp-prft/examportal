@@ -2,58 +2,59 @@ using System;
 using System.Collections.Generic;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.DAL.Interface {
+namespace PerftEvaluation.DAL.Interface
+{
     /// <summary>
-    /// Employee repository Interface
+    /// Aspirants repository Interface
     /// </summary>
-    public interface IEmployeeRepository { 
-        /// <summary>
-        /// List of Employee
+    public interface IAspirantsRepository
+    {
+         /// <summary>
+        /// List of Aspirants
         /// </summary>
-        /// <returns>Employee List</returns>
-        IEnumerable<Users> GetEmployees ();
+        /// <returns>Aspirants List</returns>
+        IEnumerable<Users> GetAspirants ();
 
         /// <summary>
-        /// Save Employee Detail
+        /// Save Aspirants Detail
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool SaveEmployee (Users users);
+        bool SaveAspirants (Users users);
 
         /// <summary>
-        /// Get Employee Detail by Id
+        /// Get Aspirants Details by Id
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Users GetEmployeeById (string Id);
+        Users GetAspirantById (string Id);
 
         /// <summary>
-        /// Update Employee details
+        /// Update Aspirants details
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool UpdateEmployee (Users users);
+        bool UpdateAspirants (Users users);
 
         /// <summary>
-        /// Inactivate the employee detail
+        /// Inactivate the Aspirants detail
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        bool InactivateEmployee (string userId);
+        bool InactivateAspirants (string userId);
 
         /// <summary>
-        /// Deleted Employee detail
+        /// Deleted Aspirant detail
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        bool DeleteEmployee (string userId);
+        bool DeleteAspirant (string userId);
 
         /// <summary>
-        /// Active the employee detail
+        /// Active the Aspirant detail
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        bool ActiveEmployee (string userId);
-
+        bool ActiveAspirant (string userId);
     }
 }

@@ -32,6 +32,22 @@ namespace PerftEvaluation.Api.Controllers {
         /// Get list of all users
         /// </summary>
         /// <returns></returns>
+        [HttpPost, Route ("GetAllUsers")]
+        public IActionResult GetAllUsers (RequestModel requestModel) {
+            try {
+                return Ok (this._userService.GetAllUsers (requestModel));
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
+        //GET api/user
+        /// <summary>
+        /// Get list of all admin users
+        /// </summary>
+        /// <returns></returns>
         [HttpPost, Route ("GetUsers")]
         public IActionResult Get (RequestModel requestModel) {
             try {

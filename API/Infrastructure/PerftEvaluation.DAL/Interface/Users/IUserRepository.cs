@@ -7,6 +7,13 @@ namespace PerftEvaluation.DAL.Interface {
     /// User repository Interface
     /// </summary>
     public interface IUserRepository {
+
+        /// <summary>
+        /// Get the list of all the actived users, employees and aspirants
+        /// </summary>
+        /// <returns>Complete Users List</returns>
+        IEnumerable<Users> GetAllUsers ();
+
         /// <summary>
         /// List of users
         /// </summary>

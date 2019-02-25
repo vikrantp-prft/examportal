@@ -1,19 +1,22 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using static PerftEvaluation.DTO.Common.CommonEnums;
 
-namespace PerftEvaluation.DTO.Dtos {
+namespace PerftEvaluation.DTO.Dtos
+{
     /// <summary>
     /// User entities DTO's
     /// </summary>
-    public class UsersDTO {
+    public class UsersDTO
+    {
         public string Id { get; set; }
 
         [Required]
-        [StringLength (100)]
+        [StringLength(100)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength (100)]
+        [StringLength(100)]
         public string LastName { get; set; }
         public bool IsActive { get; set; }
 
@@ -35,16 +38,14 @@ namespace PerftEvaluation.DTO.Dtos {
         public string Pincode { get; set; }
 
         [Required]
-        [EmailAddress (ErrorMessage = "Invalid email address")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
         [Required]
         public string Mobile { get; set; }
 
-        [Required]
         public string GroupId { get; set; }
 
-        [Required]
         public string DesignationId { get; set; }
 
         [Required]
@@ -53,10 +54,17 @@ namespace PerftEvaluation.DTO.Dtos {
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
+
+        public bool IsAdmin { get; set; }
+
+        public bool IsContributor { get; set; }
+
+        [Required]
+        public UsersEnum UserType { get; set; }
         public MastersDTO Team { get; set; }
 
-        public MastersDTO  Group { get; set; }
+        public MastersDTO Group { get; set; }
 
-        public MastersDTO  Designation { get; set; }
+        public MastersDTO Designation { get; set; }
     }
 }

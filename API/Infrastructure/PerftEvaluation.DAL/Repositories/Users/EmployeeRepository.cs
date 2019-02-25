@@ -24,7 +24,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Employees List</returns>
         public IEnumerable<Users> GetEmployees () {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.IsEmployee == true).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false).ToList ();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -38,7 +38,7 @@ namespace PerftEvaluation.DAL.Repositories {
 
         public bool SaveEmployee (Users users) {
             try {
-                users.IsEmployee = true;
+                users.UserType = 0;
                 users.IsActive = true;
                 users.CreatedDate = DateTime.Now;
                 users.ModifiedDate = DateTime.Now;
