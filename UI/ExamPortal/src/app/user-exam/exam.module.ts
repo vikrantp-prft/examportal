@@ -7,6 +7,7 @@ import { ExamRoutingModule } from './exam-routing.module';
 import { ExamComponent } from './exam/exam.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { ExamsComponent } from './assignedExamList/exams.component';
+import { ThankComponent } from './Thank-You/thank.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { ExamsComponent } from './assignedExamList/exams.component';
     declarations: [
         ExamComponent, 
         InstructionComponent,
-        ExamsComponent
+        ExamsComponent,
+        ThankComponent
     ]
 })
 export class ExamModule { }

@@ -33,8 +33,12 @@ export class ExamsComponent implements OnInit {
             const rs = result;
             if (rs.statusCode === 200) {
                 this.assignedExamList = rs.data;
+                this.ngxService.stop();
                 console.log(this.assignedExamList);
             }
         });
+    }
+    changeAttemptedStatus(){
+
     }
 }

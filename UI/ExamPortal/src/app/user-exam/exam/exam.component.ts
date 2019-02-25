@@ -16,7 +16,7 @@ export class ExamComponent implements OnInit {
     public examID: any;
     public examDetail: object;
 
-    public examName: any;
+    public examName: string;
     public question: any[];
     public questionCategory = [];
     public totalQuestion: number;
@@ -26,12 +26,12 @@ export class ExamComponent implements OnInit {
     public currentQuestionOptionType = [];
     public examDurationHours: number;
     public examDurationMinutes: number;
-    public counter: any;
+    public counter: number;
     hours: number;
     minute: number;
     second: number;
     totalMinute: number;
-    totalSecond: any;
+    totalSecond: number;
 
     constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
