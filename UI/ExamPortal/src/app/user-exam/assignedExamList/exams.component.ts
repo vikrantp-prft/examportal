@@ -9,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./exams.component.css']
 })
 export class ExamsComponent implements OnInit {
-    userID: any;
-    assignedExamList: any[];
+    userID: string;
+    assignedExamList = [];
     isAttempted: boolean;
     constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {

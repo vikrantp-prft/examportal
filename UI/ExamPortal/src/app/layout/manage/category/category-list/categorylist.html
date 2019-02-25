@@ -53,9 +53,6 @@
             </i>
           </td>
           <td>
-            <!-- <button title="Edit" class=" btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editCategory', category.id]">
-              <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-            </button> -->
             <button title="Change Status" class="mx-1 btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(category.id, category.isActive)">
               <i class="fa" [ngClass]="{'fa-toggle-on text-success': category.isActive, 'fa-toggle-off text-danger': !category.isActive}"
                 aria-hidden="true"></i>

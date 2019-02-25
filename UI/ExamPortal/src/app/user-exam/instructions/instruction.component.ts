@@ -9,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./instruction.component.css']
 })
 export class InstructionComponent implements OnInit {
-    userID: any;
-    examDetail: any;
+    userID: string;
+    examDetail: object;
     examName: string;
     examDurationHours: number;
     examDurationMinutes: number;

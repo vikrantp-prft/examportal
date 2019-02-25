@@ -13,14 +13,14 @@ import { commonService } from 'src/app/common/services/common.service';
     providers: [commonService]
 })
 export class ExamComponent implements OnInit {
-    public examID: any;
+    public examID: string;
     public examDetail: object;
 
     public examName: string;
-    public question: any[];
+    public question = [];
     public questionCategory = [];
     public totalQuestion: number;
-    public currentQuestion: any;
+    public currentQuestion;
     public currentQuestionIndex: number = 1;
     public currentQuestionQuestionType: number;
     public currentQuestionOptionType = [];
@@ -59,8 +59,6 @@ export class ExamComponent implements OnInit {
                 this.examName = rs.data.title;
                 this.examDurationHours = rs.data.examDurationHours;
                 this.examDurationMinutes = rs.data.examDurationMinutes;
-                // this.examDurationHours = 0;
-                //  this.examDurationMinutes = 1;
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;
                 this.totalSecond = this.totalMinute * 60 ;
                 this.startCountdown(this.totalSecond);
@@ -82,11 +80,13 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
+                console.log(this.question)
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
-                this.getAllQuestionCategory();
                 this.ngxService.stop();
+                this.getAllQuestionCategory();
+                
             }
         });
     }
@@ -146,7 +146,7 @@ export class ExamComponent implements OnInit {
                 // The code here will run when
                 // the timer has reached zero.
                 clearInterval(interval);
-                window.location.href = "http://localhost:4200/login";
+                window.location.href = "http://localhost:4200/thank-you";
             };
         }, 1000);
     };
