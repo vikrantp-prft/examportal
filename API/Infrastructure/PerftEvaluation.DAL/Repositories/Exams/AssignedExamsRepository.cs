@@ -76,8 +76,19 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns></returns>
         public bool ExamAssignment (AssignedExams assignedExams) {
             try {
-                _db.Save<AssignedExams> (assignedExams, AssignedExams.CollectionName);
-                return true;
+                var filter = Builders<AssignedExams>.Filter;
+                var filterDef = filter.And (filter.Eq (c => c.ExamId, assignedExams.ExamId),
+                    filter.Eq (c => c.UserId, assignedExams.UserId));
+
+                if (filterDef != null) {
+                    var updateQuery = Builders<AssignedExams>.Update
+                        .Set (c => c.IsActive, assignedExams.IsActive);
+
+                    return _db.UpdateOne<AssignedExams> (filterDef, updateQuery, AssignedExams.CollectionName);
+                } else {
+                    _db.Save<AssignedExams> (assignedExams, AssignedExams.CollectionName);
+                    return true;
+                }
             } catch (Exception exception) {
                 throw exception;
             }

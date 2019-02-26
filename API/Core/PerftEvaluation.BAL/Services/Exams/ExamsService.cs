@@ -53,6 +53,7 @@ namespace PerftEvaluation.BAL.Services {
                 examsDTO.ShuffleOptions = item.ShuffleOptions;
                 examsDTO.ShuffleQuestions = item.ShuffleQuestions;
                 examsDTO.IsPaperPublic = item.IsPaperPublic;
+                examsDTO.IsFeedback = item.IsFeedback;
                 examsDTO.TotalQuestions = item.TotalQuestions;
                 examsDTO.IsActive = item.IsActive;
                 examsDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
@@ -102,6 +103,7 @@ namespace PerftEvaluation.BAL.Services {
             examsDTO.ShuffleOptions = exam.ShuffleOptions;
             examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
             examsDTO.IsPaperPublic = exam.IsPaperPublic;
+            examsDTO.IsFeedback = exam.IsFeedback;
             examsDTO.TotalQuestions = exam.TotalQuestions;
             examsDTO.IsActive = exam.IsActive;
             examsDTO.IsDeleted = exam.IsDeleted;
@@ -139,35 +141,30 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="examDTO"></param>
         /// <returns></returns>
-        public bool SetActiveInactive(ExamsDTO examsDTO)
-        {
+        public bool SetActiveInactive (ExamsDTO examsDTO) {
             DateTime start = examsDTO.FromDate.Value;
             DateTime current = DateTime.Now;
             DateTime end = examsDTO.ToDate.Value;
 
-            int activeExam = DateTime.Compare(start, current);
-            int inactiveExam = DateTime.Compare(start, end);
+            int activeExam = DateTime.Compare (start, current);
+            int inactiveExam = DateTime.Compare (start, end);
 
-            if (activeExam < 0){
-                this.InactiveExams(examsDTO.Id);
+            if (activeExam < 0) {
+                this.InactiveExams (examsDTO.Id);
                 return false;
-            }
-            else if(activeExam == 0){
-                if(inactiveExam < 0){
-                    this.ActiveExams(examsDTO.Id);
+            } else if (activeExam == 0) {
+                if (inactiveExam < 0) {
+                    this.ActiveExams (examsDTO.Id);
                     return true;
-                }
-                else if(inactiveExam == 0){
-                    this.InactiveExams(examsDTO.Id);
+                } else if (inactiveExam == 0) {
+                    this.InactiveExams (examsDTO.Id);
+                    return false;
+                } else {
+                    this.InactiveExams (examsDTO.Id);
                     return false;
                 }
-                else{
-                    this.InactiveExams(examsDTO.Id);
-                    return false;
-                }
-            }
-            else{
-                this.InactiveExams(examsDTO.Id);
+            } else {
+                this.InactiveExams (examsDTO.Id);
                 return false;
             }
         }
