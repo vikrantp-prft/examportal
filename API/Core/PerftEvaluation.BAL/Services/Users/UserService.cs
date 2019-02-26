@@ -253,6 +253,16 @@ namespace PerftEvaluation.BAL.Services
         {
             return _userRepository.IsEmailExist(email);
         }
+
+        /// <summary>
+        /// Mark user as a admin
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true/false</returns>
+        public bool MarkUserAsAdmin(string userId)
+        {
+            return _userRepository.MarkUserAsAdmin(userId);
+        }
         #endregion
 
     }

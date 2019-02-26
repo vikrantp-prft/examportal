@@ -200,6 +200,21 @@ namespace PerftEvaluation.DAL.Repositories
         {
             return (_db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.Email == email).Count() > 0 ? true : false);
         }
+
+        /// <summary>
+        /// Mark User as a admin users
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        public bool MarkUserAsAdmin(string userId)
+        {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq(c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set(c => c.IsAdmin, true);
+
+            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
+        }
         #endregion
     }
 }

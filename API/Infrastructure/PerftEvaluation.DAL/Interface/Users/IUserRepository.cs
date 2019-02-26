@@ -74,5 +74,12 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="email"></param>
         /// <returns></returns>
         bool IsEmailExist (string email);
+
+        /// <summary>
+        /// Mark user as a admin
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool MarkUserAsAdmin (string userId);
     }
 }

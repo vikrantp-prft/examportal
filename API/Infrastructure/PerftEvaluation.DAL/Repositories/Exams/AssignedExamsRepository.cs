@@ -76,11 +76,12 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns></returns>
         public bool ExamAssignment (AssignedExams assignedExams) {
             try {
-                var filter = Builders<AssignedExams>.Filter;
-                var filterDef = filter.And (filter.Eq (c => c.ExamId, assignedExams.ExamId),
-                    filter.Eq (c => c.UserId, assignedExams.UserId));
+                var ExamAssignsCheck = _db.GetCollection<AssignedExams> (AssignedExams.CollectionName).AsQueryable ().Where (x => x.ExamId == assignedExams.ExamId && x.UserId == assignedExams.UserId).FirstOrDefault ();
 
-                if (filterDef != null) {
+                if (ExamAssignsCheck != null) {
+                    var filter = Builders<AssignedExams>.Filter;
+                    var filterDef = filter.Eq (c => c.Id, ExamAssignsCheck.Id);
+
                     var updateQuery = Builders<AssignedExams>.Update
                         .Set (c => c.IsActive, assignedExams.IsActive);
 
