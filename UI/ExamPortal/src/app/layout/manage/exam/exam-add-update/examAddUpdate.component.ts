@@ -40,6 +40,7 @@ export class examAddUpdateComponent implements OnInit {
       shuffleQuestions: new FormControl(false),
       shuffleOptions: new FormControl(false),
       isPaperPublic: new FormControl(false),
+      isFeedback: new FormControl(false),
       totalQuestions: new FormControl(''),
     });
   }
