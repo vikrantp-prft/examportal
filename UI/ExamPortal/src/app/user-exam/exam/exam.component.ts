@@ -14,19 +14,20 @@ import { commonService } from 'src/app/common/services/common.service';
 })
 export class ExamComponent implements OnInit {
     public examID: string;
-    public examDetail;
+    public examDetail: any;
 
     public examName: string;
     public question = [];
     public questionCategory = [];
     public totalQuestion: number;
-    public currentQuestion;
+    public currentQuestion: string;
     public currentQuestionIndex: number = 1;
     public currentQuestionQuestionType: number;
     public currentQuestionOptionType = [];
     public examDurationHours: number;
     public examDurationMinutes: number;
     public counter: number;
+    public examType: number = 0 ;
     hours: number;
     minute: number;
     second: number;

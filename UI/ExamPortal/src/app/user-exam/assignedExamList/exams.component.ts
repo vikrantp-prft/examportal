@@ -35,8 +35,6 @@ export class ExamsComponent implements OnInit {
             // console.log(rs);
             if (rs.statusCode === 200) {
                 this.assignedExamList = rs.data;
-                this.isAttempted = this.assignedExamList[0].isAttempted;
-                // console.log(this.isAttempted);
                 this.ngxService.stop();
                 console.log(this.assignedExamList);
             }
