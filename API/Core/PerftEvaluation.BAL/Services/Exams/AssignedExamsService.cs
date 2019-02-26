@@ -85,27 +85,27 @@ namespace PerftEvaluation.BAL.Services {
         /// <param name="requestModel"></param>
         /// <returns></returns>
         public ResponseModel GetUsersByExamId (RequestModel requestModel) {
-            //Filter & sort the data
-            var filteredUsers = this._assignedExamsRepository.GetAssignedUsersByExamId (requestModel.Id).AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
-            //Integrate pagination
-            var users = filteredUsers.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var employeeList = this._employeeRepository.GetEmployees ();
+            List<UsersDTO> userList = new List<UsersDTO> ();
+            foreach (var item in employeeList) {
+                UsersDTO user = new UsersDTO ();
+                user.FirstName = item.FirstName;
+                user.LastName = item.LastName;
+                user.Email = item.Email;
+                user.IsActive = item.IsActive;
+                user.Id = item.Id;
+                user.IsDeleted = item.IsDeleted;
+                user.IsExamAssigned = _assignedExamsRepository.ExamAssignmentCheck (item.Id, requestModel.Id);
 
-            List<AssignedExamsDTO> userJoin = new List<AssignedExamsDTO> ();
-            foreach (var item in users) {
-                AssignedExamsDTO usersDTO = new AssignedExamsDTO ();
-                usersDTO.Id = item.Id;
-                usersDTO.UserId = item.UserId;
-                usersDTO.ExamId = item.ExamId;
-                usersDTO.IsActive = item.IsActive;
-                usersDTO.IsDeleted = item.IsDeleted;
-                usersDTO.Exam = _examsService.GetExamsById (item.ExamId);
-                usersDTO.Employee = _employeeService.GetEmployeeById (item.UserId);
-
-                userJoin.Add (usersDTO);
+                userList.Add (user);
             }
 
+            //Filter & sort the data
+            var filteredUsers = userList.AsQueryable().SortAndFilter (requestModel, DbFilters.UserFilters);
+            //Integrate pagination
+            var users = filteredUsers.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             //return object
-            return CommonResponse.OkResponse (requestModel, userJoin, (filteredUsers.Count () < 100 ? filteredUsers.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, users, (filteredUsers.Count () < 100 ? filteredUsers.Count () : 100));
         }
 
         /// <summary>

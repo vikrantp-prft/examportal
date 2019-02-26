@@ -39,5 +39,13 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="assignedExams"></param>
         /// <returns></returns>
         bool ExamAssignment (AssignedExams assignedExams);
+
+        /// <summary>
+        /// Check the assignment status with exams
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="examId"></param>
+        /// <returns>true/false</returns>
+        bool ExamAssignmentCheck (string userId, string examId);
     }
 }

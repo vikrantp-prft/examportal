@@ -94,5 +94,23 @@ namespace PerftEvaluation.DAL.Repositories {
                 throw exception;
             }
         }
+
+        /// <summary>
+        /// Check the assignment status with exams
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        public bool ExamAssignmentCheck (string userId, string examId) {
+            try {
+                var examAssignsCheck = _db.GetCollection<AssignedExams> (AssignedExams.CollectionName).AsQueryable ().Where (x => x.ExamId == examId && x.UserId == userId).FirstOrDefault ();
+                if (examAssignsCheck != null) {
+                    return true;
+                }
+                return false;
+            } catch (Exception exception) {
+                throw exception;
+            }
+        }
     }
 }

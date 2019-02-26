@@ -2,21 +2,19 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using static PerftEvaluation.DTO.Common.CommonEnums;
 
-namespace PerftEvaluation.DTO.Dtos
-{
+namespace PerftEvaluation.DTO.Dtos {
     /// <summary>
     /// User entities DTO's
     /// </summary>
-    public class UsersDTO
-    {
+    public class UsersDTO {
         public string Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength (100)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength (100)]
         public string LastName { get; set; }
         public bool IsActive { get; set; }
 
@@ -38,7 +36,7 @@ namespace PerftEvaluation.DTO.Dtos
         public string Pincode { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [EmailAddress (ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
         [Required]
@@ -66,5 +64,7 @@ namespace PerftEvaluation.DTO.Dtos
         public MastersDTO Group { get; set; }
 
         public MastersDTO Designation { get; set; }
+
+        public bool IsExamAssigned { get; set; }
     }
 }
