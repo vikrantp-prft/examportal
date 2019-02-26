@@ -16,9 +16,9 @@ namespace PerftEvaluation.Api.Controllers {
 
         private ResponseModel responseModel = null;
 
-        protected readonly ILogger<MasterController> _logger;
+        protected readonly ILogger<ResultsController> _logger;
 
-        public ResultsController (IResultsService resultsService, ILogger<MasterController> logger = null) {
+        public ResultsController (IResultsService resultsService, ILogger<ResultsController> logger = null) {
             this._resultsService = resultsService;
             this.responseModel = new ResponseModel ();
             if (null != logger) {

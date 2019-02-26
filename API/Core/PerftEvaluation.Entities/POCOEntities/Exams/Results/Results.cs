@@ -49,37 +49,5 @@ namespace PerftEvaluation.Entities.POCOEntities
 
         [BsonElement("endTime")]
         public DateTime? EndTime { get; set; }
-
-        public List<AttemptedQuestion> AttemptedQuestions { get; set; }
-    }
-
-    public class AttemptedQuestion
-    {
-
-        [BsonElement ("AttemptedQuestionId"), BsonRepresentation (BsonType.ObjectId)]
-        public string AttemptedQuestionId { get; set; }
-
-
-        [BsonElement("QuestionsId"), BsonRepresentation(BsonType.ObjectId)]
-        [Required]
-        public string QuestionsId { get; set; }
-
-
-        [BsonElement("selectedOptionId"), BsonRepresentation(BsonType.ObjectId)]
-        [Required]
-        public string selectedOptionId { get; set; }
-        
-
-        [BsonElement("isCorrect")]
-        public bool IsCorrect { get; set; }
-
-
-        [BsonElement("marks")]
-        [Required]
-        public int Marks { get; set; }
-
-
-        [BsonElement("isAttempted")]
-        public bool IsAttempted { get; set; }
     }
 }

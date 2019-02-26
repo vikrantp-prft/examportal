@@ -81,18 +81,6 @@ namespace PerftEvaluation.BAL.Services {
                 resultsDTO.IsActive = item.IsActive;
                 resultsDTO.Exam = _examsService.GetExamsById(item.ExamId);
                 resultsDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
-                resultsDTO.AttemptedQuestions = this._mapper.Map<List<AttemptedQuestionDTO>>(item.AttemptedQuestions);
-
-                // resultsDTO.AttemptedQuestions.Select (e => new AttemptedQuestionDTO {
-                // QuestionsId = e.QuestionsId,
-                // selectedOptionId = e.selectedOptionId,
-                // Marks = e.Marks,
-                // IsAttempted = e.IsAttempted,
-                // IsCorrect = e.IsCorrect,
-                // QuestionsDetails = _questionsService.GetQuestionById (e.QuestionsId)
-                // });
-
-
                 resultJoin.Add(resultsDTO);
             }
 
