@@ -66,7 +66,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ActiveExamAssigned")]
         public IActionResult IsExamAssigned (RequestModel requestModel) {
             try {
-                return Ok (_assignedExamsService.ActiveExamAssigned (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = _assignedExamsService.ActiveExamAssigned (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -81,7 +85,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("InactiveExamAssigned")]
         public IActionResult InactiveExamAssigned (RequestModel requestModel) {
             try {
-                return Ok (_assignedExamsService.InactiveExamAssigned (requestModel.Id));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = _assignedExamsService.InactiveExamAssigned (requestModel.Id);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
@@ -95,7 +103,11 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("ExamAssignment")]
         public IActionResult ExamAssignment (List<AssignedExamsDTO> assignedExamsDTOs) {
             try {
-                return Ok (_assignedExamsService.ExamAssignment (assignedExamsDTOs));
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = _assignedExamsService.ExamAssignment (assignedExamsDTOs);
+
+                return Ok (responseModel);
             } catch (Exception exception) {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
