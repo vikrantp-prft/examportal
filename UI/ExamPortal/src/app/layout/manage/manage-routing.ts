@@ -21,6 +21,7 @@ import { EditDegreeComponent } from './degree/degree-edit-update/degreeEditUpdat
 import { StateListComponent } from './state/state-list/stateList.component';
 import { AddStateComponent } from './state/state-add-update/stateAddUpdate.component';
 import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.component';
+import { UserListComponent } from './exam/user-list/userList.component';
 
 
 
@@ -90,6 +91,9 @@ const routes: Routes = [
             },
             {
                 path: 'editState/:id', component: EditStateComponent
+            },
+            {
+                path: 'userList/:examId', component: UserListComponent
             }
 
         ]
