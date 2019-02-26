@@ -100,6 +100,7 @@ namespace PerftEvaluation.DAL.Repositories
                 .Set(c => c.FromDate, exams.FromDate)
                 .Set(c => c.ToDate, exams.ToDate)
                 .Set(c => c.IsPaperPublic, exams.IsPaperPublic)
+                .Set(c => c.IsFeedback, exams.IsFeedback)
                 .Set(c => c.PassingMarks, exams.PassingMarks)
                 .Set(c => c.ShowResultInFront, exams.ShowResultInFront)
                 .Set(c => c.ShuffleOptions, exams.ShuffleOptions)
