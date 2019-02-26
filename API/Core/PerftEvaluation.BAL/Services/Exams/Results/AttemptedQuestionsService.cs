@@ -65,7 +65,8 @@ namespace PerftEvaluation.BAL.Services
                 AttemptedQuestionsDTO attemptedQuestionsDTO = new AttemptedQuestionsDTO();
                 attemptedQuestionsDTO.Id = item.Id;
                 attemptedQuestionsDTO.QuestionsId = item.QuestionsId;
-                attemptedQuestionsDTO.selectedOptionId = item.selectedOptionId;
+                attemptedQuestionsDTO.SelectedOptionId = item.SelectedOptionId;
+                attemptedQuestionsDTO.UserId = item.UserId;
                 attemptedQuestionsDTO.ExamId = item.ExamId;
                 attemptedQuestionsDTO.Marks = item.Marks;
                 attemptedQuestionsDTO.IsCorrect = item.IsCorrect;
@@ -88,7 +89,26 @@ namespace PerftEvaluation.BAL.Services
         {
             try
             {
-                return this._attemptedQuestionsRepository.SaveAttemptedQuestions(this._mapper.Map<AttemptedQuestions>(attemptedQuestionsDTO));
+                var saveQuestion = this._attemptedQuestionsRepository.SaveAttemptedQuestions(this._mapper.Map<AttemptedQuestions>(attemptedQuestionsDTO));
+
+                if (saveQuestion == true)
+                {
+                    string[] correctedOptions = _questionsService.GetCorrectOptionsByQuestionId(attemptedQuestionsDTO.QuestionsId);
+
+                    string[] selectedOptions = attemptedQuestionsDTO.SelectedOptionId;
+
+                    foreach (var options in selectedOptions)
+                    {
+                        foreach (var val in correctedOptions)
+                        {
+                            if (options == val)
+                            {
+                                attemptedQuestionsDTO.IsCorrect = true;
+                            }
+                        }
+                    }
+                }
+                return saveQuestion;
             }
             catch (Exception ex)
             {

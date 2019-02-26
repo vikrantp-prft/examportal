@@ -212,5 +212,12 @@ namespace PerftEvaluation.BAL.Services
             return allOptions;
         }
 
+        public string[] GetCorrectOptionsByQuestionId(string questionId)
+        {
+            var questions = this._questionsRepository.GetQuestionsById(questionId);
+            QuestionsDTO optionsDTO = new QuestionsDTO();
+            string[] correctedOptions = this._mapper.Map<List<OptionsDTO>>(questions.Options).Where(c => c.IsCorrect == true).Select(x => x.OptionId).ToArray();
+            return correctedOptions;
+        }
     }
 }

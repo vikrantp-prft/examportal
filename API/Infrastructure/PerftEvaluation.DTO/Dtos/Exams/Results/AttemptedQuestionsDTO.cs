@@ -11,7 +11,10 @@ namespace PerftEvaluation.DTO.Dtos
         public string QuestionsId { get; set; }
 
         [Required]
-        public string selectedOptionId { get; set; }
+        public string[] SelectedOptionId { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
 
         [Required]
         public string ExamId {get; set;}
