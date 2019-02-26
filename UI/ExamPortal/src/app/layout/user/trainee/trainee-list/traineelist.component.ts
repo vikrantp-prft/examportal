@@ -15,6 +15,13 @@ interface paginationModel {
 
 })
 export class TraineeListComponent implements OnInit {
+
+  public traineeModel: any = {
+    "totalRecords": 0,
+    "pageSize": 10,
+    "pageNumber": 1
+  }
+
   public params: any = {
     currentPage: 1,
     pageSize: 10,
@@ -46,23 +53,31 @@ export class TraineeListComponent implements OnInit {
   }
 
   fn_GetTraineeList() {
-    const prop: paginationModel = {
-      currentPage: parseInt(this.params.currentPage),
-      pageSize: parseInt(this.params.pageSize),
-      searchString: this.params.searchString
-    };
-    const url = 'api/User';
+    
+    const url = 'api/Employee/GetEmployees';
 
-    this.CommonService.fn_Get(url).subscribe(
-      (data: any) => {
-        if (data != null /*&& data.statusCode === 200*/) {
+    this.CommonService.fn_PostWithData(this.traineeModel, url).subscribe(
+      (data: any) => {        
           console.log(data);
           this.traineeList = data.data;
           console.log(this.traineeList);
-        }
-      },
+        },
       err => console.error(err),
       () => { }
     );
   }
+
+  // fn_GetEmployeeList() {
+  //   this.ngxService.start();
+  //   const url = 'api/Employee/GetEmployees';
+  //   this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
+  //     (data: any) => {
+  //       this.employeeList = data.data;
+  //       this.ngxService.stop();
+  //       this.employeeModel.totalRecords = data.totalRecords;
+  //     },
+  //     err => console.error(err),
+  //     () => { }
+  //   );
+  // }
 }

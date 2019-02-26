@@ -88,6 +88,7 @@ export class examEditUpdateComponent implements OnInit {
       shuffleQuestions: new FormControl(false),
       shuffleOptions: new FormControl(false),
       isPaperPublic: new FormControl(false),
+      isFeedback: new FormControl(false),
       totalQuestions: new FormControl("")
     });
   }
@@ -125,6 +126,9 @@ export class examEditUpdateComponent implements OnInit {
     );
     this.editExamForm.controls.isPaperPublic.setValue(
       this.examDetail.isPaperPublic
+    );
+    this.editExamForm.controls.isFeedback.setValue(
+      this.examDetail.isFeedback
     );
     this.editExamForm.controls.totalQuestions.setValue(
       this.examDetail.totalQuestions

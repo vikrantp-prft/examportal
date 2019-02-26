@@ -12,19 +12,27 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
     providers: [commonService]
 })
 export class ExamComponent implements OnInit {
-    examID: any;
+    public examID: any;
     public examDetail: object;
-    
-    examName: any;
-    question = [];
-    questionCategory = [];
-    totalQuestion: number;
-    currentQuestion: any;
-    currentQuestionIndex: number = 1;
-    currentQuestionQuestionType: number; 
-    currentQuestionOptionType = [];
- 
-    constructor(private ngxService: NgxUiLoaderService,private CommonService: commonService, private route: ActivatedRoute) {
+
+    public examName: any;
+    public question: any[];
+    public questionCategory = [];
+    public totalQuestion: number;
+    public currentQuestion: any;
+    public currentQuestionIndex: number = 1;
+    public currentQuestionQuestionType: number;
+    public currentQuestionOptionType = [];
+    public examDurationHours: number;
+    public examDurationMinutes: number;
+    public counter: any;
+    hours: number;
+    minute: number;
+    second: number;
+    totalMinute: number;
+    totalSecond: any;
+
+    constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
         });
@@ -40,13 +48,23 @@ export class ExamComponent implements OnInit {
         const examDetailUrl = "api/Exams/GetExamById";
         this.fn_getExamDetails(examDetailModel, examDetailUrl);
     }
-    fn_getExamDetails(model, url){
+    fn_getExamDetails(model, url) {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode === 200) {
                 this.examDetail = rs.data;
+                console.log(this.examDetail);
                 this.examName = rs.data.title;
+                this.examDurationHours = rs.data.examDurationHours;
+                this.examDurationMinutes = rs.data.examDurationMinutes;
+                // this.examDurationHours = 0;
+                //  this.examDurationMinutes = 1;
+                this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;
+                this.totalSecond = this.totalMinute * 60 ;
+                // console.log(this.totalMinute);
+                // console.log(this.totalSecond)
+                this.startCountdown(this.totalSecond);
                 this.ngxService.stop();
             }
         });
@@ -54,11 +72,12 @@ export class ExamComponent implements OnInit {
     getQuestionList() {
         const url = 'api/Questions/listQuestionsByExamId';
         const questionModel = {
-            "id": this.examID
+            "id": this.examID,
+            "pageSize": 200
         };
-        this.fn_getQuestionList(questionModel,url);
+        this.fn_getQuestionList(questionModel, url);
     }
-    fn_getQuestionList(model,url){
+    fn_getQuestionList(model, url) {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
@@ -72,50 +91,64 @@ export class ExamComponent implements OnInit {
             }
         });
     }
-    getAllQuestionCategory(){
-        const distinct = ( value, index, self) => {
+    getAllQuestionCategory() {
+        const distinct = (value, index, self) => {
             return self.indexOf(value) === index;
         }
-        for(let i=0; i < this.question.length;i++){
+        for (let i = 0; i < this.question.length; i++) {
             this.questionCategory[i] = this.question[i].category.name;
         }
         this.questionCategory = this.questionCategory.filter(distinct);
     }
-    setCurrentQuestion(questionId){
+    setCurrentQuestion(questionId) {
         this.currentQuestion = this.question[questionId].question;
     }
-    setCurrentQuestionQuestionType(questionId){
+    setCurrentQuestionQuestionType(questionId) {
         this.currentQuestionQuestionType = this.question[questionId].questionType;
     }
-    setCurrentQuestionOptionType(questionId){
+    setCurrentQuestionOptionType(questionId) {
         this.currentQuestionOptionType = this.question[questionId].options;
     }
-    setCurrentQuestionAndOption(){
+    setCurrentQuestionAndOption() {
         if (this.currentQuestionIndex == 0) {
             this.currentQuestionIndex = this.question.length;
         }
-        if(this.currentQuestionIndex == (this.question.length + 1))
-        {
+        if (this.currentQuestionIndex == (this.question.length + 1)) {
             this.currentQuestionIndex = 1;
         }
-        if(this.currentQuestionIndex < (this.question.length + 1)){
+        if (this.currentQuestionIndex < (this.question.length + 1)) {
             this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
-            this.currentQuestionQuestionType = this.question[this.currentQuestionIndex -1].questionType;
+            this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
             this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
         }
     }
-    fn_previous(){
+    fn_previous() {
         this.currentQuestionIndex--;
         this.setCurrentQuestionAndOption();
     }
-    fn_next(){
+    fn_next() {
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
     }
-    jumpToQuestion(id){
+    jumpToQuestion(id) {
         this.setCurrentQuestion(id);
         this.setCurrentQuestionQuestionType(id);
         this.setCurrentQuestionOptionType(id);
-        this.currentQuestionIndex = id + 1;        
+        this.currentQuestionIndex = id + 1;
     }
+    startCountdown(seconds) {
+        this.counter = seconds;
+        var interval = setInterval(() => {
+            this.hours = Math.floor(this.counter / 3600);
+            this.minute = Math.floor((this.counter % 3600) / 60);
+            this.second = this.counter % 60;
+            this.counter--;
+            if (this.counter < 0) {
+                // The code here will run when
+                // the timer has reached zero.
+                clearInterval(interval);
+                window.location.href = "http://localhost:4200/login";
+            };
+        }, 1000);
+    };
 }

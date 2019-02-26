@@ -153,5 +153,20 @@ namespace PerftEvaluation.Api.Controllers {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
+
+
+        [HttpPost, Route("SetActiveInactiveExams")]
+        public IActionResult DelSetActiveInactiveExamseteExam (ExamsDTO examsDTO) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._examService.SetActiveInactive (examsDTO);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
     }
 }

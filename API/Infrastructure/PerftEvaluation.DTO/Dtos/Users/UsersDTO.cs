@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using static PerftEvaluation.DTO.Common.CommonEnums;
 
 namespace PerftEvaluation.DTO.Dtos {
     /// <summary>
@@ -41,10 +42,8 @@ namespace PerftEvaluation.DTO.Dtos {
         [Required]
         public string Mobile { get; set; }
 
-        [Required]
         public string GroupId { get; set; }
 
-        [Required]
         public string DesignationId { get; set; }
 
         [Required]
@@ -53,10 +52,19 @@ namespace PerftEvaluation.DTO.Dtos {
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
+
+        public bool IsAdmin { get; set; }
+
+        public bool IsContributor { get; set; }
+
+        [Required]
+        public UsersEnum UserType { get; set; }
         public MastersDTO Team { get; set; }
 
-        public MastersDTO  Group { get; set; }
+        public MastersDTO Group { get; set; }
 
-        public MastersDTO  Designation { get; set; }
+        public MastersDTO Designation { get; set; }
+
+        public bool IsExamAssigned { get; set; }
     }
 }

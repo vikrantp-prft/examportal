@@ -43,6 +43,54 @@ namespace PerftEvaluation.BAL.Services
         #endregion
 
         #region Class Method 
+
+        /// <summary>
+        /// Get All Users
+        /// </summary>
+        /// <value></value>
+        public ResponseModel GetAllUsers(RequestModel requestModel)
+        {
+            //Filter & sort the data
+            var filteredUsers = this._userRepository.GetAllUsers().AsQueryable().SortAndFilter(requestModel, DbFilters.UserFilters);
+            //Integrate pagination
+            var allUsers = filteredUsers.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+
+            List<UsersDTO> userJoin = new List<UsersDTO>();
+            foreach (var item in allUsers)
+            {
+                UsersDTO usersDTO = new UsersDTO();
+                usersDTO.Id = item.Id;
+                usersDTO.FirstName = item.FirstName;
+                usersDTO.LastName = item.LastName;
+                usersDTO.IsActive = item.IsActive;
+                usersDTO.Password = item.Password;
+                usersDTO.DOB = item.DOB;
+                usersDTO.Address1 = item.Address1;
+                usersDTO.Address2 = item.Address2;
+                usersDTO.City = item.City;
+                usersDTO.StateId = item.StateId;
+                usersDTO.Pincode = item.Pincode;
+                usersDTO.Email = item.Email;
+                usersDTO.Mobile = item.Mobile;
+                usersDTO.GroupId = item.GroupId;
+                usersDTO.DesignationId = item.DesignationId;
+                usersDTO.TeamId = item.TeamId;
+                usersDTO.Note = item.Note;
+                usersDTO.CreatedDate = item.CreatedDate;
+                usersDTO.ModifiedDate = item.ModifiedDate;
+                usersDTO.IsDeleted = item.IsDeleted;
+                usersDTO.IsAdmin = item.IsAdmin;
+                usersDTO.IsContributor = item.IsContributor;
+                usersDTO.UserType = item.UserType;
+                usersDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
+                usersDTO.Group = item.GroupId != null? _masterService.GetMasterById (item.GroupId) : null;
+                usersDTO.Designation = item.DesignationId != null? _masterService.GetMasterById (item.DesignationId) : null;
+                userJoin.Add(usersDTO);
+            }
+            //return object
+            return CommonResponse.OkResponse(requestModel, userJoin, (filteredUsers.Count() < 100 ? filteredUsers.Count() : 100));
+        }
+
         /// <summary>
         /// Get Users List
         /// </summary>
@@ -72,13 +120,15 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.Email = item.Email;
                 usersDTO.Mobile = item.Mobile;
                 usersDTO.GroupId = item.GroupId;
-                usersDTO.StateId = item.StateId;
                 usersDTO.DesignationId = item.DesignationId;
                 usersDTO.TeamId = item.TeamId;
                 usersDTO.Note = item.Note;
                 usersDTO.CreatedDate = item.CreatedDate;
                 usersDTO.ModifiedDate = item.ModifiedDate;
                 usersDTO.IsDeleted = item.IsDeleted;
+                usersDTO.IsAdmin = item.IsAdmin;
+                usersDTO.IsContributor = item.IsContributor;
+                usersDTO.UserType = item.UserType;
                 usersDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
                 usersDTO.Group = item.GroupId != null? _masterService.GetMasterById (item.GroupId) : null;
                 usersDTO.Designation = item.DesignationId != null? _masterService.GetMasterById (item.DesignationId) : null;
@@ -132,6 +182,9 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.CreatedDate = user.CreatedDate;
                 usersDTO.ModifiedDate = user.ModifiedDate;
                 usersDTO.IsDeleted = user.IsDeleted;
+                usersDTO.IsAdmin = user.IsAdmin;
+                usersDTO.IsContributor = user.IsContributor;
+                usersDTO.UserType = user.UserType;
                 usersDTO.Team = user.TeamId != null? _masterService.GetMasterById (user.TeamId) : null;
                 usersDTO.Group = user.GroupId != null? _masterService.GetMasterById (user.GroupId) : null;
                 usersDTO.Designation = user.DesignationId != null? _masterService.GetMasterById (user.DesignationId) : null;
@@ -199,6 +252,16 @@ namespace PerftEvaluation.BAL.Services
         public bool IsEmailExist(string email)
         {
             return _userRepository.IsEmailExist(email);
+        }
+
+        /// <summary>
+        /// Mark user as a admin
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true/false</returns>
+        public bool MarkUserAsAdmin(string userId)
+        {
+            return _userRepository.MarkUserAsAdmin(userId);
         }
         #endregion
 

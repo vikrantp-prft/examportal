@@ -47,31 +47,5 @@ namespace PerftEvaluation.DTO.Dtos {
         public ExamsDTO Exam { get; set; }
 
         public EmployeesDTO Employee { get; set; }
-
-        public List<AttemptedQuestionDTO> AttemptedQuestions { get; set; }
     }
-
-    public class AttemptedQuestionDTO {
-
-        public string AttemptedQuestionId { get; set; }
-
-
-        [Required]
-        public string QuestionsId { get; set; }
-
-
-        [Required]
-        public string selectedOptionId { get; set; }
-
-
-        [Required]
-        public int Marks { get; set; }
-
-        public bool IsCorrect { get; set; }
-
-        public bool IsAttempted { get; set; }
-
-        public QuestionsDTO QuestionsDetails { get; set; }
-    }
-
 }

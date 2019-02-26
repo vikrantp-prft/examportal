@@ -4,7 +4,7 @@ using PerftEvaluation.Entities.POCOEntities;
 
 namespace PerftEvaluation.DAL.Interface {
     /// <summary>
-    /// User repository Interface
+    /// Employee repository Interface
     /// </summary>
     public interface IEmployeeRepository { 
         /// <summary>

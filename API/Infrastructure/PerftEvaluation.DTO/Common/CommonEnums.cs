@@ -15,5 +15,11 @@ namespace PerftEvaluation.DTO.Common {
             theory
 
         }
+
+        public enum UsersEnum
+        {
+            Employee,
+            Aspirant
+        }
     }
 }
