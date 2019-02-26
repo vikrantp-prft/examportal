@@ -113,7 +113,7 @@ export class UserListComponent implements OnInit {
         this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
             const rs = result;
             console.log(rs);
-            if (rs.data == true)  {
+            if (rs.data === true)  {
                 if(data.isActive)
                     this.toastr.success('Exam assigned successfully!');
                 else
