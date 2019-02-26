@@ -10,7 +10,7 @@ const routes: Routes = [
         path: 'exams/:userId', component: ExamsComponent
     },
     {
-        path: 'instruction', component: InstructionComponent
+        path: 'instruction/:examId', component: InstructionComponent
     },
     {
         path: 'exam/:examId', component: ExamComponent

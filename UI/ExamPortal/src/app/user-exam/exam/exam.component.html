@@ -1,100 +1,112 @@
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-md navbar-white  bg-white">
-      <img src="assets/images/prft.png" class="logo" alt="">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link">John Smith <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link">Log out <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
+  <nav class="navbar navbar-expand-md navbar-white bg-white">
+    <img src="assets/images/prft.png" class="logo" alt="">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link">John Smith <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link">Log out <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<hr class="my-0">
+<ngx-ui-loader></ngx-ui-loader>
+<div></div>
+<div class="container-fluid mt-4">
+  <section id="main" class="">
+    <div class="card">
+      <div class="card-header">
+        <span class="mb-0 font-weight-bol h4">{{ examName }}</span>
+        <span class="mb-0 font-weight-bol pull-right h4">{{hours}}:{{minute}}:{{second}}</span>
       </div>
-    </nav>
-  </div>
-  <hr class="my-0">
-  <ngx-ui-loader></ngx-ui-loader>
-  <div class="container-fluid mt-4">
-    <section id="main" class="">
-      <div class="card">
-        <div class="card-header ">
-          <span class="mb-0 font-weight-bol h4">{{ examName }}</span>
-          <span class="mb-0 font-weight-bol pull-right h4">{{hours}}:{{minute}}:{{second}}</span>
-        </div>
-        <div class="card-body mt-2">
-          <div class="row">
-            <div class="col-md-9">
-              <div class="card">
-                <div class="card-header p-0">
-                  <ul class="nav">
-                    <li *ngFor="let category of questionCategory" [ngClass]="{'btn-primary': false}" class="nav-item nav-pills py-2  nav-fill">
-                      <a class="nav-link border-0  ">{{category}}</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="card-body">
-                  <pre class="core-pre p-4" innerHTML="{{currentQuestionIndex + '. ' + currentQuestion}}"></pre>
-  
-                  <div class="" *ngIf="currentQuestionQuestionType == 0">
-                    <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input type="radio" name="radioOption" id="">
-                      <span class="mx-3">{{i+1}}.</span>
-                      <span style="display:inline-flex"  innerHTML="{{option.option}}"></span>
-                    </div>
-                  </div>
-  
-                  <div class="" *ngIf="currentQuestionQuestionType == 1">
-                    <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input class="ml-3" type="checkbox" >
-                      <span class="mx-3">{{i+1}}.</span>
-                      <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
-                    </div>
-                  </div>
-                  <div class="" *ngIf="currentQuestionQuestionType == 2">
-                    <div class="form-group">
-                      <label for="exampleFormControlTextarea1">Ans.</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"></textarea>
-                    </div>
+      <div class="card-body mt-2">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-0">
+                <ul class="nav">
+                  <li *ngFor="let category of questionCategory" [ngClass]="{'btn-primary': false}"
+                    class="nav-item nav-pills py-2 nav-fill">
+                    <a class="nav-link border-0">{{category}}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <pre class="core-pre p-4" innerHTML="{{currentQuestionIndex + '. ' +
+                  currentQuestion}}"></pre>
+
+                <div class="" *ngIf="currentQuestionQuestionType == 0">
+                  <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
+                    <input type="radio" name="radioOption" id="">
+                    <span class="mx-3">{{i+1}}.</span>
+                    <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                   </div>
                 </div>
-                <div class="card-footer">
-                  <!-- <input type="submit" value="Next »" class="btn btn-primary" onclick="setAnswer();"> -->
-                  <button class="btn btn-primary" (click)="fn_previous()">
-                    Previous
-                  </button>
-                  <button disabled class="btn btn-primary mx-3" (click)="fn_next()">
-                    Save & Next
-                  </button>
-                  <button  class="btn btn-primary" (click)="fn_next()">
-                    Next
-                  </button>
-                  <button [routerLink]="[ '/thank-you']" class="btn btn-primary pull-right">
-                    End Exam
-                  </button>
+
+                <div class="" *ngIf="currentQuestionQuestionType == 1">
+                  <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
+                    <input class="ml-3" type="checkbox">
+                    <span class="mx-3">{{i+1}}.</span>
+                    <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+                  </div>
+                </div>
+                <div class="" *ngIf="currentQuestionQuestionType == 2">
+                  <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Ans.</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"
+                      placeholder="Enter your answer"></textarea>
+                  </div>
                 </div>
               </div>
+              <div class="card-footer">
+                <!-- <input type="submit" value="Next »" class="btn btn-primary" onclick="setAnswer();"> -->
+                <button class="btn btn-primary" (click)="fn_previous()">
+                  Previous
+                </button>
+                <button disabled class="btn btn-primary mx-3" (click)="fn_next()">
+                  Save & Next
+                </button>
+                <button class="btn btn-primary" (click)="fn_next()">
+                  Next
+                </button>
+                <button [routerLink]="[ '/thank-you']" class="btn btn-primary pull-right">
+                  End Exam
+                </button>
+              </div>
             </div>
-            <div class="col-md-3">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="mb-0">Jump to Question</h4>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <button class=" m-1 col-md-2 btn btn-md btn-danger" (click)="jumpToQuestion(i)" *ngFor="let q of question; let i=index">{{i+1}}</button>
-                  </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="mb-0">Jump to Question</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <button class="m-1 col-md-2 btn btn-md btn-danger" (click)="jumpToQuestion(i)"
+                    *ngFor="let q of question; let i=index">{{i+1}}</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  </div>
-  <hr>
-  
+    </div>
+  </section>
+</div>
+
+<div class="survey">
+
+</div>
+<div class="feedback">
+
+</div>
+<hr>
