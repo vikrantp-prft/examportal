@@ -27,12 +27,9 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="middleName">Middle Name</label><span style="color:red">*</span>
+                <label for="middleName">Middle Name</label>
                 <input type="text" class="form-control" id="middleName" placeholder="Middle Name"
                   formControlName="middleName">
-                <app-field-error-display [displayError]="isFieldValid(employeeForm, 'middleName')"
-                  errorMsg="Enter middle name">
-                </app-field-error-display>
               </div>
             </div>
             <div class="col-md-4">
