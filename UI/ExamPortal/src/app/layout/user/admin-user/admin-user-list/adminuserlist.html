@@ -3,7 +3,7 @@
     <div class="col col-xl-12 col-lg-12">
       <div class="card mb-3">
         <div class="card-header">
-          <h1 class="h3 font-weight-bold mb-0">Users</h1>
+          <h1 class="h3 font-weight-bold mb-0">Admin Users</h1>
         </div>
         <div class="datatable-header">
           <div class="mx-1 row">
@@ -19,9 +19,9 @@
               </div>
             </div>
             <div class="col">
-              <button [routerLink]="['/user/addadminuser']" class="btn btn-md btn-primary" title="Add User">
+              <!-- <button [routerLink]="['/user/addadminuser']" class="btn btn-md btn-primary" title="Add User">
                 Add
-              </button>
+              </button> -->
             </div>
             <div class="col-md-3">
               <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
@@ -32,6 +32,7 @@
             </div>
           </div>
         </div>
+        <ngx-ui-loader></ngx-ui-loader>
         <div class="card-body pb-0 table-responsive">
           <table class="table table-hover table-striped  table-bordered">
             <thead>
@@ -45,17 +46,17 @@
               </tr>
             </thead>
             <tbody>
-              <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let user of userList; let i = index">
-                <td [routerLink]="['/user/updateadmin', user.id]">{{(adminModel.pageNumber-1)*10 + i +1 }}</td>
-                <td [routerLink]="['/user/updateadmin', user.id]">{{user.firstName}} {{user.lastName}}</td>
-                <td [routerLink]="['/user/updateadmin', user.id]">{{user.email}}</td>
-                <td [routerLink]="['/user/updateadmin', user.id]">
-                  <!--<div *ngIf="emp.team!=null">
+                <td>{{(adminModel.pageNumber-1)*10 + i +1 }}</td>
+                <td>{{user.firstName}} {{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <!-- [routerLink]="['/user/updateadmin', user.id]" -->
+                <td>
+                  <div *ngIf="user.team!=null">
                     {{user.team.name}}
-                  </div> -->
+                  </div>
                 </td>
-                <td [routerLink]="['/user/updateadmin', user.id]">
+                <td>
                   <i class="fa" [ngClass]="{'fa-check text-success': user.isActive, 'fa-times text-danger': !user.isActive}"
                     aria-hidden="true">
                   </i>
@@ -69,9 +70,12 @@
                     <i class="fa" [ngClass]="{'fa-toggle-on text-success': user.isActive, 'fa-toggle-off text-danger': !user.isActive}"
                       aria-hidden="true"></i>
                   </button>
-                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteAdminUser(user.id)" title="Delete Admin">
-                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_RemoveAdminAccess(user.id)" title="Remove admin access">
+                    <i class="fa fa-user-times text-danger" aria-hidden="true"></i>
                   </button>
+                  <!-- <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteAdminUser(user.id)" title="Delete Admin">
+                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                  </button> -->
                 </td>
               </tr>
             </tbody>

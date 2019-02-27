@@ -13,7 +13,7 @@ import { NgxUiLoaderService } from "ngx-ui-loader";
 })
 export class UserListComponent implements OnInit {
   public userModel: any = {
-    id: '',
+    id: "",
     totalRecords: 0,
     pageSize: 10,
     pageNumber: 1
@@ -104,23 +104,8 @@ export class UserListComponent implements OnInit {
           isAttempted: false,
           isActive: false
         }
-
-    }
-
-    fn_examAssignment(data, url) {
-        this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-            const rs = result;
-            console.log(rs);
-            if (rs.statusCode == 200)  {
-                if(data.isActive)
-                    this.toastr.success('Exam assigned successfully!');
-                else
-                    this.toastr.success('Exam unassigned successfully!');
-            }
-            else {
-                this.toastr.error('Failed to assign exam');
-            }
-        });
+      ];
+      this.fn_examAssignment(unAssignExam, examAssignedUrl);
     }
   }
 
@@ -128,7 +113,7 @@ export class UserListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       console.log(rs);
-      if (rs.data === true) {
+      if (rs.statusCode == 200) {
         if (data.isActive) this.toastr.success("Exam assigned successfully!");
         else this.toastr.success("Exam unassigned successfully!");
       } else {
