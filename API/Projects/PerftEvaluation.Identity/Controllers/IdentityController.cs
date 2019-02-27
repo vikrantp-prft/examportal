@@ -57,14 +57,14 @@ namespace PerftEvaluation.Identity.Controllers
 
                 if (!loginResult.Succeeded)
                 {
-                    return BadRequest("Login failed. Please check your credentials.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("Login failed. Please check your credentials."));
                 }
 
                 var user = await _userManager.FindByNameAsync(loginModel.Username);
 
-                return Ok(GetToken(user));
+                return Ok(ResponseDTO.OkResponse(GetToken(user)));
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
 
         }
 
@@ -79,21 +79,21 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await _userManager.FindByEmailAsync(resetPasswordModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User doest not exist.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User doest not exist."));
                 }
 
                 string token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordModel.Password);
                 if (result.Succeeded)
                 {
-                    return Ok($"Password reset to '{resetPasswordModel.Password}'");
+                    return Ok(ResponseDTO.OkResponse($"Password reset to '{resetPasswordModel.Password}'"));
                 }
                 else
                 {
-                    return BadRequest(result.Errors);
+                    return BadRequest(ResponseDTO.ExceptionResponse("Password reset failed. Please try again.", result.Errors));
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
 
         }
         #endregion
@@ -108,7 +108,7 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await _userManager.FindByNameAsync(loginModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User doese not exist. Please contact system administrator.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User doese not exist. Please contact system administrator."));
                 }
 
                 var isEligible = false;
@@ -125,18 +125,18 @@ namespace PerftEvaluation.Identity.Controllers
 
                     if (!loginResult.Succeeded)
                     {
-                        return BadRequest("Login failed. Please check your credentials.");
+                        return BadRequest(ResponseDTO.ExceptionResponse("Login failed. Please check your credentials."));
                     }
 
-                    return Ok(GetToken(user));
+                    return Ok(ResponseDTO.OkResponse(GetToken(user)));
                 }
                 else
                 {
-                    return BadRequest("Sorry, You are not allowed to access this portal.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("Sorry, You are not allowed to access this portal."));
                 }
 
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
 
         }
 
@@ -150,7 +150,7 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await _userManager.FindByNameAsync(loginModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User doese not exist. Please contact system administrator.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User doese not exist. Please contact system administrator."));
                 }
 
                 var isEligible = false;
@@ -167,18 +167,18 @@ namespace PerftEvaluation.Identity.Controllers
 
                     if (!loginResult.Succeeded)
                     {
-                        return BadRequest("Login failed. Please check your credentials.");
+                        return BadRequest(ResponseDTO.ExceptionResponse("Login failed. Please check your credentials."));
                     }
 
-                    return Ok(GetToken(user));
+                    return Ok(ResponseDTO.OkResponse(GetToken(user)));
                 }
                 else
                 {
-                    return BadRequest("Sorry, You are not allowed to access this portal.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("Sorry, You are not allowed to access this portal."));
                 }
 
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
 
         }
 
@@ -191,7 +191,7 @@ namespace PerftEvaluation.Identity.Controllers
                 User.Identity.Name ??
                 User.Claims.Where(c => c.Properties.ContainsKey("unique_name")).Select(c => c.Value).FirstOrDefault()
                 );
-            return Ok(GetToken(user));
+            return Ok(ResponseDTO.OkResponse(GetToken(user)));
 
         }
 
@@ -201,7 +201,7 @@ namespace PerftEvaluation.Identity.Controllers
         public async Task<IActionResult> DestroyIdentityToken()
         {
             await _signInManager.SignOutAsync();
-            return Ok("Token destroyed.");
+            return Ok(ResponseDTO.OkResponse("Token destroyed."));
 
         }
 
@@ -216,20 +216,20 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await _userManager.FindByEmailAsync(resetPasswordModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User doest not exist.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User doest not exist."));
                 }
 
                 var result = await _userManager.ResetPasswordAsync(user, resetPasswordModel.ResetCode, resetPasswordModel.Password);
                 if (result.Succeeded)
                 {
-                    return Ok($"Password reset to '{resetPasswordModel.Password}'");
+                    return Ok(ResponseDTO.OkResponse($"Password reset to '{resetPasswordModel.Password}'"));
                 }
                 else
                 {
-                    return BadRequest(result.Errors);
+                    return BadRequest(ResponseDTO.ExceptionResponse("Password reset failed. Please try again.", result.Errors));
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
 
         }
 
@@ -244,13 +244,13 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await _userManager.FindByEmailAsync(usernameModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User doest not exist.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User doest not exist."));
                 }
 
                 // TODO: Send Email with reset link
-                return Ok(await _userManager.GeneratePasswordResetTokenAsync(user));
+                return Ok(ResponseDTO.OkResponse(await _userManager.GeneratePasswordResetTokenAsync(user)));
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
 
         }
 
@@ -323,14 +323,14 @@ namespace PerftEvaluation.Identity.Controllers
                 if (identityResult.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, registerModel.RoleName);
-                    return Ok($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'");
+                    return Ok(ResponseDTO.OkResponse($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'"));
                 }
                 else
                 {
-                    return BadRequest(identityResult.Errors);
+                    return BadRequest(ResponseDTO.ExceptionResponse("Registration failed, Please try again.", identityResult.Errors));
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
         }
         #endregion
 
@@ -346,14 +346,14 @@ namespace PerftEvaluation.Identity.Controllers
                 var result = await _roleManager.CreateAsync(role);
                 if (result.Succeeded)
                 {
-                    return Ok($"'{model.RoleName}' Role created.");
+                    return Ok(ResponseDTO.OkResponse($"'{model.RoleName}' Role created."));
                 }
                 else
                 {
-                    return BadRequest(result.Errors);
+                    return BadRequest(ResponseDTO.ExceptionResponse("Role creation failed, Please try again.", result.Errors));
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
         }
 
         [HttpPost]
@@ -366,16 +366,16 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await this._userManager.FindByEmailAsync(userRoleModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User does not exist.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User does not exist."));
 
                 }
                 else
                 {
                     await _userManager.AddToRoleAsync(user, userRoleModel.RoleName);
-                    return Ok($"'{userRoleModel.RoleName}' role assigned to user '{userRoleModel.Username}'");
+                    return Ok(ResponseDTO.OkResponse($"'{userRoleModel.RoleName}' role assigned to user '{userRoleModel.Username}'"));
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
         }
 
         [HttpPost]
@@ -388,16 +388,16 @@ namespace PerftEvaluation.Identity.Controllers
                 var user = await this._userManager.FindByEmailAsync(userRoleModel.Username);
                 if (user == null)
                 {
-                    return BadRequest("User does not exist.");
+                    return BadRequest(ResponseDTO.ExceptionResponse("User does not exist."));
 
                 }
                 else
                 {
                     await _userManager.RemoveFromRoleAsync(user, userRoleModel.RoleName);
-                    return Ok($"'{userRoleModel.RoleName}' role removed from user '{userRoleModel.Username}'");
+                    return Ok(ResponseDTO.OkResponse($"'{userRoleModel.RoleName}' role removed from user '{userRoleModel.Username}'"));
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
         }
         #endregion 
         private void AddErrors(IdentityResult result)
