@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from 'src/app/router.animations';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { commonService } from 'src/app/common/services/common.service';
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class ExamComponent implements OnInit {
     totalMinute: number;
     totalSecond: number;
 
-    constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
+    constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
         });
@@ -137,6 +138,23 @@ export class ExamComponent implements OnInit {
         this.setCurrentQuestionQuestionType(id);
         this.setCurrentQuestionOptionType(id);
         this.currentQuestionIndex = id + 1;
+    }
+    fn_endExam(){
+        swal({
+            title: 'Are you sure?',
+            text: 'You want to end the exam!',
+            buttonsStyling: true,
+            confirmButtonClass: 'btn btn-success',
+            showCancelButton: true,
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes'
+          }).then(x => {
+            if (x.value == true) {
+                //[routerLink]="[ '/thank-you']";
+                this.router.navigate(['/thank-you']);
+            }
+    
+          });
     }
     startCountdown(seconds) {
         this.counter = seconds;
