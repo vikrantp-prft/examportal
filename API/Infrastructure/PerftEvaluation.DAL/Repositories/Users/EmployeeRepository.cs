@@ -131,12 +131,10 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.CurrentStateId, users.CurrentStateId)
                 .Set (c => c.Mobile, users.Mobile)
                 .Set (c => c.TeamId, users.TeamId)
-                .Set (c => c.Email, users.Email)
                 .Set (c => c.Note, users.Note)
                 .Set (c => c.Interest, users.Interest)
-                .Set (c => c.EducationDetails, users.EducationDetails)
-                .Set (c => c.TeamId, users.TeamId);
-
+                .Set (c => c.EducationDetails, users.EducationDetails);
+             
             try {
                 //users.IsEmployee = true;
                 users.ModifiedDate = DateTime.Now;
