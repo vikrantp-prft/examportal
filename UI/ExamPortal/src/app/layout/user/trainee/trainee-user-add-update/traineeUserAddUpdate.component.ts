@@ -18,6 +18,8 @@ export class AddTraineeUserComponent implements OnInit {
   public courseArray: any[];
   public courseName: any;
   selectedCourse: any;
+  public emailExist: boolean = false;
+  public newArray = [];
   public educationArray: Array<any> = [];
   public updateEducationButton: boolean = false;
   public addEducationButton: boolean = true;
@@ -110,6 +112,49 @@ export class AddTraineeUserComponent implements OnInit {
         this.ngxService.stop();
         } else {
         this.stateArray = null;
+      }
+    });
+  }
+
+  fn_saveTrainee(value) {
+    debugger;
+
+    if (this.traineeForm.valid) {
+
+      if (this.educationArray.length === 0) {
+        this.toastr.error('Please add education details');
+        return false;
+      }
+      else if (this.emailExist == true) {
+        return false;
+      }
+      else {
+        const saveTraineeurl = 'api/Aspirants';
+        this.newArray.push(this.educationArray);
+        this.newArray[0].forEach(element => {
+          element.course = null;
+        });
+        value.value.EducationDetails = this.newArray[0];
+        this.fn_saveTraineefun(value.value, saveTraineeurl);
+      }
+    } else {
+      this.CommonService.validateAllFormFields(this.traineeForm);
+      this.toastr.error('Please fill required details');
+      return false;
+    }
+  }
+
+  // function for save trainee details.
+  fn_saveTraineefun(data, url) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
+      const rs = result;
+      if (rs.statusCode === 200) {
+        this.ngxService.stop();
+        this.toastr.success('Trainee details added successfully!');
+        this.router.navigate(['user/traineelist']);
+      } else {
+        this.toastr.error('Failed to add Trainee details' + rs);
       }
     });
   }

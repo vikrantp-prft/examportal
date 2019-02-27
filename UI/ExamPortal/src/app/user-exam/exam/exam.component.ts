@@ -27,7 +27,7 @@ export class ExamComponent implements OnInit {
     public examDurationHours: number;
     public examDurationMinutes: number;
     public counter: number;
-    public examType: number = 0 ;
+    public isFeedback: boolean; 
     hours: number;
     minute: number;
     second: number;
@@ -58,6 +58,8 @@ export class ExamComponent implements OnInit {
                 this.examDetail = rs.data;
                 console.log(this.examDetail);
                 this.examName = rs.data.title;
+                this.isFeedback = rs.data.isFeedback ;
+                console.log(this.isFeedback);
                 this.examDurationHours = rs.data.examDurationHours;
                 this.examDurationMinutes = rs.data.examDurationMinutes;
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;

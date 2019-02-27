@@ -54,7 +54,7 @@ export class TraineeListComponent implements OnInit {
 
   fn_GetTraineeList() {
     
-    const url = 'api/Employee/GetEmployees';
+    const url = 'api/Aspirants/GetAspirants';
 
     this.CommonService.fn_PostWithData(this.traineeModel, url).subscribe(
       (data: any) => {        
@@ -67,17 +67,5 @@ export class TraineeListComponent implements OnInit {
     );
   }
 
-  // fn_GetEmployeeList() {
-  //   this.ngxService.start();
-  //   const url = 'api/Employee/GetEmployees';
-  //   this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
-  //     (data: any) => {
-  //       this.employeeList = data.data;
-  //       this.ngxService.stop();
-  //       this.employeeModel.totalRecords = data.totalRecords;
-  //     },
-  //     err => console.error(err),
-  //     () => { }
-  //   );
-  // }
+ 
 }

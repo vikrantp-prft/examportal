@@ -51,6 +51,9 @@ namespace PerftEvaluation.DTO.Dtos
 
         [Required]
         public string TeamId { get; set; }
+        public string Note { get; set; }
+
+         public string[] Interest { get; set; }
 
         public List<EducationsDetailsDTO> EducationDetails;
 
