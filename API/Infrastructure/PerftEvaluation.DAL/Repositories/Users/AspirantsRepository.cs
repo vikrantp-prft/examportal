@@ -67,7 +67,7 @@ namespace PerftEvaluation.DAL.Repositories
         public IEnumerable<Users> GetAspirants()
         {
            try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.UserType == UsersEnum.Aspirant).ToList ();
             } catch (Exception ex) {
                 throw ex;
             }

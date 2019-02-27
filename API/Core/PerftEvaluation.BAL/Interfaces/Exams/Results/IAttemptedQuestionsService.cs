@@ -28,13 +28,5 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <param name="examId"></param>
         /// <returns></returns>
         bool DeleteAttemptedQuestionsByExamId(string examId);
-
-
-        /// <summary>
-        /// Update Attempted Questions details
-        /// </summary>
-        /// <param name="attemptedQuestions"></param>
-        /// <returns></returns>
-        bool UpdateAttemptedQuestions(AttemptedQuestionsDTO attemptedQuestionsDTO);
     }
 }

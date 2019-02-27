@@ -53,7 +53,7 @@ namespace PerftEvaluation.Entities.POCOEntities {
         public bool IsPaperPublic { get; set; }
 
         [BsonElement ("totalQuestions")]
-        [Required]
+
         public int TotalQuestions { get; set; }
 
         [BsonElement ("isFeedback")]

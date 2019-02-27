@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { Http } from '@angular/http';
-import { commonService } from 'src/app/common/services/common.service';
-import swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { Http } from "@angular/http";
+import { commonService } from "src/app/common/services/common.service";
+import swal from "sweetalert2";
+import { ToastrService } from "ngx-toastr";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 interface paginationModel {
   pageNumber: number;
@@ -14,24 +14,24 @@ interface paginationModel {
 }
 
 @Component({
-  selector: 'adminuser-list',
-  templateUrl: './adminuserlist.html',
-  styleUrls: ['./adminuserlist.component.scss'],
+  selector: "adminuser-list",
+  templateUrl: "./adminuserlist.html",
+  styleUrls: ["./adminuserlist.component.scss"],
   providers: [commonService]
 })
 export class AdminUserListComponent implements OnInit {
   public params: any = {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 10
   };
 
   public adminModel: any = {
-    "totalRecords": 0,
-    "pageSize": 10,
-    "pageNumber": 1
-  }
+    totalRecords: 0,
+    pageSize: 10,
+    pageNumber: 1
+  };
 
-  public getUserurl = 'api/User/GetUsers';
+  public getUserurl = "api/User/GetUsers";
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -39,7 +39,13 @@ export class AdminUserListComponent implements OnInit {
   public totalItems = 0;
   public userList = [];
   public statusUrl: any;
-  constructor( private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(
+    private ngxService: NgxUiLoaderService,
+    public router: Router,
+    private CommonService: commonService,
+    public http: Http,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.fn_GetAdminUserList();
@@ -71,41 +77,78 @@ export class AdminUserListComponent implements OnInit {
 
   fn_GetAdminUserList() {
     this.ngxService.start();
-    this.CommonService.fn_PostWithData(this.adminModel, this.getUserurl).subscribe((result: any) => {
+    this.CommonService.fn_PostWithData(
+      this.adminModel,
+      this.getUserurl
+    ).subscribe((result: any) => {
       const rs = result;
-      if (rs.statusCode == 200) {
+      if (rs.statusCode === 200) {
         this.ngxService.stop();
         this.userList = rs.data;
+      } else {
+        this.toastr.error("Something went wrong!");
       }
-      else {
+    });
+  }
+
+  fn_RemoveAdminAccess(id, isActive) {
+    swal({
+      title: "Are you sure?",
+      text: "You want to remove the admin access!",
+      buttonsStyling: true,
+      confirmButtonClass: "btn btn-success",
+      showCancelButton: true,
+      cancelButtonClass: "btn btn-danger",
+      confirmButtonText: "Yes"
+    }).then(x => {
+      if (x.value == true) {
+        this.statusUrl = "api/User/MarkUserAsAdmin";
+        this.toastr.success("Admin access has been removed!");
+
+        const adminStatusModel = {
+          id: id
+        };
+        this.fn_removeAdminAccess(this.statusUrl, adminStatusModel);
+      }
+    });
+  }
+
+  //function to save status change
+  fn_removeAdminAccess(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
+      const rs = result;
+      if (rs.statusCode === 200) {
+        this.ngxService.stop();
+        this.fn_GetAdminUserList();
+      } else {
+        this.toastr.error("Something went wrong!");
       }
     });
   }
 
   // function to change isActive status
   fn_ChangeStatus(id, isActive) {
-    debugger;
     swal({
-      title: 'Are you sure?',
-      text: 'You want to change the status!',
+      title: "Are you sure?",
+      text: "You want to change the status!",
       buttonsStyling: true,
-      confirmButtonClass: 'btn btn-success',
+      confirmButtonClass: "btn btn-success",
       showCancelButton: true,
-      cancelButtonClass: 'btn btn-danger',
-      confirmButtonText: 'Yes'
+      cancelButtonClass: "btn btn-danger",
+      confirmButtonText: "Yes"
     }).then(x => {
       if (x.value == true) {
         if (isActive == true) {
-          this.statusUrl = 'api/User/InactivateUser';
-          this.toastr.success('Inactivated admin details');
-        }
-        else {
-          this.statusUrl = 'api/User/ActivateUser';
-          this.toastr.success('Activated admin details');
+          this.statusUrl = "api/User/InactivateUser";
+          this.toastr.success("Inactivated admin details");
+        } else {
+          this.statusUrl = "api/User/ActivateUser";
+          this.toastr.success("Activated admin details");
         }
         const adminStatusModel = {
-          "id": id,
-        }
+          id: id
+        };
         this.fn_saveStatusChange(this.statusUrl, adminStatusModel);
       }
     });
@@ -114,18 +157,18 @@ export class AdminUserListComponent implements OnInit {
   fn_deleteAdminUser(Id) {
     if (Id != null) {
       swal({
-        title: 'Are you sure?',
-        text: 'You want to delete the User!',
+        title: "Are you sure?",
+        text: "You want to delete the User!",
         buttonsStyling: true,
-        confirmButtonClass: 'btn btn-success',
+        confirmButtonClass: "btn btn-success",
         showCancelButton: true,
-        cancelButtonClass: 'btn btn-danger',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonClass: "btn btn-danger",
+        confirmButtonText: "Yes, delete it!"
       }).then(x => {
-        if (x.value = true) {
-          const url = 'api/User/DeleteUser';
+        if ((x.value = true)) {
+          const url = "api/User/DeleteUser";
           const model = {
-            id: ''
+            id: ""
           };
           model.id = Id;
           this.fn_delfun(url, model);
@@ -139,9 +182,9 @@ export class AdminUserListComponent implements OnInit {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       this.ngxService.start();
       const rs = result;
-      if ((result.message = 'Success')) {
+      if ((result.message = "Success")) {
         this.ngxService.stop();
-        this.toastr.success('Users details deleted successfully!');
+        this.toastr.success("Users details deleted successfully!");
         this.fn_GetAdminUserList();
       }
     });
@@ -155,9 +198,7 @@ export class AdminUserListComponent implements OnInit {
       if (rs.statusCode == 200) {
         this.ngxService.stop();
         this.fn_GetAdminUserList();
-      }
-      else {
-
+      } else {
       }
     });
   }

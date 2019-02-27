@@ -56,16 +56,17 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode === 200) {
                 this.examDetail = rs.data;
-                console.log(this.examDetail);
+                //console.log(this.examDetail);
                 this.examName = rs.data.title;
                 this.isFeedback = rs.data.isFeedback ;
-                console.log(this.isFeedback);
+                //console.log(this.isFeedback);
                 this.examDurationHours = rs.data.examDurationHours;
                 this.examDurationMinutes = rs.data.examDurationMinutes;
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;
                 this.totalSecond = this.totalMinute * 60 ;
-                this.startCountdown(this.totalSecond);
                 this.ngxService.stop();
+                this.startCountdown(this.totalSecond);
+                
             }
         });
     }

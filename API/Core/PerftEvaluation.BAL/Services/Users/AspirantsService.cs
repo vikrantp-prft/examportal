@@ -143,9 +143,9 @@ namespace PerftEvaluation.BAL.Services
                 aspirantsDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
                 aspirantsDTO.Note = item.Note;
                 aspirantsDTO.IsDeleted = item.IsDeleted;
-                //employeesDTO.IsEmployee = item.IsEmployee;
                 aspirantsDTO.CreatedDate = item.CreatedDate;
                 aspirantsDTO.ModifiedDate = item.ModifiedDate;
+                aspirantsDTO.UserType = item.UserType;
                 aspirantsDTO.EducationDetails = item.EducationDetails.Select(x => new EducationsDetailsDTO()
                 {
                     EducationDetailsId = x.EducationDetailsId,

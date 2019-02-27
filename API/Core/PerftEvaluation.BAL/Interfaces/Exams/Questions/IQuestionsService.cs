@@ -60,5 +60,13 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="examId">Id of exam record against which these questions will be uploaded.</param>
         /// <returns></returns>
         bool ExcelUpload(Stream fileStream, string examId);
+
+
+        /// <summary>
+        /// Get List of corrected option by Question Id
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        string[] GetCorrectOptionsByQuestionId (string questionId);
     }
 }

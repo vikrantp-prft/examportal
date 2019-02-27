@@ -44,6 +44,7 @@
                     <div class="col">
                       <select class="form-control" formControlName="examDurationHours" #examDurationHours>
                         <option value="">--Select--</option>
+                        <option>0</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -157,20 +158,20 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-6 pt-2">
+              <div class="col-12 pt-2">
                 <div class="form-group">
                   <label for="Description">Description</label>
                   <textarea type="text" class="form-control" formControlName="description" placeholder="Description" #description></textarea>
                 </div>
               </div>
-              <div class="col-6 question-upload">
+              <!-- <div class="col-6 question-upload">
                 <div class="form-control">
                   <input class="" type="file" name="fileUpload" ng2FileSelect [uploader]="uploader" />
                   <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     Upload File
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="row float-sm-right pr-3">
               <div class="form-group">

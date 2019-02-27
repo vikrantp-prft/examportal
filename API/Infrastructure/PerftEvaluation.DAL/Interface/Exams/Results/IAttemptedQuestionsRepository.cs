@@ -29,13 +29,5 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="examId"></param>
         /// <returns></returns>
         bool DeleteAttemptedQuestionsByExamId (string examId);
-
-
-        /// <summary>
-        /// Update Exams details
-        /// </summary>
-        /// <param name="attemptedQuestions"></param>
-        /// <returns></returns>
-        bool UpdateAttemptedQuestions(AttemptedQuestions attemptedQuestions);
     }
 }

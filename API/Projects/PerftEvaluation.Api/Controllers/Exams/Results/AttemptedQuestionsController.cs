@@ -54,7 +54,7 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("DeleteAttemptedQuestionsById")]
+        [HttpPost, Route("DeleteAttemptedQuestionsByExamId")]
         public IActionResult DeleteAttemptedQuestionsById(RequestModel requestModel)
         {
             try
@@ -93,26 +93,6 @@ namespace PerftEvaluation.Api.Controllers
             catch (Exception exception)
             {
                 return BadRequest(CommonResponse.ExceptionResponse(exception));
-            }
-        }
-
-
-        // POST api/attemptedQuestions/UpdateAttemptedQuestions
-        /// <summary>
-        /// Update Attempted Questions details
-        /// </summary>
-        /// <param name="examsDTO"></param>
-        /// <returns></returns>
-        [HttpPost, Route ("UpdateAttemptedQuestions")]
-        public IActionResult UpdateAttemptedQuestions (AttemptedQuestionsDTO attemptedQuestionsDTO) {
-            try {
-                responseModel.StatusCode = 200;
-                responseModel.Message = "Success";
-                responseModel.Data = this._attemptedQuestions.UpdateAttemptedQuestions (attemptedQuestionsDTO);
-
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
     }
