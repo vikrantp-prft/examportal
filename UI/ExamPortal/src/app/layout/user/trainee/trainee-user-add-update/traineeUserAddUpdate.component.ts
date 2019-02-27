@@ -43,7 +43,7 @@ export class AddTraineeUserComponent implements OnInit {
 
       this.traineeForm = this.formBuilder.group({
         firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
-        middleName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+        middleName: new FormControl(''),
         lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
         dob: [null, [Validators.required]],
         mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
@@ -116,8 +116,12 @@ export class AddTraineeUserComponent implements OnInit {
     });
   }
 
+  // function to display the error message for  validation.
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
+
   fn_saveTrainee(value) {
-    debugger;
 
     if (this.traineeForm.valid) {
 
