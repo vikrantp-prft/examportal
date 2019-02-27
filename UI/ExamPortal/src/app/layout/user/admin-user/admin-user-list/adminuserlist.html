@@ -66,10 +66,10 @@
                     title="Edit Admin">
                     <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
                   </button>&nbsp; -->
-                  <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(user.id, user.isActive)">
+                  <!-- <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(user.id, user.isActive)">
                     <i class="fa" [ngClass]="{'fa-toggle-on text-success': user.isActive, 'fa-toggle-off text-danger': !user.isActive}"
                       aria-hidden="true"></i>
-                  </button>
+                  </button> -->
                   <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_RemoveAdminAccess(user.id)" title="Remove admin access">
                     <i class="fa fa-user-times text-danger" aria-hidden="true"></i>
                   </button>

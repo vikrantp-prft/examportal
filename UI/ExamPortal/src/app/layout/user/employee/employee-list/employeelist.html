@@ -69,11 +69,11 @@
                     <i class="fa" [ngClass]="{'fa-toggle-on text-success': emp.isActive, 'fa-toggle-off text-danger': !emp.isActive}"
                       aria-hidden="true"></i>
                   </button>
-                  <button class="btn btn-md mr-1" type="button" ng-if="user.isAdmin" rel="tooltip" (click)="fn_ProvideAdminAccess(user.id)" title="Remove admin access">
-                    <i class="fa fa-user-plus text-danger" aria-hidden="true"></i>
-                  </button>
-                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)" title="Delete Employee">
+                  <button class="btn btn-md mr-1" type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)" title="Delete Employee">
                     <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                  </button>
+                  <button class="btn btn-md mr-1" type="button" [hidden]="!emp.isAdmin" rel="tooltip" (click)="fn_ProvideAdminAccess(emp.id)" title="Make admin">
+                    <i class="fa fa-user-plus text-danger" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>
