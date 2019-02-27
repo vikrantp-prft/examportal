@@ -54,7 +54,7 @@ namespace PerftEvaluation.BAL.Services
         public ResponseModel GetAttemptedQuestionsByExamsId(RequestModel requestModel)
         {
             //Filter & sort the data
-            var filteredAttemptedQuestions = this._attemptedQuestionsRepository.GetAttemptedQuestionsByExamsId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ResultFilters);
+            var filteredAttemptedQuestions = this._attemptedQuestionsRepository.GetAttemptedQuestionsByExamsId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ExamFilters);
             //Integrate pagination
             var attemptedQuestions = filteredAttemptedQuestions.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
 
@@ -109,23 +109,6 @@ namespace PerftEvaluation.BAL.Services
                     }
                 }
                 return saveQuestion;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
-
-        /// <summary>
-        /// Update Attempted details
-        /// </summary>
-        /// <param name="attemptedQuestions"></param>
-        /// <returns></returns>
-        public bool UpdateAttemptedQuestions(AttemptedQuestionsDTO attemptedQuestionsDTO)
-        {
-            try
-            {
-                return this._attemptedQuestionsRepository.UpdateAttemptedQuestions(this._mapper.Map<AttemptedQuestions>(attemptedQuestionsDTO));
             }
             catch (Exception ex)
             {

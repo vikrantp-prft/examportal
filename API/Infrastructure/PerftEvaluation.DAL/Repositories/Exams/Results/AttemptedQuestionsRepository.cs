@@ -45,10 +45,7 @@ namespace PerftEvaluation.DAL.Repositories
             try
             {
                 return _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName)
-                                                            .AsQueryable().Where(x => x.IsDeleted == false
-                                                                                    && x.IsAttempted == true
-                                                                                    && x.IsActive == true
-                                                                                    && x.ExamId == examId)
+                                                            .AsQueryable().Where(x => x.ExamId.Equals(examId))
                                                             .ToList();
             }
             catch (Exception ex)
@@ -66,6 +63,8 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
+                attemptedQuestions.CreatedDate = DateTime.Now;
+                attemptedQuestions.ModifiedDate = DateTime.Now;
                 var attemptedQuestionCheck = _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName).AsQueryable().Where(x => x.ExamId == attemptedQuestions.ExamId && x.UserId == attemptedQuestions.UserId && x.QuestionsId == attemptedQuestions.QuestionsId).FirstOrDefault();
                 if (attemptedQuestionCheck != null)
                 {
@@ -87,29 +86,6 @@ namespace PerftEvaluation.DAL.Repositories
             {
                 throw ex;
             }
-        }
-
-        /// <summary>
-        /// Update Exams details
-        /// </summary>
-        /// <param name="attemptedQuestions"></param>
-        /// <returns></returns>
-        public bool UpdateAttemptedQuestions(AttemptedQuestions attemptedQuestions)
-        {
-            var filter = Builders<AttemptedQuestions>.Filter;
-            var filterDef = filter.Eq(c => c.Id, attemptedQuestions.Id);
-
-            var updateQuery = Builders<AttemptedQuestions>.Update
-                .Set(c => c.ExamId, attemptedQuestions.ExamId)
-                .Set(c => c.QuestionsId, attemptedQuestions.QuestionsId)
-                .Set(c => c.SelectedOptionId, attemptedQuestions.SelectedOptionId)
-                .Set(c => c.IsCorrect, attemptedQuestions.IsCorrect)
-                .Set(c => c.Marks, attemptedQuestions.Marks)
-                .Set(c => c.IsAttempted, attemptedQuestions.IsAttempted)
-                .Set(c => c.IsActive, attemptedQuestions.IsActive)
-                .Set(c => c.IsDeleted, attemptedQuestions.IsDeleted);
-
-            return _db.UpdateOne<AttemptedQuestions>(filterDef, updateQuery, AttemptedQuestions.CollectionName);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace PerftEvaluation.Entities.POCOEntities
         public string QuestionsId { get; set; }
 
 
-        [BsonElement("selectedOptionId"), BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("selectedOptionId")]
         [Required]
         public string[] SelectedOptionId { get; set; }
 
