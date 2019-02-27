@@ -66,6 +66,7 @@ namespace PerftEvaluation.BAL.Services
                 attemptedQuestionsDTO.Id = item.Id;
                 attemptedQuestionsDTO.QuestionsId = item.QuestionsId;
                 attemptedQuestionsDTO.SelectedOptionId = item.SelectedOptionId;
+                attemptedQuestionsDTO.SubjectiveAnswer = item.SubjectiveAnswer;
                 attemptedQuestionsDTO.UserId = item.UserId;
                 attemptedQuestionsDTO.ExamId = item.ExamId;
                 attemptedQuestionsDTO.Marks = item.Marks;
