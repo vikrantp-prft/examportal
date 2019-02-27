@@ -37,16 +37,23 @@ export class TraineeListComponent implements OnInit {
   constructor(private CommonService: commonService) { }
   // Function for  pagination
   setRecordPerPage(event: any): void {
-    this.params.currentPage = 1;
-    this.params.pageSize = event.target.value;
+    this.traineeModel.pageNumber = 1;
+    this.traineeModel.pageSize = event.target.value;
+    this.fn_GetTraineeList();
   }
   pageChanged(event: any): void {
-
-    this.params.currentPage = parseInt(event.page);
-    this.params.pageSize = parseInt(event.itemsPerPage);
+    this.traineeModel.pageNumber = parseInt(event.page);
+    this.traineeModel.pageSize = parseInt(event.itemsPerPage);
+    this.fn_GetTraineeList();
   }
   // Searching
   searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.traineeModel.pageNumber = 1;
+      this.traineeModel.pageSize = 10;
+      this.traineeModel.filter = event.target.value;
+      this.fn_GetTraineeList();
+    }
   }
   ngOnInit() {
     this.fn_GetTraineeList();
