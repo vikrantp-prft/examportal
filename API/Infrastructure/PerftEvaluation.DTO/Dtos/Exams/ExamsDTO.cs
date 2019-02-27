@@ -33,7 +33,6 @@ namespace PerftEvaluation.DTO.Dtos {
         public bool IsPaperPublic { get; set; }
         public bool IsFeedback { get; set; }
 
-        [Required]
         public int TotalQuestions { get; set; }
         public bool IsDeleted { get; set; }
 
