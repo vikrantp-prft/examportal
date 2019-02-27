@@ -42,7 +42,6 @@ namespace PerftEvaluation.Api.Controllers {
             }
         }
 
-
         //GET api/user
         /// <summary>
         /// Get list of all admin users
@@ -227,6 +226,25 @@ namespace PerftEvaluation.Api.Controllers {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.MarkUserAsAdmin (requestModel.Id);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        /// <summary>
+        /// Mark user as admin
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns>true/false</returns>
+        [HttpPost, Route ("RevokeAdminAccess")]
+        public IActionResult RevokeUserAdminAccess (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.RemoveUserAdminAccess (requestModel.Id);
 
                 return Ok (responseModel);
             } catch (Exception exception) {

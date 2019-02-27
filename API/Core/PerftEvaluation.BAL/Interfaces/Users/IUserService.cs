@@ -84,5 +84,12 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="userId"></param>
         /// <returns>true/false</returns>
         bool MarkUserAsAdmin (string userId);
+
+        /// <summary>
+        /// Remove user as a admin access
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true/false</returns>
+        bool RemoveUserAdminAccess (string userId);
     }
 }
