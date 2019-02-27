@@ -24,8 +24,6 @@ namespace PerftEvaluation.DTO.Dtos {
 
         public bool IsContributor { get; set; }
 
-        public UsersEnum UserType { get; set; }
-
         [Required]
         public string Email { get; set; }
 
