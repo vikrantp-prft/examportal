@@ -158,6 +158,9 @@ export class EmployeeListComponent implements OnInit {
         this.toastr.success("Employee details deleted successfully!");
         this.fn_GetEmployeeList();
       }
+      else {
+        this.toastr.error("Failed to delete employee details");
+      }
     });
   }
 
