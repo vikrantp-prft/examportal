@@ -102,7 +102,7 @@ export class AdminUserListComponent implements OnInit {
       confirmButtonText: "Yes"
     }).then(x => {
       if (x.value == true) {
-        this.statusUrl = "api/User/RevokeUserAdminAccess";
+        this.statusUrl = "api/User/RevokeAdminAccess";
         this.toastr.success("Admin access has been removed!");
 
         const adminStatusModel = {
