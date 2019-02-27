@@ -8,13 +8,11 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services
-{
+namespace PerftEvaluation.BAL.Services {
     /// <summary>
     /// Service for Users
     /// </summary>
-    public class EmployeeService : IEmployeeService
-    {
+    public class EmployeeService : IEmployeeService {
         #region Declaration
         protected readonly IEmployeeRepository _employeeRepository;
         protected readonly IMasterRepository _masterRepository;
@@ -27,8 +25,7 @@ namespace PerftEvaluation.BAL.Services
         /// Class Constructor
         /// </summary>
         /// <param name="EmployeeRepository"></param>
-        public EmployeeService(IEmployeeRepository EmployeeRepository, IMasterService masterService, IMasterRepository masterRepository, IMapper mapper)
-        {
+        public EmployeeService (IEmployeeRepository EmployeeRepository, IMasterService masterService, IMasterRepository masterRepository, IMapper mapper) {
             this._employeeRepository = EmployeeRepository;
             this._mapper = mapper;
             this._masterRepository = masterRepository;
@@ -41,19 +38,17 @@ namespace PerftEvaluation.BAL.Services
         /// Get Employees List
         /// </summary>
         /// <value></value>
-        public ResponseModel GetEmployees(RequestModel requestModel)
-        {
+        public ResponseModel GetEmployees (RequestModel requestModel) {
 
             //Add filter query
-            var filteredEmployees = this._employeeRepository.GetEmployees().AsQueryable().SortAndFilter(requestModel, DbFilters.UserFilters);
+            var filteredEmployees = this._employeeRepository.GetEmployees ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
             //Manage the pagnation & joins 
 
-            var pagedEmployees = filteredEmployees.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+            var pagedEmployees = filteredEmployees.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
 
-            List<EmployeesDTO> employeeJoin = new List<EmployeesDTO>();
-            foreach (var item in pagedEmployees)
-            {
-                EmployeesDTO employeesDTO = new EmployeesDTO();
+            List<EmployeesDTO> employeeJoin = new List<EmployeesDTO> ();
+            foreach (var item in pagedEmployees) {
+                EmployeesDTO employeesDTO = new EmployeesDTO ();
                 employeesDTO.Id = item.Id;
                 employeesDTO.FirstName = item.FirstName;
                 employeesDTO.MiddleName = item.MiddleName;
@@ -75,27 +70,29 @@ namespace PerftEvaluation.BAL.Services
                 employeesDTO.CurrentStateId = item.CurrentStateId;
                 employeesDTO.Mobile = item.Mobile;
                 employeesDTO.TeamId = item.TeamId;
-                employeesDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
+                employeesDTO.Team = item.TeamId != null ? _masterService.GetMasterById (item.TeamId) : null;
                 employeesDTO.Note = item.Note;
                 employeesDTO.IsDeleted = item.IsDeleted;
                 //employeesDTO.IsEmployee = item.IsEmployee;
                 employeesDTO.CreatedDate = item.CreatedDate;
                 employeesDTO.ModifiedDate = item.ModifiedDate;
-                employeesDTO.EducationDetails = item.EducationDetails.Select(x => new EducationDetailsDTO()
-                {
+                employeesDTO.IsAdmin = item.IsAdmin;
+                employeesDTO.IsContributor = item.IsContributor;
+                employeesDTO.UserType = item.UserType;
+                employeesDTO.EducationDetails = item.EducationDetails.Select (x => new EducationDetailsDTO () {
                     EducationDetailsId = x.EducationDetailsId,
-                    CourseId = x.CourseId,
-                    Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
-                    Institution = x.Institution,
-                    YearOfPassing = x.YearOfPassing,
-                    Percentage = x.Percentage
-                }).ToList();
+                        CourseId = x.CourseId,
+                        Course = x.CourseId != null ? _masterService.GetMasterById (x.CourseId) : null,
+                        Institution = x.Institution,
+                        YearOfPassing = x.YearOfPassing,
+                        Percentage = x.Percentage
+                }).ToList ();
 
-                employeeJoin.Add(employeesDTO);
+                employeeJoin.Add (employeesDTO);
             }
 
             //return object
-            return CommonResponse.OkResponse(requestModel, employeeJoin, (filteredEmployees.Count() < 100 ? filteredEmployees.Count() : 100));
+            return CommonResponse.OkResponse (requestModel, employeeJoin, (filteredEmployees.Count () < 100 ? filteredEmployees.Count () : 100));
         }
 
         /// <summary>
@@ -103,11 +100,10 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeesDTO"></param>
         /// <returns></returns>
-        public bool SaveEmployee(EmployeesDTO employeesDTO)
-        {
-            Users users = new Users();
-            users = this._mapper.Map<Users>(employeesDTO);
-            return this._employeeRepository.SaveEmployee(users);
+        public bool SaveEmployee (EmployeesDTO employeesDTO) {
+            Users users = new Users ();
+            users = this._mapper.Map<Users> (employeesDTO);
+            return this._employeeRepository.SaveEmployee (users);
         }
 
         /// <summary>
@@ -115,11 +111,10 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public EmployeesDTO GetEmployeeById(string Id)
-        {
-            var employee = this._employeeRepository.GetEmployeeById(Id);
+        public EmployeesDTO GetEmployeeById (string Id) {
+            var employee = this._employeeRepository.GetEmployeeById (Id);
 
-            EmployeesDTO employeesDTO = new EmployeesDTO();
+            EmployeesDTO employeesDTO = new EmployeesDTO ();
             employeesDTO.Id = employee.Id;
             employeesDTO.FirstName = employee.FirstName;
             employeesDTO.MiddleName = employee.MiddleName;
@@ -140,21 +135,24 @@ namespace PerftEvaluation.BAL.Services
             employeesDTO.CurrentPincode = employee.CurrentPincode;
             employeesDTO.CurrentStateId = employee.CurrentStateId;
             employeesDTO.Mobile = employee.Mobile;
-            employeesDTO.TeamId = employee.TeamId; employeesDTO.Team = employee.TeamId != null ? _masterService.GetMasterById(employee.TeamId) : null;
+            employeesDTO.TeamId = employee.TeamId;
+            employeesDTO.Team = employee.TeamId != null ? _masterService.GetMasterById (employee.TeamId) : null;
             employeesDTO.Note = employee.Note;
             employeesDTO.IsDeleted = employee.IsDeleted;
+            employeesDTO.IsAdmin = employee.IsAdmin;
+            employeesDTO.IsContributor = employee.IsContributor;
+            employeesDTO.UserType = employee.UserType;
             //employeesDTO.IsEmployee = employee.IsEmployee;
             employeesDTO.CreatedDate = employee.CreatedDate;
             employeesDTO.ModifiedDate = employee.ModifiedDate;
-            employeesDTO.EducationDetails = employee.EducationDetails.Select(x => new EducationDetailsDTO()
-            {
+            employeesDTO.EducationDetails = employee.EducationDetails.Select (x => new EducationDetailsDTO () {
                 EducationDetailsId = x.EducationDetailsId,
-                CourseId = x.CourseId,
-                Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
-                Institution = x.Institution,
-                YearOfPassing = x.YearOfPassing,
-                Percentage = x.Percentage
-            }).ToList();
+                    CourseId = x.CourseId,
+                    Course = x.CourseId != null ? _masterService.GetMasterById (x.CourseId) : null,
+                    Institution = x.Institution,
+                    YearOfPassing = x.YearOfPassing,
+                    Percentage = x.Percentage
+            }).ToList ();
 
             return employeesDTO;
         }
@@ -164,9 +162,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool ActivateEmployee(string employeeId)
-        {
-            return this._employeeRepository.ActiveEmployee(employeeId);
+        public bool ActivateEmployee (string employeeId) {
+            return this._employeeRepository.ActiveEmployee (employeeId);
         }
 
         /// <summary>
@@ -174,9 +171,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool InactivateEmployee(string employeeId)
-        {
-            return this._employeeRepository.InactivateEmployee(employeeId);
+        public bool InactivateEmployee (string employeeId) {
+            return this._employeeRepository.InactivateEmployee (employeeId);
         }
 
         /// <summary>
@@ -184,18 +180,16 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool DeleteEmployee(string employeeId)
-        {
-            return this._employeeRepository.DeleteEmployee(employeeId);
+        public bool DeleteEmployee (string employeeId) {
+            return this._employeeRepository.DeleteEmployee (employeeId);
         }
 
         /// <summary>
         /// Update Employee record
         /// </summary>
         /// <returns></returns>
-        public bool UpdateEmployee(EmployeesDTO employeesDTO)
-        {
-            return this._employeeRepository.UpdateEmployee(this._mapper.Map<Users>(employeesDTO));
+        public bool UpdateEmployee (EmployeesDTO employeesDTO) {
+            return this._employeeRepository.UpdateEmployee (this._mapper.Map<Users> (employeesDTO));
         }
         #endregion
 
