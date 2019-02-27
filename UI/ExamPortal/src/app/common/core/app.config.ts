@@ -5,6 +5,7 @@ export const appConfig = {
   // apiUrl: 'http://localhost:7000/', // url for dev
    apiUrl: 'http://zil189:90/', // url for dev
   //apiUrl: 'http://zil395:8080/', // url for production
+  identityUrl: 'http://zil189:9050/',
 
   pattern: {
     NAME: /^[a-zA-Z.\-\']*$/,//^[^-\s0-9$#@!%*?&^]
