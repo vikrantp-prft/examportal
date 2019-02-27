@@ -10,7 +10,7 @@
             <div class="col-md-2">
               <div class="">
                 <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
-                  <option selected>Per Page</option>
+                  <option value="10" selected>Per Page</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
@@ -47,24 +47,24 @@
             <tbody>
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let user of userList; let i = index">
-                <td>{{(adminModel.pageNumber-1)*10 + i +1 }}</td>
-                <td>{{user.firstName}} {{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td>
+                <td [routerLink]="['/user/updateadmin', user.id]">{{(adminModel.pageNumber-1)*10 + i +1 }}</td>
+                <td [routerLink]="['/user/updateadmin', user.id]">{{user.firstName}} {{user.lastName}}</td>
+                <td [routerLink]="['/user/updateadmin', user.id]">{{user.email}}</td>
+                <td [routerLink]="['/user/updateadmin', user.id]">
                   <!--<div *ngIf="emp.team!=null">
                     {{user.team.name}}
                   </div> -->
                 </td>
-                <td>
+                <td [routerLink]="['/user/updateadmin', user.id]">
                   <i class="fa" [ngClass]="{'fa-check text-success': user.isActive, 'fa-times text-danger': !user.isActive}"
                     aria-hidden="true">
                   </i>
                 </td>
                 <td>
-                  <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateadmin', user.id]"
+                  <!-- <button class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/user/updateadmin', user.id]"
                     title="Edit Admin">
                     <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-                  </button>&nbsp;
+                  </button>&nbsp; -->
                   <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(user.id, user.isActive)">
                     <i class="fa" [ngClass]="{'fa-toggle-on text-success': user.isActive, 'fa-toggle-off text-danger': !user.isActive}"
                       aria-hidden="true"></i>

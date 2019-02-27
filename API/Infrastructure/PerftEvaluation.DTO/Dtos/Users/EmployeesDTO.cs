@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static PerftEvaluation.DTO.Common.CommonEnums;
 
 namespace PerftEvaluation.DTO.Dtos {
     /// <summary>
@@ -21,8 +22,7 @@ namespace PerftEvaluation.DTO.Dtos {
 
         [Required]
         public string Email { get; set; }
-
-        [Required]
+        
         public string Password { get; set; }
 
         public DateTime? DOB { get; set; }
@@ -56,11 +56,12 @@ namespace PerftEvaluation.DTO.Dtos {
         public string[] Interest { get; set; }
 
         public List<EducationDetailsDTO> EducationDetails;
-
-        public bool IsEmployee { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
+
+        [Required]
+        public UsersEnum UserType { get; set; }
 
         public MastersDTO Team { get; set; }
 

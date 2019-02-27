@@ -33,15 +33,24 @@ namespace PerftEvaluation.Entities.POCOEntities {
     public class Options {
         [BsonElement ("optionId"), BsonRepresentation (BsonType.ObjectId)]
         public string OptionId { get; set; }
+        
 
         [BsonElement ("option")]
         [Required]
         public string Option { get; set; }
 
+
         [BsonElement ("description")]
         public string Description { get; set; }
 
+
+        [BsonDefaultValue(false)]
         [BsonElement ("isCorrect")]
         public bool IsCorrect { get; set; }
+
+
+        [BsonDefaultValue(false)]
+        [BsonElement ("isSelected")]
+        public bool IsSelected { get; set; }
     }
 }

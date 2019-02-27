@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
@@ -30,7 +31,7 @@ namespace PerftEvaluation.DAL.Repositories
             var updateQuery = Builders<Results>.Update
                 .Set (c => c.IsDeleted, true);
 
-            return _db.UpdateOne<Results> (filterDef, updateQuery, Masters.CollectionName);
+            return _db.UpdateOne<Results> (filterDef, updateQuery, Results.CollectionName);
         }
 
         /// <summary>
@@ -75,6 +76,11 @@ namespace PerftEvaluation.DAL.Repositories
         public bool SaveResults(Results results)
         {
             try{
+                results.IsDeleted = false;
+                results.IsActive = true;
+                results.CreatedDate = DateTime.Now;
+                results.ModifiedDate = DateTime.Now;
+
                 _db.Save<Results>(results, Results.CollectionName);
                 return true;
             }

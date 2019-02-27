@@ -47,8 +47,7 @@ export class TeamListComponent implements OnInit {
   }
   teamForm = new FormGroup({
     teamTitle: new FormControl('', Validators.required),
-    teamDescription: new FormControl('', Validators.required),
-    teamisActive: new FormControl('')
+    teamDescription: new FormControl('')
   });
   get teamTitle() {
     return this.teamForm.get('teamTitle');
@@ -72,11 +71,11 @@ export class TeamListComponent implements OnInit {
     this.fn_saveTeamfun(url, teamModel);
   }
   fn_saveTeamfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Team added successfully!');
         this.fn_GetTeamList();
       }
@@ -85,9 +84,9 @@ export class TeamListComponent implements OnInit {
       }
     });
   }
-
   // Get Team by Id
   fn_GetTeamById(ID) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterById';
     const teamModel =
     {
@@ -99,16 +98,19 @@ export class TeamListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(teamModel, url).subscribe((result: any) => {
+    this.getTeamByIdFun(url, teamModel);
+  }
+  getTeamByIdFun(url, model) {
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editTeamList = rs.data;
+        this.ngxService.stop();
         this.fn_setEditValues();
-      }
-      else {
       }
     });
   }
+
   // default values
   fn_setEditValues() {
     // this.categoryForm.controls.id.setValue(this.examID);
@@ -129,9 +131,11 @@ export class TeamListComponent implements OnInit {
   }
   // function for save team details.
   fn_updateTeamfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Team  updated successfully!');
         this.fn_GetTeamList();
       }
@@ -169,14 +173,13 @@ export class TeamListComponent implements OnInit {
     this.fn_GetFilteredList(searchModel);
   }
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.teamList = rs.data;
-        // this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -188,10 +191,8 @@ export class TeamListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.teamList = rs.data;
-        this.ngxService.stop();
         this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -221,9 +222,11 @@ export class TeamListComponent implements OnInit {
   }
   // function for soft deleting the Ad Team
   fn_delTeamFun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Team\'s details deleted successfully!');
         this.fn_GetTeamList();
       }
@@ -259,15 +262,16 @@ export class TeamListComponent implements OnInit {
   }
   //function to save status change
   fn_saveStatusChange(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
+        this.toastr.success('Team\'s status changes successfully!');
         this.fn_GetTeamList();
       }
       else {
-        console.log("Something is wrong.")
+        this.toastr.success('Failed to change team\'s status');
       }
     });
   }

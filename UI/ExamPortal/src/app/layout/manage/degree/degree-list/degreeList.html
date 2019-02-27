@@ -9,7 +9,7 @@
       <div class="col-md-2">
         <div class="">
           <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
-            <option selected>Per Page</option>
+            <option value="10" selected>Per Page</option>
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -38,7 +38,7 @@
             <th>Title</th>
             <th>Description</th>
             <th class="th-width">Active</th>
-            <th class="th-width-action">Action</th>
+            <th style="width: 120px;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -53,9 +53,6 @@
               </i>
             </td>
             <td>
-              <!-- <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', degree.id]">
-                <i class="fa fa-pencil-square-o text-datk" aria-hidden="true"></i>
-              </button> -->
               <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(degree.id, degree.isActive)">
                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': degree.isActive, 'fa-toggle-off text-danger': !degree.isActive}"
                   aria-hidden="true"></i>
@@ -79,7 +76,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addDegree">Add Degree</h5>
+        <h5 class="modal-title" id="addDegree">Add degree</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -87,9 +84,9 @@
       <form [formGroup]="degreeForm">
         <div class="modal-body">
           <div class="form-group">
-            <label for="degreeTitle">Title</label>
+            <label for="degreeTitle">Title<span class="text-danger">*</span></label>
             <input formControlName="degreeTitle" type="text" class="form-control" id="degreeTitle" aria-describedby="titleHelp"
-              placeholder="Enter Title">
+              placeholder="Enter title">
             <div *ngIf="degreeTitle.touched && degreeTitle.errors" class="alert alert-danger">
               Degree title is required
             </div>
@@ -97,7 +94,7 @@
           <div class="form-group">
             <label for="degreeDescription">Description</label>
             <textarea formControlName="degreeDescription" type="text" class="form-control" id="degreeDescription"
-              placeholder="Enter Description"></textarea>
+              placeholder="Enter description"></textarea>
             <div *ngIf="degreeDescription.touched && degreeDescription.invalid"   class="alert alert-danger">
               Degree description is required
             </div>
@@ -106,7 +103,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" [disabled]="!degreeForm.valid" (click)="fn_saveDegree(degreeForm)"
             data-dismiss="modal">Submit</button>
-          <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="reset" class="btn btn-danger">Reset</button>
         </div>
       </form>
     </div>
@@ -118,7 +115,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDegree">Edit Degree</h5>
+                <h5 class="modal-title" id="editDegree">Edit degree</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -126,9 +123,9 @@
             <form [formGroup]="degreeForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="degreeTitle">Title</label>
+                        <label for="degreeTitle">Title<span class="text-danger">*</span></label>
                         <input formControlName="degreeTitle" type="text" class="form-control" id="degreeTitle"
-                            aria-describedby="titleHelp" placeholder="Enter Title">
+                            aria-describedby="titleHelp" placeholder="Enter title">
                         <div *ngIf="degreeTitle.touched && degreeTitle.errors" class="alert alert-danger">
                            Degree title is required
                         </div>
@@ -136,7 +133,7 @@
                     <div class="form-group">
                         <label for="degreeDescription">Description</label>
                         <textarea formControlName="degreeDescription" type="text" class="form-control" id="degreeDescription"
-                            placeholder="Enter Description"></textarea>
+                            placeholder="Enter description"></textarea>
                         <div *ngIf="degreeDescription.touched && degreeDescription.invalid"   class="alert alert-danger">
                             Degree description is required
                         </div>
@@ -145,7 +142,7 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" [disabled]="!degreeForm.valid" (click)="fn_updateDegree(degreeForm)"
                         data-dismiss="modal">Update</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
                 </div>
             </form>
         </div>

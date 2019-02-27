@@ -51,7 +51,7 @@ export class DesignationListComponent implements OnInit {
   }
   designationForm = new FormGroup({
     designationTitle: new FormControl('', Validators.required),
-    designationDescription: new FormControl('', [Validators.required])
+    designationDescription: new FormControl('')
   });
   get designationTitle() {
     return this.designationForm.get('designationTitle');
@@ -77,16 +77,15 @@ export class DesignationListComponent implements OnInit {
       description: data.value.designationDescription,
       masterType: "Designation"
     }
-    console.log(designationModel);
     this.fn_saveDesignationfun(url, designationModel);
   }
   // function for save employee details.
   fn_saveDesignationfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Designation  added successfully!');
         this.fn_GetDesignationList();
       }
@@ -108,13 +107,16 @@ export class DesignationListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(designationModel, url).subscribe((result: any) => {
+    this.getDesignationByIdFunu(url, designationModel)
+  }
+  getDesignationByIdFunu(url, model){
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editDesignationList = rs.data;
+        this.ngxService.stop();
         this.fn_setEditValues();
-      }
-      else {
       }
     });
   }
@@ -134,14 +136,15 @@ export class DesignationListComponent implements OnInit {
       description: data.value.designationDescription,
       masterType: "Designation"
     }
-    console.log(designationModel)
     this.fn_updateDesignationfun(url, designationModel);
   }
   // function for save category details.
   fn_updateDesignationfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('Designation  updated successfully!');
         this.fn_GetDesignationList();
       }
@@ -179,14 +182,13 @@ export class DesignationListComponent implements OnInit {
     this.fn_GetFilteredList(searchModel);
   }
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.designationList = rs.data;
-        // this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -197,11 +199,9 @@ export class DesignationListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.designationModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.designationList = rs.data;
         this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -229,9 +229,11 @@ export class DesignationListComponent implements OnInit {
   }
   // function for soft deleting the Admin User.
   fn_delDesignationFun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Designation\'s details deleted successfully!');
         this.fn_GetDesignationList();
       }
@@ -267,13 +269,16 @@ export class DesignationListComponent implements OnInit {
   }
   //function to save status change
   fn_saveStatusChange(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
+        this.toastr.success('Designation\'s status changes successfully!');
         this.fn_GetDesignationList();
       }
-      else {
-        console.log("Something is wrong.")
+      else{
+        this.toastr.success('Failed to change designation\'s status');
       }
     });
   }

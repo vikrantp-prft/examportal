@@ -2,7 +2,9 @@ export const appConfig = {
   // local host port of WEB LAYER
 
   //  apiUrl: 'http://localhost:54690/', // url for local
-  apiUrl: 'http://zil189:90/',
+  // apiUrl: 'http://localhost:7000/', // url for dev
+   apiUrl: 'http://zil189:90/', // url for dev
+  //apiUrl: 'http://zil395:8080/', // url for production
 
   pattern: {
     NAME: /^[a-zA-Z.\-\']*$/,//^[^-\s0-9$#@!%*?&^]

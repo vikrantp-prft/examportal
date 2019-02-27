@@ -10,6 +10,13 @@ namespace PerftEvaluation.BAL.Interfaces {
     /// User Service Interface 
     /// </summary>
     public interface IUserService {
+
+        /// <summary>
+        /// Get All Users list
+        /// </summary>
+        /// <value>List of all Users</value>
+        ResponseModel GetAllUsers (RequestModel requestModel);
+
         /// <summary>
         /// Get Users list
         /// </summary>
@@ -70,5 +77,12 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="email"></param>
         /// <returns></returns>
         bool IsEmailExist (string email);
+
+        /// <summary>
+        /// Mark user as admin
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool MarkUserAsAdmin (string userId);
     }
 }

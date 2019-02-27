@@ -134,7 +134,7 @@ export class questionAddUpdateComponent implements OnInit {
         this.toastr.warning('Can add only Max 5 Options');
       }
       else {
-        control.push(this.fn_addSubMultipleSelectOption());
+        control.push(this.fn_addSubMultipleSelectOption()); 
       }
     }
 

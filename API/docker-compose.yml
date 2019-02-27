@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  ocelot:
+    build: ./Projects/PerftEvaluation.OcelotApiGw/
+    ports: 
+      - "9000:9000"
+  api:
+    build: ./Projects/PerftEvaluation.Api/
+    ports: 
+      - "9001:9001"

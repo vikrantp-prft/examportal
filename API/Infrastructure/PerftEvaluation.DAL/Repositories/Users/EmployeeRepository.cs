@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using PerftEvaluation.DAL.Context;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.Entities.POCOEntities;
+using static PerftEvaluation.DTO.Common.CommonEnums;
 
 namespace PerftEvaluation.DAL.Repositories {
     public class EmployeeRepository : IEmployeeRepository {
@@ -24,7 +25,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Employees List</returns>
         public IEnumerable<Users> GetEmployees () {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.IsEmployee == true).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false & x.UserType == UsersEnum.Employee).ToList ();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -38,14 +39,13 @@ namespace PerftEvaluation.DAL.Repositories {
 
         public bool SaveEmployee (Users users) {
             try {
-                users.IsEmployee = true;
+                users.UserType = UsersEnum.Employee;
                 users.IsActive = true;
                 users.CreatedDate = DateTime.Now;
                 users.ModifiedDate = DateTime.Now;
 
-                if (users.EducationDetails != null)
-                {
-                    users.EducationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                if (users.EducationDetails != null) {
+                    users.EducationDetails.Where (c => c.EducationDetailsId == null).ToList ().ForEach (c => c.EducationDetailsId = ObjectId.GenerateNewId ().ToString ());
                 }
 
                 _db.Save<Users> (users, Users.CollectionName);
@@ -96,8 +96,7 @@ namespace PerftEvaluation.DAL.Repositories {
             }
         }
 
-        public bool DeleteEmployee(string userId)
-        {
+        public bool DeleteEmployee (string userId) {
             var filter = Builders<Users>.Filter;
             var filterDef = filter.Eq (c => c.Id, userId);
             var updateQuery = Builders<Users>.Update
@@ -110,8 +109,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// Update the user details
         /// </summary>
         /// <returns></returns>
-        public bool UpdateEmployee(Users users)
-        {
+        public bool UpdateEmployee (Users users) {
             var filter = Builders<Users>.Filter;
             var filterDef = filter.Eq (c => c.Id, users.Id);
             var updateQuery = Builders<Users>.Update
@@ -133,18 +131,15 @@ namespace PerftEvaluation.DAL.Repositories {
                 .Set (c => c.CurrentStateId, users.CurrentStateId)
                 .Set (c => c.Mobile, users.Mobile)
                 .Set (c => c.TeamId, users.TeamId)
-                .Set (c => c.Email, users.Email)
                 .Set (c => c.Note, users.Note)
                 .Set (c => c.Interest, users.Interest)
-                .Set (c => c.EducationDetails, users.EducationDetails)
-                .Set (c => c.TeamId, users.TeamId);
-
+                .Set (c => c.EducationDetails, users.EducationDetails);
+             
             try {
-                users.IsEmployee = true;
+                //users.IsEmployee = true;
                 users.ModifiedDate = DateTime.Now;
-                if (users.EducationDetails != null)
-                {
-                    users.EducationDetails.Where(c => c.EducationDetailsId == null).ToList().ForEach(c => c.EducationDetailsId = ObjectId.GenerateNewId().ToString());
+                if (users.EducationDetails != null) {
+                    users.EducationDetails.Where (c => c.EducationDetailsId == null).ToList ().ForEach (c => c.EducationDetailsId = ObjectId.GenerateNewId ().ToString ());
                 }
 
                 _db.UpdateOne<Users> (filterDef, updateQuery, Users.CollectionName);

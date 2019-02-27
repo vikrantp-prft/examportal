@@ -57,79 +57,22 @@
                 <td>{{trainee.email}}</td>
                 <td>{{trainee.mobile}}</td>
                 <td>
-                  <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
+                  <!-- <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>&nbsp;
-                  <button type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>&nbsp; -->
+                  <button class="btn btn-md mx-1" type="button" rel="tooltip" (click)="expression" title="Change Status">
+                    <i class="fa fa-toggle-on"></i>
                   </button>
-
-                  <!-- 
-
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button> -->
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteEmployee(emp.id)" title="Delete Trainee">
+                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                  </button>
+                  <!-- <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(emp.id, emp.isActive)">
+                    <i class="fa" [ngClass]="{'fa-toggle-on text-success': emp.isActive, 'fa-toggle-off text-danger': !emp.isActive}"
+                      aria-hidden="true"></i>
+                  </button> -->  
                 </td>
               </tr>
-              <!-- <tr>
-                <td>/about.html</td>
-                <td>261</td>
-                <td>33.3%</td>
-                <td>$234.12</td>
-                <td>
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>/sales.html</td>
-                <td>665</td>
-                <td>21.3%</td>
-                <td>$16.34</td>
-                <td>
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>/blog.html</td>
-                <td>9516</td>
-                <td>89.3%</td>
-                <td>$1644.43</td>
-                <td>
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>/404.html</td>
-                <td>23</td>
-                <td>34.3%</td>
-                <td>$23.52</td>
-                <td>
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>/services.html</td>
-                <td>421</td>
-                <td>60.3%</td>
-                <td>$724.32</td>
-                <td>
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>/blog/post.html</td>
-                <td>1233</td>
-                <td>93.2%</td>
-                <td>$126.34</td>
-                <td>
-                  <button [routerLink]="['/user/edittrainee']" class="btn-primary">Edit</button>
-                  <button class="btn-primary">Delete</button>
-                </td>
-              </tr> -->
+              
             </tbody>
           </table>
         </div>

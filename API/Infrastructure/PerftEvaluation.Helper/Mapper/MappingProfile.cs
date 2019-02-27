@@ -21,6 +21,8 @@ namespace PerftEvaluation.Helper.Mapper {
             CreateMap<Questions, QuestionsDTO> ().ReverseMap();
             CreateMap<Results, ResultsDTO> ().ReverseMap();
             CreateMap<AssignedExams, AssignedExamsDTO>().ReverseMap();
+            CreateMap<Users,AspirantsDTO>().ReverseMap();
+            CreateMap<AttemptedQuestions, AttemptedQuestionsDTO>().ReverseMap();
         }
     }
 }

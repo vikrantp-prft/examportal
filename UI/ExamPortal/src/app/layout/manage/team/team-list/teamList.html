@@ -7,7 +7,7 @@
       <div class="row justify-content-end">
         <div class="col-md-2">
           <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
-            <option selected>Per Page</option>
+            <option value="10" selected>Per Page</option>
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -34,7 +34,7 @@
             <th>Title</th>
             <th>Description</th>
             <th class="th-width">Active</th>
-            <th class="th-width-action">Action</th>
+            <th style="width:120px;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -78,7 +78,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addTeam">Add Team</h5>
+        <h5 class="modal-title" id="addTeam">Add team</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -86,9 +86,9 @@
       <form [formGroup]="teamForm">
         <div class="modal-body">
           <div class="form-group">
-            <label for="teamTitle">Title</label>
+            <label for="teamTitle">Title<span class="text-danger">*</span></label>
             <input formControlName="teamTitle" type="text" class="form-control" id="teamTitle"
-              aria-describedby="titleHelp" placeholder="Enter Title">
+              aria-describedby="titleHelp" placeholder="Enter title">
             <div *ngIf="teamTitle.touched && teamTitle.errors" class="alert alert-danger">
               Team title is required
             </div>
@@ -96,7 +96,7 @@
           <div class="form-group">
             <label for="teamDescription">Description</label>
             <textarea formControlName="teamDescription" type="text" class="form-control" id="teamDescription"
-              placeholder="Enter Description"></textarea>
+              placeholder="Enter description"></textarea>
             <div *ngIf="teamDescription.touched && teamDescription.invalid"   class="alert alert-danger">
               Team description is required
             </div>
@@ -105,7 +105,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" [disabled]="!teamForm.valid"
             (click)="fn_saveTeam(teamForm)" data-dismiss="modal">Submit</button>
-            <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
         </div>
       </form>
     </div>
@@ -117,7 +117,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editTeam">Edit Team</h5>
+        <h5 class="modal-title" id="editTeam">Edit team</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,9 +125,9 @@
       <form [formGroup]="teamForm">
         <div class="modal-body">
           <div class="form-group">
-            <label for="teamTitle">Title</label>
+            <label for="teamTitle">Title<span class="text-danger">*</span></label>
             <input formControlName="teamTitle" type="text" class="form-control" id="teamTitle"
-              aria-describedby="titleHelp" placeholder="Enter Title">
+              aria-describedby="titleHelp" placeholder="Enter title">
             <div *ngIf="teamTitle.touched && teamTitle.errors" class="alert alert-danger">
               Team title is required
             </div>
@@ -135,7 +135,7 @@
           <div class="form-group">
             <label for="teamDescription">Description</label>
             <textarea formControlName="teamDescription" type="text" class="form-control" id="teamDescription"
-              placeholder="Enter Description"></textarea>
+              placeholder="Enter description"></textarea>
             <div *ngIf="teamDescription.touched && teamDescription.invalid"   class="alert alert-danger">
               Team description is required
             </div>
@@ -144,7 +144,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" [disabled]="!teamForm.valid"
             (click)="fn_updateTeam(teamForm)" data-dismiss="modal">Submit</button>
-          <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+          <button type="reset" class="btn btn-danger">Reset</button>
         </div>
       </form>
     </div>

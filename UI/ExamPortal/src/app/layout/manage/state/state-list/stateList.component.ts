@@ -32,23 +32,27 @@ export class StateListComponent implements OnInit {
   public stateList = [];
   public stateInfo: any;
   public statusUrl: any;
+  public editStateList: any;
   public stateModel =
     {
       "condition": "State",
       "pageSize": 10,
       "pageNumber": 1
     };
-  editStateList: any;
   // Constructor
-  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(
+    private ngxService: NgxUiLoaderService, 
+    public router: Router, 
+    private CommonService: commonService, 
+    public http: Http, 
+    private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetStateList();
   }
   stateForm = new FormGroup({
     stateTitle: new FormControl('', Validators.required),
-    stateDescription: new FormControl('', Validators.required),
-    stateisActive: new FormControl('')
+    stateDescription: new FormControl('')
   });
   get stateTitle() {
     return this.stateForm.get('stateTitle');
@@ -73,12 +77,14 @@ export class StateListComponent implements OnInit {
   }
   // function for save employee details.
   fn_saveStatefun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.toastr.success('State  added successfully!');
         this.fn_GetStateList();
         this.frmReset();
+        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to add state');
@@ -98,13 +104,16 @@ export class StateListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(stateModel, url).subscribe((result: any) => {
+    this.fn_GetStateByIdFun(url, stateModel);
+  }
+  fn_GetStateByIdFun(url, model){
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editStateList = rs.data;
+        this.ngxService.stop();
         this.fn_setEditValues();
-      }
-      else {
       }
     });
   }
@@ -127,9 +136,11 @@ export class StateListComponent implements OnInit {
   }
   // function for save state details.
   fn_updateStatefun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('State  updated successfully!');
         this.fn_GetStateList();
       }
@@ -153,6 +164,7 @@ export class StateListComponent implements OnInit {
   };
   // Searching
   searchRecord(event: any): void {
+    const url = 'api/Master/GetMasterByType';
     const searchModel =
     {
       "id": "string",
@@ -164,17 +176,15 @@ export class StateListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     }
-    this.fn_GetFilteredList(searchModel);
+    this.fn_GetFilteredList(url, searchModel);
   }
-  fn_GetFilteredList(data) {
-    const url = 'api/Master/GetMasterByType';
+  fn_GetFilteredList(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.stateList = rs.data;
-        // this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -185,11 +195,9 @@ export class StateListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.stateModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.stateList = rs.data;
         this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -217,11 +225,13 @@ export class StateListComponent implements OnInit {
   }
   // function for soft deleting state.
   fn_delStateFun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((rs.message == 'Success')) {
         this.toastr.success('State\'s details deleted successfully!');
         this.fn_GetStateList();
+        this.ngxService.stop();
       }
       else {
         this.toastr.error("Failed to delete state");
@@ -256,14 +266,15 @@ export class StateListComponent implements OnInit {
   //function to save status change
   fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
-      // debugger;
-      // console.log(result);
+      this.ngxService.start();
       const rs = result;
       if (rs.statusCode == 200) {
+        this.toastr.success('State\'s status changes successfully!');
         this.fn_GetStateList();
+        this.ngxService.stop();
       }
       else {
-        console.log("Something is wrong.")
+        this.toastr.success('Failed to change state\'s status');
       }
     });
   }

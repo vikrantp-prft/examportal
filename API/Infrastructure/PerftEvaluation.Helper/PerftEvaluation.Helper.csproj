@@ -13,5 +13,6 @@
     <ProjectReference Include="..\..\Core\PerftEvaluation.Entities\PerftEvaluation.Entities.csproj" />
     <ProjectReference Include="..\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj" />
     <ProjectReference Include="..\PerftEvaluation.DAL\PerftEvaluation.DAL.csproj" />
+    <ProjectReference Include="..\Perft.Evaluation.ExcelUtility\PerftEvaluation.ExcelUtility.csproj" />
   </ItemGroup>
 </Project>

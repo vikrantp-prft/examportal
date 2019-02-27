@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-2 align-items-start">
           <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
-            <option selected>Per Page</option>
+            <option value="10" selected>Per Page</option>
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -42,22 +42,22 @@
         <tbody>
           <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let exam of examList; let i = index">
-            <td>{{(params.pageNumber-1)*10 + i +1 }}</td>
-            <td>{{exam.title | slice:0:35}}</td>
-            <td>{{exam.team==null? 'All':exam.team.name}}</td>
-            <td>{{exam.examDurationHours}} Hrs {{exam.examDurationMinutes}} Mins</td>
-            <td>{{exam.totalQuestions}}</td>
+            <td [routerLink]="['/manage/editExam', exam.id]">{{(params.pageNumber-1)*10 + i +1 }}</td>
+            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.title | slice:0:35}}</td>
+            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.team==null? 'All':exam.team.name}}</td>
+            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.examDurationHours}} Hrs {{exam.examDurationMinutes}} Mins</td>
+            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.totalQuestions}}</td>
             <td>
               <!-- <a [routerLink]="['/manage/questionList', exam.id]" [routerLinkActive]="['router-link-active']" class="list-group-item">
                     <i class="fa fa-monument"></i>&nbsp;
                     <span>{{ 'View Question' }}</span>
                   </a> -->
               <button class="btn btn-md " title="View Questions" [routerLink]="['/manage/questionList', exam.id]"
-                [routerLinkActive]="['router-link-active']" type="button" rel="tooltip" (click)="fn_getEmployee(exam.id)">
+                [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
                 <i class="fa fa-eye text-primary" aria-hidden="true"></i>
               </button>&nbsp;
-              <button class="btn btn-md" title="Edit Exam" type="button" rel="tooltip" [routerLink]="['/manage/editExam', exam.id]">
-                <i class="fa text-dark fa-pencil-square-o" aria-hidden="true"></i>
+              <button class="btn btn-md" title="Assign User" [routerLink]="[ '/manage/userList' , exam.id ]" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
+                <i class="fa fa-user text-primary" aria-hidden="true"></i>
               </button>&nbsp;
               <button class="btn btn-md" title="Delete Exam" type="button" rel="tooltip" (click)="fn_deleteExam(exam.id)">
                 <i class="fa fa-trash text-danger" aria-hidden="true"></i>
@@ -68,7 +68,7 @@
       </table>
     </div>
 
-    <pagination class="pt-0 mt-0 btn btn-md pull-right" [totalItems]="totalItems" [itemsPerPage]="params.pageSize"
+    <pagination class="pt-0 mt-0 btn btn-md pull-right" [totalItems]="totalItems" [itemsPerPage]="  "
       (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
       nextText="NEXT" firstText="FIRST" lastText="LAST">
     </pagination>

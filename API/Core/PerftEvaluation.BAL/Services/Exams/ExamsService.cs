@@ -53,7 +53,9 @@ namespace PerftEvaluation.BAL.Services {
                 examsDTO.ShuffleOptions = item.ShuffleOptions;
                 examsDTO.ShuffleQuestions = item.ShuffleQuestions;
                 examsDTO.IsPaperPublic = item.IsPaperPublic;
+                examsDTO.IsFeedback = item.IsFeedback;
                 examsDTO.TotalQuestions = item.TotalQuestions;
+                examsDTO.IsActive = item.IsActive;
                 examsDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
 
                 examJoin.Add (examsDTO);
@@ -89,20 +91,23 @@ namespace PerftEvaluation.BAL.Services {
 
             ExamsDTO examsDTO = new ExamsDTO ();
             examsDTO.Id = exam.Id;
-                examsDTO.Title = exam.Title;
-                examsDTO.TeamId = exam.TeamId;
-                examsDTO.Description = exam.Description;
-                examsDTO.ExamDurationHours = exam.ExamDurationHours;
-                examsDTO.ExamDurationMinutes = exam.ExamDurationMinutes;
-                examsDTO.PassingMarks = exam.PassingMarks;
-                examsDTO.FromDate = exam.FromDate;
-                examsDTO.ToDate = exam.ToDate;
-                examsDTO.ShowResultInFront = exam.ShowResultInFront;
-                examsDTO.ShuffleOptions = exam.ShuffleOptions;
-                examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
-                examsDTO.IsPaperPublic = exam.IsPaperPublic;
-                examsDTO.TotalQuestions = exam.TotalQuestions;
-                examsDTO.Team = exam.TeamId != null? _masterService.GetMasterById (exam.TeamId) : null;
+            examsDTO.Title = exam.Title;
+            examsDTO.TeamId = exam.TeamId;
+            examsDTO.Description = exam.Description;
+            examsDTO.ExamDurationHours = exam.ExamDurationHours;
+            examsDTO.ExamDurationMinutes = exam.ExamDurationMinutes;
+            examsDTO.PassingMarks = exam.PassingMarks;
+            examsDTO.FromDate = exam.FromDate;
+            examsDTO.ToDate = exam.ToDate;
+            examsDTO.ShowResultInFront = exam.ShowResultInFront;
+            examsDTO.ShuffleOptions = exam.ShuffleOptions;
+            examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
+            examsDTO.IsPaperPublic = exam.IsPaperPublic;
+            examsDTO.IsFeedback = exam.IsFeedback;
+            examsDTO.TotalQuestions = exam.TotalQuestions;
+            examsDTO.IsActive = exam.IsActive;
+            examsDTO.IsDeleted = exam.IsDeleted;
+            examsDTO.Team = exam.TeamId != null? _masterService.GetMasterById (exam.TeamId) : null;
 
             return examsDTO;
         }
@@ -129,6 +134,39 @@ namespace PerftEvaluation.BAL.Services {
         /// <value></value>
         public bool UpdateExam (ExamsDTO examsDTO) {
             return this._examsRepository.UpdateExams (this._mapper.Map<Exams> (examsDTO));
+        }
+
+        /// <summary>
+        /// SetActiveInactive Exams
+        /// </summary>
+        /// <param name="examDTO"></param>
+        /// <returns></returns>
+        public bool SetActiveInactive (ExamsDTO examsDTO) {
+            DateTime start = examsDTO.FromDate.Value;
+            DateTime current = DateTime.Now;
+            DateTime end = examsDTO.ToDate.Value;
+
+            int activeExam = DateTime.Compare (start, current);
+            int inactiveExam = DateTime.Compare (start, end);
+
+            if (activeExam < 0) {
+                this.InactiveExams (examsDTO.Id);
+                return false;
+            } else if (activeExam == 0) {
+                if (inactiveExam < 0) {
+                    this.ActiveExams (examsDTO.Id);
+                    return true;
+                } else if (inactiveExam == 0) {
+                    this.InactiveExams (examsDTO.Id);
+                    return false;
+                } else {
+                    this.InactiveExams (examsDTO.Id);
+                    return false;
+                }
+            } else {
+                this.InactiveExams (examsDTO.Id);
+                return false;
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ interface paginationModel {
 })
 export class CategoryListComponent implements OnInit {
   // Declaration
-  public params: any = {
+  public params = {
     pageNumber: 1,
     pageSize: 10,
     filter: ''
@@ -30,8 +30,9 @@ export class CategoryListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public categoryList = [];
-  public editCategoryList: any;
-  public statusUrl: any;
+  public editCategoryList;
+  public statusUrl: string;
+  public toggle: boolean = true;
   public categoryModel =
     {
       "condition": "Category",
@@ -39,8 +40,12 @@ export class CategoryListComponent implements OnInit {
       "pageNumber": 1
     };
   // Constructor
-  constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
-  toggle: boolean = true;
+  constructor(
+    private ngxService: NgxUiLoaderService, 
+    public router: Router, 
+    private CommonService: commonService, 
+    public http: Http, 
+    private toastr: ToastrService) { }
   // Lifecycle method
   ngOnInit() {
     this.fn_GetCategoryList();
@@ -50,7 +55,7 @@ export class CategoryListComponent implements OnInit {
   }
   categoryForm = new FormGroup({
     categoryTitle: new FormControl('', [Validators.required]),
-    categoryDescription: new FormControl('', [Validators.required])
+    categoryDescription: new FormControl('',)
   });
   get categoryTitle() {
     return this.categoryForm.get('categoryTitle');
@@ -73,12 +78,14 @@ export class CategoryListComponent implements OnInit {
   }
   // function for save question category details.
   fn_saveCategoryfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.toastr.success('category  added successfully!');
         this.fn_GetCategoryList();
         this.frmReset();
+        this.ngxService.stop();
       }
       else {
         this.toastr.success('Failed to add category');
@@ -98,13 +105,17 @@ export class CategoryListComponent implements OnInit {
       "sortBy": "string",
       "isDescending": true
     };
-    this.CommonService.fn_PostWithData(categoryModel, url).subscribe((result: any) => {
+    this.GetCategoryById(categoryModel, url);
+  }
+  GetCategoryById(model, url){
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.editCategoryList = rs.data;
+        console.log(this.editCategoryList);
         this.fn_setEditValues();
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -128,9 +139,11 @@ export class CategoryListComponent implements OnInit {
   }
   // function for save category details.
   fn_updateCategoryfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
         this.toastr.success('category  updated successfully!');
         this.fn_GetCategoryList();
       }
@@ -168,13 +181,13 @@ export class CategoryListComponent implements OnInit {
     this.fn_GetFilteredList(searchModel);
   }
   fn_GetFilteredList(data) {
+    this.ngxService.start();
     const url = 'api/Master/GetMasterByType';
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
         this.categoryList = rs.data;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -185,11 +198,9 @@ export class CategoryListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.categoryModel, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
-        this.ngxService.stop();
         this.categoryList = rs.data;
         this.totalItems = rs.totalRecords;
-      }
-      else {
+        this.ngxService.stop();
       }
     });
   }
@@ -224,11 +235,16 @@ export class CategoryListComponent implements OnInit {
   }
   // function for soft deleting the Employee.
   fn_delfun(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((result.message == 'Success')) {
+        this.ngxService.stop();
         this.toastr.success('Category details deleted successfully!');
         this.fn_GetCategoryList();
+      }
+      else {
+        this.toastr.success('Failded to delete category');
       }
     });
   }
@@ -259,12 +275,16 @@ export class CategoryListComponent implements OnInit {
   }
   //function to save status change
   fn_saveStatusChange(url, data) {
+    this.ngxService.start();
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
+        this.ngxService.stop();
+        this.toastr.success('Category status changes successfully!');
         this.fn_GetCategoryList();
       }
-      else {
+      else{
+        this.toastr.success('Failed to change status');
       }
     });
   }

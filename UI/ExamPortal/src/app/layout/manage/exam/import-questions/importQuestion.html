@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<!-- <div class="col-md-12">
   <div class="row">
     <div class="col-md-12 col-xs-12 col-lg-12 card">
       <div class="card-header">
@@ -11,5 +11,22 @@
         </button>
       </div>
     </div>
+  </div>
+</div> -->
+
+<div class="row">
+  <label class="col-sm-2 label-on-left">Import File
+    <span class="required">*</span>
+  </label>
+  <div class="fileinput fileinput-new importFile fileImg col-sm-7" data-provides="fileinput">
+    <div class="fileinput-new thumbnail">
+      <!-- <img [src]="reportImageurl" alt="..." id="fileid1"> -->
+    </div>
+    <div class="fileinput-preview fileinput-exists thumbnail" id="fileid"></div>
+    <span class="btn btn-rose btn-round btn-file">
+      <span class="fileinput-new">Select CSV</span>
+      <span class="fileinput-exists">Select CSV File</span>
+      <input type="file" name="..." (change)="fn_fileChange($event)" required />
+    </span>
   </div>
 </div>

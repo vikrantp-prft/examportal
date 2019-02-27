@@ -9,7 +9,7 @@
       <div class="col-md-2">
         <div class="">
           <select class="custom-select" id="inlineFormCustomSelect" (change)="setRecordPerPage($event)">
-            <option selected>Per Page</option>
+            <option value="10" selected>Per Page</option>
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -36,7 +36,7 @@
             <th>State</th>
             <th>Description</th>
             <th class="th-width">Active</th>
-            <th class="th-width-action">Action</th>
+            <th style="width: 120px;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -77,7 +77,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addState">Add State</h5>
+        <h5 class="modal-title" id="addState">Add state</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -85,9 +85,9 @@
       <form [formGroup]="stateForm">
         <div class="modal-body">
           <div class="form-group">
-            <label for="stateTitle">Title</label>
+            <label for="stateTitle">Title<span class="text-danger">*</span></label>
             <input formControlName="stateTitle" type="text" class="form-control" id="stateTitle" aria-describedby="titleHelp"
-              placeholder="Enter Title">
+              placeholder="Enter title">
             <div *ngIf="stateTitle.touched && stateTitle.errors" class="alert alert-danger">
               State title is required
             </div>
@@ -95,7 +95,7 @@
           <div class="form-group">
             <label for="stateDescription">Description</label>
             <textarea formControlName="stateDescription" type="text" class="form-control" id="stateDescription"
-              placeholder="Enter Description"></textarea>
+              placeholder="Enter description"></textarea>
             <div *ngIf="stateDescription.touched && stateDescription.invalid"   class="alert alert-danger">
               State description is required
             </div>
@@ -104,7 +104,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" [disabled]="!stateForm.valid" (click)="fn_saveState(stateForm)"
             data-dismiss="modal">Submit</button>
-          <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+          <button type="reset" class="btn btn-danger">Reset</button>
         </div>
       </form>
     </div>
@@ -117,7 +117,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addState">Edit State</h5>
+        <h5 class="modal-title" id="addState">Edit state</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,9 +125,9 @@
       <form [formGroup]="stateForm">
         <div class="modal-body">
           <div class="form-group">
-            <label for="stateTitle">Title</label>
+            <label for="stateTitle">Title<span class="text-danger">*</span></label>
             <input formControlName="stateTitle" type="text" class="form-control" id="stateTitle" aria-describedby="titleHelp"
-              placeholder="Enter Title">
+              placeholder="Enter title">
             <div *ngIf="stateTitle.touched && stateTitle.errors" class="alert alert-danger">
               State title is required
             </div>
@@ -135,7 +135,7 @@
           <div class="form-group">
             <label for="stateDescription">Description</label>
             <textarea formControlName="stateDescription" type="text" class="form-control" id="stateDescription"
-              placeholder="Enter Description"></textarea>
+              placeholder="Enter description"></textarea>
             <div *ngIf="stateDescription.touched && stateDescription.invalid"   class="alert alert-danger">
               State description is required
             </div>
@@ -144,7 +144,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" [disabled]="!stateForm.valid" (click)="fn_updateState(stateForm)"
             data-dismiss="modal">Update</button>
-          <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+          <button type="reset" class="btn btn-danger">Reset</button>
         </div>
       </form>
     </div>

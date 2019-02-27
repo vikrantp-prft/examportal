@@ -57,5 +57,6 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="questionId"></param>
         /// <returns></returns>
         bool DeleteQuestion (string questionId);
+
     }
 }

@@ -32,6 +32,22 @@ namespace PerftEvaluation.Api.Controllers {
         /// Get list of all users
         /// </summary>
         /// <returns></returns>
+        [HttpPost, Route ("GetAllUsers")]
+        public IActionResult GetAllUsers (RequestModel requestModel) {
+            try {
+                return Ok (this._userService.GetAllUsers (requestModel));
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+
+        //GET api/user
+        /// <summary>
+        /// Get list of all admin users
+        /// </summary>
+        /// <returns></returns>
         [HttpPost, Route ("GetUsers")]
         public IActionResult Get (RequestModel requestModel) {
             try {
@@ -192,6 +208,25 @@ namespace PerftEvaluation.Api.Controllers {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._userService.IsEmailExist (requestModel.Condition);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        /// <summary>
+        /// Mark user as admin
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns>true/false</returns>
+        [HttpPost, Route ("MarkUserAsAdmin")]
+        public IActionResult MarkUserAsAdmin (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.MarkUserAsAdmin (requestModel.Id);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
