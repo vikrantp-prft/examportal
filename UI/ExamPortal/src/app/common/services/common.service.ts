@@ -1,22 +1,19 @@
-import { Injectable, Inject, EventEmitter } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import { HttpParams } from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { appConfig } from '../core/app.config';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Injectable, Inject, EventEmitter } from "@angular/core";
+import { Http, Headers, Response, RequestOptions } from "@angular/http";
+import { HttpParams } from "@angular/common/http";
+import "rxjs/add/operator/map";
+import "rxjs/Rx";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { appConfig } from "../core/app.config";
+import { FormGroup, FormControl } from "@angular/forms";
 
 declare const $: any;
 @Injectable()
 export class commonService {
   public headers: Headers;
-  constructor(
-    @Inject(Http) public http: Http,
-    public router: Router
-  ) {
-    this.headers = new Headers({ 'Content-Type': 'application/json' });
+  constructor(@Inject(Http) public http: Http, public router: Router) {
+    this.headers = new Headers({ "Content-Type": "application/json" });
 
     // this.headers = new Headers({
     //   Authorization: "Bearer " + authservice.token
@@ -65,8 +62,14 @@ export class commonService {
       .catch((error: any) => {
         if (error.status === 401) {
           // this.fn_log(error);
-          console.log('error : ', error);
+          console.log("error : ", error);
           return Observable.throw(error.statusText);
+        }
+        if (error.status === 400) {
+          // this.fn_log(error);
+          console.log("error : ", error);
+          //Observable.
+          return Observable.of(error);
         }
       });
   }
@@ -85,7 +88,9 @@ export class commonService {
   }
 
   fn_UploadImage(url: string, formData: any) {
-    const headers_fileUp = new Headers({ 'Content-Type': 'multipart/form-data' });
+    const headers_fileUp = new Headers({
+      "Content-Type": "multipart/form-data"
+    });
     // let headers_fileUp = new Headers({
     //   Authorization: "Bearer " + this.authservice.token
     // });
@@ -106,5 +111,27 @@ export class commonService {
         this.validateAllFormFields(control);
       }
     });
+  }
+
+  fn_PostWithIdentityData(d: any, url: string) {
+    //  let headers1 = new Headers({ 'Content-Type': 'application/json' });
+    return this.http
+      .post(appConfig.identityUrl + url, JSON.stringify(d), {
+        headers: this.headers
+      })
+      .map((res: Response) => res.json())
+      .catch((error: any) => {
+        if (error.status === 401) {
+          // this.fn_log(error);
+          console.log("error : ", error);
+          return Observable.throw(error.statusText);
+        }
+        if (error.status === 400) {
+          // this.fn_log(error);
+          console.log("error : ", error);
+          //Observable.
+          return Observable.of(error);
+        }
+      });
   }
 }

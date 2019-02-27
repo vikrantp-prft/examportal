@@ -65,7 +65,12 @@ namespace PerftEvaluation.DAL.Repositories
             {
                 attemptedQuestions.CreatedDate = DateTime.Now;
                 attemptedQuestions.ModifiedDate = DateTime.Now;
-                var attemptedQuestionCheck = _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName).AsQueryable().Where(x => x.ExamId == attemptedQuestions.ExamId && x.UserId == attemptedQuestions.UserId && x.QuestionsId == attemptedQuestions.QuestionsId).FirstOrDefault();
+                var attemptedQuestionCheck = _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName)
+                                            .AsQueryable()
+                                            .Where(x => x.ExamId == attemptedQuestions.ExamId
+                                                   && x.UserId == attemptedQuestions.UserId
+                                                   && x.QuestionsId == attemptedQuestions.QuestionsId)
+                                            .FirstOrDefault();
                 if (attemptedQuestionCheck != null)
                 {
                     var filter = Builders<AttemptedQuestions>.Filter;

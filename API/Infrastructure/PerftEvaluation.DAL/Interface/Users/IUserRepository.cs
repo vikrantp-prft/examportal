@@ -81,5 +81,12 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="userId"></param>
         /// <returns>true/false</returns>
         bool MarkUserAsAdmin (string userId);
+
+        /// <summary>
+        /// Remove the User as a admin access
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool RemoveUserAdminAccess (string userId);
     }
 }

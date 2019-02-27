@@ -9,13 +9,11 @@ using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.DTO.Dtos.Dashboard;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services
-{
+namespace PerftEvaluation.BAL.Services {
     /// <summary>
     /// Service for Users
     /// </summary>
-    public class UserService : IUserService
-    {
+    public class UserService : IUserService {
 
         #region Declaration
         protected readonly IUserRepository _userRepository;
@@ -30,11 +28,10 @@ namespace PerftEvaluation.BAL.Services
         /// Class Constructor
         /// </summary>
         /// <param name="UserRepository"></param>
-        public UserService(IUserRepository UserRepository, 
-                           IMapper mapper,
-                           IMasterRepository masterRepository,
-                           IMasterService masterService)
-        {
+        public UserService (IUserRepository UserRepository,
+            IMapper mapper,
+            IMasterRepository masterRepository,
+            IMasterService masterService) {
             this._userRepository = UserRepository;
             this._mapper = mapper;
             this._masterRepository = masterRepository;
@@ -48,17 +45,15 @@ namespace PerftEvaluation.BAL.Services
         /// Get All Users
         /// </summary>
         /// <value></value>
-        public ResponseModel GetAllUsers(RequestModel requestModel)
-        {
+        public ResponseModel GetAllUsers (RequestModel requestModel) {
             //Filter & sort the data
-            var filteredUsers = this._userRepository.GetAllUsers().AsQueryable().SortAndFilter(requestModel, DbFilters.UserFilters);
+            var filteredUsers = this._userRepository.GetAllUsers ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
             //Integrate pagination
-            var allUsers = filteredUsers.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+            var allUsers = filteredUsers.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
 
-            List<UsersDTO> userJoin = new List<UsersDTO>();
-            foreach (var item in allUsers)
-            {
-                UsersDTO usersDTO = new UsersDTO();
+            List<UsersDTO> userJoin = new List<UsersDTO> ();
+            foreach (var item in allUsers) {
+                UsersDTO usersDTO = new UsersDTO ();
                 usersDTO.Id = item.Id;
                 usersDTO.FirstName = item.FirstName;
                 usersDTO.LastName = item.LastName;
@@ -85,27 +80,25 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
                 usersDTO.Group = item.GroupId != null? _masterService.GetMasterById (item.GroupId) : null;
                 usersDTO.Designation = item.DesignationId != null? _masterService.GetMasterById (item.DesignationId) : null;
-                userJoin.Add(usersDTO);
+                userJoin.Add (usersDTO);
             }
             //return object
-            return CommonResponse.OkResponse(requestModel, userJoin, (filteredUsers.Count() < 100 ? filteredUsers.Count() : 100));
+            return CommonResponse.OkResponse (requestModel, userJoin, (filteredUsers.Count () < 100 ? filteredUsers.Count () : 100));
         }
 
         /// <summary>
         /// Get Users List
         /// </summary>
         /// <value></value>
-        public ResponseModel GetUsers(RequestModel requestModel)
-        {
+        public ResponseModel GetUsers (RequestModel requestModel) {
             //Filter & sort the data
-            var filteredUser = this._userRepository.GetUsers().AsQueryable().SortAndFilter(requestModel, DbFilters.UserFilters);
+            var filteredUser = this._userRepository.GetUsers ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
             //Integrate pagination
-            var user = filteredUser.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+            var user = filteredUser.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
 
-            List<UsersDTO> userJoin = new List<UsersDTO>();
-            foreach (var item in user)
-            {
-                UsersDTO usersDTO = new UsersDTO();
+            List<UsersDTO> userJoin = new List<UsersDTO> ();
+            foreach (var item in user) {
+                UsersDTO usersDTO = new UsersDTO ();
                 usersDTO.Id = item.Id;
                 usersDTO.FirstName = item.FirstName;
                 usersDTO.LastName = item.LastName;
@@ -132,10 +125,10 @@ namespace PerftEvaluation.BAL.Services
                 usersDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
                 usersDTO.Group = item.GroupId != null? _masterService.GetMasterById (item.GroupId) : null;
                 usersDTO.Designation = item.DesignationId != null? _masterService.GetMasterById (item.DesignationId) : null;
-                userJoin.Add(usersDTO);
+                userJoin.Add (usersDTO);
             }
             //return object
-            return CommonResponse.OkResponse(requestModel, userJoin, (filteredUser.Count() < 100 ? filteredUser.Count() : 100));
+            return CommonResponse.OkResponse (requestModel, userJoin, (filteredUser.Count () < 100 ? filteredUser.Count () : 100));
         }
 
         /// <summary>
@@ -143,12 +136,11 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        public bool SaveUsers(UsersDTO usersDTO)
-        {
-            Users users = new Users();
+        public bool SaveUsers (UsersDTO usersDTO) {
+            Users users = new Users ();
 
-            users = this._mapper.Map<Users>(usersDTO);
-            return this._userRepository.SaveUser(users);
+            users = this._mapper.Map<Users> (usersDTO);
+            return this._userRepository.SaveUser (users);
         }
 
         /// <summary>
@@ -156,40 +148,39 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public UsersDTO GetUserById(string Id)
-        {
-            var user = this._userRepository.GetUserById(Id);
+        public UsersDTO GetUserById (string Id) {
+            var user = this._userRepository.GetUserById (Id);
 
-            UsersDTO usersDTO = new UsersDTO();
-                usersDTO.Id = user.Id;
-                usersDTO.FirstName = user.FirstName;
-                usersDTO.LastName = user.LastName;
-                usersDTO.IsActive = user.IsActive;
-                usersDTO.Password = user.Password;
-                usersDTO.DOB = user.DOB;
-                usersDTO.Address1 = user.Address1;
-                usersDTO.Address2 = user.Address2;
-                usersDTO.City = user.City;
-                usersDTO.StateId = user.StateId;
-                usersDTO.Pincode = user.Pincode;
-                usersDTO.Email = user.Email;
-                usersDTO.Mobile = user.Mobile;
-                usersDTO.GroupId = user.GroupId;
-                usersDTO.StateId = user.StateId;
-                usersDTO.DesignationId = user.DesignationId;
-                usersDTO.TeamId = user.TeamId;
-                usersDTO.Note = user.Note;
-                usersDTO.CreatedDate = user.CreatedDate;
-                usersDTO.ModifiedDate = user.ModifiedDate;
-                usersDTO.IsDeleted = user.IsDeleted;
-                usersDTO.IsAdmin = user.IsAdmin;
-                usersDTO.IsContributor = user.IsContributor;
-                usersDTO.UserType = user.UserType;
-                usersDTO.Team = user.TeamId != null? _masterService.GetMasterById (user.TeamId) : null;
-                usersDTO.Group = user.GroupId != null? _masterService.GetMasterById (user.GroupId) : null;
-                usersDTO.Designation = user.DesignationId != null? _masterService.GetMasterById (user.DesignationId) : null;
+            UsersDTO usersDTO = new UsersDTO ();
+            usersDTO.Id = user.Id;
+            usersDTO.FirstName = user.FirstName;
+            usersDTO.LastName = user.LastName;
+            usersDTO.IsActive = user.IsActive;
+            usersDTO.Password = user.Password;
+            usersDTO.DOB = user.DOB;
+            usersDTO.Address1 = user.Address1;
+            usersDTO.Address2 = user.Address2;
+            usersDTO.City = user.City;
+            usersDTO.StateId = user.StateId;
+            usersDTO.Pincode = user.Pincode;
+            usersDTO.Email = user.Email;
+            usersDTO.Mobile = user.Mobile;
+            usersDTO.GroupId = user.GroupId;
+            usersDTO.StateId = user.StateId;
+            usersDTO.DesignationId = user.DesignationId;
+            usersDTO.TeamId = user.TeamId;
+            usersDTO.Note = user.Note;
+            usersDTO.CreatedDate = user.CreatedDate;
+            usersDTO.ModifiedDate = user.ModifiedDate;
+            usersDTO.IsDeleted = user.IsDeleted;
+            usersDTO.IsAdmin = user.IsAdmin;
+            usersDTO.IsContributor = user.IsContributor;
+            usersDTO.UserType = user.UserType;
+            usersDTO.Team = user.TeamId != null? _masterService.GetMasterById (user.TeamId) : null;
+            usersDTO.Group = user.GroupId != null? _masterService.GetMasterById (user.GroupId) : null;
+            usersDTO.Designation = user.DesignationId != null? _masterService.GetMasterById (user.DesignationId) : null;
 
-                return usersDTO;
+            return usersDTO;
         }
 
         /// <summary>
@@ -197,9 +188,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        public bool UpdateUser(UsersDTO usersDTO)
-        {
-            return this._userRepository.UpdateUser(this._mapper.Map<Users>(usersDTO));
+        public bool UpdateUser (UsersDTO usersDTO) {
+            return this._userRepository.UpdateUser (this._mapper.Map<Users> (usersDTO));
         }
 
         /// <summary>
@@ -207,9 +197,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool ActivateUser(string userId)
-        {
-            return this._userRepository.ActiveUsers(userId);
+        public bool ActivateUser (string userId) {
+            return this._userRepository.ActiveUsers (userId);
         }
 
         /// <summary>
@@ -217,19 +206,17 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool InactivateUser(string userId)
-        {
-            return this._userRepository.InactivateUsers(userId);
+        public bool InactivateUser (string userId) {
+            return this._userRepository.InactivateUsers (userId);
         }
 
         /// <summary>
         /// Get the count and content for dashboard
         /// </summary>
         /// <returns></returns>
-        public DashboardDTO GetDashboardInfo()
-        {
-            DashboardDTO dashboardDTO = new DashboardDTO();
-            dashboardDTO.UserCount = _userRepository.UsersCount();
+        public DashboardDTO GetDashboardInfo () {
+            DashboardDTO dashboardDTO = new DashboardDTO ();
+            dashboardDTO.UserCount = _userRepository.UsersCount ();
 
             return dashboardDTO;
         }
@@ -239,9 +226,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool DeleteUser(string userId)
-        {
-            return this._userRepository.DeleteUsers(userId);
+        public bool DeleteUser (string userId) {
+            return this._userRepository.DeleteUsers (userId);
         }
 
         /// <summary>
@@ -249,9 +235,8 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public bool IsEmailExist(string email)
-        {
-            return _userRepository.IsEmailExist(email);
+        public bool IsEmailExist (string email) {
+            return _userRepository.IsEmailExist (email);
         }
 
         /// <summary>
@@ -259,9 +244,17 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="email"></param>
         /// <returns>true/false</returns>
-        public bool MarkUserAsAdmin(string userId)
-        {
-            return _userRepository.MarkUserAsAdmin(userId);
+        public bool MarkUserAsAdmin (string userId) {
+            return _userRepository.MarkUserAsAdmin (userId);
+        }
+
+        /// <summary>
+        /// Remove user as a admin access
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true/false</returns>
+        public bool RemoveUserAdminAccess (string userId) {
+            return _userRepository.RemoveUserAdminAccess (userId);
         }
         #endregion
 

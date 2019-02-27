@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { commonService } from 'src/app/common/services/common.service';
-import { Http } from '@angular/http';
-import swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { commonService } from "src/app/common/services/common.service";
+import { Http } from "@angular/http";
+import swal from "sweetalert2";
+import { ToastrService } from "ngx-toastr";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 interface paginationModel {
   pageNumber: number;
   pageSize: number;
@@ -13,17 +13,16 @@ interface paginationModel {
 }
 
 @Component({
-  selector: 'employee-list',
-  templateUrl: './employeelist.html',
+  selector: "employee-list",
+  templateUrl: "./employeelist.html",
   providers: [commonService]
 })
 export class EmployeeListComponent implements OnInit {
-
   public employeeModel: any = {
-    "totalRecords": 0,
-    "pageSize": 10,
-    "pageNumber": 1
-  }
+    totalRecords: 0,
+    pageSize: 10,
+    pageNumber: 1
+  };
   public i: Number = 0;
   public startrecordno: Number = 1;
   public endrecord: Number = 1;
@@ -31,13 +30,19 @@ export class EmployeeListComponent implements OnInit {
   public totalItems = 0;
   public employeeList = [];
   public statusUrl: any;
-  employeeData: any = { totalRecords: '' };
+  employeeData: any = { totalRecords: "" };
 
   // Constructor
 
-  constructor( private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) { }
+  constructor(
+    private ngxService: NgxUiLoaderService,
+    public router: Router,
+    private CommonService: commonService,
+    public http: Http,
+    private toastr: ToastrService
+  ) {}
   showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+    this.toastr.success("Hello world!", "Toastr fun!");
   }
   // Lifecycle method
 
@@ -71,7 +76,7 @@ export class EmployeeListComponent implements OnInit {
   // Function to get list of employees
   fn_GetEmployeeList() {
     this.ngxService.start();
-    const url = 'api/Employee/GetEmployees';
+    const url = "api/Employee/GetEmployees";
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
         this.employeeList = data.data;
@@ -79,7 +84,7 @@ export class EmployeeListComponent implements OnInit {
         this.employeeModel.totalRecords = data.totalRecords;
       },
       err => console.error(err),
-      () => { }
+      () => {}
     );
   }
 
@@ -87,35 +92,70 @@ export class EmployeeListComponent implements OnInit {
   fn_deleteEmployee(Id) {
     if (Id != null) {
       swal({
-        title: 'Are you sure?',
-        text: 'You want to delete the Employee!',
+        title: "Are you sure?",
+        text: "You want to delete the Employee!",
         buttonsStyling: true,
-        confirmButtonClass: 'btn btn-success',
+        confirmButtonClass: "btn btn-success",
         showCancelButton: true,
-        cancelButtonClass: 'btn btn-danger',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonClass: "btn btn-danger",
+        confirmButtonText: "Yes, delete it!"
       }).then(x => {
         if (x.value == true) {
-          const url = 'api/Employee/DeleteEmployee';
+          const url = "api/Employee/DeleteEmployee";
           const model = {
-            id: ''
+            id: ""
             // deletedBy: 0
           };
           model.id = Id;
           // obj_SearchDetails.deletedBy = 1;
           this.fn_delfun(url, model);
         }
-
       });
     }
+  }
+
+  fn_ProvideAdminAccess(id) {
+    swal({
+      title: "Are you sure?",
+      text: "You want to provide the admin access!",
+      buttonsStyling: true,
+      confirmButtonClass: "btn btn-success",
+      showCancelButton: true,
+      cancelButtonClass: "btn btn-danger",
+      confirmButtonText: "Yes"
+    }).then(x => {
+      if (x.value == true) {
+        this.statusUrl = "api/User/MarkUserAsAdmin";
+        this.toastr.success("Admin access has been removed!");
+
+        const adminStatusModel = {
+          id: id
+        };
+        this.fn_ProvideAdminAccessApi(this.statusUrl, adminStatusModel);
+      }
+    });
+  }
+
+  //function to save status change
+  fn_ProvideAdminAccessApi(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
+      const rs = result;
+      if (rs.statusCode === 200) {
+        this.ngxService.stop();
+        this.fn_GetEmployeeList();
+      } else {
+        this.toastr.error("Something went wrong!");
+      }
+    });
   }
 
   // function for soft deleting the Employee.
   fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
-      if ((result.message = 'Success')) {
-        this.toastr.success('Employee details deleted successfully!');
+      if ((result.message = "Success")) {
+        this.toastr.success("Employee details deleted successfully!");
         this.fn_GetEmployeeList();
       }
     });
@@ -124,26 +164,25 @@ export class EmployeeListComponent implements OnInit {
   // function to change isActive status
   fn_ChangeStatus(id, isActive) {
     swal({
-      title: 'Are you sure?',
-      text: 'You want to change the status!',
+      title: "Are you sure?",
+      text: "You want to change the status!",
       buttonsStyling: true,
-      confirmButtonClass: 'btn btn-success',
+      confirmButtonClass: "btn btn-success",
       showCancelButton: true,
-      cancelButtonClass: 'btn btn-danger',
-      confirmButtonText: 'Yes'
+      cancelButtonClass: "btn btn-danger",
+      confirmButtonText: "Yes"
     }).then(x => {
       if (x.value == true) {
         if (isActive == true) {
-          this.statusUrl = 'api/Employee/InactivateEmployee';
-          this.toastr.success('Inactivated employee details');
-        }
-        else {
-          this.statusUrl = 'api/Employee/ActivateEmployee';
-          this.toastr.success('Activated employee details');
+          this.statusUrl = "api/Employee/InactivateEmployee";
+          this.toastr.success("Inactivated employee details");
+        } else {
+          this.statusUrl = "api/Employee/ActivateEmployee";
+          this.toastr.success("Activated employee details");
         }
         const employeeStatusModel = {
-          "id": id,
-        }
+          id: id
+        };
         this.fn_saveStatusChange(this.statusUrl, employeeStatusModel);
       }
     });
@@ -155,9 +194,7 @@ export class EmployeeListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.fn_GetEmployeeList();
-      }
-      else {
-
+      } else {
       }
     });
   }

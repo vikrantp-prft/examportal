@@ -1,16 +1,22 @@
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { NgxUiLoaderModule } from "ngx-ui-loader";
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginComponent } from './login.component';
+import { LoginRoutingModule } from "./login-routing.module";
+import { LoginComponent } from "./login.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        LoginRoutingModule,NgxUiLoaderModule],
-    declarations: [LoginComponent]
+  imports: [
+    CommonModule,
+    TranslateModule,
+    LoginRoutingModule,
+    NgxUiLoaderModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+
+  declarations: [LoginComponent]
 })
 export class LoginModule {}

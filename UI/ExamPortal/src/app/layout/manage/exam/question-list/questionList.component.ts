@@ -247,7 +247,6 @@ export class questionListComponent implements OnInit {
     this.getQuestionsList();
   }
   editQuestion(questionID) {
-    debugger;
     this.resetAll();
     this.ngxService.start();
     this.getQuestionDetails(questionID);
@@ -386,7 +385,6 @@ export class questionListComponent implements OnInit {
 
       if ( formData.value.questionType != "subjective" )
       {
-        debugger;
         if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
           this.displayErrorOption = true;
           return false;
