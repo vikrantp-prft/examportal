@@ -91,7 +91,7 @@ export class AdminUserListComponent implements OnInit {
     });
   }
 
-  fn_RemoveAdminAccess(id, isActive) {
+  fn_RemoveAdminAccess(id) {
     swal({
       title: "Are you sure?",
       text: "You want to remove the admin access!",
@@ -102,19 +102,19 @@ export class AdminUserListComponent implements OnInit {
       confirmButtonText: "Yes"
     }).then(x => {
       if (x.value == true) {
-        this.statusUrl = "api/User/MarkUserAsAdmin";
+        this.statusUrl = "api/User/RevokeAdminAccess";
         this.toastr.success("Admin access has been removed!");
 
         const adminStatusModel = {
           id: id
         };
-        this.fn_removeAdminAccess(this.statusUrl, adminStatusModel);
+        this.fn_removeAdminAccessApi(this.statusUrl, adminStatusModel);
       }
     });
   }
 
   //function to save status change
-  fn_removeAdminAccess(url, data) {
+  fn_removeAdminAccessApi(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       this.ngxService.start();
       const rs = result;
