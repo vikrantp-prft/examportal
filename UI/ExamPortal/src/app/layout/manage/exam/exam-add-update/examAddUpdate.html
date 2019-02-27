@@ -99,7 +99,7 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label for="Exam Active From">Active From (DD/MM/YYYY)</label>
+                  <label for="Exam Active From">Active From (MM/DD/YYYY)</label>
                   <span class="text-danger">*</span>
                   <input type="date" class="form-control" formControlName="fromDate" #fromDate>
                   <app-field-error-display [displayError]="isFieldValid(addExamForm, 'fromDate')" errorMsg="Enter valid date">
@@ -108,7 +108,7 @@
               </div>
               <div class="col-6">
                 <div class="form-group">
-                  <label for="Exam Active Till">To (DD/MM/YYYY)</label>
+                  <label for="Exam Active Till">To (MM/DD/YYYY)</label>
                   <span class="text-danger">*</span>
                   <input type="date" class="form-control" formControlName="toDate" #toDate>
                   <app-field-error-display [displayError]="isFieldValid(addExamForm, 'toDate')" errorMsg="Enter valid date">
