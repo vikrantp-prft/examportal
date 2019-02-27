@@ -54,7 +54,7 @@ export class TraineeListComponent implements OnInit {
 
   fn_GetTraineeList() {
     
-    const url = 'api/Employee/GetEmployees';
+    const url = 'api/Aspirants/GetAspirants';
 
     this.CommonService.fn_PostWithData(this.traineeModel, url).subscribe(
       (data: any) => {        
