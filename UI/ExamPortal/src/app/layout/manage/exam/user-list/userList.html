@@ -56,7 +56,7 @@
                         <tr *ngFor="let user of userList; let i = index">
                             <td style="text-align:center;">
                                 <div>
-                                    <input type="checkbox" value="isAssign" (change)="fn_isAssign($event,user.id)">
+                                    <input type="checkbox" value="isAssign" [checked]="user.isExamAssigned" (change)="fn_isAssign($event,user.id)">
                                 </div>
                             </td>
                             <td>{{user.firstName}} {{user.lastName}}</td>

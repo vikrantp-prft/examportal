@@ -12,7 +12,7 @@ namespace PerftEvaluation.BAL.Services {
     public class AssignedExamsService : IAssignedExamsService {
         protected readonly IAssignedExamsRepository _assignedExamsRepository;
         protected readonly IExamsRepository _examsRepository;
-
+        protected readonly IMasterService _masterService;
         protected readonly IExamsService _examsService;
 
         protected readonly IEmployeeRepository _employeeRepository;
@@ -23,13 +23,15 @@ namespace PerftEvaluation.BAL.Services {
             IExamsRepository examsRepository,
             IEmployeeRepository employeeRepository,
             IEmployeeService employeeService,
-            IExamsService examsService) {
+            IExamsService examsService,
+            IMasterService masterService) {
             this._mapper = mapper;
             this._assignedExamsRepository = assignedExamsRepository;
             this._examsRepository = examsRepository;
             this._employeeRepository = employeeRepository;
             this._employeeService = employeeService;
             this._examsService = examsService;
+            this._masterService = masterService;
         }
 
         /// <summary>
@@ -95,13 +97,14 @@ namespace PerftEvaluation.BAL.Services {
                 user.IsActive = item.IsActive;
                 user.Id = item.Id;
                 user.IsDeleted = item.IsDeleted;
+                user.Team = item.TeamId != null ? _masterService.GetMasterById (item.TeamId) : null;
                 user.IsExamAssigned = _assignedExamsRepository.ExamAssignmentCheck (item.Id, requestModel.Id);
 
                 userList.Add (user);
             }
 
             //Filter & sort the data
-            var filteredUsers = userList.AsQueryable().SortAndFilter (requestModel, DbFilters.UserFilters);
+            var filteredUsers = userList.AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
             //Integrate pagination
             var users = filteredUsers.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
             //return object
