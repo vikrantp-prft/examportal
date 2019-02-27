@@ -37,7 +37,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <returns>Exams List</returns>
         public IEnumerable<AssignedExams> GetAssignedExamsByUserId (string userId) {
             try {
-                return _db.GetCollection<AssignedExams> (AssignedExams.CollectionName).AsQueryable ().Where (x => x.UserId == userId).ToList ();
+                return _db.GetCollection<AssignedExams> (AssignedExams.CollectionName).AsQueryable ().Where (x => x.UserId == userId && x.IsActive == true).ToList ();
             } catch (Exception ex) {
                 throw ex;
             }
