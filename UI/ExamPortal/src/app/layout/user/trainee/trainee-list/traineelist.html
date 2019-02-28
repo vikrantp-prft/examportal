@@ -18,23 +18,20 @@
                 </select>
               </div>
             </div>
-            <!-- <div class="col">
-              <button class="btn btn-md btn-primary" [routerLink]="['/user/quickaddtraineeuser']">Quick Add Aspirant
-              </button>
-            </div> -->
+          
             <div class="col">
               <button type="button" class="btn btn-md btn-primary" [routerLink]="['/user/addtraineeuser']">
                 Add
               </button>
             </div>
-            
+
             <div class="col-md-3">
               <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
                 class="form-control" />
               <a href="#" class="search-icon">
                 <i class="fa fa-search"></i>
               </a>
-            </div>            
+            </div>
           </div>
         </div>
         <div class="card-body pb-0 table-responsive">
@@ -49,31 +46,33 @@
               </tr>
             </thead>
             <tbody>
+              <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let trainee of traineeList; let i = index">
                 <td>{{i+1}}</td>
                 <td>{{trainee.firstName}}</td>
                 <td>{{trainee.email}}</td>
                 <td>{{trainee.mobile}}</td>
                 <td>
-                  <!-- <button type="button" rel="tooltip" (click)="fn_getEmployee(emp.id)">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>&nbsp; -->
-                  <button class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(trainee.id, trainee.isActive)" title="Change Status">
-                    <i class="fa" [ngClass]="{'fa-toggle-on text-success': trainee.isActive, 'fa-toggle-off text-danger': !trainee.isActive}"
+                  <button class="btn btn-md mx-1" type="button" rel="tooltip"
+                    (click)="fn_ChangeStatus(trainee.id, trainee.isActive)" title="Change Status">
+                    <i class="fa"
+                      [ngClass]="{'fa-toggle-on text-success': trainee.isActive, 'fa-toggle-off text-danger': !trainee.isActive}"
                       aria-hidden="true"></i>
                   </button>
-                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteTrainee(trainee.id)" title="Delete Trainee">
+                  <button class="btn btn-md" type="button" rel="tooltip" (click)="fn_deleteTrainee(trainee.id)"
+                    title="Delete Trainee">
                     <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>
-              
+
             </tbody>
           </table>
         </div>
-        <pagination class="pull-right pr-2" [totalItems]="traineeModel.totalRecords" [itemsPerPage]="traineeModel.pageSize"
-          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false"
-          previousText="PREVIOUS" nextText="NEXT" firstText="FIRST" lastText="LAST"></pagination>
+        <pagination class="pull-right pr-2" [totalItems]="traineeModel.totalRecords"
+          [itemsPerPage]="traineeModel.pageSize" (pageChanged)="pageChanged($event)" [maxSize]="3"
+          [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+          lastText="LAST"></pagination>
       </div>
     </div>
   </div>

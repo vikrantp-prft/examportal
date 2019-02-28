@@ -121,7 +121,6 @@ export class AddTraineeUserComponent implements OnInit {
   }
 
   fn_saveTrainee(value) {
-    console.log("Hi");
     if (this.traineeForm.valid) {
       console.log(this.traineeForm.valid);
       if (this.educationArray.length === 0) {
