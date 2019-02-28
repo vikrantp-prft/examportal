@@ -49,8 +49,6 @@ namespace PerftEvaluation.DTO.Dtos
         [Required]
         public string Mobile { get; set; }
 
-        [Required]
-        public string TeamId { get; set; }
         public string Note { get; set; }
 
          public string[] Interest { get; set; }
@@ -65,9 +63,6 @@ namespace PerftEvaluation.DTO.Dtos
 
         [Required]
         public UsersEnum UserType { get; set; }
-
-        public MastersDTO Team { get; set; }
-
     }
 
     public class EducationsDetailsDTO

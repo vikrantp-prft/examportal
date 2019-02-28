@@ -102,33 +102,49 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                var attemptedQuestionsList = _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName).AsQueryable().Where(x => x.ExamId == examId && x.UserId == userId).ToList();
-
-                Results generate = new Results();
-                generate.ExamId = examId;
-                generate.UserId = userId;
-                generate.QuestionsAttempted = attemptedQuestionsList.Count();
-                generate.ObtainedMarks = attemptedQuestionsList.Where(x => x.IsCorrect == true).Count();
-                generate.TotalMarks = _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.ExamId == examId && x.IsActive == true && x.IsDeleted == false).Count();
-                generate.IsDeleted = false;
-                generate.IsActive = true;
-
-                if (this.SaveResults(generate))
+                var isAttempted = ExamAttempted(examId, userId);
+                if (isAttempted)
                 {
-                    return generate;
-                }
-                else
-                {
-                    return null;
-                }
+                    var attemptedQuestionsList = _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName).AsQueryable().Where(x => x.ExamId == examId && x.UserId == userId).ToList();
 
+                    Results generate = new Results();
+                    generate.ExamId = examId;
+                    generate.UserId = userId;
+                    generate.QuestionsAttempted = attemptedQuestionsList.Count();
+                    generate.ObtainedMarks = attemptedQuestionsList.Where(x => x.IsCorrect == true).Count();
+                    generate.TotalMarks = _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.ExamId == examId && x.IsActive == true && x.IsDeleted == false).Count();
+                    generate.IsDeleted = false;
+                    generate.IsActive = true;
 
+                    if (this.SaveResults(generate))
+                    {
+                        return generate;
+                    }
+                }
+                return null;
 
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+
+        /// <summary>
+        /// Exam attempted true
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool ExamAttempted(string examId, string userId)
+        {
+            var filter = Builders<AssignedExams>.Filter;
+            var filterDef = filter.And(filter.Eq(c => c.ExamId, examId), filter.Eq(c => c.UserId, userId));
+            var updateQuery = Builders<AssignedExams>.Update
+            .Set(c => c.IsAttempted, true);
+
+            return _db.UpdateOne<AssignedExams>(filterDef, updateQuery, AssignedExams.CollectionName);
         }
     }
 }
