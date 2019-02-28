@@ -54,7 +54,7 @@ namespace PerftEvaluation.Entities.POCOEntities {
 
         [BsonElement ("totalQuestions")]
 
-        public int TotalQuestions { get; set; }
+        public int? TotalQuestions { get; set; }
 
         [BsonElement ("isFeedback")]
         public bool IsFeedback { get; set; }
