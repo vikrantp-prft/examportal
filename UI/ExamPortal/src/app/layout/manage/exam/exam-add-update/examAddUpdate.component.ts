@@ -47,28 +47,40 @@ export class examAddUpdateComponent implements OnInit {
 
 
   onSubmit = function (formData) {
-    if (this.addExamForm.valid) {
-      this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {
-        const rs = result;
-        if (rs.statusCode == 200) {
-          this.toastr.success('Exam details added successfully!');
-          this.router.navigate(['manage/examlist']);
-        }
-        else {
-          this.toastr.console.error('Failed to add Exam details');
-        }
-      });
-    }
-    else {
-      this.commonService.validateAllFormFields(this.addExamForm);
-      this.toastr.error('Please fill required details');
-      return false;
+    if (this.fn_validateDuration()) {
+      if (this.addExamForm.valid) {
+        this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {
+          const rs = result;
+          if (rs.statusCode == 200) {
+            this.toastr.success('Exam details added successfully!');
+            this.router.navigate(['manage/examlist']);
+          }
+          else {
+            this.toastr.console.error('Failed to add Exam details');
+          }
+        });
+      }
+      else {
+        this.commonService.validateAllFormFields(this.addExamForm);
+        this.toastr.error('Please fill required details');
+        return false;
+      }
     }
   }
 
   // function to display the error message for  validation.
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
+  }
+
+  fn_validateDuration() {
+    if ((this.addExamForm.controls.examDurationHours.value == '0') && (this.addExamForm.controls.examDurationMinutes.value == '00')) {
+      this.toastr.error("Enter valid duration");
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   ngOnInit() {
