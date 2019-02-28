@@ -1,8 +1,7 @@
 <div class="container-fluid">
   <nav class="navbar navbar-expand-md navbar-white bg-white">
     <img src="assets/images/prft.png" class="logo" alt="">
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarsExampleDefault"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,29 +31,21 @@
           <div class="row">
             <div class="col-md-9">
               <div class="card">
-                <!-- <div class="card-header p-0">
-                  <ul class="nav">
-                    <li *ngFor="let category of questionCategory" [ngClass]="{'btn-primary': false}"
-                      class="nav-item nav-pills py-2 nav-fill">
-                      <a class="nav-link border-0">{{category}}</a>
-                    </li>
-                  </ul>
-                </div> -->
                 <div class="card-body">
                   <pre class="core-pre p-4" innerHTML="{{currentQuestionIndex + '. ' +
-                    currentQuestion}}"></pre>
+                    currentQuestion}}">
+                  </pre>
 
                   <div class="" *ngIf="currentQuestionQuestionType == 0">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input type="radio" name="radioOption" id="">
+                      <input (change)="setOptionIdArray($event)" type="radio" name="radioOption" id="" value="{{option?.optionId}}">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                     </div>
                   </div>
-
                   <div class="" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input class="ml-3" type="checkbox">
+                      <input class="ml-3" type="checkbox" value="{{option?.optionId}}" (change)="setOptionIdArray($event)">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                     </div>
@@ -62,20 +53,16 @@
                   <div class="" *ngIf="currentQuestionQuestionType == 2">
                     <div class="form-group">
                       <label for="exampleFormControlTextarea1">Ans.</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"
-                        placeholder="Enter your answer"></textarea>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"></textarea>
                     </div>
                   </div>
+
                 </div>
                 <div class="card-footer">
-                  <!-- <input type="submit" value="Next »" class="btn btn-primary" onclick="setAnswer();"> -->
-                  <button class="btn btn-primary" (click)="fn_previous()">
+                  <button class="btn btn-primary" (click)="fn_previous()" [disabled]="currentQuestionIndex == 1">
                     Previous
                   </button>
-                  <button disabled class="btn btn-primary mx-3" (click)="fn_next()">
-                    Save & Next
-                  </button>
-                  <button class="btn btn-primary" (click)="fn_next()">
+                  <button class="ml-1 btn btn-primary" (click)="fn_next()" [disabled]="currentQuestionIndex == totalQuestion">
                     Next
                   </button>
                   <button (click)="fn_endExam()" class="btn btn-primary pull-right">
@@ -91,8 +78,7 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <button class="m-1 col-md-2 btn btn-md btn-danger" (click)="jumpToQuestion(i)"
-                      *ngFor="let q of question; let i=index">{{i+1}}</button>
+                    <button class="m-1 col-md-2 btn btn-md btn-danger" (click)="jumpToQuestion(i)" *ngFor="let q of question; let i=index">{{i+1}}</button>
                   </div>
                 </div>
               </div>
@@ -126,7 +112,7 @@
             </li>
           </ol>
           <div class="row" *ngIf="item?.questionType == 2">
-            <textarea class="col-8" name="" id=""  rows="10"></textarea>
+            <textarea class="col-8" name="" id="" rows="10"></textarea>
           </div>
           <hr>
         </li>

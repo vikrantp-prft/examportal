@@ -51,9 +51,10 @@
                 </i>
               </td>
               <td>
-                <button [disabled]="item?.isAttempted" [routerLink]="[ '/instruction', item?.examId]" class="btn btn-md btn-primary">
+                <button [hidden]="item?.isAttempted" [disabled]="item?.isAttempted" [routerLink]="[ '/instruction', item?.examId]" class="btn btn-md btn-primary">
                   Start test
                 </button>
+                <label [hidden]="!item?.isAttempted" class="text-success font-weight-bold">Attempted </label>
               </td>
             </tr>
           </tbody>

@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { commonService } from 'src/app/common/services/common.service';
 import swal from 'sweetalert2';
+import { FormGroup, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -28,12 +29,16 @@ export class ExamComponent implements OnInit {
     public examDurationHours: number;
     public examDurationMinutes: number;
     public counter: number;
-    public isFeedback: boolean; 
-    hours: number;
-    minute: number;
-    second: number;
-    totalMinute: number;
-    totalSecond: number;
+    public isFeedback: boolean;
+    public hours: number;
+    public minute: number;
+    public second: number;
+    public totalMinute: number;
+    public totalSecond: number;
+    public currentQuestionQuestionId: string;
+    public optionIdArray: string[] = [];
+    // public radioOptionId: string;
+
 
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
@@ -44,6 +49,9 @@ export class ExamComponent implements OnInit {
         this.getExamDetails();
         this.getQuestionList();
     }
+    optionForm = new FormGroup({
+        multipleSelect: new FormControl('')
+    });
     getExamDetails() {
         const examDetailModel = {
             "id": this.examID
@@ -57,17 +65,15 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode === 200) {
                 this.examDetail = rs.data;
-                //console.log(this.examDetail);
                 this.examName = rs.data.title;
-                this.isFeedback = rs.data.isFeedback ;
-                //console.log(this.isFeedback);
+                this.isFeedback = rs.data.isFeedback;
                 this.examDurationHours = rs.data.examDurationHours;
                 this.examDurationMinutes = rs.data.examDurationMinutes;
-                this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes ;
-                this.totalSecond = this.totalMinute * 60 ;
                 this.ngxService.stop();
+                this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes;
+                this.totalSecond = this.totalMinute * 60;
                 this.startCountdown(this.totalSecond);
-                
+
             }
         });
     }
@@ -85,13 +91,13 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
-                console.log(this.question)
+                this.ngxService.stop();
+                this.totalQuestion = this.question.length;
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
-                this.ngxService.stop();
+                this.currentQuestionQuestionId = this.question[0].id;
                 this.getAllQuestionCategory();
-                
             }
         });
     }
@@ -114,25 +120,49 @@ export class ExamComponent implements OnInit {
         this.currentQuestionOptionType = this.question[questionId].options;
     }
     setCurrentQuestionAndOption() {
-        if (this.currentQuestionIndex == 0) {
-            this.currentQuestionIndex = this.question.length;
-        }
-        if (this.currentQuestionIndex == (this.question.length + 1)) {
-            this.currentQuestionIndex = 1;
-        }
         if (this.currentQuestionIndex < (this.question.length + 1)) {
             this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
             this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
             this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
         }
     }
+    setCurrentQuestionQuestionId(myId) {
+        this.currentQuestionQuestionId = this.question[myId].id;
+    }
     fn_previous() {
         this.currentQuestionIndex--;
         this.setCurrentQuestionAndOption();
     }
     fn_next() {
+        this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
+        // console.log(this.currentQuestionQuestionId);
         this.currentQuestionIndex++;
+        // this.currentQuestionQuestionId = this.
         this.setCurrentQuestionAndOption();
+        this.SaveAttemptedQuestionsById();
+    }
+    SaveAttemptedQuestionsById() {
+        const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
+        const model = {
+            "QuestionsId": this.currentQuestionQuestionId,
+            "selectedOptionId": this.optionIdArray,
+            "userId": "5c53e96bad3abd0eec04b09a",
+            "ExamId": this.examID,
+            "isAttempted": true,
+            "subjectiveAnswer": ""
+        }
+        this.fn_SaveAttemptedQuestionsById(model, url);
+    }
+    fn_SaveAttemptedQuestionsById(model, url) {
+        this.ngxService.start();
+        this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
+            const rs = result;
+            if (rs.statusCode == 200) {
+                this.optionIdArray = [];
+                this.ngxService.stop();
+            }
+
+        });
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
@@ -157,6 +187,30 @@ export class ExamComponent implements OnInit {
     
           });
     }
+    setOptionIdArray(event: any) {
+        // console.log(event)
+        // console.log(event.target.type)
+        // console.log(event.target.checked)
+        if (event.target.type == 'checkbox') {
+            if (event.target.checked == true) {
+                this.optionIdArray.push(event.target.value);
+            } else {
+                this.optionIdArray.splice(this.optionIdArray.indexOf(event.target.value), 1)
+            }
+            // console.log(this.optionIdArray)
+        }
+        if (event.target.type == 'radio') {
+            if (event.target.checked == true) {
+                this.optionIdArray = [];
+                this.optionIdArray.push(event.target.value);
+            } else {
+                this.optionIdArray.pop()
+            }
+            // console.log(this.optionIdArray)
+        }
+
+    }
+
     startCountdown(seconds) {
         this.counter = seconds;
         var interval = setInterval(() => {
