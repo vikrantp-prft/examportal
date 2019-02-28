@@ -39,44 +39,43 @@ export class AddTraineeUserComponent implements OnInit {
   ]
 
   constructor(private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http,
-    private formBuilder: FormBuilder, private toastr: ToastrService) { 
+    private formBuilder: FormBuilder, private toastr: ToastrService) {
 
-      this.traineeForm = this.formBuilder.group({
-        firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
-        middleName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
-        lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
-        dob: [null, [Validators.required]],
-        mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
-        address1: [null, [Validators.required, Validators.maxLength(100)]],
-        address2: new FormControl(''),
-        city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
-        stateId: ["", [Validators.required]],
-        pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
-        currentAddress1: [null, [Validators.required, Validators.maxLength(100)]],
-        currentAddress2: new FormControl(''),
-        currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
-        currentStateId: ["", [Validators.required]],
-        currentPincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
-        note: new FormControl(''),
-        email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
-        password: [null, [Validators.required, Validators.pattern(appConfig.pattern.PASSWORD), Validators.maxLength(20)]],
-        courseId: new FormControl(''),
-        yearOfPassing: new FormControl(''),
-        institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
-        percentage: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
-        interest: new FormArray([]),
-        educationDetails: new FormArray([])
-        })
-    }
+    this.traineeForm = this.formBuilder.group({
+      firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      middleName: new FormControl(''),
+      lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      dob: [null, [Validators.required]],
+      mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
+      address1: [null, [Validators.required, Validators.maxLength(100)]],
+      address2: new FormControl(''),
+      city: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
+      stateId: ["", [Validators.required]],
+      pincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
+      currentAddress1: [null, [Validators.required, Validators.maxLength(100)]],
+      currentAddress2: new FormControl(''),
+      currentCity: [null, [Validators.required, Validators.pattern(appConfig.pattern.CITY), Validators.maxLength(30)]],
+      currentStateId: ["", [Validators.required]],
+      currentPincode: [null, [Validators.required, Validators.pattern(appConfig.pattern.PINCODE), Validators.maxLength(6)]],
+      note: new FormControl(''),
+      email: [null, [Validators.required, Validators.pattern(appConfig.pattern.EMAIL)]],
+      courseId: new FormControl(''),
+      yearOfPassing: new FormControl(''),
+      institution: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DESCRIPTION), Validators.maxLength(30)]],
+      percentage: new FormControl(''),//[null, [Validators.required, Validators.pattern(appConfig.pattern.DECIMAL)]],
+      interest: new FormArray([]),
+      educationDetails: new FormArray([])
+    })
+  }
 
   ngOnInit() {
     this.fn_getState();
     this.fn_getCourse();
     this.updateEducationButton = false;
     this.addEducationButton = true;
-   }
+  }
 
-    //function to get course
+  //function to get course
   fn_getCourse() {
     const url = 'api/Dropdown/Degrees';
     this.ngxService.start();
@@ -101,8 +100,8 @@ export class AddTraineeUserComponent implements OnInit {
     });
   }
 
-   //function to get state
-   fn_getState() {
+  //function to get state
+  fn_getState() {
     const stateUrl = 'api/Dropdown/States';
     this.ngxService.start();
     this.CommonService.fn_Get(stateUrl).subscribe((result: any) => {
@@ -110,17 +109,20 @@ export class AddTraineeUserComponent implements OnInit {
       if (stateResult.statusCode === 200) {
         this.stateArray = stateResult.data;
         this.ngxService.stop();
-        } else {
+      } else {
         this.stateArray = null;
       }
     });
   }
 
+  // function to display the error message for  validation.
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
+
   fn_saveTrainee(value) {
-    debugger;
-
     if (this.traineeForm.valid) {
-
+      console.log(this.traineeForm.valid);
       if (this.educationArray.length === 0) {
         this.toastr.error('Please add education details');
         return false;
@@ -138,6 +140,7 @@ export class AddTraineeUserComponent implements OnInit {
         this.fn_saveTraineefun(value.value, saveTraineeurl);
       }
     } else {
+      console.log(this.traineeForm);
       this.CommonService.validateAllFormFields(this.traineeForm);
       this.toastr.error('Please fill required details');
       return false;
@@ -159,30 +162,30 @@ export class AddTraineeUserComponent implements OnInit {
     });
   }
 
-    // Interest check change function
-    fn_onInterestChange(event) {
-      const checkedInterestArray: FormArray = this.traineeForm.get('interest') as FormArray;
-      /* Selected */
-      if (event.target.checked) {
-        // Add a new control in the arrayForm
-        checkedInterestArray.push(new FormControl(event.target.value));
-      }
-      /* unselected */
-      else {
-        // find the unselected element
-        let i: number = 0;
-        checkedInterestArray.controls.forEach((ctrl: FormControl) => {
-          if (ctrl.value == event.target.value) {
-            // Remove the unselected element from the arrayForm
-            checkedInterestArray.removeAt(i);
-            return;
-          }
-          i++;
-        });
-      }
+  // Interest check change function
+  fn_onInterestChange(event) {
+    const checkedInterestArray: FormArray = this.traineeForm.get('interest') as FormArray;
+    /* Selected */
+    if (event.target.checked) {
+      // Add a new control in the arrayForm
+      checkedInterestArray.push(new FormControl(event.target.value));
     }
+    /* unselected */
+    else {
+      // find the unselected element
+      let i: number = 0;
+      checkedInterestArray.controls.forEach((ctrl: FormControl) => {
+        if (ctrl.value == event.target.value) {
+          // Remove the unselected element from the arrayForm
+          checkedInterestArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
 
-    //function to add new course
+  //function to add new course
   fn_addNewCourse() {
     this.courseFlag = false;
     this.fn_getCourseNameById(this.traineeForm.controls.courseId.value);
@@ -310,8 +313,7 @@ export class AddTraineeUserComponent implements OnInit {
     }
   }
 
-  fn_setCurrentAddress(event)
-  {
+  fn_setCurrentAddress(event) {
     if (event.target.checked) {
       debugger;
       this.traineeForm.controls.currentAddress1.setValue(this.traineeForm.controls.address1.value);
@@ -320,7 +322,7 @@ export class AddTraineeUserComponent implements OnInit {
       this.traineeForm.controls.currentStateId.setValue(this.traineeForm.controls.stateId.value);
       this.traineeForm.controls.currentPincode.setValue(this.traineeForm.controls.pincode.value);
     }
-    else{
+    else {
       this.traineeForm.controls.currentAddress1.reset();
       this.traineeForm.controls.currentAddress2.reset();
       this.traineeForm.controls.currentCity.reset();
@@ -329,4 +331,51 @@ export class AddTraineeUserComponent implements OnInit {
     }
   }
 
+  fn_resetEmployeeDetails() {
+
+    console.log("qwerty")
+    this.traineeForm.controls.firstName.reset();
+    this.traineeForm.controls.middleName.reset();
+    this.traineeForm.controls.lastName.reset();
+    this.traineeForm.controls.dob.reset();
+    this.traineeForm.controls.address1.reset();
+    this.traineeForm.controls.address2.reset();
+    this.traineeForm.controls.city.reset();
+    this.traineeForm.controls.pincode.reset();
+    this.traineeForm.controls.stateId.setValue("");
+    this.traineeForm.controls.mobile.reset();
+    this.traineeForm.controls.currentAddress1.reset();
+    this.traineeForm.controls.currentAddress2.reset();
+    this.traineeForm.controls.currentCity.reset();
+    this.traineeForm.controls.currentStateId.setValue("");
+    this.traineeForm.controls.currentPincode.reset();
+    this.traineeForm.controls.email.reset();
+    this.traineeForm.controls.note.reset();
+    this.educationArray = [];
+    this.interestArray.forEach(element => {
+      element.selected = false;
+    });
+    this.fn_resetEducationDetails();
+  }
+
+  fn_checkEmail(event) {
+    var existEmailUrl = "api/User/IsEmailExist";
+    var model =
+    {
+      "condition": event
+    }
+    this.CommonService.fn_PostWithData(model, existEmailUrl).subscribe((result: any) => {
+      this.ngxService.start();
+      const stateResult = result;
+      if (stateResult.statusCode === 200) {
+        if (stateResult.data == true) {
+          this.ngxService.stop();
+          this.emailExist = true;
+        }
+        else {
+          this.emailExist = false;
+        }
+      }
+    });
+  }
 }

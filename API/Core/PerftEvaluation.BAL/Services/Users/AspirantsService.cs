@@ -83,8 +83,6 @@ namespace PerftEvaluation.BAL.Services
             aspirantsDTO.CurrentCity = aspirant.CurrentCity;
             aspirantsDTO.CurrentPincode = aspirant.CurrentPincode;
             aspirantsDTO.CurrentStateId = aspirant.CurrentStateId;
-            aspirantsDTO.Mobile = aspirant.Mobile;
-            aspirantsDTO.TeamId = aspirant.TeamId; aspirantsDTO.Team = aspirant.TeamId != null ? _masterService.GetMasterById(aspirant.TeamId) : null;
             aspirantsDTO.Note = aspirant.Note;
             aspirantsDTO.IsDeleted = aspirant.IsDeleted;
             //employeesDTO.IsEmployee = employee.IsEmployee;
@@ -139,8 +137,6 @@ namespace PerftEvaluation.BAL.Services
                 aspirantsDTO.CurrentPincode = item.CurrentPincode;
                 aspirantsDTO.CurrentStateId = item.CurrentStateId;
                 aspirantsDTO.Mobile = item.Mobile;
-                aspirantsDTO.TeamId = item.TeamId;
-                aspirantsDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
                 aspirantsDTO.Note = item.Note;
                 aspirantsDTO.IsDeleted = item.IsDeleted;
                 aspirantsDTO.CreatedDate = item.CreatedDate;

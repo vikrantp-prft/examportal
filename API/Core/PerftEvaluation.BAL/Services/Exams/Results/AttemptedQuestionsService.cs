@@ -90,10 +90,8 @@ namespace PerftEvaluation.BAL.Services
         {
             try
             {
-                var saveQuestion = this._attemptedQuestionsRepository.SaveAttemptedQuestions(this._mapper.Map<AttemptedQuestions>(attemptedQuestionsDTO));
-
-                if (saveQuestion == true)
-                {
+                
+                
                     string[] correctedOptions = _questionsService.GetCorrectOptionsByQuestionId(attemptedQuestionsDTO.QuestionsId);
 
                     string[] selectedOptions = attemptedQuestionsDTO.SelectedOptionId;
@@ -108,8 +106,9 @@ namespace PerftEvaluation.BAL.Services
                             }
                         }
                     }
-                }
-                return saveQuestion;
+                
+                return this._attemptedQuestionsRepository.SaveAttemptedQuestions(this._mapper.Map<AttemptedQuestions>(attemptedQuestionsDTO));
+
             }
             catch (Exception ex)
             {

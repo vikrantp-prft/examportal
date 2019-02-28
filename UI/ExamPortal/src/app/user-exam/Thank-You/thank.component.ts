@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
     selector: 'app-thank',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./thank.component.css']
 })
 export class ThankComponent implements OnInit {
-    constructor() { }
+    constructor(private ngxService: NgxUiLoaderService) { }
 
     ngOnInit(): void { }
 }

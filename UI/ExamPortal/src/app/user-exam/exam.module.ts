@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InstructionComponent } from './instructions/instruction.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,9 @@ import { ThankComponent } from './Thank-You/thank.component';
         CommonModule,
         TranslateModule,
         ExamRoutingModule,
-        NgxUiLoaderModule
+        NgxUiLoaderModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         ExamComponent, 

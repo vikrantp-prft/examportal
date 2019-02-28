@@ -8,11 +8,13 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services {
+namespace PerftEvaluation.BAL.Services
+{
     /// <summary>
     /// Result's Service class
     /// </summary>
-    public class ResultsService : IResultsService {
+    public class ResultsService : IResultsService
+    {
         protected readonly IResultsRepository _resultsRepository;
 
         protected readonly IExamsRepository _examsRepository;
@@ -27,13 +29,14 @@ namespace PerftEvaluation.BAL.Services {
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
 
-        public ResultsService (IResultsRepository resultsRepository, 
+        public ResultsService(IResultsRepository resultsRepository,
                                IMapper mapper,
                                IExamsRepository examsRepository,
                                IExamsService examsService,
                                IEmployeeRepository employeeRepository,
                                IEmployeeService employeeService,
-                               IQuestionsService questionsService) {
+                               IQuestionsService questionsService)
+        {
             this._resultsRepository = resultsRepository;
             this._mapper = mapper;
             this._examsRepository = examsRepository;
@@ -48,20 +51,22 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="examId"></param>
         /// <returns></returns>
-        public bool DeleteResultsByExamId (string examId) {
-            return this._resultsRepository.DeleteResultsByExamId (examId);
+        public bool DeleteResultsByExamId(string examId)
+        {
+            return this._resultsRepository.DeleteResultsByExamId(examId);
         }
 
         /// <summary>
         /// Get Result's list by Exam ID
         /// </summary>
         /// <value></value>
-        public ResponseModel GetResultsByExamId (RequestModel requestModel) {
+        public ResponseModel GetResultsByExamId(RequestModel requestModel)
+        {
             //Filter & sort the data
-            var filteredResults = this._resultsRepository.GetResultsByExamsId (requestModel.Id).AsQueryable ().SortAndFilter (requestModel, DbFilters.ResultFilters);
+            var filteredResults = this._resultsRepository.GetResultsByExamsId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ResultFilters);
             //Integrate pagination
-            var results = filteredResults.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
-            
+            var results = filteredResults.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+
             //return object
             List<ResultsDTO> resultJoin = new List<ResultsDTO>();
             foreach (var item in results)
@@ -93,21 +98,29 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Result's list by User ID
         /// </summary>
         /// <value></value>
-        public ResponseModel GetResultsByUserId (RequestModel requestModel) {
+        public ResponseModel GetResultsByUserId(RequestModel requestModel)
+        {
             //Filter & sort the data
-            var filteredResults = this._resultsRepository.GetResultsByUsersId (requestModel.Id).AsQueryable ().SortAndFilter (requestModel, DbFilters.ResultFilters);
+            var filteredResults = this._resultsRepository.GetResultsByUsersId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ResultFilters);
             //Integrate pagination
-            var results = filteredResults.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var results = filteredResults.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<ResultsDTO>> (results), (filteredResults.Count () < 100 ? filteredResults.Count () : 100));
+            return CommonResponse.OkResponse(requestModel, this._mapper.Map<IEnumerable<ResultsDTO>>(results), (filteredResults.Count() < 100 ? filteredResults.Count() : 100));
         }
 
         /// <summary>
         /// Save Results
         /// </summary>
         /// <value></value>
-        public bool SaveResults (ResultsDTO resultsDTO) {
-            return this._resultsRepository.SaveResults (this._mapper.Map<Results> (resultsDTO));
+        public bool SaveResults(ResultsDTO resultsDTO)
+        {
+            return this._resultsRepository.SaveResults(this._mapper.Map<Results>(resultsDTO));
+        }
+
+        public ResultsDTO GenerateResults(ResultsDTO resultsDTO)
+        {
+            var result = this._resultsRepository.GenerateResults(resultsDTO.UserId, resultsDTO.ExamId);
+            return this._mapper.Map<ResultsDTO>(result);
         }
     }
 }

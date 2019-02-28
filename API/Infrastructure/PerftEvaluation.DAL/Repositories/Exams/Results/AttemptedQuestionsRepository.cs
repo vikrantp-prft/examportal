@@ -77,7 +77,8 @@ namespace PerftEvaluation.DAL.Repositories
                     var filterDef = filter.Eq(c => c.Id, attemptedQuestionCheck.Id);
 
                     var updateQuery = Builders<AttemptedQuestions>.Update
-                        .Set(c => c.SelectedOptionId, attemptedQuestions.SelectedOptionId);
+                        .Set(c => c.SelectedOptionId, attemptedQuestions.SelectedOptionId)
+                        .Set(c => c.IsCorrect, attemptedQuestions.IsCorrect);
 
                     return _db.UpdateOne<AttemptedQuestions>(filterDef, updateQuery, AttemptedQuestions.CollectionName);
                 }

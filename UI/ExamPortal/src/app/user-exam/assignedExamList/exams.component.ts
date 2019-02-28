@@ -32,11 +32,9 @@ export class ExamsComponent implements OnInit {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
-            // console.log(rs);
             if (rs.statusCode === 200) {
                 this.assignedExamList = rs.data;
                 this.ngxService.stop();
-                console.log(this.assignedExamList);
             }
         });
     }

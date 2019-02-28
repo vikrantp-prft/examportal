@@ -1,8 +1,12 @@
 <div class="card">
   <div class="card-header">
     <h1 class="h3 font-weight-bold mb-0">
-      Add Trainee
+      Add Aspirant
     </h1>
+    <div class="back-btn">
+      <button [routerLink]="['/user/traineelist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
+        Back </button>
+    </div>
   </div>
 
   <div class="card-body">
@@ -12,34 +16,63 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
+                <label for="firstName">First Name<span class="required">*</span></label>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                  formControlName="firstName">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'firstName')"
+                  errorMsg="Enter first name">
+                </app-field-error-display>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="middleName">Middle Name</label>
-                <input type="text" class="form-control" id="middleName" formControlName="middleName" placeholder="Middle Name">
+                <input type="text" class="form-control" id="middleName" formControlName="middleName"
+                  placeholder="Middle Name">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name">
+                <label for="lastName">Last Name</label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                  placeholder="Last Name">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'lastName')"
+                  errorMsg="Enter last name">
+                </app-field-error-display>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="dateOfBirth">Date of Birth Name</label>
+                <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
                 <input type="date" class="form-control" id="dob" formControlName="dob">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'dob')"
+                  errorMsg="Enter valid date of birth">
+                </app-field-error-display>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="mobile">Mobile</label>
+                <label for="mobile">Mobile</label><span style="color:red">*</span>
                 <input type="number" class="form-control" id="mobile" formControlName="mobile" placeholder="Mobile">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'mobile')"
+                  errorMsg="Enter valid mobile number">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="email">Email :</label><span style="color:red">*</span>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                  (ngModelChange)="fn_checkEmail($event)">
+                <div *ngIf="emailExist; then thenBlock;"> </div>
+                <ng-template #thenBlock>
+                  <div><span style="color:red">Email is already exist.</span></div>
+                </ng-template>
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'email')"
+                  errorMsg="Enter valid email id">
+                </app-field-error-display>
               </div>
             </div>
           </div>
@@ -49,29 +82,43 @@
           <div class="col-md-6">
             <div class="sections">
               <div class="section-heading">
-                <h4 class="mb-1">Permanant Address </h4>
+                <h4 class="mb-1">Permanent Address </h4>
               </div>
               <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control mb-2" id="address1" formControlName="address1" placeholder="Address 1">
-                <input type="text" class="form-control" id="address2" formControlName="address2" placeholder="Address 2 (optional)">
+                <label for="address">Address</label><span style="color:red">*</span>
+                <input type="text" class="form-control mb-2" id="address1" formControlName="address1"
+                  placeholder="Address 1">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'address1')"
+                  errorMsg="Enter permanent address">
+                </app-field-error-display>
+                <input type="text" class="form-control" id="address2" formControlName="address2"
+                  placeholder="Address 2 (optional)">
               </div>
               <div class="form-group">
-                <label for="city"> City </label>
+                <label for="city"> City </label><span style="color:red">*</span>
                 <input type="text" class="form-control" id="city" formControlName="city" placeholder="City">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'city')"
+                  errorMsg="Enter permanent city">
+                </app-field-error-display>
               </div>
               <div class="form-group">
-                <label for="state">State</label>
+                <label for="state">State</label><span style="color:red">*</span>
                 <select class="form-control" formControlName="stateId">
                   <option value="" selected>--Selected--</option>
                   <option *ngFor="let state of stateArray" value={{state.id}}>
                     {{state.name}}
                   </option>
                 </select>
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'stateId')"
+                  errorMsg="Select permanent state">
+                </app-field-error-display>
               </div>
               <div class="form-group">
-                <label for="pincode"> Pincode </label>
+                <label for="pincode"> Pincode </label><span style="color:red">*</span>
                 <input type="number" class="form-control" id="pincode" formControlName="pincode" placeholder="Pincode">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'pincode')"
+                  errorMsg="Enter valid 6 digit pincode">
+                </app-field-error-display>
               </div>
             </div>
           </div>
@@ -81,31 +128,47 @@
                 <h4 class="mb-0">Current Address
                   <span>
                     <label Class="ml-5" style="font-size:.6em"> <input type="checkbox" id="currentAddress"
-                        (change)="fn_setCurrentAddress($event)"> Same as permanant</label>
+                        (change)="fn_setCurrentAddress($event)"> Same as permanent</label>
                   </span>
                 </h4>
               </div>
               <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control mb-2" id="currentAddress1" formControlName="currentAddress1" placeholder="Address 1">
-                <input type="text" class="form-control" id="currentAddress2" formControlName="currentAddress2" placeholder="Address 2 (optional)">
+                <label for="address">Address</label><span style="color:red">*</span>
+                <input type="text" class="form-control mb-2" id="currentAddress1" formControlName="currentAddress1"
+                  placeholder="Address 1">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'currentAddress1')"
+                  errorMsg="Enter current address">
+                </app-field-error-display>
+                <input type="text" class="form-control" id="currentAddress2" formControlName="currentAddress2"
+                  placeholder="Address 2 (optional)">
               </div>
               <div class="form-group">
-                <label for="city"> City </label>
-                <input type="text" class="form-control" id="currentCity" formControlName="currentCity" placeholder="City">
+                <label for="city"> City </label><span style="color:red">*</span>
+                <input type="text" class="form-control" id="currentCity" formControlName="currentCity"
+                  placeholder="City">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'currentCity')"
+                  errorMsg="Enter current city">
+                </app-field-error-display>
               </div>
               <div class="form-group">
-                <label for="state">State</label>
+                <label for="state">State</label><span style="color:red">*</span>
                 <select class="form-control" formControlName="currentStateId">
                   <option value="" selected>--Selected--</option>
                   <option *ngFor="let state of stateArray" value={{state.id}}>
                     {{state.name}}
                   </option>
                 </select>
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'currentStateId')"
+                  errorMsg="Select current state">
+                </app-field-error-display>
               </div>
               <div class="form-group">
-                <label for="pincode"> Pincode </label>
-                <input type="number" class="form-control" id="currentPincode" formControlName="currentPincode" placeholder="Pincode">
+                <label for="pincode"> Pincode </label><span style="color:red">*</span>
+                <input type="number" class="form-control" id="currentPincode" formControlName="currentPincode"
+                  placeholder="Pincode">
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'currentPincode')"
+                  errorMsg="Enter valid 6 digit pincode">
+                </app-field-error-display>
               </div>
             </div>
           </div>
@@ -156,10 +219,12 @@
             </div>
           </div>
           <div class="form-group" *ngIf="addEducationButton">
-            <input type="button" class="btn btn-primary pull-right mb-2" id="btnAddNewEducationDetails" value="Add" (click)="fn_addNewCourse()">
+            <input type="button" class="btn btn-primary pull-right mb-2" id="btnAddNewEducationDetails" value="Add"
+              (click)="fn_addNewCourse()">
           </div>
           <div class="form-group" *ngIf="updateEducationButton">
-            <input type="button" class="btn btn-secondary" id="btnUpdateNewEducationDetails" value="Update" (click)="fn_updateNewCourse()">
+            <input type="button" class="btn btn-secondary pull-right mb-2" id="btnUpdateNewEducationDetails"
+              value="Update" (click)="fn_updateNewCourse()">
           </div>
           <div>
             <table class="table table-bordered" id="educationDetailsTable">
@@ -202,27 +267,6 @@
           </div>
 
           <div class="form-group">
-            <label for="other-details"> Other Educational Details: </label>
-            <textarea class="form-control"></textarea>
-          </div>
-
-          <!-- <div class="form-group">
-            <p> Interest </p>
-            <label class="checkbox-inline">
-              <input type="checkbox" value="">Quality Assurance (QA)
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" value=""> HTML/CSS
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" value=""> Flesh/FLex
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" value=""> Design
-            </label>
-          </div> -->
-
-          <div class="form-group">
             <label for="Interest">Interest</label> <br>
             <div *ngFor="let interest of interestArray; let i=index" class="form-check form-check-inline">
               <label>
@@ -235,27 +279,13 @@
 
           <div class="form-group">
             <label for="other-details"> Note (If any): </label>
-            <textarea class="form-control"></textarea>
-          </div>
-        </div>
-
-        <div class="sections">
-          <div class="section-heading">
-            <h4 class="">Login Details</h4>
-          </div>
-          <div class="form-group">
-            <label for="email">Email :</label>
-            <input type="email" class="form-control" id="email">
-          </div>
-          <div class="form-group">
-            <label for="password">Password :</label>
-            <input type="password" class="form-control" id="password">
+            <textarea class="form-control" formControlName="note"></textarea>
           </div>
         </div>
 
         <div class="btn-sections">
-          <button type="button" class="btn btn-danger pull-right">Reset</button>
-          <button type="button" class="btn btn-primary pull-right mr-2">Save</button>
+          <button type="button" class="btn btn-danger pull-right" (click)="fn_resetEmployeeDetails()">Reset</button>
+          <button id="btnSubmit" type="submit" class="btn btn-primary pull-right mr-2">Save</button>
         </div>
       </form>
     </div>
