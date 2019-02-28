@@ -10,7 +10,7 @@
             <div class="col-md-2">
               <div class=" ">
                 <select class="custom-select" name="example_length" (change)="setRecordPerPage($event)">
-                  <option selected>Per Page</option>
+                  <option value="10" selected>Per Page</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
@@ -22,7 +22,7 @@
               <button class="btn btn-md btn-primary" [routerLink]="['/user/quickaddtraineeuser']">Quick Add Aspirant
               </button>
             </div> -->
-            <div class="col-md-1">
+            <div class="col">
               <button type="button" class="btn btn-md btn-primary" [routerLink]="['/user/addtraineeuser']">
                 Add
               </button>
@@ -34,9 +34,7 @@
               <a href="#" class="search-icon">
                 <i class="fa fa-search"></i>
               </a>
-            </div>
-            <!-- </div>    -->
-            
+            </div>            
           </div>
         </div>
         <div class="card-body pb-0 table-responsive">

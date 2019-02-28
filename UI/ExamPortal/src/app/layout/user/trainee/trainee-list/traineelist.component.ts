@@ -40,8 +40,11 @@ export class TraineeListComponent implements OnInit {
   public traineeList = [];
   public statusUrl: any;
 
-  constructor( private ngxService: NgxUiLoaderService, public router: Router, private CommonService: commonService, public http: Http, private toastr: ToastrService) 
-  { }
+  constructor(private ngxService: NgxUiLoaderService,
+    public router: Router,
+    private CommonService: commonService,
+    public http: Http,
+    private toastr: ToastrService) { }
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.traineeModel.pageNumber = 1;
@@ -67,15 +70,13 @@ export class TraineeListComponent implements OnInit {
   }
 
   fn_GetTraineeList() {
-    
+    this.ngxService.start();
     const url = 'api/Aspirants/GetAspirants';
-
     this.CommonService.fn_PostWithData(this.traineeModel, url).subscribe(
-      (data: any) => {        
-          console.log(data);
-          this.traineeList = data.data;
-          console.log(this.traineeList);
-        },
+      (data: any) => {
+        this.traineeList = data.data;
+        this.ngxService.stop();
+      },
       err => console.error(err),
       () => { }
     );
@@ -108,8 +109,8 @@ export class TraineeListComponent implements OnInit {
     });
   }
 
-   //function to save status change
-   fn_saveStatusChange(url, data) {
+  //function to save status change
+  fn_saveStatusChange(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if (rs.statusCode == 200) {
@@ -145,19 +146,17 @@ export class TraineeListComponent implements OnInit {
     }
   }
 
-   // function for soft deleting the Employee.
-   fn_delfun(url, data) {
+  // function for soft deleting the Employee.
+  fn_delfun(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
       if ((result.message = "Success")) {
         this.toastr.success("Aspirant details deleted successfully!");
         this.fn_GetTraineeList();
       }
-      else{
+      else {
         this.toastr.error("Failed to delete aspirant details");
       }
     });
   }
-
- 
 }

@@ -80,8 +80,8 @@ export class EmployeeListComponent implements OnInit {
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
         this.employeeList = data.data;
-        this.ngxService.stop();
         this.employeeModel.totalRecords = data.totalRecords;
+        this.ngxService.stop();
       },
       err => console.error(err),
       () => {}

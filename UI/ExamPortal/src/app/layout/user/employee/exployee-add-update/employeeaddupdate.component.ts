@@ -80,11 +80,6 @@ export class AddEmployeeComponent implements OnInit {
     this.fn_getCourse();
     this.updateEducationButton = false;
     this.addEducationButton = true;
-    // this.employeeForm.controls.teamId.setValue("");
-    // this.employeeForm.controls.courseId.setValue("");
-    // this.employeeForm.controls.stateId.setValue("");
-    // this.employeeForm.controls.currentStateId.setValue("");
-    // this.employeeForm.controls.yearOfPassing.setValue("");
   }
 
   // function to display the error message for  validation.
@@ -271,14 +266,6 @@ export class AddEmployeeComponent implements OnInit {
     this.selectedCourse = selectElementText;
   }
 
-  //delete course from table
-  // fn_deleteCourse(index) {
-  //   this.educationArray.splice(index, 1);
-  //   this.addEducationButton = true;
-  //   this.updateEducationButton = false;
-  //   this.fn_resetEducationDetails();
-  // }
-
   //fetch selected course
   fn_editCourse(index) {
     this.addEducationButton = false;
@@ -376,7 +363,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   fn_checkEmail(event) {
-    debugger;
     var existEmailUrl = "api/User/IsEmailExist";
     var model =
     {
