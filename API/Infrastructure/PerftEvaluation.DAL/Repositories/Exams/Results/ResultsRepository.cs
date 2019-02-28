@@ -16,11 +16,9 @@ namespace PerftEvaluation.DAL.Repositories
     {
         protected readonly DBHelper _db = null;
 
-        protected readonly AttemptedQuestionsRepository _attemptedQuestionsRepository;
-        public ResultsRepository(AttemptedQuestionsRepository attemptedQuestionsRepository)
+        public ResultsRepository()
         {
             this._db = new DBHelper();
-            this._attemptedQuestionsRepository = attemptedQuestionsRepository;
         }
 
         /// <summary>
