@@ -35,5 +35,7 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="examId"></param>
         /// <returns></returns>
         bool DeleteResultsByExamId (string examId);
+
+        Results GenerateResults(string userId, string examId);
     }
 }

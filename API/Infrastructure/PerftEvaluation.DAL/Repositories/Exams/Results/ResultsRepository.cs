@@ -15,9 +15,12 @@ namespace PerftEvaluation.DAL.Repositories
     public class ResultsRepository : IResultsRepository
     {
         protected readonly DBHelper _db = null;
-        public ResultsRepository()
+
+        protected readonly AttemptedQuestionsRepository _attemptedQuestionsRepository;
+        public ResultsRepository(AttemptedQuestionsRepository attemptedQuestionsRepository)
         {
             this._db = new DBHelper();
+            this._attemptedQuestionsRepository = attemptedQuestionsRepository;
         }
 
         /// <summary>
@@ -27,11 +30,11 @@ namespace PerftEvaluation.DAL.Repositories
         public bool DeleteResultsByExamId(string examId)
         {
             var filter = Builders<Results>.Filter;
-            var filterDef = filter.Eq (c => c.Id, examId);
+            var filterDef = filter.Eq(c => c.Id, examId);
             var updateQuery = Builders<Results>.Update
-                .Set (c => c.IsDeleted, true);
+                .Set(c => c.IsDeleted, true);
 
-            return _db.UpdateOne<Results> (filterDef, updateQuery, Results.CollectionName);
+            return _db.UpdateOne<Results>(filterDef, updateQuery, Results.CollectionName);
         }
 
         /// <summary>
@@ -75,7 +78,8 @@ namespace PerftEvaluation.DAL.Repositories
         /// <returns></returns>
         public bool SaveResults(Results results)
         {
-            try{
+            try
+            {
                 results.IsDeleted = false;
                 results.IsActive = true;
                 results.CreatedDate = DateTime.Now;
@@ -84,7 +88,47 @@ namespace PerftEvaluation.DAL.Repositories
                 _db.Save<Results>(results, Results.CollectionName);
                 return true;
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
+        /// Generate Results
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        public Results GenerateResults(string userId, string examId)
+        {
+            try
+            {
+                var attemptedQuestionsList = _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName).AsQueryable().Where(x => x.ExamId == examId && x.UserId == userId).ToList();
+
+                Results generate = new Results();
+                generate.ExamId = examId;
+                generate.UserId = userId;
+                generate.QuestionsAttempted = attemptedQuestionsList.Count();
+                generate.ObtainedMarks = attemptedQuestionsList.Where(x => x.IsCorrect == true).Count();
+                generate.TotalMarks = _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.ExamId == examId && x.IsActive == true && x.IsDeleted == false).Count();
+                generate.IsDeleted = false;
+                generate.IsActive = true;
+
+                if (this.SaveResults(generate))
+                {
+                    return generate;
+                }
+                else
+                {
+                    return null;
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
