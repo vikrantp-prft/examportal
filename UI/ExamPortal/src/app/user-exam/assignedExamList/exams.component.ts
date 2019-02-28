@@ -33,7 +33,6 @@ export class ExamsComponent implements OnInit {
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode === 200) {
-                console.log(rs.data)
                 this.assignedExamList = rs.data;
                 this.ngxService.stop();
             }

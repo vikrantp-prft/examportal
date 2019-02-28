@@ -7,7 +7,6 @@ import { commonService } from 'src/app/common/services/common.service';
 import swal from 'sweetalert2';
 import { FormGroup, FormControl } from '@angular/forms';
 
-
 @Component({
     selector: 'app-exam',
     templateUrl: './exam.component.html',
@@ -17,7 +16,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class ExamComponent implements OnInit {
     public examID: string;
     public examDetail: any;
-
+    public endExam : boolean = false;
     public examName: string;
     public question = [];
     public questionCategory = [];
@@ -91,12 +90,12 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
-                this.ngxService.stop();
                 this.totalQuestion = this.question.length;
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
                 this.currentQuestionQuestionId = this.question[0].id;
+                this.ngxService.stop();
                 this.getAllQuestionCategory();
             }
         });
@@ -135,9 +134,7 @@ export class ExamComponent implements OnInit {
     }
     fn_next() {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
-        // console.log(this.currentQuestionQuestionId);
         this.currentQuestionIndex++;
-        // this.currentQuestionQuestionId = this.
         this.setCurrentQuestionAndOption();
         this.SaveAttemptedQuestionsById();
     }
@@ -153,15 +150,19 @@ export class ExamComponent implements OnInit {
         }
         this.fn_SaveAttemptedQuestionsById(model, url);
     }
+
     fn_SaveAttemptedQuestionsById(model, url) {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
-                this.optionIdArray = [];
                 this.ngxService.stop();
+                this.optionIdArray = [];
+                if (this.endExam) {
+                    this.router.navigate(['/thank-you']);
+                    
+                }
             }
-
         });
     }
     jumpToQuestion(id) {
@@ -170,7 +171,7 @@ export class ExamComponent implements OnInit {
         this.setCurrentQuestionOptionType(id);
         this.currentQuestionIndex = id + 1;
     }
-    fn_endExam(){
+    fn_endExam() {
         swal({
             title: 'Are you sure?',
             text: 'You want to end the exam!',
@@ -179,25 +180,22 @@ export class ExamComponent implements OnInit {
             showCancelButton: true,
             cancelButtonClass: 'btn btn-danger',
             confirmButtonText: 'Yes'
-          }).then(x => {
+        }).then(x => {
             if (x.value == true) {
-                //[routerLink]="[ '/thank-you']";
-                this.router.navigate(['/thank-you']);
+                if (this.currentQuestionIndex == this.question.length) {
+                    this.endExam = true;
+                    this.fn_next();
+                }
             }
-    
-          });
+        });
     }
     setOptionIdArray(event: any) {
-        // console.log(event)
-        // console.log(event.target.type)
-        // console.log(event.target.checked)
         if (event.target.type == 'checkbox') {
             if (event.target.checked == true) {
                 this.optionIdArray.push(event.target.value);
             } else {
                 this.optionIdArray.splice(this.optionIdArray.indexOf(event.target.value), 1)
             }
-            // console.log(this.optionIdArray)
         }
         if (event.target.type == 'radio') {
             if (event.target.checked == true) {
@@ -206,11 +204,19 @@ export class ExamComponent implements OnInit {
             } else {
                 this.optionIdArray.pop()
             }
-            // console.log(this.optionIdArray)
         }
 
     }
+    saveResult() {
+        const url = 'api/Results/GenerateResult';
+        const modal = {
+            "examId": this.examID,
+            // "userId": 
+        };
+    }
+    fn_saveResult() {
 
+    }
     startCountdown(seconds) {
         this.counter = seconds;
         var interval = setInterval(() => {

@@ -1,3 +1,4 @@
+<ngx-ui-loader></ngx-ui-loader>
 <div class="container-fluid">
   <nav class="navbar navbar-expand-md navbar-white bg-white">
     <img src="assets/images/prft.png" class="logo" alt="">
@@ -18,7 +19,6 @@
   </nav>
 </div>
 <hr class="my-0">
-<ngx-ui-loader></ngx-ui-loader>
 <div *ngIf="isFeedback == false">
   <div class="container-fluid mt-4">
     <section id="main" class="">
@@ -62,10 +62,10 @@
                   <button class="btn btn-primary" (click)="fn_previous()" [disabled]="currentQuestionIndex == 1">
                     Previous
                   </button>
-                  <button class="ml-1 btn btn-primary" (click)="fn_next()" [disabled]="currentQuestionIndex == totalQuestion">
+                  <button class="ml-1 btn btn-primary" (click)="fn_next()" [hidden]="currentQuestionIndex == totalQuestion">
                     Next
                   </button>
-                  <button (click)="fn_endExam()" class="btn btn-primary pull-right">
+                  <button (click)="fn_endExam()" class="ml-2 btn btn-primary" [hidden]="!(currentQuestionIndex == totalQuestion)">
                     End Exam
                   </button>
                 </div>
