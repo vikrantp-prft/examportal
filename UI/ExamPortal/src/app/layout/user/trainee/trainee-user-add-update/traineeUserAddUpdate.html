@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="dateOfBirth">Date of Birth</label><span style="color:red">*</span>
                 <input type="date" class="form-control" id="dob" formControlName="dob">
@@ -52,12 +52,26 @@
                 </app-field-error-display>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="mobile">Mobile</label><span style="color:red">*</span>
                 <input type="number" class="form-control" id="mobile" formControlName="mobile" placeholder="Mobile">
                 <app-field-error-display [displayError]="isFieldValid(traineeForm, 'mobile')"
                   errorMsg="Enter valid mobile number">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="email">Email :</label><span style="color:red">*</span>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                  (ngModelChange)="fn_checkEmail($event)">
+                <div *ngIf="emailExist; then thenBlock;"> </div>
+                <ng-template #thenBlock>
+                  <div><span style="color:red">Email is already exist.</span></div>
+                </ng-template>
+                <app-field-error-display [displayError]="isFieldValid(traineeForm, 'email')"
+                  errorMsg="Enter valid email id">
                 </app-field-error-display>
               </div>
             </div>
@@ -266,27 +280,6 @@
           <div class="form-group">
             <label for="other-details"> Note (If any): </label>
             <textarea class="form-control" formControlName="note"></textarea>
-          </div>
-        </div>
-
-        <div class="sections">
-          <div class="section-heading">
-            <h4 class="">Login Details</h4>
-          </div>
-          <div class="form-group">
-            <label for="email">Email :</label>
-            <input type="email" class="form-control" id="email" formControlName="email"
-              (ngModelChange)="fn_checkEmail($event)">
-            <div *ngIf="emailExist; then thenBlock;"> </div>
-            <ng-template #thenBlock>
-              <div><span style="color:red">Email is already exist.</span></div>
-            </ng-template>
-            <app-field-error-display [displayError]="isFieldValid(traineeForm, 'email')" errorMsg="Enter valid email id">
-            </app-field-error-display>
-          </div>
-          <div class="form-group">
-            <label for="password">Password :</label>
-            <input type="password" class="form-control" id="password">
           </div>
         </div>
 
