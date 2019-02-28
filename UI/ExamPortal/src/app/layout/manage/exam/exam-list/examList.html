@@ -35,8 +35,7 @@
             <th>Question Paper</th>
             <th>Team</th>
             <th>Duration</th>
-            <th class="th-width-action">Total Question</th>
-            <th class="th-width-action">Action</th>
+            <th style="width:220px;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -46,18 +45,16 @@
             <td [routerLink]="['/manage/editExam', exam.id]">{{exam.title | slice:0:35}}</td>
             <td [routerLink]="['/manage/editExam', exam.id]">{{exam.team==null? 'All':exam.team.name}}</td>
             <td [routerLink]="['/manage/editExam', exam.id]">{{exam.examDurationHours}} Hrs {{exam.examDurationMinutes}} Mins</td>
-            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.totalQuestions}}</td>
             <td>
-              <!-- <a [routerLink]="['/manage/questionList', exam.id]" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                    <i class="fa fa-monument"></i>&nbsp;
-                    <span>{{ 'View Question' }}</span>
-                  </a> -->
               <button class="btn btn-md " title="View Questions" [routerLink]="['/manage/questionList', exam.id]"
                 [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
                 <i class="fa fa-eye text-primary" aria-hidden="true"></i>
               </button>&nbsp;
               <button class="btn btn-md" title="Assign User" [routerLink]="[ '/manage/userList' , exam.id ]" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
                 <i class="fa fa-user text-primary" aria-hidden="true"></i>
+              </button>&nbsp;
+              <button class="btn btn-md" title="View Result" [routerLink]="[ '/manage/resultList' , exam.id ]" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
+                <i class="fa fa-file-text-o text-primary" aria-hidden="true"></i>
               </button>&nbsp;
               <button class="btn btn-md" title="Delete Exam" type="button" rel="tooltip" (click)="fn_deleteExam(exam.id)">
                 <i class="fa fa-trash text-danger" aria-hidden="true"></i>

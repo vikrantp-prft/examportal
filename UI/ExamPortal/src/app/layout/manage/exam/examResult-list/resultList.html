@@ -1,0 +1,57 @@
+<div>
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h1 class="h3 font-weight-bold mb-0">Result</h1>
+                    <button [routerLink]="['/manage/examlist']" class="btn btn-primary ml-2 pull-right"><span><i
+                                class="fa fa-arrow-left"></i></span>
+                        Back
+                    </button>
+                </div>
+
+                <div class="datatable-header">
+                    <div class="row mx-1 justify-content-between">
+                        <div class="col-md-2">
+                            <div class="">
+                                <select class="custom-select" id="inlineFormCustomSelect"
+                                    (change)="setRecordPerPage($event)">
+                                    <option value="10" selected>Per Page</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach"
+                                placeholder="Search" class="form-control" />
+                            <a href="#" class="search-icon">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body table-responsive pb-0">
+                    <table class="table table-hover table-striped  table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="th-width">Sr.</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th class="th-width-action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
