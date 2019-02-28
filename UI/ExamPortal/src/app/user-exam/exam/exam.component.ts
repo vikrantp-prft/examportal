@@ -185,6 +185,7 @@ export class ExamComponent implements OnInit {
                 if (this.currentQuestionIndex == this.question.length) {
                     this.endExam = true;
                     this.fn_next();
+                    this.saveResult();
                 }
             }
         });
@@ -211,11 +212,19 @@ export class ExamComponent implements OnInit {
         const url = 'api/Results/GenerateResult';
         const modal = {
             "examId": this.examID,
-            // "userId": 
+            "userId": "5c53e96bad3abd0eec04b09a"
         };
+        this.fn_saveResult(url, modal);
     }
-    fn_saveResult() {
-
+    fn_saveResult(url, modal) {
+        this.ngxService.start();
+        this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
+            const rs = result;
+            if (rs.statusCode == 200) {
+                this.ngxService.stop();
+                // console.log(rs);
+            }
+        });
     }
     startCountdown(seconds) {
         this.counter = seconds;
