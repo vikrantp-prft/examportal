@@ -126,8 +126,7 @@ export class EmployeeListComponent implements OnInit {
     }).then(x => {
       if (x.value == true) {
         this.statusUrl = "api/User/MarkUserAsAdmin";
-        this.toastr.success("Admin access has been removed!");
-
+        this.toastr.success("Admin access has been provided!");
         const adminStatusModel = {
           id: id
         };
