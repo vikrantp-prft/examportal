@@ -26,7 +26,7 @@ namespace PerftEvaluation.BAL.Services.ExamSession
             bool isScucess;
             List<ExamUserSession> userSessionsCollection;
             userSessionsCollection = GetExamSessionCollection();
-
+            newUserSessionEntry.SessionId = GetExamSessionId(newUserSessionEntry.UserId, newUserSessionEntry.ExamId);
             ExamUserSession existingUserSession = GetUserExamSession(newUserSessionEntry.UserId, newUserSessionEntry.ExamId);
 
             // If at all there is a session exist for a user then reset the timer and start again.
@@ -38,7 +38,7 @@ namespace PerftEvaluation.BAL.Services.ExamSession
             }
             else
             {
-                newUserSessionEntry.TimeElampsed = DateTime.Now;
+                newUserSessionEntry.TimeElampsed = 1;
                 userSessionsCollection.Add(newUserSessionEntry);
             }
 

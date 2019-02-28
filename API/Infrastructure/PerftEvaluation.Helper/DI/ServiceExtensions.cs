@@ -1,7 +1,10 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using PerftEvaluation.BAL.Interfaces;
+using PerftEvaluation.BAL.Interfaces.Exams.ExamSession;
+using PerftEvaluation.BAL.Interfaces.ExamSession;
 using PerftEvaluation.BAL.Services;
+using PerftEvaluation.BAL.Services.ExamSession;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DAL.Repositories;
 using PerftEvaluation.ExcelUtility;
@@ -35,6 +38,8 @@ namespace PerftEvaluation.Helper.DI
             services.AddScoped<IQuestionsImportExport, ExcelOperations>();
             services.AddScoped<IAttemptedQuestionsService, AttemptedQuestionsService>();
             services.AddTransient<IAspirantsService, AspirantsService>();
+            services.AddTransient<IExamUserSessionStorage, ExamUserSessionCacheStore>();
+            services.AddTransient<IExamSessionService, ExamUserSessionService>();
 
             //Projects Repositories
             services.AddTransient<IUserRepository, UserRepository>();

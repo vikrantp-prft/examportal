@@ -19,7 +19,7 @@ namespace PerftEvaluation.DTO.Dtos.ExamSession
         public string SessionId { get; set; }
         public string ExamId { get; set; }
         public string UserId { get; set; }
-        public DateTime TimeElampsed { get; set; }
+        public int TimeElampsed { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
     }

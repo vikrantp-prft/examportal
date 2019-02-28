@@ -207,7 +207,7 @@ namespace PerftEvaluation.BAL.Services
                     break;
                 }
 
-                // if there are values in options then skip and go to next option.
+                // if there are no values in options then skip and go to next option.
                 if (String.IsNullOrEmpty(row["Option" + i].ToString().Trim()))
                 {
                     continue;

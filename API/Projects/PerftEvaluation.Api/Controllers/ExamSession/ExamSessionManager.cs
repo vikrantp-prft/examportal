@@ -16,18 +16,18 @@ namespace PerftEvaluation.Api.Controllers.ExamSession
 
         Claim claim;
 
-        public ExamSessionManager(IExamSessionService examSessionService, IHttpContextAccessor httpContextAccessor)
+        public ExamSessionManager(IExamSessionService examSessionService) //, IHttpContextAccessor httpContextAccessor)
         {
             _examSessionService = examSessionService;
-            _httpContextAccessor = httpContextAccessor;
-            claim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            // _httpContextAccessor = httpContextAccessor;
+            // claim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
         }
 
         [HttpGet, Route("InitiateNewExamSession")]
         public IActionResult InitiateNewExamSession(string examId)
         {
             bool isSuccess = false;
-            var userId = claim.Value;
+            var userId = "123"; //claim.Value;
             isSuccess = _examSessionService.CreateNewSession(userId, examId);
 
             if (isSuccess)
@@ -39,7 +39,7 @@ namespace PerftEvaluation.Api.Controllers.ExamSession
         [HttpGet, Route("GetUserExamSession")]
         public IActionResult GetUserExamSession(string examId)
         {
-            var userId = claim.Value;
+            var userId = "123"; //claim.Value;
             ExamUserSession examUserSession = _examSessionService.GetUserExamSession(userId, examId);
 
             return Ok(examUserSession);
