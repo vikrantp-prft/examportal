@@ -9,10 +9,12 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link">John Smith <span class="sr-only">(current)</span></a>
+            <a class="nav-link">Jai Bidkar <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link">Log out <span class="sr-only">(current)</span></a>
+            <a class="nav-link" [routerLink]="['/login']">
+              <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
+            </a>
           </li>
         </ul>
       </div>
