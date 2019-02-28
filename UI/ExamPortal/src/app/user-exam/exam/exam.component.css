@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans|Quicksand|Roboto");
+/* @import url("https://fonts.googleapis.com/css?family=Fira+Sans|Quicksand|Roboto"); */
 .logo{
     max-width: 16%;
     height: auto;
@@ -12,9 +12,6 @@ hr{
     border-radius: 0;
 }
 
-.myRoboto {
-    font-family: 'Roboto', sans-serif;
-}
 div {
     /* font-family: 'Fira Sans', sans-serif; */
     font-family: 'Quicksand', sans-serif;
@@ -23,5 +20,9 @@ div {
 .core-pre {
     border: 1px dashed #93b7d5;
     background-color: #f8f8f8;
+}
+
+.padding-left-4{
+    padding-left: 4rem !important;
 }
 
