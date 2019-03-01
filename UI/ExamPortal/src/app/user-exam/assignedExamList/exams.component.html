@@ -48,7 +48,7 @@
               <td> {{ item?.exam?.title }} </td>
               <td> {{ item?.exam?.description }} </td>
               <td> {{ item?.exam?.totalQuestions }} </td>
-              <td> {{ item?.exam?.examDurationHours }}HR:{{ item?.exam?.examDurationMinutes }}MIN </td>
+              <td> {{ item?.exam?.examDurationHours }}:{{ item?.exam?.examDurationMinutes }} (HR:MIN) </td>
               <td>
                 <i class="fa" [ngClass]="{'fa-check text-success': item.isAttempted, 'fa-times text-danger': !item.isAttempted}"
                   aria-hidden="true">

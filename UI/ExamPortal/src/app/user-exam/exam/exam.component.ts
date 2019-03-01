@@ -133,7 +133,9 @@ export class ExamComponent implements OnInit {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
-        this.SaveAttemptedQuestionsById();
+        if (this.optionIdArray.length != 0) {
+            this.SaveAttemptedQuestionsById();
+        }
     }
     SaveAttemptedQuestionsById() {
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
@@ -153,6 +155,7 @@ export class ExamComponent implements OnInit {
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
+                console.log(rs)
                 this.ngxService.stop();
                 this.optionIdArray = [];
                 if (this.endExam) {
@@ -188,6 +191,7 @@ export class ExamComponent implements OnInit {
         });
     }
     setOptionIdArray(event: any) {
+        console.log(event)
         if (event.target.type == 'checkbox') {
             if (event.target.checked == true) {
                 this.optionIdArray.push(event.target.value);

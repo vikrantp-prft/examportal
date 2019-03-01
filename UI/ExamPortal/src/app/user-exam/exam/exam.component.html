@@ -40,8 +40,6 @@
                 </div>
             </div>
           </div>
-          <!-- <span class="py-2 m-0 col">{{ examName }}</span>
-          <span class="py-2 m-0 col-2 bg-warning">Time Left: {{hours}}:{{minute}}:{{second}}</span> -->
         </div>
         <div class="card-body mt-2 lead">
           <div class="row">
@@ -54,6 +52,7 @@
 
                   <div class="" *ngIf="currentQuestionQuestionType == 0">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
+                        {{option?.optionId}}
                       <input (change)="setOptionIdArray($event)" type="radio" name="radioOption" id="" value="{{option?.optionId}}">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
@@ -61,6 +60,7 @@
                   </div>
                   <div class="" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
+                        {{option?.optionId}}
                       <input class="ml-3" type="checkbox" value="{{option?.optionId}}" (change)="setOptionIdArray($event)">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
@@ -79,9 +79,9 @@
                     Previous
                   </button>
                   <button class="ml-1 btn btn-primary" (click)="fn_next()" [hidden]="currentQuestionIndex == totalQuestion">
-                    Next
+                    Save & Next
                   </button>
-                  <button (click)="fn_endExam()" class="ml-2 btn btn-primary" [hidden]="!(currentQuestionIndex == totalQuestion)">
+                  <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right" >
                     End Exam
                   </button>
                 </div>
