@@ -47,9 +47,6 @@ export class ExamComponent implements OnInit {
         this.getExamDetails();
         this.getQuestionList();
     }
-    optionForm = new FormGroup({
-        multipleSelect: new FormControl('')
-    });
     getExamDetails() {
         const examDetailModel = {
             "id": this.examID
@@ -75,7 +72,6 @@ export class ExamComponent implements OnInit {
         });
     }
     getQuestionList() {
-        // const url = 'api/Questions/listQuestionsByExamId';
         const url = 'api/AttemptedQuestions/GetQuestionsByAssignedExam';
 
         const questionModel = {
@@ -96,6 +92,8 @@ export class ExamComponent implements OnInit {
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
                 this.currentQuestionQuestionId = this.question[0].questionId;
+                this.currentQuestionSelectedOptions = this.question[0].selectedOptionId;
+                console.log(this.currentQuestionSelectedOptions)
                 this.ngxService.stop();
                 this.getAllQuestionCategory();
             }
@@ -124,10 +122,15 @@ export class ExamComponent implements OnInit {
             this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
             this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
             this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
+            this.currentQuestionSelectedOptions = this.question[this.currentQuestionIndex - 1].selectedOptionId;
+            console.log(this.currentQuestionSelectedOptions)
         }
     }
     setCurrentQuestionQuestionId(myId) {
         this.currentQuestionQuestionId = this.question[myId].questionId;
+    }
+    setCurrentQuestionSelectedOptions(){
+       
     }
     fn_previous() {
         this.currentQuestionIndex--;
@@ -141,6 +144,13 @@ export class ExamComponent implements OnInit {
             this.SaveAttemptedQuestionsById();
         }
     }
+    jumpToQuestion(id) {
+        this.setCurrentQuestion(id);
+        this.setCurrentQuestionQuestionType(id);
+        this.setCurrentQuestionOptionType(id);
+        this.currentQuestionIndex = id + 1;
+    }
+
     SaveAttemptedQuestionsById() {
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
         const model = {
@@ -159,7 +169,6 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 console.log(rs)
-                this.getQuestionList();
                 this.ngxService.stop();
                 this.optionIdArray = [];
                 if (this.endExam) {
@@ -167,12 +176,6 @@ export class ExamComponent implements OnInit {
                 }
             }
         });
-    }
-    jumpToQuestion(id) {
-        this.setCurrentQuestion(id);
-        this.setCurrentQuestionQuestionType(id);
-        this.setCurrentQuestionOptionType(id);
-        this.currentQuestionIndex = id + 1;
     }
     fn_endExam() {
         swal({
