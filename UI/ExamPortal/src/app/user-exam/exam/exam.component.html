@@ -29,15 +29,15 @@
       <div class="card">
         <div class="card-header p-0 m-0">
           <div class="row justify-content-between">
-              <div class="col-2 ">
-                  <div class="p-3 h5 mb-0 font-weight-bold">
-                      {{examName}}
-                  </div>
+            <div class="col-2 ">
+              <div class="p-3 h5 mb-0 font-weight-bold">
+                {{examName}}
               </div>
+            </div>
             <div class="col-3 pl-0">
-                <div class="bg-primary p-3 font-weight-bold h5 mb-0 text-white text-center">
-                    Time Left: {{hours}}:{{minute}}:{{second}}
-                </div>
+              <div class="muli bg-primary p-3 font-weight-bold h5 mb-0 text-white text-center">
+                Time Left: {{hours}}:{{minute}}:{{second}}
+              </div>
             </div>
           </div>
         </div>
@@ -45,22 +45,26 @@
           <div class="row">
             <div class="col-md-9">
               <div class="card">
+                <div class="card-header p-0">
+                  <ul class="nav">
+                    <li *ngFor="let category of questionCategory" [ngClass]="{'btn-primary': false}" class="nav-item nav-pills py-2 nav-fill">
+                      <a class="nav-link border-0">{{category}}</a>
+                    </li>
+                  </ul>
+                </div>
                 <div class="card-body">
-                  <pre class="core-pre p-4" innerHTML="{{currentQuestionIndex + '. ' +
+                  <pre class="core-pre p-4 Merriweather" innerHTML="{{currentQuestionIndex + '. ' +
                     currentQuestion}}">
                   </pre>
-
-                  <div class="" *ngIf="currentQuestionQuestionType == 0">
+                  <div class="text-primary" *ngIf="currentQuestionQuestionType == 0">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                        {{option?.optionId}}
                       <input (change)="setOptionIdArray($event)" type="radio" name="radioOption" id="" value="{{option?.optionId}}">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                     </div>
                   </div>
-                  <div class="" *ngIf="currentQuestionQuestionType == 1">
+                  <div class="text-primary" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                        {{option?.optionId}}
                       <input class="ml-3" type="checkbox" value="{{option?.optionId}}" (change)="setOptionIdArray($event)">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
@@ -81,7 +85,7 @@
                   <button class="ml-1 btn btn-primary" (click)="fn_next()" [hidden]="currentQuestionIndex == totalQuestion">
                     Save & Next
                   </button>
-                  <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right" >
+                  <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right">
                     End Exam
                   </button>
                 </div>

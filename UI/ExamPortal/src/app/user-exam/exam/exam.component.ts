@@ -15,7 +15,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class ExamComponent implements OnInit {
     public examID: string;
-    public examDetail: any;
+    public examDetail: object;
     public endExam : boolean = false;
     public examName: string;
     public question = [];
@@ -69,7 +69,6 @@ export class ExamComponent implements OnInit {
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes;
                 this.totalSecond = this.totalMinute * 60;
                 this.startCountdown(this.totalSecond);
-
             }
         });
     }
@@ -149,7 +148,6 @@ export class ExamComponent implements OnInit {
         }
         this.fn_SaveAttemptedQuestionsById(model, url);
     }
-
     fn_SaveAttemptedQuestionsById(model, url) {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
@@ -159,8 +157,7 @@ export class ExamComponent implements OnInit {
                 this.ngxService.stop();
                 this.optionIdArray = [];
                 if (this.endExam) {
-                    this.router.navigate(['/thank-you']);
-                    
+                    this.saveResult();
                 }
             }
         });
@@ -185,7 +182,6 @@ export class ExamComponent implements OnInit {
                 if (this.currentQuestionIndex == this.question.length) {
                     this.endExam = true;
                     this.fn_next();
-                    this.saveResult();
                 }
             }
         });
@@ -223,7 +219,7 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.ngxService.stop();
-                // console.log(rs);
+                this.router.navigate(['/thank-you']);
             }
         });
     }

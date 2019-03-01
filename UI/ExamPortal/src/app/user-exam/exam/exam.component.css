@@ -1,4 +1,4 @@
-/* @import url("https://fonts.googleapis.com/css?family=Fira+Sans|Quicksand|Roboto"); */
+@import url("https://fonts.googleapis.com/css?family=Maven+Pro|Merriweather+Sans|Muli|Noto+Sans+TC");
 .logo{
     max-width: 16%;
     height: auto;
@@ -14,7 +14,14 @@ hr{
 
 div {
     /* font-family: 'Fira Sans', sans-serif; */
-    font-family: 'Quicksand', sans-serif;
+    /* font-family: 'Maven Pro', sans-serif; */
+    font-family: 'Merriweather Sans', sans-serif;
+}
+.Merriweather {
+    font-family: 'Merriweather Sans', sans-serif;
+}
+.muli {
+    font-family: 'Muli', sans-serif;
 }
 
 .core-pre {
