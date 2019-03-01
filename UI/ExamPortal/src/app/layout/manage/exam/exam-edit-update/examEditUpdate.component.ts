@@ -147,25 +147,38 @@ export class examEditUpdateComponent implements OnInit {
     }
     return this.year + "-" + this.month + "-" + this.day;
   }
-  onSubmit = function(formData) {
-    if (this.editExamForm.valid) {
-      this.commonService
-        .fn_PostWithData(formData, this.url)
-        .subscribe((result: any) => {
-          const rs = result;
-          if (rs.statusCode == 200) {
-            this.toastr.success("Exam details Updated successfully!");
-            this.router.navigate(["manage/examlist"]);
-          } else {
-            this.toastr.console.error("Failed to Update Exam details");
-          }
-        });
-    } else {
-      this.commonService.validateAllFormFields(this.editExamForm);
-      this.toastr.error("Please fill required details");
-      return false;
+  onSubmit = function (formData) {
+    if (this.fn_validateDuration()) {
+      if (this.editExamForm.valid) {
+        this.commonService
+          .fn_PostWithData(formData, this.url)
+          .subscribe((result: any) => {
+            const rs = result;
+            if (rs.statusCode == 200) {
+              this.toastr.success("Exam details Updated successfully!");
+              this.router.navigate(["manage/examlist"]);
+            } else {
+              this.toastr.console.error("Failed to Update Exam details");
+            }
+          });
+      } else {
+        this.commonService.validateAllFormFields(this.editExamForm);
+        this.toastr.error("Please fill required details");
+        return false;
+      }
     }
   };
+
+  fn_validateDuration() {
+    if ((this.editExamForm.controls.examDurationHours.value == '0') && (this.editExamForm.controls.examDurationMinutes.value == '00')) {
+      this.toastr.error("Enter valid duration");
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
   ngOnInit() {
     this.uploader.onAfterAddingFile = file => {
       file.withCredentials = false;
@@ -189,7 +202,7 @@ export class examEditUpdateComponent implements OnInit {
         this.ngxService.stop();
       },
       err => console.error(err),
-      () => {}
+      () => { }
     );
   }
   // function to display the error message for  validation.
