@@ -5,27 +5,23 @@ using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
-namespace PerftEvaluation.Api.Controllers
-{
-    [Route("api/[controller]")]
+namespace PerftEvaluation.Api.Controllers {
+    [Route ("api/[controller]")]
     [ApiController]
     /// <summary>
     /// Attempted Questions API controller
     /// </summary>
-    public class AttemptedQuestionsController : ControllerBase
-    {
+    public class AttemptedQuestionsController : ControllerBase {
         public readonly IAttemptedQuestionsService _attemptedQuestions;
 
         private ResponseModel responseModel = null;
 
         protected readonly ILogger<AttemptedQuestionsController> _logger;
-        public AttemptedQuestionsController(IAttemptedQuestionsService attemptedQuestions,
-                                            ILogger<AttemptedQuestionsController> logger = null)
-        {
+        public AttemptedQuestionsController (IAttemptedQuestionsService attemptedQuestions,
+            ILogger<AttemptedQuestionsController> logger = null) {
             this._attemptedQuestions = attemptedQuestions;
-            this.responseModel = new ResponseModel();
-            if (null != logger)
-            {
+            this.responseModel = new ResponseModel ();
+            if (null != logger) {
                 this._logger = logger;
             }
         }
@@ -35,16 +31,12 @@ namespace PerftEvaluation.Api.Controllers
         /// Get list of all Attempted Questions By ExamsId
         /// </summary>
         /// <returns></returns>
-        [HttpPost, Route("GetAttemptedQuestionsByExamsId")]
-        public IActionResult GetAttemptedQuestionsByExamsId(RequestModel requestModel)
-        {
-            try
-            {
-                return Ok(this._attemptedQuestions.GetAttemptedQuestionsByExamsId(requestModel));
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+        [HttpPost, Route ("GetAttemptedQuestionsByExamsId")]
+        public IActionResult GetAttemptedQuestionsByExamsId (RequestModel requestModel) {
+            try {
+                return Ok (this._attemptedQuestions.GetAttemptedQuestionsByExamsId (requestModel));
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
 
@@ -54,24 +46,19 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route("DeleteAttemptedQuestionsByExamId")]
-        public IActionResult DeleteAttemptedQuestionsById(RequestModel requestModel)
-        {
-            try
-            {
+        [HttpPost, Route ("DeleteAttemptedQuestionsByExamId")]
+        public IActionResult DeleteAttemptedQuestionsById (RequestModel requestModel) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._attemptedQuestions.DeleteAttemptedQuestionsByExamId(requestModel.Id);
+                responseModel.Data = this._attemptedQuestions.DeleteAttemptedQuestionsByExamId (requestModel.Id);
 
-                return Ok(responseModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"MESSAGE: {exception.Message}");
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
-
 
         // POST api/attemptedQuestions/SaveAttemptedQuestions
         /// <summary>
@@ -79,20 +66,35 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <param name="examsDTO"></param>
         /// <returns></returns>
-        [HttpPost, Route("SaveAttemptedQuestionsById")]
-        public IActionResult SaveAttemptedQuestionsById(AttemptedQuestionsDTO attemptedQuestionsDTO)
-        {
-            try
-            {
+        [HttpPost, Route ("SaveAttemptedQuestionsById")]
+        public IActionResult SaveAttemptedQuestionsById (AttemptedQuestionsDTO attemptedQuestionsDTO) {
+            try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._attemptedQuestions.SaveAttemptedQuestions(attemptedQuestionsDTO);
+                responseModel.Data = this._attemptedQuestions.SaveAttemptedQuestions (attemptedQuestionsDTO);
 
-                return Ok(responseModel);
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
-            catch (Exception exception)
-            {
-                return BadRequest(CommonResponse.ExceptionResponse(exception));
+        }
+
+        // POST api/attemptedQuestions/GetQuestionsByAssignedExam
+        /// <summary>
+        /// Get the list of question along with attempted question detail
+        /// </summary>
+        /// <param name="examsDTO"></param>
+        /// <returns></returns>
+        [HttpPost, Route ("GetQuestionsByAssignedExam")]
+        public IActionResult GetQuestionsByAssignedExam (UserQuestionsDTO userQuestionsDTO) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._attemptedQuestions.GetQuestionsByAssignedExam (userQuestionsDTO.ExamId, userQuestionsDTO.UserId);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
     }
