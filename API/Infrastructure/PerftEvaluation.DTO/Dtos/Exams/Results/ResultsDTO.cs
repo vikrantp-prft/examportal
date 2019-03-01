@@ -41,5 +41,7 @@ namespace PerftEvaluation.DTO.Dtos
         public ExamsDTO Exam { get; set; }
 
         public EmployeesDTO Employee { get; set; }
+
+        public List<AttemptedQuestionsDTO> AttemptedQuestions { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace PerftEvaluation.BAL.Services
 
         protected readonly IExamsRepository _examsRepository;
 
+        protected readonly IAttemptedQuestionsRepository _attemptedQuestionsRepository;
+
         protected readonly IExamsService _examsService;
 
         protected readonly IEmployeeRepository _employeeRepository;
@@ -35,7 +37,8 @@ namespace PerftEvaluation.BAL.Services
                                IExamsService examsService,
                                IEmployeeRepository employeeRepository,
                                IEmployeeService employeeService,
-                               IQuestionsService questionsService)
+                               IQuestionsService questionsService,
+                               IAttemptedQuestionsRepository attemptedQuestionsRepository)
         {
             this._resultsRepository = resultsRepository;
             this._mapper = mapper;
@@ -44,6 +47,7 @@ namespace PerftEvaluation.BAL.Services
             this._employeeRepository = employeeRepository;
             this._employeeService = employeeService;
             this._questionsService = questionsService;
+            this._attemptedQuestionsRepository = attemptedQuestionsRepository;
         }
 
         /// <summary>
@@ -98,14 +102,36 @@ namespace PerftEvaluation.BAL.Services
         /// Get Result's list by User ID
         /// </summary>
         /// <value></value>
-        public ResponseModel GetResultsByUserId(RequestModel requestModel)
+        public List<ResultsDTO> GetIndividualResults(ResultsDTO resultsDTO)
         {
-            //Filter & sort the data
-            var filteredResults = this._resultsRepository.GetResultsByUsersId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ResultFilters);
-            //Integrate pagination
-            var results = filteredResults.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+            //Get data
+            var results = this._resultsRepository.GetIndividualResults(resultsDTO.UserId, resultsDTO.ExamId).AsQueryable();
+
+            var questionsAttempted = this._attemptedQuestionsRepository.GetAttemptedQuestions(resultsDTO.UserId, resultsDTO.ExamId);
             //return object
-            return CommonResponse.OkResponse(requestModel, this._mapper.Map<IEnumerable<ResultsDTO>>(results), (filteredResults.Count() < 100 ? filteredResults.Count() : 100));
+            List<ResultsDTO> resultJoin = new List<ResultsDTO>();
+            foreach (var item in results)
+            {
+                resultsDTO.Id = item.Id;
+                resultsDTO.UserId = item.UserId;
+                resultsDTO.ExamId = item.ExamId;
+                resultsDTO.QuestionsAttempted = item.QuestionsAttempted;
+                resultsDTO.TotalMarks = item.TotalMarks;
+                resultsDTO.ObtainedMarks = item.ObtainedMarks;
+                resultsDTO.Duration = item.Duration;
+                resultsDTO.TimeConsumed = item.TimeConsumed;
+                resultsDTO.StartTime = item.StartTime;
+                resultsDTO.EndTime = item.EndTime;
+                resultsDTO.IsDeleted = item.IsDeleted;
+                resultsDTO.IsActive = item.IsActive;
+                resultsDTO.Exam = _examsService.GetExamsById(item.ExamId);
+                resultsDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
+                resultsDTO.AttemptedQuestions = 
+                resultJoin.Add(resultsDTO);
+            }
+
+            //return object
+            return resultJoin;
         }
 
         /// <summary>

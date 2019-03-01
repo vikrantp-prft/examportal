@@ -54,11 +54,11 @@ namespace PerftEvaluation.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost, Route("listResultsByUserId")]
-        public IActionResult GetResultsByUserId(RequestModel requestModel)
+        public IActionResult GetResultsByUserId(ResultsDTO resultsDTO)
         {
             try
             {
-                return Ok(this._resultsService.GetResultsByUserId(requestModel));
+                return Ok(this._resultsService.GetIndividualResults(resultsDTO));
             }
             catch (Exception exception)
             {

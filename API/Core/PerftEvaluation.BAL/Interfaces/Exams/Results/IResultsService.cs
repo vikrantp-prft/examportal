@@ -20,7 +20,7 @@ namespace PerftEvaluation.BAL.Interfaces
         /// Get Result's list by User ID
         /// </summary>
         /// <value></value>
-        ResponseModel GetResultsByUserId(RequestModel requestModel);
+        List<ResultsDTO> GetIndividualResults(ResultsDTO resultsDTO);
 
         /// <summary>
         /// Save Results

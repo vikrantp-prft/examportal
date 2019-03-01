@@ -57,11 +57,23 @@ namespace PerftEvaluation.DAL.Repositories
         /// <param name="userId"></param>
         /// <returns></returns>
 
-        public IEnumerable<Results> GetResultsByUsersId(string userId)
+        public IEnumerable<Results> GetIndividualResults(string userId, string examId)
         {
             try
             {
-                return _db.GetCollection<Results>(Results.CollectionName).AsQueryable().Where(x => x.IsActive == true && x.UserId == userId).ToList();
+                var isAttempted = ExamAttempted(examId, userId);
+                if (isAttempted)
+                {
+                    return _db.GetCollection<Results>(Results.CollectionName)
+                                                .AsQueryable()
+                                                .Where(x => x.IsActive == true 
+                                                && x.UserId == userId 
+                                                && x.ExamId == examId
+                                                && x.IsDeleted == false)
+                                            .ToList();
+                }
+
+                return null;
             }
             catch (Exception ex)
             {

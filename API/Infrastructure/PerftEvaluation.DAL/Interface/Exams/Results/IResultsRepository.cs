@@ -19,7 +19,7 @@ namespace PerftEvaluation.DAL.Interface
         /// List of Results by User ID
         /// </summary>
         /// <returns>Results List</returns>
-        IEnumerable<Results> GetResultsByUsersId(string userId);
+        IEnumerable<Results> GetIndividualResults(string userId, string examId);
 
         /// <summary>
         /// Save Results
