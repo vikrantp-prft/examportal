@@ -24,16 +24,20 @@ export class ExamListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public examList = [];
+  public statusUrl: string;
+  
   // Constructor
   constructor(
     private ngxService: NgxUiLoaderService, 
     public router: Router, 
     private CommonService: commonService, 
     public http: Http, private toastr: ToastrService) { }
+
   // Lifecycle method
   ngOnInit() {
     this.fn_GetExamList();
   }
+
   // Function for  pagination
   setRecordPerPage(event: any): void {
     this.params.pageNumber = 1;
@@ -105,4 +109,43 @@ export class ExamListComponent implements OnInit {
       }
     });
   }
+
+  // function to change isActive status
+  fn_ChangeStatus(id, isActive) {
+    swal({
+      title: "Are you sure?",
+      text: "You want to change the status!",
+      buttonsStyling: true,
+      confirmButtonClass: "btn btn-success",
+      showCancelButton: true,
+      cancelButtonClass: "btn btn-danger",
+      confirmButtonText: "Yes"
+    }).then(x => {
+      if (x.value == true) {
+        if (isActive == true) {
+          this.statusUrl = "api/Exams/InactivateExam";
+          this.toastr.success("Exam inactivated");
+        } else {
+          this.statusUrl = "api/Exams/ActiveExam";
+          this.toastr.success("Exam activated");
+        }
+        const examStatusModel = {
+          id: id
+        };
+        this.fn_saveStatusChange(this.statusUrl, examStatusModel);
+      }
+    });
+  }
+
+  //function to save status change
+  fn_saveStatusChange(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.fn_GetExamList();
+      } else {
+      }
+    });
+  }
+
 }

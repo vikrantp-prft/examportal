@@ -35,7 +35,7 @@
             <th>Question Paper</th>
             <th>Team</th>
             <th>Duration</th>
-            <th style="width:220px;">Action</th>
+            <th style="width:270px;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@
             <td [routerLink]="['/manage/editExam', exam.id]">{{(params.pageNumber-1)*10 + i +1 }}</td>
             <td [routerLink]="['/manage/editExam', exam.id]">{{exam.title | slice:0:35}}</td>
             <td [routerLink]="['/manage/editExam', exam.id]">{{exam.team==null? 'All':exam.team.name}}</td>
-            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.examDurationHours}} Hrs {{exam.examDurationMinutes}} Mins</td>
+            <td [routerLink]="['/manage/editExam', exam.id]">{{exam.examDurationHours}} : {{exam.examDurationMinutes}} </td>
             <td>
               <button class="btn btn-md " title="View Questions" [routerLink]="['/manage/questionList', exam.id]"
                 [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
@@ -55,6 +55,10 @@
               </button>&nbsp;
               <button class="btn btn-md" title="View Result" [routerLink]="[ '/manage/resultList' , exam.id ]" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
                 <i class="fa fa-file-text-o text-primary" aria-hidden="true"></i>
+              </button>&nbsp;
+              <button title="Change Status" class="btn btn-md" type="button" rel="tooltip" (click)="fn_ChangeStatus(exam.id, exam.isActive)">
+                  <i class="fa" [ngClass]="{'fa-toggle-on text-success': exam.isActive, 'fa-toggle-off text-danger': !exam.isActive}"
+                    aria-hidden="true"></i>
               </button>&nbsp;
               <button class="btn btn-md" title="Delete Exam" type="button" rel="tooltip" (click)="fn_deleteExam(exam.id)">
                 <i class="fa fa-trash text-danger" aria-hidden="true"></i>
