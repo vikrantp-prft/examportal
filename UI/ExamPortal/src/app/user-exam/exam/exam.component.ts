@@ -159,6 +159,7 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 console.log(rs)
+                this.getQuestionList();
                 this.ngxService.stop();
                 this.optionIdArray = [];
                 if (this.endExam) {
