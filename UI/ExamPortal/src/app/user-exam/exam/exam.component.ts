@@ -15,10 +15,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class ExamComponent implements OnInit {
     public examID: string;
-    public examDetail: object;
-    public endExam : boolean = false;
-    public examName: string;
-    public question = [];
+    public examDetail?: object;
+    public endExam: boolean = false;
+    public examName?: string;
+    public question?: any[] = [];
     public questionCategory = [];
     public totalQuestion: number;
     public currentQuestion: string;
@@ -36,6 +36,8 @@ export class ExamComponent implements OnInit {
     public totalSecond: number;
     public currentQuestionQuestionId: string;
     public optionIdArray: string[] = [];
+    public currentQuestionIsAttempted: boolean;
+    public currentQuestionSelectedOptions = [];
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
@@ -73,10 +75,12 @@ export class ExamComponent implements OnInit {
         });
     }
     getQuestionList() {
-        const url = 'api/Questions/listQuestionsByExamId';
+        // const url = 'api/Questions/listQuestionsByExamId';
+        const url = 'api/AttemptedQuestions/GetQuestionsByAssignedExam';
+
         const questionModel = {
-            "id": this.examID,
-            "pageSize": 200
+            "examId": this.examID,
+            "userId": "5c53e96bad3abd0eec04b09a"
         };
         this.fn_getQuestionList(questionModel, url);
     }
@@ -86,11 +90,12 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
+                console.log(this.question)
                 this.totalQuestion = this.question.length;
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
-                this.currentQuestionQuestionId = this.question[0].id;
+                this.currentQuestionQuestionId = this.question[0].questionId;
                 this.ngxService.stop();
                 this.getAllQuestionCategory();
             }
@@ -122,7 +127,7 @@ export class ExamComponent implements OnInit {
         }
     }
     setCurrentQuestionQuestionId(myId) {
-        this.currentQuestionQuestionId = this.question[myId].id;
+        this.currentQuestionQuestionId = this.question[myId].questionId;
     }
     fn_previous() {
         this.currentQuestionIndex--;
@@ -179,9 +184,12 @@ export class ExamComponent implements OnInit {
             confirmButtonText: 'Yes'
         }).then(x => {
             if (x.value == true) {
-                if (this.currentQuestionIndex == this.question.length) {
-                    this.endExam = true;
-                    this.fn_next();
+                this.endExam = true;
+                if (this.optionIdArray.length != 0) {
+                    this.SaveAttemptedQuestionsById();
+                }
+                else {
+                    this.saveResult();
                 }
             }
         });
