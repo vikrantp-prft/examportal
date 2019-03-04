@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
@@ -28,5 +29,13 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <param name="examId"></param>
         /// <returns></returns>
         bool DeleteAttemptedQuestionsByExamId(string examId);
+
+        /// <summary>
+        /// List of question as per the exam id
+        /// </summary>
+        /// <param name="ExamId"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        List<UserQuestionsDTO> GetQuestionsByAssignedExam(string ExamId, string UserId);
     }
 }

@@ -19,12 +19,18 @@ namespace PerftEvaluation.BAL.Services
 
         protected readonly IExamsRepository _examsRepository;
 
+        protected readonly IAttemptedQuestionsRepository _attemptedQuestionsRepository;
+
         protected readonly IExamsService _examsService;
 
         protected readonly IEmployeeRepository _employeeRepository;
         protected readonly IEmployeeService _employeeService;
 
         protected readonly IQuestionsService _questionsService;
+
+        protected readonly IQuestionsRepository _questionsRepository;
+
+        protected readonly IMasterService _masterService;
 
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
@@ -35,7 +41,10 @@ namespace PerftEvaluation.BAL.Services
                                IExamsService examsService,
                                IEmployeeRepository employeeRepository,
                                IEmployeeService employeeService,
-                               IQuestionsService questionsService)
+                               IQuestionsService questionsService,
+                               IAttemptedQuestionsRepository attemptedQuestionsRepository,
+                               IQuestionsRepository questionsRepository,
+                               IMasterService masterService)
         {
             this._resultsRepository = resultsRepository;
             this._mapper = mapper;
@@ -44,6 +53,9 @@ namespace PerftEvaluation.BAL.Services
             this._employeeRepository = employeeRepository;
             this._employeeService = employeeService;
             this._questionsService = questionsService;
+            this._attemptedQuestionsRepository = attemptedQuestionsRepository;
+            this._questionsRepository = questionsRepository;
+            this._masterService = masterService;
         }
 
         /// <summary>
@@ -95,17 +107,45 @@ namespace PerftEvaluation.BAL.Services
         }
 
         /// <summary>
-        /// Get Result's list by User ID
+        /// Get the list of question as per the exam id per user
         /// </summary>
-        /// <value></value>
-        public ResponseModel GetResultsByUserId(RequestModel requestModel)
+        /// <param name="ExamId"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public List<UserAttemptedQuestionsDTO> GetIndividualResults(string ExamId, string UserId)
         {
-            //Filter & sort the data
-            var filteredResults = this._resultsRepository.GetResultsByUsersId(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ResultFilters);
-            //Integrate pagination
-            var results = filteredResults.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
-            //return object
-            return CommonResponse.OkResponse(requestModel, this._mapper.Map<IEnumerable<ResultsDTO>>(results), (filteredResults.Count() < 100 ? filteredResults.Count() : 100));
+            try
+            {
+                List<UserAttemptedQuestionsDTO> userAttemptedQuestionsList = new List<UserAttemptedQuestionsDTO>();
+                var questions = _questionsRepository.GetQuestionsByExamId(ExamId);
+
+                foreach (var item in questions)
+                {
+                    UserAttemptedQuestionsDTO userAttemptedQuestionsDTO = new UserAttemptedQuestionsDTO();
+                    userAttemptedQuestionsDTO.ExamId = item.ExamId;
+                    userAttemptedQuestionsDTO.QuestionId = item.Id;
+                    userAttemptedQuestionsDTO.UserId = UserId;
+                    userAttemptedQuestionsDTO.Exams = _examsService.GetExamsById(item.ExamId);
+                    userAttemptedQuestionsDTO.Users = _employeeService.GetEmployeeById(UserId);
+                    userAttemptedQuestionsDTO.Question = _questionsService.GetQuestionById(item.Id);
+                    var attemptedQuestions = _attemptedQuestionsRepository.GetAttemptedQuestionsByExamsId(ExamId).Where(x => x.UserId == UserId && x.QuestionsId == item.Id).FirstOrDefault();
+                    if (attemptedQuestions != null)
+                    {
+                        userAttemptedQuestionsDTO.SelectedOptionId = attemptedQuestions.SelectedOptionId;
+                        userAttemptedQuestionsDTO.IsAttempted = attemptedQuestions.IsAttempted;
+                        userAttemptedQuestionsDTO.IsCorrect = attemptedQuestions.IsCorrect;
+                        userAttemptedQuestionsDTO.SubjectiveAnswer = attemptedQuestions.SubjectiveAnswer;
+                    }
+                    userAttemptedQuestionsList.Add(userAttemptedQuestionsDTO);
+                }
+
+                return userAttemptedQuestionsList;
+
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
 
         /// <summary>

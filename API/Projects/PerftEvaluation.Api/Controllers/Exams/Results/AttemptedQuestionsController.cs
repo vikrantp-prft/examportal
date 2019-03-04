@@ -20,7 +20,7 @@ namespace PerftEvaluation.Api.Controllers
 
         protected readonly ILogger<AttemptedQuestionsController> _logger;
         public AttemptedQuestionsController(IAttemptedQuestionsService attemptedQuestions,
-                                            ILogger<AttemptedQuestionsController> logger = null)
+            ILogger<AttemptedQuestionsController> logger = null)
         {
             this._attemptedQuestions = attemptedQuestions;
             this.responseModel = new ResponseModel();
@@ -72,7 +72,6 @@ namespace PerftEvaluation.Api.Controllers
             }
         }
 
-
         // POST api/attemptedQuestions/SaveAttemptedQuestions
         /// <summary>
         /// Save exams detail
@@ -87,6 +86,29 @@ namespace PerftEvaluation.Api.Controllers
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
                 responseModel.Data = this._attemptedQuestions.SaveAttemptedQuestions(attemptedQuestionsDTO);
+
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
+            }
+        }
+
+        // POST api/attemptedQuestions/GetQuestionsByAssignedExam
+        /// <summary>
+        /// Get the list of question along with attempted question detail
+        /// </summary>
+        /// <param name="examsDTO"></param>
+        /// <returns></returns>
+        [HttpPost, Route("GetQuestionsByAssignedExam")]
+        public IActionResult GetQuestionsByAssignedExam(UserQuestionsDTO userQuestionsDTO)
+        {
+            try
+            {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._attemptedQuestions.GetQuestionsByAssignedExam(userQuestionsDTO.ExamId, userQuestionsDTO.UserId);
 
                 return Ok(responseModel);
             }

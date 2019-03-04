@@ -1,27 +1,5 @@
 <ngx-ui-loader></ngx-ui-loader>
-<div class="container-fluid">
-  <nav class="navbar navbar-expand-md navbar-white bg-white">
-    <img src="assets/images/prft.png" class="logo" alt="">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <div class="nav-link">
-            <i class="fa fa-user"></i> Jai Bidkar <b class="caret"></b>
-          </div>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/login']">
-            <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</div>
+<app-header></app-header>
 <hr class="my-0">
 <div *ngIf="isFeedback == false">
   <div class="container-fluid mt-4">
@@ -29,39 +7,46 @@
       <div class="card">
         <div class="card-header p-0 m-0">
           <div class="row justify-content-between">
-              <div class="col-2 ">
-                  <div class="p-3 h5 mb-0 font-weight-bold">
-                      {{examName}}
-                  </div>
+            <div class="col-2 ">
+              <div class="p-3 h5 mb-0 font-weight-bold">
+                {{examName}}
               </div>
+            </div>
             <div class="col-3 pl-0">
-                <div class="bg-primary p-3 font-weight-bold h5 mb-0 text-white text-center">
-                    Time Left: {{hours}}:{{minute}}:{{second}}
-                </div>
+              <div class="muli bg-warning p-3 font-weight-bold h5 mb-0 text-white text-center">
+                Time Left: {{hours}}:{{minute}}:{{second}}
+              </div>
             </div>
           </div>
-          <!-- <span class="py-2 m-0 col">{{ examName }}</span>
-          <span class="py-2 m-0 col-2 bg-warning">Time Left: {{hours}}:{{minute}}:{{second}}</span> -->
         </div>
-        <div class="card-body mt-2 lead">
+        <div class="card-body lead">
           <div class="row">
             <div class="col-md-9">
               <div class="card">
+                <div class="card-header p-0">
+                  <ul class="nav">
+                    <li *ngFor="let category of questionCategory" [ngClass]="{'btn-primary': false}" class="nav-item nav-pills py-2 nav-fill">
+                      <a class="nav-link border-0">{{category}}</a>
+                    </li>
+                  </ul>
+                </div>
                 <div class="card-body">
-                  <pre class="core-pre p-4" innerHTML="{{currentQuestionIndex + '. ' +
+                  <pre class="core-pre  Merriweather" innerHTML="{{currentQuestionIndex + '. ' +
                     currentQuestion}}">
                   </pre>
-
-                  <div class="" *ngIf="currentQuestionQuestionType == 0">
+                  <hr>
+                  <div class="text-primary" *ngIf="currentQuestionQuestionType == 0">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input (change)="setOptionIdArray($event)" type="radio" name="radioOption" id="" value="{{option?.optionId}}">
+                        <!-- {{option?.optionId}} -->
+                      <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""  value="{{option?.optionId}}">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                     </div>
                   </div>
-                  <div class="" *ngIf="currentQuestionQuestionType == 1">
+                  <div class="text-primary" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input class="ml-3" type="checkbox" value="{{option?.optionId}}" (change)="setOptionIdArray($event)">
+                        <!-- {{option?.optionId}} -->
+                      <input class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                     </div>
@@ -75,13 +60,13 @@
 
                 </div>
                 <div class="card-footer">
-                  <button class="btn btn-primary" (click)="fn_previous()" [disabled]="currentQuestionIndex == 1">
+                  <button class="btn btn-primary" (click)="fn_previous();" [disabled]="currentQuestionIndex == 1">
                     Previous
                   </button>
-                  <button class="ml-1 btn btn-primary" (click)="fn_next()" [hidden]="currentQuestionIndex == totalQuestion">
-                    Next
+                  <button class="ml-1 btn btn-primary" (click)="fn_next();" [hidden]="currentQuestionIndex == totalQuestion">
+                    Save & Next
                   </button>
-                  <button (click)="fn_endExam()" class="ml-2 btn btn-primary" [hidden]="!(currentQuestionIndex == totalQuestion)">
+                  <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right">
                     End Exam
                   </button>
                 </div>
@@ -117,10 +102,10 @@
           <ol>
             <li *ngFor="let op of item.options; let i=index">
               <span class="mx-3" *ngIf="item?.questionType == 0">
-                <input type="checkbox" name="" id="">
+                <input  type="checkbox" name="" id="" value="{{op.optionId}}">
               </span>
               <span class="mx-3" *ngIf="item?.questionType == 1">
-                <input type="radio" name="" id="">
+                <input  type="radio" name="{{item.questionId}}" >
               </span>
               <span style="display:inline-flex" innerHTML="{{op.option}}"></span>
             </li>
@@ -134,4 +119,3 @@
     </div>
   </div>
 </div>
-<hr>

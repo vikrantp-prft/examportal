@@ -40,17 +40,31 @@
                             <tr>
                                 <th class="th-width">Sr.</th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th class="th-width-action">Action</th>
+                                <th>Marks Obtained</th>
+                                <th>Total Marks</th>
+                                <th class="th-width">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-
+                            <tr *ngFor="let user of userList; let i = index">
+                                <td style="text-align:center;">{{i+1}}</td>
+                                <td>{{user.employee.firstName}} {{user.employee.lastName}}</td>
+                                <td>{{user.obtainedMarks}}</td>
+                                <td>{{user.totalMarks}}</td>
+                                <td>
+                                    <button class="btn btn-md" title="View Detail Result" [routerLink]="[ '/manage/detailedResult', user.employee.id ]" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
+                                        <i class="fa fa-file-text-o text-primary" aria-hidden="true"></i>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <pagination class="pt-0 mt-0 btn btn-md pull-right" [totalItems]="userModel.totalRecords"
+                    [itemsPerPage]="userModel.pageSize" (pageChanged)="pageChanged($event)" [maxSize]="3"
+                    [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS" nextText="NEXT" firstText="FIRST"
+                    lastText="LAST">
+                </pagination>
             </div>
         </div>
     </div>

@@ -52,6 +52,8 @@ export class ResultListComponent implements OnInit {
   // Lifecycle method
   ngOnInit() {
     this.userModel.id = this.examID;
+    this.fn_GetResultList();
+    
   }
 
   // Function for  pagination
@@ -66,20 +68,23 @@ export class ResultListComponent implements OnInit {
     this.userModel.pageSize = parseInt(event.itemsPerPage);
   }
 
-//   // Function to get list of users
-//   fn_GetUserList() {
-//     this.ngxService.start();
-//     const url = "api/AssignedExams/ListEmployeesByExamId"; //'api/Employee/GetEmployees'
-//     this.CommonService.fn_PostWithData(this.userModel, url).subscribe(
-//       (data: any) => {
-//         this.userList = data.data;
-//         this.ngxService.stop();
-//         this.userModel.totalRecords = data.totalRecords;
-//       },
-//       err => console.error(err),
-//       () => {}
-//     );
-//   }
+  // Function to get list of users
+  fn_GetResultList() {
+    const examModel = {
+      "id": this.examID
+    }
+    this.ngxService.start();
+    const url = "api/Results/listResultsByExamId"; 
+    this.CommonService.fn_PostWithData(examModel, url).subscribe(
+      (data: any) => {
+        this.userList = data.data;
+        this.ngxService.stop();
+        this.userModel.totalRecords = data.totalRecords;
+      },
+      err => console.error(err),
+      () => {}
+    );
+  }
 
   
 

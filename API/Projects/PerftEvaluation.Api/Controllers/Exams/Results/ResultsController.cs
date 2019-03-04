@@ -48,17 +48,18 @@ namespace PerftEvaluation.Api.Controllers
             }
         }
 
-        //GET api/exams/resultsByExamId
+        //GET api/results/getIndividualUserResult
         /// <summary>
-        /// Get list of all Exams depending upon Exam ID
+        /// Get Individual User Result
         /// </summary>
         /// <returns></returns>
-        [HttpPost, Route("listResultsByUserId")]
-        public IActionResult GetResultsByUserId(RequestModel requestModel)
+        [HttpPost, Route("getIndividualUserResult")]
+        public IActionResult GetIndividualUserResult(UserAttemptedQuestionsDTO userAttemptedQuestionsDTO)
         {
             try
             {
-                return Ok(this._resultsService.GetResultsByUserId(requestModel));
+                return Ok(this._resultsService.GetIndividualResults(userAttemptedQuestionsDTO.ExamId,
+                                                                    userAttemptedQuestionsDTO.UserId));
             }
             catch (Exception exception)
             {

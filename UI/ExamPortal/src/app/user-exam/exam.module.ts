@@ -9,6 +9,7 @@ import { ExamComponent } from './exam/exam.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { ExamsComponent } from './assignedExamList/exams.component';
 import { ThankComponent } from './Thank-You/thank.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { ThankComponent } from './Thank-You/thank.component';
         ExamComponent, 
         InstructionComponent,
         ExamsComponent,
-        ThankComponent
+        ThankComponent,
+        HeaderComponent
     ]
 })
 export class ExamModule { }

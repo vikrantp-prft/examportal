@@ -19,12 +19,15 @@ namespace PerftEvaluation.BAL.Services
     {
         public readonly IAttemptedQuestionsRepository _attemptedQuestionsRepository;
         public readonly IQuestionsService _questionsService;
+        public readonly IQuestionsRepository _questionsRepository;
+        public readonly IMasterService _masterService;
         public readonly IMapper _mapper;
         public AttemptedQuestionsService(IAttemptedQuestionsRepository attemptedQuestionsRepository,
-                                        IMapper mapper,
-                                        IQuestionsService questionsService)
+            IMapper mapper, IQuestionsRepository questionsRepository, IMasterService masterService, IQuestionsService questionsService)
         {
             this._attemptedQuestionsRepository = attemptedQuestionsRepository;
+            this._questionsRepository = questionsRepository;
+            this._masterService = masterService;
             this._mapper = mapper;
             this._questionsService = questionsService;
         }
@@ -90,29 +93,70 @@ namespace PerftEvaluation.BAL.Services
         {
             try
             {
-                
-                
-                    string[] correctedOptions = _questionsService.GetCorrectOptionsByQuestionId(attemptedQuestionsDTO.QuestionsId);
 
-                    string[] selectedOptions = attemptedQuestionsDTO.SelectedOptionId;
+                string[] correctedOptions = _questionsService.GetCorrectOptionsByQuestionId(attemptedQuestionsDTO.QuestionsId);
 
-                    foreach (var options in selectedOptions)
+                string[] selectedOptions = attemptedQuestionsDTO.SelectedOptionId;
+
+                foreach (var options in selectedOptions)
+                {
+                    foreach (var val in correctedOptions)
                     {
-                        foreach (var val in correctedOptions)
+                        if (options == val)
                         {
-                            if (options == val)
-                            {
-                                attemptedQuestionsDTO.IsCorrect = true;
-                            }
+                            attemptedQuestionsDTO.IsCorrect = true;
                         }
                     }
-                
+                }
+
                 return this._attemptedQuestionsRepository.SaveAttemptedQuestions(this._mapper.Map<AttemptedQuestions>(attemptedQuestionsDTO));
 
             }
             catch (Exception ex)
             {
                 throw (ex);
+            }
+        }
+
+        /// <summary>
+        /// Get the list of question as per the exam id
+        /// </summary>
+        /// <param name="ExamId"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public List<UserQuestionsDTO> GetQuestionsByAssignedExam(string ExamId, string UserId)
+        {
+            try
+            {
+                List<UserQuestionsDTO> userQuestionsDTOList = new List<UserQuestionsDTO>();
+                var questions = _questionsRepository.GetQuestionsByExamId(ExamId);
+
+                foreach (var item in questions)
+                {
+                    UserQuestionsDTO userQuestionsDTO = new UserQuestionsDTO();
+                    userQuestionsDTO.ExamId = item.ExamId;
+                    userQuestionsDTO.QuestionId = item.Id;
+                    userQuestionsDTO.UserId = UserId;
+                    userQuestionsDTO.QuestionType = item.QuestionType;
+                    userQuestionsDTO.CategoryId = item.CategoryId;
+                    userQuestionsDTO.Question = item.Question;
+                    userQuestionsDTO.Category = _masterService.GetMasterById(item.CategoryId);
+                    userQuestionsDTO.Options = this._mapper.Map<List<UserOptionsDTO>>(item.Options);
+                    var attemptedQuestions = _attemptedQuestionsRepository.GetAttemptedQuestionsByExamsId(ExamId).Where(x => x.UserId == UserId && x.QuestionsId == item.Id).FirstOrDefault();
+                    if (attemptedQuestions != null)
+                    {
+                        userQuestionsDTO.SelectedOptionId = attemptedQuestions.SelectedOptionId;
+                        userQuestionsDTO.IsAttempted = attemptedQuestions.IsAttempted;
+                    }
+                    userQuestionsDTOList.Add(userQuestionsDTO);
+                }
+
+                return userQuestionsDTOList;
+
+            }
+            catch (Exception exception)
+            {
+                throw exception;
             }
         }
     }

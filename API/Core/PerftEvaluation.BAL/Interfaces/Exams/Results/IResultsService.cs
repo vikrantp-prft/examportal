@@ -16,11 +16,6 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <value></value>
         ResponseModel GetResultsByExamId(RequestModel requestModel);
 
-        /// <summary>
-        /// Get Result's list by User ID
-        /// </summary>
-        /// <value></value>
-        ResponseModel GetResultsByUserId(RequestModel requestModel);
 
         /// <summary>
         /// Save Results
@@ -36,5 +31,14 @@ namespace PerftEvaluation.BAL.Interfaces
         bool DeleteResultsByExamId(string examId);
 
         ResultsDTO GenerateResults(ResultsDTO resultsDTO);
+
+
+        /// <summary>
+        /// Get the list of question as per the exam id per user
+        /// </summary>
+        /// <param name="ExamId"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        List<UserAttemptedQuestionsDTO> GetIndividualResults(string ExamId, string UserId);
     }
 }

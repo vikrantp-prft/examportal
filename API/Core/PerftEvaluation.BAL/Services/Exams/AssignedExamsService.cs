@@ -53,6 +53,7 @@ namespace PerftEvaluation.BAL.Services {
                 examsDTO.ExamId = item.ExamId;
                 examsDTO.IsActive = item.IsActive;
                 examsDTO.IsDeleted = item.IsDeleted;
+                examsDTO.IsAttempted = item.IsAttempted;
                 examsDTO.Exam = _examsService.GetExamsById (item.ExamId);
                 examsDTO.Employee = _employeeService.GetEmployeeById (item.UserId);
 

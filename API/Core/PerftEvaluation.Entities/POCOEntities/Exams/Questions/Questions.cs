@@ -27,6 +27,11 @@ namespace PerftEvaluation.Entities.POCOEntities {
         [Required]
         public string Question { get; set; }
 
+
+        [BsonElement("subjectiveAnswer")]
+        public string SubjectiveAnswer { get; set; }
+
+
         public List<Options> Options { get; set; }
     }
 

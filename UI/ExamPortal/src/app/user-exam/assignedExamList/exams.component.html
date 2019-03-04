@@ -1,26 +1,4 @@
-<header>
-  <nav class="navbar navbar-expand-md navbar-white  bg-white">
-    <img src="assets/images/prft.png" class="logo" alt="">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <div class="nav-link">
-            <i class="fa fa-user"></i> Jai Bidkar <b class="caret"></b>
-          </div>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/login']">
-            <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>
+<app-header></app-header>
 <hr class="my-0">
 <main>
   <div class="container-fluid">
@@ -48,7 +26,7 @@
               <td> {{ item?.exam?.title }} </td>
               <td> {{ item?.exam?.description }} </td>
               <td> {{ item?.exam?.totalQuestions }} </td>
-              <td> {{ item?.exam?.examDurationHours }}HR:{{ item?.exam?.examDurationMinutes }}MIN </td>
+              <td> {{ item?.exam?.examDurationHours }}:{{ item?.exam?.examDurationMinutes }} (HR:MIN) </td>
               <td>
                 <i class="fa" [ngClass]="{'fa-check text-success': item.isAttempted, 'fa-times text-danger': !item.isAttempted}"
                   aria-hidden="true">
