@@ -93,5 +93,20 @@ namespace PerftEvaluation.DAL.Repositories
                 throw ex;
             }
         }
+
+
+        public List<AttemptedQuestions> GetAttemptedQuestions (string userId, string examId){
+            try
+            {
+                return _db.GetCollection<AttemptedQuestions>(AttemptedQuestions.CollectionName)
+                                                            .AsQueryable()
+                                                            .Where(x => x.ExamId == examId && x.UserId == userId)
+                                                            .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace PerftEvaluation.DTO.Dtos {
 
         [Required]
         public string Question { get; set; }
+        public string SubjectiveAnswer { get; set; }
 
         public bool IsActive { get; set; }
 
