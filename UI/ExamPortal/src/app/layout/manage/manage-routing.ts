@@ -23,6 +23,7 @@ import { AddStateComponent } from './state/state-add-update/stateAddUpdate.compo
 import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.component';
 import { UserListComponent } from './exam/user-list/userList.component';
 import { ResultListComponent } from './exam/examResult-list/resultList.component';
+import { DetailedResultComponent } from './exam/detailedResult/detailedResult.component';
 
 
 
@@ -98,6 +99,9 @@ const routes: Routes = [
             },
             {
                 path: 'resultList/:examId', component: ResultListComponent
+            },
+            {
+                path: 'detailedResult/:userId', component:DetailedResultComponent
             }
 
         ]

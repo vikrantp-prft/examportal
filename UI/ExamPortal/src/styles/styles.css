@@ -100,3 +100,7 @@ h1 {
 .question-upload {
   padding-top: 39px;
 }
+
+.ul-none{
+  list-style: none;
+}

@@ -52,7 +52,7 @@
                                 <td>{{user.obtainedMarks}}</td>
                                 <td>{{user.totalMarks}}</td>
                                 <td>
-                                    <button class="btn btn-md" title="View Detail Result" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
+                                    <button class="btn btn-md" title="View Detail Result" [routerLink]="[ '/manage/detailedResult', user.employee.id ]" [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
                                         <i class="fa fa-file-text-o text-primary" aria-hidden="true"></i>
                                     </button>
                                 </td>

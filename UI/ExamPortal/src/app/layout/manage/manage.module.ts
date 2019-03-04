@@ -32,6 +32,7 @@ import { EditStateComponent } from './state/state-edit-update/stateEditUpdate.co
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { UserListComponent } from './exam/user-list/userList.component';
 import { ResultListComponent } from './exam/examResult-list/resultList.component';
+import { DetailedResultComponent } from './exam/detailedResult/detailedResult.component';
 
 @NgModule({
     imports: [
@@ -68,7 +69,8 @@ import { ResultListComponent } from './exam/examResult-list/resultList.component
         AddStateComponent,
         EditStateComponent,
         UserListComponent,
-        ResultListComponent
+        ResultListComponent,
+        DetailedResultComponent
     ]
 })
 export class ManageModule { }
