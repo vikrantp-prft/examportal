@@ -14,14 +14,14 @@ import { FormGroup, FormControl } from '@angular/forms';
     providers: [commonService]
 })
 export class ExamComponent implements OnInit {
-    public examID: string;
+    public examID?: string;
     public examDetail?: object;
     public endExam: boolean = false;
     public examName?: string;
     public question?: any[] = [];
     public questionCategory = [];
     public totalQuestion: number;
-    public currentQuestion: string;
+    public currentQuestion?: string;
     public currentQuestionIndex: number = 1;
     public currentQuestionQuestionType: number;
     public currentQuestionOptionType = [];
@@ -60,11 +60,11 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode === 200) {
                 this.examDetail = rs.data;
+                this.ngxService.stop();
                 this.examName = rs.data.title;
                 this.isFeedback = rs.data.isFeedback;
                 this.examDurationHours = rs.data.examDurationHours;
                 this.examDurationMinutes = rs.data.examDurationMinutes;
-                this.ngxService.stop();
                 this.totalMinute = (this.examDurationHours * 60) + this.examDurationMinutes;
                 this.totalSecond = this.totalMinute * 60;
                 this.startCountdown(this.totalSecond);
@@ -86,15 +86,13 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
-                console.log(this.question)
+                this.ngxService.stop();
                 this.totalQuestion = this.question.length;
                 this.currentQuestion = this.question[0].question;
                 this.currentQuestionQuestionType = this.question[0].questionType;
                 this.currentQuestionOptionType = this.question[0].options;
                 this.currentQuestionQuestionId = this.question[0].questionId;
                 this.currentQuestionSelectedOptions = this.question[0].selectedOptionId;
-                console.log(this.currentQuestionSelectedOptions)
-                this.ngxService.stop();
                 this.getAllQuestionCategory();
             }
         });
@@ -123,7 +121,6 @@ export class ExamComponent implements OnInit {
             this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
             this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
             this.currentQuestionSelectedOptions = this.question[this.currentQuestionIndex - 1].selectedOptionId;
-            console.log(this.currentQuestionSelectedOptions)
         }
     }
     setCurrentQuestionQuestionId(myId) {
@@ -153,7 +150,7 @@ export class ExamComponent implements OnInit {
 
     SaveAttemptedQuestionsById() {
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
-        const model = {
+        const modal = {
             "QuestionsId": this.currentQuestionQuestionId,
             "selectedOptionId": this.optionIdArray,
             "userId": "5c53e96bad3abd0eec04b09a",
@@ -161,14 +158,13 @@ export class ExamComponent implements OnInit {
             "isAttempted": true,
             "subjectiveAnswer": ""
         }
-        this.fn_SaveAttemptedQuestionsById(model, url);
+        this.fn_SaveAttemptedQuestionsById(url, modal);
     }
-    fn_SaveAttemptedQuestionsById(model, url) {
+    fn_SaveAttemptedQuestionsById(url, modal) {
         this.ngxService.start();
-        this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
+        this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
-                console.log(rs)
                 this.ngxService.stop();
                 this.optionIdArray = [];
                 if (this.endExam) {
@@ -199,7 +195,6 @@ export class ExamComponent implements OnInit {
         });
     }
     setOptionIdArray(event: any) {
-        console.log(event)
         if (event.target.type == 'checkbox') {
             if (event.target.checked == true) {
                 this.optionIdArray.push(event.target.value);
@@ -230,8 +225,8 @@ export class ExamComponent implements OnInit {
         this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
-                this.ngxService.stop();
                 this.router.navigate(['/thank-you']);
+                this.ngxService.stop();
             }
         });
     }
