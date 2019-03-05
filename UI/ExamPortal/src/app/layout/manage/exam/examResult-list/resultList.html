@@ -40,15 +40,18 @@
                             <tr>
                                 <th class="th-width">Sr.</th>
                                 <th>Name</th>
+                                <th>Questions Attempted</th>
                                 <th>Marks Obtained</th>
                                 <th>Total Marks</th>
                                 <th class="th-width">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <ngx-ui-loader></ngx-ui-loader>
                             <tr *ngFor="let user of userList; let i = index">
                                 <td style="text-align:center;">{{i+1}}</td>
                                 <td>{{user.employee.firstName}} {{user.employee.lastName}}</td>
+                                <td>{{user.questionsAttempted}}</td>
                                 <td>{{user.obtainedMarks}}</td>
                                 <td>{{user.totalMarks}}</td>
                                 <td>

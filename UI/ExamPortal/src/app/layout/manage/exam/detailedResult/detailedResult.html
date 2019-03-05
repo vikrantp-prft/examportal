@@ -1,9 +1,9 @@
-<div class="">
+<div class="container">
     <div class="card">
         <div class="card-header">
             <div class="row justify-content-around">
-                <h3 class="col">Result</h3>
-                <button [routerLink]="['/manage/resultList']" class="btn btn-primary ml-2 pull-right"><span>
+                <h3 class="col mb-0">Result</h3>
+                <button [routerLink]="['/manage/resultList',userId]" class="btn btn-primary ml-2 pull-right"><span>
                         <i class="fa fa-arrow-left"></i></span>
                     Back
                 </button>
@@ -14,7 +14,7 @@
                 <div class="row" *ngFor="let result of resultData; let i=index">
                     <div style="width:30px; text-align:center;">{{i+1}}</div>
                     <div class="col">
-                        <p innerHTML="{{result.question.question}}"></p>
+                        <pre innerHTML="{{result.question.question}}"></pre>
                         <ul class="ul-none">
                             <li *ngFor="let option of result.question.options; let i=index">
                                 <span class="mx-3" *ngIf="result.question.questionType == 0">

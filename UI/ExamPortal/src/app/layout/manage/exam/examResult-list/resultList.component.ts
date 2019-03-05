@@ -78,6 +78,7 @@ export class ResultListComponent implements OnInit {
     this.CommonService.fn_PostWithData(examModel, url).subscribe(
       (data: any) => {
         this.userList = data.data;
+        console.log(this.userList);
         this.ngxService.stop();
         this.userModel.totalRecords = data.totalRecords;
       },

@@ -19,7 +19,6 @@ export class DetailedResultComponent implements OnInit {
     }
 
     ngOnInit(): void { 
-        console.log(this.userId);
         this.fn_getResult();
     }
 
@@ -33,25 +32,11 @@ export class DetailedResultComponent implements OnInit {
         this.CommonService.fn_PostWithData(userModel, url).subscribe(
             (data: any) => {
             this.resultData = data;
-            console.log(this.resultData);
+            //console.log(this.resultData);
             },
             err => console.error(err),
             () => {}
           );
     }
-
-    // fn_GetResultList() {
-    //     this.ngxService.start();
-    //     const url = "api/Results/listResultsByExamId"; 
-    //     this.CommonService.fn_PostWithData(this.userModel, url).subscribe(
-    //       (data: any) => {
-    //         this.userList = data.data;
-    //         this.ngxService.stop();
-    //         this.userModel.totalRecords = data.totalRecords;
-    //       },
-    //       err => console.error(err),
-    //       () => {}
-    //     );
-    //   }
     
 }
