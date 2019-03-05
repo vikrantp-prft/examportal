@@ -186,7 +186,7 @@ export class ExamComponent implements OnInit {
             if (x.value == true) {
                 this.endExam = true;
                 if (this.optionIdArray.length != 0) {
-                    this.SaveAttemptedQuestionsById();
+                    this.fn_next();
                 }
                 else {
                     this.saveResult();

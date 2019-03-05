@@ -263,6 +263,7 @@ export class questionListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionDetail = rs.data;
+        console.log(this.questionDetail)
         this.setEditValues();
       } else {
       }

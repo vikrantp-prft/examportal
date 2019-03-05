@@ -7,10 +7,10 @@
             Questions
           </h1>
           <div class="back-btn">
-            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question"
-              (click)="loadQuestionForm()">
+            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
               Add
             </button>
+            <button class="btn btn-primary btn-md mr-2" title="Preview All Questions">Preview</button>
             <!-- <button class="btn btn-md btn-primary mx-2" title="Add new question" data-toggle="modal" data-target="#importQuestion">
               Import
             </button> -->
@@ -18,8 +18,7 @@
               <button class="btn btn-primary " title="Import Question">Import</button>
               <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:72px;" />
             </div>
-            <button [routerLink]="['/manage/examlist']" class="btn btn-primary ml-2"><span><i
-                  class="fa fa-arrow-left"></i></span>
+            <button [routerLink]="['/manage/examlist']" class="btn btn-primary ml-2"><span><i class="fa fa-arrow-left"></i></span>
               Back
             </button>
           </div>
@@ -81,8 +80,7 @@
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let question of questionList; let i = index">
                 <td (click)="editQuestion(question.id)">{{(questionModel.pageNumber-1)*10 + i +1 }}</td>
-                <td (click)="editQuestion(question.id)" title="{{question.question}}"
-                  [innerHTML]="question.question | slice:0:40"></td>
+                <td (click)="editQuestion(question.id)" title="{{question.question}}" [innerHTML]="question.question | slice:0:40"></td>
                 <!-- <td>{{question.questionType}}</td> -->
                 <!-- <td>{{question.categoryId}}</td> -->
                 <td>
@@ -98,8 +96,8 @@
           </table>
         </div>
         <pagination class="mr-2 pull-right" [totalItems]="totalItems" [itemsPerPage]="questionModel.pageSize"
-          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false"
-          previousText="PREVIOUS" nextText="NEXT" firstText="FIRST" lastText="LAST">
+          (pageChanged)="pageChanged($event)" [maxSize]="3" [boundaryLinks]="true" [rotate]="false" previousText="PREVIOUS"
+          nextText="NEXT" firstText="FIRST" lastText="LAST">
         </pagination>
       </div>
     </div>
@@ -124,23 +122,20 @@
                     <option *ngFor="let category of categoryList; let i = index" value="{{category.id}}">
                       {{category.name}}</option>
                   </select>
-                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')"
-                    errorMsg="Select any Question Category">
+                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionCategory')" errorMsg="Select any Question Category">
                   </app-field-error-display>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
                   <label for="middleName">Question Type</label>
-                  <select formControlName="questionType" class="form-control"
-                    (change)="loadOptions($event.target.value)">
+                  <select formControlName="questionType" class="form-control" (change)="loadOptions($event.target.value)">
                     <option value="" selected>--Select--</option>
                     <option value="multipleSelect">Multiple Select(Checkbox)</option>
                     <option value="SingleSelect">Single Select(Radio Button)</option>
                     <option value="subjective">Subjective</option>
                   </select>
-                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')"
-                    errorMsg="Select any Question Type">
+                  <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionType')" errorMsg="Select any Question Type">
                   </app-field-error-display>
                 </div>
               </div>
@@ -149,8 +144,7 @@
               <label for="lastName">Question</label>
               <ejs-richtexteditor formControlName="questionText"></ejs-richtexteditor>
               <!-- <input type="textarea" formControlName="questionText" class="form-control"> -->
-              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')"
-                errorMsg="Please enter Question">
+              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Please enter Question">
               </app-field-error-display>
             </div>
 
@@ -162,24 +156,23 @@
               </div>
               <div formArrayName="obj_multiSelectOptions">
 
-                <div class="row no-gutters"
-                  *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
-                                      
-                    <!-- <div class="col-md-2">
+                <div class="row no-gutters" *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i = index">
+
+                  <!-- <div class="col-md-2">
                       <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
                     </div> -->
                   <div class="col-12" [formGroupName]="i">
                     <div class="row">
                       <div class="col-md-1 mt-1">
-                          <label for="lastName">{{i+1}})</label>
+                        <label for="lastName">{{i+1}})</label>
                       </div>
                       <div class="col-md-3 mt-1 px-0">
-                        <label for="ans">Is correct answer?</label>      
+                        <label for="ans">Is correct answer?</label>
                       </div>
                       <div class="col-1 mt-2 px-0">
-                          <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
-                        </div>
+                        <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
                       </div>
+                    </div>
                     <div class="col-12">
                       <!-- <input type="text" formControlName="multipleSelectOptions" class="form-control form-control-sm"> -->
                       <ejs-richtexteditor formControlName="multipleSelectOptions" class="mt-1"></ejs-richtexteditor>
@@ -196,8 +189,8 @@
                   <!-- Add Options -->
                   <i class="fa fa-plus" title="Add Options" aria-hidden="true"></i>
                 </button>
-                <button class="ml-1 mt-2 btn btn-sm btn-primary" type="button" rel="tooltip"
-                  (click)="addSubstractMultipleSelectOptions('sub')" title="Remove Last Option">
+                <button class="ml-1 mt-2 btn btn-sm btn-primary" type="button" rel="tooltip" (click)="addSubstractMultipleSelectOptions('sub')"
+                  title="Remove Last Option">
                   <!-- Remove Last Options -->
                   <i class="fa fa-minus" title="Remove Last Options" aria-hidden="true"></i>
                 </button>
@@ -206,18 +199,17 @@
 
             <div *ngIf="singleSelectFlag" class="pl-4 py-4 mb-4" style="border:1px solid lightgray">
               <div>
-                <div class=""
-                  *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
+                <div class="" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i = index">
                   <div class="row">
                     <div class="col-md-1 mt-1">
                       <label for="lastName">{{i+1}})</label>
                     </div>
                     <div class="col-md-3 mt-1 px-0">
-                      <label for="ans">Is correct answer?</label>      
+                      <label for="ans">Is correct answer?</label>
                     </div>
                     <div class="col-1 mt-2 px-0">
-                      <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}"
-                        formControlName="singleSelectOptionsCorrectAns" class="form-control">
+                      <input type="radio" name="singleSelectOptionsCorrectAns" value="{{i}}" formControlName="singleSelectOptionsCorrectAns"
+                        class="form-control">
                     </div>
                   </div>
                   <div class="row no-gutters mr-1" formArrayName="obj_singleSelectOptions">
@@ -241,8 +233,8 @@
                   <!-- Add Options -->
                   <i class="fa fa-plus" title="Add Options" aria-hidden="true"></i>
                 </button>
-                <button title="Remove Last Options" class="btn btn-sm ml-1 btn-primary offset-md-1" type="button"
-                  rel="tooltip" (click)="addSubstractSingleSelectOptions('sub')">
+                <button title="Remove Last Options" class="btn btn-sm ml-1 btn-primary offset-md-1" type="button" rel="tooltip"
+                  (click)="addSubstractSingleSelectOptions('sub')">
                   <!-- Remove Last Options -->
                   <i class="fa fa-minus" title="Remove Last Options" aria-hidden="true"></i>
                 </button>
@@ -252,6 +244,8 @@
             <app-field-error-display [displayError]="displayErrorOption" errorMsg="Please Enter/Select Valid Options">
             </app-field-error-display>
           </div>
+          <button class="btn btn-md btn-primary" type="button" data-toggle="modal" data-target="#previewModal">Preview
+            Question</button>
           <button class="btn btn-danger ml-1 btn-md pull-right" type="button" (click)="resetAll()">Reset</button>
           <button class="btn btn-primary btn-md pull-right" type="submit">Save</button>
         </form>
@@ -260,19 +254,77 @@
   </div>
 </div>
 
-<!-- Import Question Modal -->
-<!-- <div class="modal fade" id="importQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Import Question</h5>
+        <h5 class="modal-title" id="previewModalLabel">Preview Question</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <pre class="core-pre  Merriweather" innerHTML="{{questionDetail?.question}}">
+        </pre>
+        <hr>
+        <div class="text-primary" *ngIf="questionDetail?.questionType == 0">
+          <div class="" *ngFor="let option of questionDetail?.options; let i=index">
+            <input class="ml-3" type="radio">
+            <span class="mx-3">{{i+1}}.</span>
+            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+          </div>
+        </div>
+        <div class="text-primary" *ngIf="questionDetail?.questionType == 1">
+          <div class="" *ngFor="let option of questionDetail?.options; let i=index">
+            <input class="ml-3" type="checkbox">
+            <span class="mx-3">{{i+1}}.</span>
+            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Modal -->
+<!-- <div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewModalLabel">Preview Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre class="core-pre  Merriweather">
+        </pre>
+        <hr>
+        <div class="text-primary" *ngIf="questionDetail?.questionType == 0">
+          <div class="" *ngFor="let option of questionDetail?.options; let i=index">
+            <input class="ml-3" type="radio">
+            <span class="mx-3">{{i+1}}.</span>
+            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+          </div>
+        </div>
+        <div class="text-primary" *ngIf="questionDetail?.questionType == 1">
+          <div class="" *ngFor="let option of questionDetail?.options; let i=index">
+            <input class="ml-3" type="checkbox">
+            <span class="mx-3">{{i+1}}.</span>
+            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div> -->
+
