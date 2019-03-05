@@ -19,7 +19,7 @@ import { FileUploader } from "ng2-file-upload";
 @Component({
   selector: "question-list",
   templateUrl: "./questionList.html",
-  styleUrls:['./questionList.component.css'],
+  styleUrls: ['./questionList.component.css'],
   providers: [commonService]
 })
 export class questionListComponent implements OnInit {
@@ -50,6 +50,7 @@ export class questionListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 10;
   public questionList = [];
+  public previewQuestionList?: any[] = [];
   public questionDetail: any;
   public questionListUrl = "api/Questions/listQuestionsByExamId";
   public questionDetailUrl = "api/Questions/GetQuestionById";
@@ -125,6 +126,7 @@ export class questionListComponent implements OnInit {
       pageNumber: 1
     };
     this.getQuestionsList();
+    this.getPreviewQuestionLsit();
     this.disbleAllFlag();
     this.multipleSelectEdit = false;
     this.singleSelectEdit = false;
@@ -147,7 +149,7 @@ export class questionListComponent implements OnInit {
         this.ngxService.stop();
       },
       err => console.error(err),
-      () => {}
+      () => { }
     );
   }
   disbleAllFlag() {
@@ -192,6 +194,23 @@ export class questionListComponent implements OnInit {
         this.totalItems = rs.totalRecords;
       } else {
       }
+    });
+  }
+  getPreviewQuestionLsit() {
+    const url = 'api/Questions/ListQuestionsByExamId';
+    const questionModel = {
+      "id": this.examID
+    };
+    this.fn_getPreviewQuestionLsit(questionModel, url);
+  }
+  fn_getPreviewQuestionLsit(modal, url) {
+    this.ngxService.start();
+    this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
+        const rs = result;
+        if (rs.statusCode == 200) {
+            this.previewQuestionList = rs.data;
+            this.ngxService.stop();
+        }
     });
   }
   loadQuestionForm() {
@@ -318,10 +337,10 @@ export class questionListComponent implements OnInit {
           )
         );
       }
-    
+
     });
   }
-  onSubmit = function(formData) {
+  onSubmit = function (formData) {
     if (this.questionForm.valid) {
       if (formData.value.questionType == "SingleSelect") {
         this.clear_obj_multiSelectOptions();
@@ -334,11 +353,11 @@ export class questionListComponent implements OnInit {
           options.push({
             optionId:
               formData.value.obj_singleSelectOptions[key][
-                "singleSelectOptionsID"
+              "singleSelectOptionsID"
               ],
             option:
               formData.value.obj_singleSelectOptions[key][
-                "singleSelectOptions"
+              "singleSelectOptions"
               ],
             isCorrect: isCorrectVal
           });
@@ -351,18 +370,18 @@ export class questionListComponent implements OnInit {
           var isCorrectVal = false;
           if (
             formData.value.obj_multiSelectOptions[key][
-              "multipleSelectOptionsCorrectAns"
+            "multipleSelectOptionsCorrectAns"
             ]
           )
             isCorrectVal = true;
           options.push({
             optionId:
               formData.value.obj_multiSelectOptions[key][
-                "multipleSelectOptionsID"
+              "multipleSelectOptionsID"
               ],
             option:
               formData.value.obj_multiSelectOptions[key][
-                "multipleSelectOptions"
+              "multipleSelectOptions"
               ],
             isCorrect: isCorrectVal
           });
@@ -384,8 +403,7 @@ export class questionListComponent implements OnInit {
         }
       });
 
-      if ( formData.value.questionType != "subjective" )
-      {
+      if (formData.value.questionType != "subjective") {
         if (!this.validdationOptionText || !this.validdationOptionIsCorrect) {
           this.displayErrorOption = true;
           return false;
@@ -557,11 +575,11 @@ export class questionListComponent implements OnInit {
         (result: any) => {
           const rs = result;
           // console.log(rs)
-          if(rs == true){
+          if (rs == true) {
             this.toastr.success('Questions imported successfully!');
             this.getQuestionsList();
           }
-          else{
+          else {
             this.toastr.success('Failed to import questions!');
           }
         }

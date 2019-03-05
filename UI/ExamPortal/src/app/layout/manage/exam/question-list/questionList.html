@@ -10,10 +10,7 @@
             <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
               Add
             </button>
-            <button class="btn btn-primary btn-md mr-2" title="Preview All Questions">Preview</button>
-            <!-- <button class="btn btn-md btn-primary mx-2" title="Add new question" data-toggle="modal" data-target="#importQuestion">
-              Import
-            </button> -->
+            <button class="btn btn-primary btn-md mr-2" title="Preview All Questions" data-toggle="modal" data-target="#previewAllModal">Preview</button>
             <div class="upload-btn-wrapper">
               <button class="btn btn-primary " title="Import Question">Import</button>
               <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:72px;" />
@@ -36,12 +33,6 @@
                 </select>
               </div>
             </div>
-            <!-- </div>    -->
-            <!-- <div class="col-md-2" style="display: inline-block;">
-                          <button [routerLink]="['/manage/addExamQuestion', examID]" class="btn-primary">Add Question</button>
-                        </div> -->
-            <!-- [(ngModel)]="params.searchString" -->
-            <!-- <div class=""> -->
             <div class="col">
               <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
                 class="form-control" />
@@ -57,36 +48,15 @@
               <tr>
                 <th>Sr.</th>
                 <th>Questions</th>
-                <!-- <th style="width:140px;">Question Type</th> -->
-                <!-- <th>Category</th> -->
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr>
-                                  <th>Sr. No.</th>
-                                  <th>Question</th>
-                                  <th>Question Type</th>
-                                  <th>Category</th>
-                                  <th>
-                                    <button type="button" rel="tooltip" (click)="fn_getEmployee(question.id)">
-                                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </button>&nbsp;
-                                    <button type="button" rel="tooltip" (click)="fn_deleteEmployee(question.id)">
-                                      <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </button>
-                                  </th>
-                                </tr> -->
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let question of questionList; let i = index">
                 <td (click)="editQuestion(question.id)">{{(questionModel.pageNumber-1)*10 + i +1 }}</td>
                 <td (click)="editQuestion(question.id)" title="{{question.question}}" [innerHTML]="question.question | slice:0:40"></td>
-                <!-- <td>{{question.questionType}}</td> -->
-                <!-- <td>{{question.categoryId}}</td> -->
                 <td>
-                  <!-- <button class="btn btn-md" type="button" rel="tooltip" (click)="editQuestion(question.id)">
-                    <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-                  </button>&nbsp; -->
                   <button class="btn btn-md " type="button" rel="tooltip" (click)="deleteQuestion(question.id)">
                     <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                   </button>
@@ -255,7 +225,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel"
+<!-- <div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -289,10 +259,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Modal -->
-<!-- <div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel"
+<div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -326,5 +296,50 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
+<!-- Model for preview All Question -->
+<div class="modal fade bd-example-modal-lg" id="previewAllModal" tabindex="-1" role="dialog" aria-labelledby="previewAllModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewAllModalLabel">Preview All Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="" *ngFor="let item of previewQuestionList; let i=index">
+          <pre class="core-pre Merriweather" innerHTML="{{ (i+1) + '. ' + item?.question}}">
+          </pre>
+          <div class="text-primary" *ngIf="item?.questionType == 0">
+            <div class="" *ngFor="let option of item?.options; let i=index">
+              <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id="" value="{{option?.optionId}}">
+              <span class="mx-3">{{i+1}}.</span>
+              <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+            </div>
+          </div>
+          <div class="text-primary" *ngIf="item?.questionType == 1">
+            <div class="" *ngFor="let option of item?.options; let i=index">
+              <input class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}"
+                (change)="setOptionIdArray($event)">
+              <span class="mx-3">{{i+1}}.</span>
+              <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+            </div>
+          </div>
+          <div class="" *ngIf="item?.questionType == 2">
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Ans.</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"></textarea>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
