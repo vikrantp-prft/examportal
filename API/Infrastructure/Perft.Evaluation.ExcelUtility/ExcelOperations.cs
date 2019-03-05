@@ -162,7 +162,7 @@ namespace PerftEvaluation.ExcelUtility
                     columnName = GetCellValue(document, cell);
                     dt.Columns.Add(columnName);
                 }
-                catch (DuplicateNameException) // if there are columns with same name then create new column with different name
+                catch (DuplicateNameException ex) // if there are columns with same name then create new column with different name
                 {
                     Console.WriteLine("Warning for duplicate column : " + ex.StackTrace);
                     dt.Columns.Add(columnName + columnIndex++); // Add incremental column name just to keep some uniqueness. 
