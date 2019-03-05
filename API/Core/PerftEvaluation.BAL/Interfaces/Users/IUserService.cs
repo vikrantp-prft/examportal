@@ -23,6 +23,14 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <value>List of User in DTO</value>
         ResponseModel GetUsers (RequestModel requestModel);
 
+
+        /// <summary>
+        /// Get Contributor's list
+        /// </summary>
+        /// <value>List of Contributors</value>
+        ResponseModel GetContributors (RequestModel requestModel);
+
+
         /// <summary>
         /// Save User Details
         /// </summary>

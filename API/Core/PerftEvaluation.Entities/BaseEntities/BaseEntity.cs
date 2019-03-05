@@ -26,5 +26,13 @@ namespace PerftEvaluation.Entities.BaseEntities
 
         [BsonElement("modifiedDate")]
         public DateTime? ModifiedDate { get; set; }
+
+
+        [BsonElement("createdBy")]
+        public string CreatedBy { get; set; }
+
+
+        [BsonElement("modifiedBy")]
+        public string ModifiedBy { get; set; }
     }
 }

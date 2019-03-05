@@ -57,6 +57,22 @@ namespace PerftEvaluation.Api.Controllers {
             }
         }
 
+
+        //GET api/user
+        /// <summary>
+        /// Get list of all contributors
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route ("GetContributors")]
+        public IActionResult GetContributors (RequestModel requestModel) {
+            try {
+                return Ok (this._userService.GetContributors (requestModel));
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
         // POST api/user
         /// <summary>
         /// Save user detail

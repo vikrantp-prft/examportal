@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PerftEvaluation.DTO.Dtos {
-    public class ExamsDTO {
+namespace PerftEvaluation.DTO.Dtos
+{
+    public class ExamsDTO
+    {
         public string Id { get; set; }
 
         [Required]
@@ -36,6 +38,12 @@ namespace PerftEvaluation.DTO.Dtos {
         public int? TotalQuestions { get; set; }
         public bool IsDeleted { get; set; }
 
+        public string CreatedBy { get; set; }
+
+        public string ModifiedBy { get; set; }
+
         public MastersDTO Team { get; set; }
+
+        public UsersDTO User { get; set; }
     }
 }

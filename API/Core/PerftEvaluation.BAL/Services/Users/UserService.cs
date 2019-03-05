@@ -256,6 +256,53 @@ namespace PerftEvaluation.BAL.Services {
         public bool RemoveUserAdminAccess (string userId) {
             return _userRepository.RemoveUserAdminAccess (userId);
         }
+
+
+        /// <summary>
+        /// Get Contributor's list
+        /// </summary>
+        /// <value>List of Contributors</value>
+        public ResponseModel GetContributors(RequestModel requestModel)
+        {
+            //Filter & sort the data
+            var filteredContributors = this._userRepository.GetContributors ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
+            //Integrate pagination
+            var contributors = filteredContributors.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+
+            List<UsersDTO> ContributorJoin = new List<UsersDTO> ();
+            foreach (var item in contributors) {
+                UsersDTO usersDTO = new UsersDTO ();
+                usersDTO.Id = item.Id;
+                usersDTO.FirstName = item.FirstName;
+                usersDTO.LastName = item.LastName;
+                usersDTO.IsActive = item.IsActive;
+                usersDTO.Password = item.Password;
+                usersDTO.DOB = item.DOB;
+                usersDTO.Address1 = item.Address1;
+                usersDTO.Address2 = item.Address2;
+                usersDTO.City = item.City;
+                usersDTO.StateId = item.StateId;
+                usersDTO.Pincode = item.Pincode;
+                usersDTO.Email = item.Email;
+                usersDTO.Mobile = item.Mobile;
+                usersDTO.GroupId = item.GroupId;
+                usersDTO.DesignationId = item.DesignationId;
+                usersDTO.TeamId = item.TeamId;
+                usersDTO.Note = item.Note;
+                usersDTO.CreatedDate = item.CreatedDate;
+                usersDTO.ModifiedDate = item.ModifiedDate;
+                usersDTO.IsDeleted = item.IsDeleted;
+                usersDTO.IsAdmin = item.IsAdmin;
+                usersDTO.IsContributor = item.IsContributor;
+                usersDTO.UserType = item.UserType;
+                usersDTO.Team = item.TeamId != null? _masterService.GetMasterById (item.TeamId) : null;
+                usersDTO.Group = item.GroupId != null? _masterService.GetMasterById (item.GroupId) : null;
+                usersDTO.Designation = item.DesignationId != null? _masterService.GetMasterById (item.DesignationId) : null;
+                ContributorJoin.Add (usersDTO);
+            }
+            //return object
+            return CommonResponse.OkResponse (requestModel, ContributorJoin, (filteredContributors.Count () < 100 ? filteredContributors.Count () : 100));
+        }
         #endregion
 
     }

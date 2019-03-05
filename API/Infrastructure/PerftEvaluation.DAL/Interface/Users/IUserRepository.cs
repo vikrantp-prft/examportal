@@ -20,6 +20,13 @@ namespace PerftEvaluation.DAL.Interface {
         /// <returns>Users List</returns>
         IEnumerable<Users> GetUsers ();
 
+
+        /// <summary>
+        /// List of Contributors
+        /// </summary>
+        /// <returns>Contributors List</returns>
+        IEnumerable<Users> GetContributors ();
+
         /// <summary>
         /// Save User Detail
         /// </summary>
