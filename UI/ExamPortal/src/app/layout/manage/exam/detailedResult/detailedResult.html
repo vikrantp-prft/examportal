@@ -18,25 +18,29 @@
                         <ul class="ul-none">
                             <li *ngFor="let option of result.question.options; let i=index">
                                 <span class="mx-3" *ngIf="result.question.questionType == 0">
-                                    {{result.question.options.questionType}}
-                                    <input type="radio" name="" id="" value="{{option.optionId}}">
+                                    <input type="radio" name="{{result.question.questionId}}" [checked]="option.optionId == result.selectedOptionId">
                                 </span>
                                 <span class="mx-3" *ngIf="result.question.questionType == 1">
-                                    {{result.question.options.questionType}}
-                                    <input type="checkbox" name="{{result.questionId}}">
+                                    <!-- <span *ngIf="result.selectedOptionId !== null">
+                                        <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                    </span>
+                                    <input type="checkbox" name="" id="" value="{{option.optionId}}" > -->
+                                    <ng-container *ngIf="result.selectedOptionId !== null; else elseTemplate">
+                                        <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        <input type="checkbox" name="" id="" value="{{option.optionId}}">
+                                    </ng-template>
                                 </span>
+
+                                <!-- <span class="mx-3" *ngIf="result.question.questionType == 1">
+                                    <input type="checkbox" id=""  disabled="disabled" [checked]="option.selected" name="{{result.questionId}}" >
+                                </span> -->
                                 <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <!-- <table>
-                    <tr *ngFor="let result of resultData; let i=index">
-                        <td>{{i+1}}</td>
-                        <td innerHtml="{{result.question.question}}"></td>
-                    </tr>
-                </table> -->
-                <!-- <p innerHTML="{{result.question.question}}">  </p> -->
 
             </div>
 
