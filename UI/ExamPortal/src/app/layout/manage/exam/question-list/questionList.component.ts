@@ -103,6 +103,7 @@ export class questionListComponent implements OnInit {
         this.addSubSingleSelectOption(null, false, null)
       ])
     });
+    
   }
   addSubMultipleSelectOption(param, flag, optionID) {
     return this.fb.group({
@@ -282,7 +283,6 @@ export class questionListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionDetail = rs.data;
-        console.log(this.questionDetail)
         this.setEditValues();
       } else {
       }
