@@ -3,9 +3,14 @@ export const appConfig = {
 
   //  apiUrl: 'http://localhost:54690/', // url for local
   // apiUrl: 'http://localhost:7000/', // url for dev
-   apiUrl: 'http://zil189:90/', // url for dev
-  //apiUrl: 'http://zil395:8080/', // url for production
+  
+  apiUrl: 'http://zil189:90/', // url for dev
   identityUrl: 'http://zil189:9050/',
+
+  //apiUrl: 'http://zil395:8080/', // url for production,
+
+  //apiUrl: 'http://stlscvmg96178:1000/', // url for server
+  //identityUrl: 'http://stlscvmg96178:2000/', // Identity url for server
 
   pattern: {
     NAME: /^[a-zA-Z.\-\']*$/,//^[^-\s0-9$#@!%*?&^]
