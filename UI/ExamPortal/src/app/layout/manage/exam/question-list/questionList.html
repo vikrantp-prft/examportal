@@ -273,21 +273,22 @@
         </button>
       </div>
       <div class="modal-body">
-        <pre class="core-pre  Merriweather">
+        <pre class="core-pre  Merriweather" innerHTML="{{questionForm.controls.questionText.value}}">
+          
         </pre>
         <hr>
-        <div class="text-primary" *ngIf="questionDetail?.questionType == 0">
-          <div class="" *ngFor="let option of questionDetail?.options; let i=index">
+        <div class="text-primary" *ngIf="singleSelectFlag">
+          <div class="" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i=index">
             <input class="ml-3" type="radio">
             <span class="mx-3">{{i+1}}.</span>
-            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+            <span style="display:inline-flex" innerHTML="{{option.controls.singleSelectOptions.value}}"></span>
           </div>
         </div>
-        <div class="text-primary" *ngIf="questionDetail?.questionType == 1">
-          <div class="" *ngFor="let option of questionDetail?.options; let i=index">
+        <div class="text-primary" *ngIf="multipleSelectFlag">
+          <div class="" *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i=index">
             <input class="ml-3" type="checkbox">
             <span class="mx-3">{{i+1}}.</span>
-            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+            <span style="display:inline-flex" innerHTML="{{option.controls.multipleSelectOptions.value}}"></span>
           </div>
         </div>
       </div>
