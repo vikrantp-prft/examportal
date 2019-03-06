@@ -19,7 +19,7 @@ export class ExamComponent implements OnInit {
     public endExam: boolean = false;
     public examName?: string;
     public question?: any[] = [];
-    public questionListForOption: any[] = [];
+    public questionListForOption?: any[] = [];
     public questionCategory = [];
     public totalQuestion: number;
     public currentQuestion?: string;
@@ -47,6 +47,7 @@ export class ExamComponent implements OnInit {
     ngOnInit() {
         this.getExamDetails();
         this.getQuestionList();
+        this.getQuestionListForOption();
     }
     getExamDetails() {
         const examDetailModel = {
@@ -163,7 +164,6 @@ export class ExamComponent implements OnInit {
         if (this.optionIdArray.length != 0) {
             this.SaveAttemptedQuestionsById();
         }
-        this.getQuestionListForOption();
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
@@ -190,6 +190,7 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.ngxService.stop();
+                this.getQuestionListForOption();
                 this.optionIdArray = [];
                 if (this.endExam) {
                     this.saveResult();

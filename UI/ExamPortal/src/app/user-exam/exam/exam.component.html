@@ -86,7 +86,7 @@
                     <!-- <div class="col-md-2 m-1" *ngFor="let q of questionListForOption; let i=index">
                       <button class="btn btn-md" [ngClass]="{'btn-success': q.isAttempted, 'btn-danger': !q.isAttempted}" (click)="jumpToQuestion(i)" >{{i+1}}</button>
                     </div> -->
-                    <button class="btn btn-md m-1 col-md-2" [ngClass]="{'btn-success': q.isAttempted, 'btn-danger': !q.isAttempted}" *ngFor="let q of questionListForOption; let i=index" (click)="jumpToQuestion(i)" >{{i+1}}</button>
+                    <button class="btn btn-md m-1 col-md-2" [ngClass]="{'btn-success': q?.isAttempted, 'btn-danger': !q?.isAttempted}" *ngFor="let q of questionListForOption; let i=index" (click)="jumpToQuestion(i)" >{{i+1}}</button>
                   </div>
                 </div>
               </div>
