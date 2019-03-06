@@ -37,23 +37,27 @@
                   <hr>
                   <div class="text-primary" *ngIf="currentQuestionQuestionType == 0">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                        <!-- {{option?.optionId}} -->
-                      <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""  value="{{option?.optionId}}">
+                      <input [checked]="questionListForOption[currentQuestionIndex-1]?.selectedOptionId == option?.optionId" (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""  value="{{option?.optionId}}">
                       <span class="mx-3">{{i+1}}.</span>
                       <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                     </div>
                   </div>
                   <div class="text-primary" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                        <!-- {{option?.optionId}} -->
-                      <input class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
+                      <input [(ngModel)]="option.selected" class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
+                      <!-- <ng-container *ngIf="questionListForOption[currentQuestionIndex-1].selectedOptionId !== null; else elseTemplate">
+                          <input type="checkbox"  name="{{currentQuestionQuestionId}}" id="" value="{{option.optionId}}" [checked]="questionListForOption[currentQuestionIndex-1]?.selectedOptionId?.indexOf(option?.optionId)!== -1" (change)="setOptionIdArray($event)">
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                          <input type="checkbox"  name="{{currentQuestionQuestionId}}" id="" value="{{option.optionId}}" (change)="setOptionIdArray($event)">
+                      </ng-template> -->
                       <span class="mx-3">{{i+1}}.</span>
-                      <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+                      <span style="display:inline-flex" innerHTML="{{option?.option}}"></span>
                     </div>
                   </div>
                   <div class="" *ngIf="currentQuestionQuestionType == 2">
                     <div class="form-group">
-                      <label for="exampleFormControlTextarea1">Ans.</label>
+                      <label >Ans.</label>
                       <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"></textarea>
                     </div>
                   </div>
@@ -79,7 +83,10 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <button class="m-1 col-md-2 btn btn-md btn-danger" (click)="jumpToQuestion(i)" *ngFor="let q of question; let i=index">{{i+1}}</button>
+                    <!-- <div class="col-md-2 m-1" *ngFor="let q of questionListForOption; let i=index">
+                      <button class="btn btn-md" [ngClass]="{'btn-success': q.isAttempted, 'btn-danger': !q.isAttempted}" (click)="jumpToQuestion(i)" >{{i+1}}</button>
+                    </div> -->
+                    <button class="btn btn-md m-1 col-md-2" [ngClass]="{'btn-success': q.isAttempted, 'btn-danger': !q.isAttempted}" *ngFor="let q of questionListForOption; let i=index" (click)="jumpToQuestion(i)" >{{i+1}}</button>
                   </div>
                 </div>
               </div>

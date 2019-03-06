@@ -19,6 +19,7 @@ export class ExamComponent implements OnInit {
     public endExam: boolean = false;
     public examName?: string;
     public question?: any[] = [];
+    public questionListForOption: any[] = [];
     public questionCategory = [];
     public totalQuestion: number;
     public currentQuestion?: string;
@@ -38,7 +39,6 @@ export class ExamComponent implements OnInit {
     public optionIdArray: string[] = [];
     public currentQuestionIsAttempted: boolean;
     public currentQuestionSelectedOptions = [];
-    
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
@@ -87,6 +87,8 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.question = rs.data;
+                this.questionListForOption = rs.data;
+                // console.log(this.questionListForOption)
                 this.ngxService.stop();
                 this.totalQuestion = this.question.length;
                 this.currentQuestion = this.question[0].question;
@@ -95,6 +97,26 @@ export class ExamComponent implements OnInit {
                 this.currentQuestionQuestionId = this.question[0].questionId;
                 this.currentQuestionSelectedOptions = this.question[0].selectedOptionId;
                 this.getAllQuestionCategory();
+            }
+        });
+    }
+    getQuestionListForOption(){
+        const url = 'api/AttemptedQuestions/GetQuestionsByAssignedExam';
+
+        const questionModel = {
+            "examId": this.examID,
+            "userId": "5c53e96bad3abd0eec04b09a"
+        };
+        this.fn_getQuestionListForOption(url, questionModel);
+    }
+    fn_getQuestionListForOption(url, modal){
+        this.ngxService.start();
+        this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
+            const rs = result;
+            if (rs.statusCode == 200) {
+                this.questionListForOption = rs.data;
+                // console.log(this.questionListForOption);
+                this.ngxService.stop();
             }
         });
     }
@@ -141,6 +163,7 @@ export class ExamComponent implements OnInit {
         if (this.optionIdArray.length != 0) {
             this.SaveAttemptedQuestionsById();
         }
+        this.getQuestionListForOption();
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
