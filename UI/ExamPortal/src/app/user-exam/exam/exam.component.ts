@@ -38,6 +38,7 @@ export class ExamComponent implements OnInit {
     public optionIdArray: string[] = [];
     public currentQuestionIsAttempted: boolean;
     public currentQuestionSelectedOptions = [];
+    
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];

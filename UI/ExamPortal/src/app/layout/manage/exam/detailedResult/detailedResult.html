@@ -32,18 +32,27 @@
                                         <input type="checkbox" disabled="disabled" name="" id="" value="{{option.optionId}}">
                                     </ng-template>
                                 </span>
-
-                                <!-- <span class="mx-3" *ngIf="result.question.questionType == 1">
-                                    <input type="checkbox" id=""  disabled="disabled" [checked]="option.selected" name="{{result.questionId}}" >
-                                </span> -->
                                 <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                             </li>
                         </ul>
                         <div>
-                            <label>Correct Answer:</label>
+                                <ng-container *ngIf="result?.isAttempted; else elseTemplate">
+                                    <ng-container *ngIf="result.isCorrect; else elseTemplate">
+                                        <i class="fa fa-check-circle text-success"> Correct answer</i>
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        <i class="fa fa-times-circle text-danger"> Wrong answer</i>
+                                    </ng-template>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <i class="fa fa-info-circle text-warning"> Not attempted</i>
+                                </ng-template>                  
+                            </div>
+                        <div>
+                            <!-- <label>Correct Answer:</label>
                             <div *ngFor="let option of result.question.options" >
                                 <p *ngIf="option.isCorrect" innerHTML="{{option.option}}"></p>
-                            </div>
+                            </div> -->
                         </div>
                         <hr>
                     </div>

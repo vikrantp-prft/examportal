@@ -20,7 +20,7 @@ const routes: Routes = [
         path: 'thank-you', component: ThankComponent
     },
     {
-        path: 'viewResult', component: ViewResultComponent
+        path: 'viewResult/:examId/:userId', component: ViewResultComponent
     }
 ];
 @NgModule({

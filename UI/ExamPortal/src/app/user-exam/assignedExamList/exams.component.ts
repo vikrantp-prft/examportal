@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { commonService } from 'src/app/common/services/common.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-exams',
@@ -12,8 +12,8 @@ export class ExamsComponent implements OnInit {
     userID: string;
     assignedExamList = [];
     isAttempted: boolean;
-    public showResult: boolean = true;
-    constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
+    public showResult: boolean = false;
+    constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.userID = params['userId'];
         });
@@ -33,11 +33,16 @@ export class ExamsComponent implements OnInit {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
+            console.log(rs.data);
             if (rs.statusCode === 200) {
                 this.assignedExamList = rs.data;
                 this.ngxService.stop();
             }
         });
+    }
+    fn_showResult(examId) {
+        alert("Exam id:" + examId + " User id:" + this.userID);
+        this.router.navigate(['/viewResult',examId,this.userID]);
     }
     changeAttemptedStatus(){
 

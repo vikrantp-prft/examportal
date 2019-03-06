@@ -11,11 +11,14 @@ export class ViewResultComponent implements OnInit {
 
     public userId: string;
     public resultData: any[] = [];
+    public examId: string;
 
     constructor( private route: ActivatedRoute, private CommonService: commonService ) { 
         this.route.params.subscribe(params => {
+            this.examId = params["examId"];
             this.userId = params["userId"];
           });
+        
     }
 
     ngOnInit(): void { 
@@ -25,14 +28,14 @@ export class ViewResultComponent implements OnInit {
     fn_getResult()
     {
         const userModel = {
-            "examId" : "5c4eb23a4732952c9c7fcfc3",
+            "examId" : this.examId,
             "userId": this.userId            
         }
         const url = "api/Results/getIndividualUserResult";
         this.CommonService.fn_PostWithData(userModel, url).subscribe(
             (data: any) => {
             this.resultData = data;
-            //console.log(this.resultData);
+            console.log(this.resultData);
             },
             err => console.error(err),
             () => {}
