@@ -13,11 +13,7 @@ export class ExamsComponent implements OnInit {
     assignedExamList = [];
     isAttempted: boolean;
     public showResult: boolean = false;
-<<<<<<< HEAD
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
-=======
-    constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
->>>>>>> 3f385d604a3b0e6cf31cd41da273fef8400e184d
         this.route.params.subscribe(params => {
             this.userID = params['userId'];
         });
