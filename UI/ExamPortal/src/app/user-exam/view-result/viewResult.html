@@ -1,0 +1,49 @@
+<div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row justify-content-around">
+                    <h3 class="col mb-0">Result</h3>
+                    <button [routerLink]="" class="btn btn-primary ml-2 pull-right"><span>
+                            <i class="fa fa-arrow-left"></i></span>
+                        Back
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="row" *ngFor="let result of resultData; let i=index">
+                        <div style="width:30px; text-align:center;">{{i+1}}</div>
+                        <div class="col">
+                            <pre innerHTML="{{result.question.question}}"></pre>
+                            <ul class="ul-none">
+                                <li *ngFor="let option of result.question.options; let i=index">
+                                    <span class="mx-3" *ngIf="result.question.questionType == 0">
+                                        <input type="radio" name="{{result.question.questionId}}" [checked]="option.optionId == result.selectedOptionId">
+                                    </span>
+                                    <span class="mx-3" *ngIf="result.question.questionType == 1">
+                                        <!-- <span *ngIf="result.selectedOptionId !== null">
+                                            <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                        </span>
+                                        <input type="checkbox" name="" id="" value="{{option.optionId}}" > -->
+                                        <ng-container *ngIf="result.selectedOptionId !== null; else elseTemplate">
+                                            <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                        </ng-container>
+                                        <ng-template #elseTemplate>
+                                            <input type="checkbox" name="" id="" value="{{option.optionId}}">
+                                        </ng-template>
+                                    </span>
+    
+                                    <!-- <span class="mx-3" *ngIf="result.question.questionType == 1">
+                                        <input type="checkbox" id=""  disabled="disabled" [checked]="option.selected" name="{{result.questionId}}" >
+                                    </span> -->
+                                    <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+        </div>
+    </div>

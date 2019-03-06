@@ -10,6 +10,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { ExamsComponent } from './assignedExamList/exams.component';
 import { ThankComponent } from './Thank-You/thank.component';
 import { HeaderComponent } from './header/header.component';
+import { ViewResultComponent } from './view-result/viewResult.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { HeaderComponent } from './header/header.component';
         InstructionComponent,
         ExamsComponent,
         ThankComponent,
-        HeaderComponent
+        HeaderComponent,
+        ViewResultComponent
     ]
 })
 export class ExamModule { }

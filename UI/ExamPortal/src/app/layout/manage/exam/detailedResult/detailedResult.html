@@ -18,7 +18,7 @@
                         <ul class="ul-none">
                             <li *ngFor="let option of result.question.options; let i=index">
                                 <span class="mx-3" *ngIf="result.question.questionType == 0">
-                                    <input type="radio" name="{{result.question.questionId}}" [checked]="option.optionId == result.selectedOptionId">
+                                    <input type="radio" disabled="disabled" name="{{result.question.questionId}}" [checked]="option.optionId == result.selectedOptionId">
                                 </span>
                                 <span class="mx-3" *ngIf="result.question.questionType == 1">
                                     <!-- <span *ngIf="result.selectedOptionId !== null">
@@ -26,10 +26,10 @@
                                     </span>
                                     <input type="checkbox" name="" id="" value="{{option.optionId}}" > -->
                                     <ng-container *ngIf="result.selectedOptionId !== null; else elseTemplate">
-                                        <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                        <input type="checkbox" disabled="disabled" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
                                     </ng-container>
                                     <ng-template #elseTemplate>
-                                        <input type="checkbox" name="" id="" value="{{option.optionId}}">
+                                        <input type="checkbox" disabled="disabled" name="" id="" value="{{option.optionId}}">
                                     </ng-template>
                                 </span>
 
@@ -39,6 +39,13 @@
                                 <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
                             </li>
                         </ul>
+                        <div>
+                            <label>Correct Answer:</label>
+                            <div *ngFor="let option of result.question.options" >
+                                <p *ngIf="option.isCorrect" innerHTML="{{option.option}}"></p>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
 

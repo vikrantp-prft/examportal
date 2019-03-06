@@ -3,11 +3,11 @@ import { commonService } from 'src/app/common/services/common.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'detailed-result',
-    templateUrl: './detailedResult.html',
+    selector: 'view-result',
+    templateUrl: './viewResult.html',
     providers: [commonService]
 })
-export class DetailedResultComponent implements OnInit {
+export class ViewResultComponent implements OnInit {
 
     public userId: string;
     public resultData: any[] = [];
@@ -32,7 +32,7 @@ export class DetailedResultComponent implements OnInit {
         this.CommonService.fn_PostWithData(userModel, url).subscribe(
             (data: any) => {
             this.resultData = data;
-            console.log(this.resultData);
+            //console.log(this.resultData);
             },
             err => console.error(err),
             () => {}
