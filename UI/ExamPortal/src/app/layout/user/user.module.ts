@@ -18,6 +18,7 @@ import { ErrorHandlingModule } from 'src/app/common/field-error-display/field-er
 import { AdminUserUpdateComponent } from './admin-user/admin-user-update/admin-user-update.component';
 import { GroupByPipe } from 'src/app/common/pipe/customPipe.pipe';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { ContributorListComponent } from './contributor/contributor-list/contributorList.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
         QuickAddEmployeeComponent,
         AdminUserListComponent,
         AddAdminUserComponent,
+        ContributorListComponent,
         TraineeListComponent,
         AddTraineeUserComponent,
         QuickTraineeAddUpdate,
