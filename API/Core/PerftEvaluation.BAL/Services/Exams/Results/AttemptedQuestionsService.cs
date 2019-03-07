@@ -146,6 +146,14 @@ namespace PerftEvaluation.BAL.Services
                     if (attemptedQuestions != null)
                     {
                         userQuestionsDTO.SelectedOptionId = attemptedQuestions.SelectedOptionId;
+                        foreach (var options in userQuestionsDTO.Options)
+                        {
+                            if (userQuestionsDTO.SelectedOptionId.Contains(options.OptionId))
+                            {
+                                options.IsSelected = true;
+                            }
+
+                        }
                         userQuestionsDTO.IsAttempted = attemptedQuestions.IsAttempted;
                     }
                     userQuestionsDTOList.Add(userQuestionsDTO);
