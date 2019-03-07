@@ -4,13 +4,13 @@ export const appConfig = {
   //  apiUrl: 'http://localhost:54690/', // url for local
   // apiUrl: 'http://localhost:7000/', // url for dev
   
-  // apiUrl: 'http://zil189:90/', // url for dev
-  // identityUrl: 'http://zil189:9050/',
+   apiUrl: 'http://zil189:90/', // url for dev
+   identityUrl: 'http://zil189:9050/',
 
   //apiUrl: 'http://zil395:8080/', // url for production,
 
-  apiUrl: 'http://stlscvmg96178:1000/', // url for server
-  identityUrl: 'http://stlscvmg96178:1010/', // Identity url for server
+ // apiUrl: 'http://stlscvmg96178:1000/', // url for server
+  //identityUrl: 'http://stlscvmg96178:1010/', // Identity url for server
 
   // apiUrl: 'http://10.128.196.178:1000/', // url for server
   // identityUrl: 'http://10.128.196.178:1010/', // Identity url for server

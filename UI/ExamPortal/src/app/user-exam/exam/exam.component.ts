@@ -39,6 +39,7 @@ export class ExamComponent implements OnInit {
     public optionIdArray: string[] = [];
     public currentQuestionIsAttempted: boolean;
     public currentQuestionSelectedOptions = [];
+    public searchValue: string = '';
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
@@ -97,11 +98,12 @@ export class ExamComponent implements OnInit {
                 this.currentQuestionOptionType = this.question[0].options;
                 this.currentQuestionQuestionId = this.question[0].questionId;
                 this.currentQuestionSelectedOptions = this.question[0].selectedOptionId;
+                this.searchValue = this.question[0].subjectiveAnswer;
                 this.getAllQuestionCategory();
             }
         });
     }
-    getQuestionListForOption(){
+    getQuestionListForOption() {
         const url = 'api/AttemptedQuestions/GetQuestionsByAssignedExam';
 
         const questionModel = {
@@ -110,13 +112,12 @@ export class ExamComponent implements OnInit {
         };
         this.fn_getQuestionListForOption(url, questionModel);
     }
-    fn_getQuestionListForOption(url, modal){
+    fn_getQuestionListForOption(url, modal) {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.questionListForOption = rs.data;
-                // console.log(this.questionListForOption);
                 this.ngxService.stop();
             }
         });
@@ -140,30 +141,46 @@ export class ExamComponent implements OnInit {
         this.currentQuestionOptionType = this.question[questionId].options;
     }
     setCurrentQuestionAndOption() {
-        if (this.currentQuestionIndex < (this.question.length + 1)) {
-            this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
-            this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
-            this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
-            this.currentQuestionSelectedOptions = this.question[this.currentQuestionIndex - 1].selectedOptionId;
+        if (this.currentQuestionQuestionType != 2) {
+            if (this.currentQuestionIndex < (this.question.length + 1)) {
+                this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
+                this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
+                this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
+                this.currentQuestionSelectedOptions = this.question[this.currentQuestionIndex - 1].selectedOptionId;
+            }
         }
     }
     setCurrentQuestionQuestionId(myId) {
         this.currentQuestionQuestionId = this.question[myId].questionId;
     }
-    setCurrentQuestionSelectedOptions(){
-       
+    setCurrentSubjectAnswer(questionId) {
+        this.searchValue = this.question[questionId].subjectiveAnswer;
     }
     fn_previous() {
         this.currentQuestionIndex--;
-        this.setCurrentQuestionAndOption();
+        debugger;
+        if (this.currentQuestionQuestionType == 2 ){
+            debugger;
+            this.setCurrentSubjectAnswer(this.currentQuestionIndex);
+        }
+        else{
+            this.setCurrentQuestionAndOption();
+        }    
+        debugger;    
     }
     fn_next() {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
+        debugger;
         this.setCurrentQuestionAndOption();
+        if (this.currentQuestionQuestionType == 2 ){
+            this.SaveAttemptedQuestionsById();
+        }
+        debugger;
         if (this.optionIdArray.length != 0) {
             this.SaveAttemptedQuestionsById();
         }
+        debugger;
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
@@ -180,9 +197,10 @@ export class ExamComponent implements OnInit {
             "userId": "5c53e96bad3abd0eec04b09a",
             "ExamId": this.examID,
             "isAttempted": true,
-            "subjectiveAnswer": ""
+            "subjectiveAnswer": this.searchValue
         }
         this.fn_SaveAttemptedQuestionsById(url, modal);
+        this.searchValue = null;
     }
     fn_SaveAttemptedQuestionsById(url, modal) {
         this.ngxService.start();
