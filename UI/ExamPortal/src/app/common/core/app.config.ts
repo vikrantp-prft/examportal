@@ -9,11 +9,11 @@ export const appConfig = {
 
   //apiUrl: 'http://zil395:8080/', // url for production,
 
-  //apiUrl: 'http://stlscvmg96178:1000/', // url for server
-  //identityUrl: 'http://stlscvmg96178:2000/', // Identity url for server
+  apiUrl: 'http://stlscvmg96178:1000/', // url for server
+  identityUrl: 'http://stlscvmg96178:1010/', // Identity url for server
 
-  apiUrl: 'http://10.128.196.178:1000/', // url for server
-  identityUrl: 'http://10.128.196.178:1010/', // Identity url for server
+  // apiUrl: 'http://10.128.196.178:1000/', // url for server
+  // identityUrl: 'http://10.128.196.178:1010/', // Identity url for server
 
   pattern: {
     NAME: /^[a-zA-Z.\-\']*$/,//^[^-\s0-9$#@!%*?&^]
