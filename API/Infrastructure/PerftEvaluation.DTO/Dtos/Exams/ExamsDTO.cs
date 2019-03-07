@@ -43,7 +43,5 @@ namespace PerftEvaluation.DTO.Dtos
         public string ModifiedBy { get; set; }
 
         public MastersDTO Team { get; set; }
-
-        public UsersDTO User { get; set; }
     }
 }

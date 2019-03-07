@@ -96,8 +96,22 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <summary>
         /// Remove user as a admin access
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="userId"></param>
         /// <returns>true/false</returns>
         bool RemoveUserAdminAccess (string userId);
+
+        /// <summary>
+        /// Mark user as Conrtibutor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool MarkUserAsConrtibutor (string userId);
+
+        /// <summary>
+        /// Remove user as a Conrtibutor access
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool RemoveUserConrtibutorAccess (string userId);
     }
 }

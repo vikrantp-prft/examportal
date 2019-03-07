@@ -39,6 +39,22 @@ namespace PerftEvaluation.Api.Controllers {
             }
         }
 
+
+        //GET api/exams
+        /// <summary>
+        /// Get list of all Exams
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route ("GetExamsCreatedByContributor")]
+        public IActionResult GetExamsCreatedByContributor (RequestModel requestModel) {
+            try {
+                return Ok (this._examService.GetExamsCreatedByContributor (requestModel.Id));
+            } catch (Exception ex) {
+                return BadRequest (CommonResponse.ExceptionResponse (ex));
+            }
+        }
+
+
         // POST api/exams
         /// <summary>
         /// Save exams detail

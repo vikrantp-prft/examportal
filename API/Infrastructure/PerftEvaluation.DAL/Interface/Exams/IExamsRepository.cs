@@ -57,5 +57,13 @@ namespace PerftEvaluation.DAL.Interface
         /// <param name="examId"></param>
         /// <returns></returns>
         bool DeleteExam (string examId);
+
+
+        /// <summary>
+        /// Get Exam created by Contributor
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Exams> GetExamsCreatedByContributor(string userId);
+
     }
 }

@@ -238,12 +238,47 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
-                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable().Where(x => x.IsContributor == true && x.IsDeleted == false && x.IsActive == true).AsQueryable();
+                return _db.GetCollection<Users>(Users.CollectionName).AsQueryable()
+                                                                     .Where(x => x.IsContributor == true
+                                                                              && x.IsAdmin == false
+                                                                              && x.IsDeleted == false
+                                                                              && x.IsActive == true)
+                                                                     .AsQueryable();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// Mark user as a contributor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        public bool MarkUserAsContributor(string userId)
+        {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq(c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set(c => c.IsContributor, true);
+
+            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
+        }
+
+        /// <summary>
+        /// Mark user as a contributor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        public bool RemoveUserContributorAccess(string userId)
+        {
+            var filter = Builders<Users>.Filter;
+            var filterDef = filter.Eq(c => c.Id, userId);
+            var updateQuery = Builders<Users>.Update
+                .Set(c => c.IsContributor, false);
+
+            return _db.UpdateOne<Users>(filterDef, updateQuery, Users.CollectionName);
         }
         #endregion
     }

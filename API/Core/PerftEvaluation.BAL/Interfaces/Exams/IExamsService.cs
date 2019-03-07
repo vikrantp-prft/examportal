@@ -24,6 +24,13 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <value></value> 
         bool SaveExams(ExamsDTO examsDTO);
 
+
+        /// <summary>
+        /// Get Exam created by Contributor
+        /// </summary>
+        /// <returns></returns>
+        List<ExamsDTO> GetExamsCreatedByContributor(string createdBy);
+
         /// <summary>
         /// Get Exams by ID
         /// </summary>

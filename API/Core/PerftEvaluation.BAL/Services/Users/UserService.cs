@@ -303,6 +303,26 @@ namespace PerftEvaluation.BAL.Services {
             //return object
             return CommonResponse.OkResponse (requestModel, ContributorJoin, (filteredContributors.Count () < 100 ? filteredContributors.Count () : 100));
         }
+
+        /// <summary>
+        /// Mark user as Conrtibutor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        public bool MarkUserAsConrtibutor(string userId)
+        {
+            return _userRepository.MarkUserAsContributor (userId);
+        }
+
+         /// <summary>
+        /// Remove user as Conrtibutor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        public bool RemoveUserConrtibutorAccess(string userId)
+        {
+            return _userRepository.RemoveUserContributorAccess (userId);
+        }
         #endregion
 
     }

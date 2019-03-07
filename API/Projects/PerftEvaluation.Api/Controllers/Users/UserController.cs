@@ -268,6 +268,45 @@ namespace PerftEvaluation.Api.Controllers {
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
         }
+
+
+        /// <summary>
+        /// Mark user as Contributor
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns>true/false</returns>
+        [HttpPost, Route ("MarkUserAsContributor")]
+        public IActionResult MarkUserAsContributor (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.MarkUserAsConrtibutor (requestModel.Id);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
+
+        /// <summary>
+        /// Mark user as admin
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns>true/false</returns>
+        [HttpPost, Route ("RevokeContributorAccess")]
+        public IActionResult RevokeUserContributorAccess (RequestModel requestModel) {
+            try {
+                responseModel.StatusCode = 200;
+                responseModel.Message = "Success";
+                responseModel.Data = this._userService.RemoveUserConrtibutorAccess (requestModel.Id);
+
+                return Ok (responseModel);
+            } catch (Exception exception) {
+                _logger.LogInformation ($"MESSAGE: {exception.Message}");
+                return BadRequest (CommonResponse.ExceptionResponse (exception));
+            }
+        }
         #endregion
     }
 }

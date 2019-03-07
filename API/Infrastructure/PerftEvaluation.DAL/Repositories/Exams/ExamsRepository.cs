@@ -65,6 +65,26 @@ namespace PerftEvaluation.DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Get Exam created by Contributor
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Exams> GetExamsCreatedByContributor(string userId)
+        {
+            try
+            {
+                return _db.GetCollection<Exams>(Exams.CollectionName).AsQueryable()
+                                                                     .Where(x => x.CreatedBy == userId 
+                                                                              && x.IsActive == true
+                                                                              && x.IsDeleted == false)
+                                                                     .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool InactivateExams(string examId)
         {
             var filter = Builders<Exams>.Filter;
@@ -107,6 +127,7 @@ namespace PerftEvaluation.DAL.Repositories
                 .Set(c => c.ShuffleQuestions, exams.ShuffleQuestions)
                 .Set(c => c.TeamId, exams.TeamId)
                 .Set(c => c.Title, exams.Title)
+                .Set(c => c.ModifiedBy, exams.ModifiedBy)
                 .Set(c => c.TotalQuestions, exams.TotalQuestions);
 
             return _db.UpdateOne<Exams>(filterDef, updateQuery, Exams.CollectionName);

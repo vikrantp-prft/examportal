@@ -95,5 +95,19 @@ namespace PerftEvaluation.DAL.Interface {
         /// <param name="userId"></param>
         /// <returns>true/false</returns>
         bool RemoveUserAdminAccess (string userId);
+
+        /// <summary>
+        /// Mark user as a contributor
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool MarkUserAsContributor (string userId);
+
+        /// <summary>
+        /// Remove the User as a contributor access
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true/false</returns>
+        bool RemoveUserContributorAccess (string userId);
     }
 }
