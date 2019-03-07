@@ -44,7 +44,7 @@
                   </div>
                   <div class="text-primary" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input [(ngModel)]="option.selected" class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
+                      <input [checked]="questionListForOption[currentQuestionIndex-1].options[i].isSelected" class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
                       <!-- <ng-container *ngIf="questionListForOption[currentQuestionIndex-1].selectedOptionId !== null; else elseTemplate">
                           <input type="checkbox"  name="{{currentQuestionQuestionId}}" id="" value="{{option.optionId}}" [checked]="questionListForOption[currentQuestionIndex-1]?.selectedOptionId?.indexOf(option?.optionId)!== -1" (change)="setOptionIdArray($event)">
                       </ng-container>
@@ -70,6 +70,9 @@
                   <button class="ml-1 btn btn-primary" (click)="fn_next();" [hidden]="currentQuestionIndex == totalQuestion">
                     Save & Next
                   </button>
+                  <button class="ml-1 btn btn-primary" (click)="fn_nextToNotSaveQuestion()" [hidden]="currentQuestionIndex == totalQuestion">
+                      Next
+                    </button>
                   <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right">
                     End Exam
                   </button>

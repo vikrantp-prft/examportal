@@ -47,7 +47,6 @@ export class ExamComponent implements OnInit {
     ngOnInit() {
         this.getExamDetails();
         this.getQuestionList();
-        this.getQuestionListForOption();
     }
     getExamDetails() {
         const examDetailModel = {
@@ -97,6 +96,13 @@ export class ExamComponent implements OnInit {
                 this.currentQuestionOptionType = this.question[0].options;
                 this.currentQuestionQuestionId = this.question[0].questionId;
                 this.currentQuestionSelectedOptions = this.question[0].selectedOptionId;
+                if (this.questionListForOption[0].selectedOptionId != null) {
+                    this.optionIdArray = this.questionListForOption[0].selectedOptionId;
+                }
+                else{
+                    this.optionIdArray = [];
+                }
+                console.log(this.optionIdArray)
                 this.getAllQuestionCategory();
             }
         });
@@ -116,7 +122,7 @@ export class ExamComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
                 this.questionListForOption = rs.data;
-                // console.log(this.questionListForOption);
+                // zconsole.log(this.questionListForOption);
                 this.ngxService.stop();
             }
         });
@@ -155,20 +161,35 @@ export class ExamComponent implements OnInit {
     }
     fn_previous() {
         this.currentQuestionIndex--;
+        if (this.questionListForOption[this.currentQuestionIndex -1].selectedOptionId != null) {
+            this.optionIdArray = this.questionListForOption[this.currentQuestionIndex -1].selectedOptionId;
+        }
+        else{
+            this.optionIdArray = [];
+        }
+        console.log(this.optionIdArray)
         this.setCurrentQuestionAndOption();
     }
     fn_next() {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
-        if (this.optionIdArray.length != 0) {
-            this.SaveAttemptedQuestionsById();
-        }
+        this.SaveAttemptedQuestionsById();
+    }
+    fn_nextToNotSaveQuestion(){
+        this.currentQuestionIndex++;
+        this.setCurrentQuestionAndOption();
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
         this.setCurrentQuestionQuestionType(id);
         this.setCurrentQuestionOptionType(id);
+        if (this.questionListForOption[id].selectedOptionId != null) {
+            this.optionIdArray = this.questionListForOption[id].selectedOptionId;
+        }
+        else{
+            this.optionIdArray = [];
+        }
         this.currentQuestionIndex = id + 1;
     }
 
@@ -192,6 +213,7 @@ export class ExamComponent implements OnInit {
                 this.ngxService.stop();
                 this.getQuestionListForOption();
                 this.optionIdArray = [];
+                //this.optionIdArray = this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId;
                 if (this.endExam) {
                     this.saveResult();
                 }
@@ -220,6 +242,7 @@ export class ExamComponent implements OnInit {
         });
     }
     setOptionIdArray(event: any) {
+        // this.optionIdArray = this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId;
         if (event.target.type == 'checkbox') {
             if (event.target.checked == true) {
                 this.optionIdArray.push(event.target.value);

@@ -24,7 +24,8 @@ export class ExamsComponent implements OnInit {
     }
     getExamDetails() {
         const listExamsByUserIdModel = {
-            "id": this.userID
+            "id": this.userID,
+            "createdBy": "5c53f2ecad3abd0eec04b0c9"
         }
         const listExamsByUserIdUrl = "api/AssignedExams/ListExamsByUserId";
         this.fn_getExamDetails(listExamsByUserIdModel, listExamsByUserIdUrl);
