@@ -75,6 +75,9 @@
                   <button class="btn btn-md mr-1" type="button" [hidden]="emp.isAdmin" rel="tooltip" (click)="fn_ProvideAdminAccess(emp.id)" title="Make admin">
                     <i class="fa fa-user-plus text-danger" aria-hidden="true"></i>
                   </button>
+                  <button class="btn btn-md mr-1" type="button" [hidden]="emp.isContributor" rel="tooltip" (click)="fn_ProvideContributorAccess(emp.id)" title="Make contributor">
+                      <i class="fa fa-user-edit" aria-hidden="true"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>

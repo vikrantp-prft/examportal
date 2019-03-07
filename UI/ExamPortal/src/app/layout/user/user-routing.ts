@@ -11,6 +11,7 @@ import { QuickTraineeAddUpdate } from './trainee/trainee-user-add-update/quickTr
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 import { UploadComponent } from './upload/upload.component';
 import { AdminUserUpdateComponent } from './admin-user/admin-user-update/admin-user-update.component';
+import { ContributorListComponent } from './contributor/contributor-list/contributorList.component';
 const routes: Routes = [
     {
         path: '',
@@ -48,6 +49,9 @@ const routes: Routes = [
             {
                 path: 'updateadmin/:_adminid', component: AdminUserUpdateComponent
             },
+            {
+                path: 'contributorList', component: ContributorListComponent
+            }
         ]
     }
 ];

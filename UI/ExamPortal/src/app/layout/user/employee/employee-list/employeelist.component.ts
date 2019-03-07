@@ -79,6 +79,7 @@ export class EmployeeListComponent implements OnInit {
     const url = "api/Employee/GetEmployees";
     this.CommonService.fn_PostWithData(this.employeeModel, url).subscribe(
       (data: any) => {
+        console.log(data);
         this.employeeList = data.data;
         this.employeeModel.totalRecords = data.totalRecords;
         this.ngxService.stop();
@@ -137,6 +138,41 @@ export class EmployeeListComponent implements OnInit {
 
   //function to save status change
   fn_ProvideAdminAccessApi(url, data) {
+    this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
+      this.ngxService.start();
+      const rs = result;
+      if (rs.statusCode === 200) {
+        this.ngxService.stop();
+        this.fn_GetEmployeeList();
+      } else {
+        this.toastr.error("Something went wrong!");
+      }
+    });
+  }
+
+  fn_ProvideContributorAccess(id) {
+    swal({
+      title: "Are you sure?",
+      text: "You want to provide the contributor access!",
+      buttonsStyling: true,
+      confirmButtonClass: "btn btn-success",
+      showCancelButton: true,
+      cancelButtonClass: "btn btn-danger",
+      confirmButtonText: "Yes"
+    }).then(x => {
+      if (x.value == true) {
+        this.statusUrl = "api/User/MarkUserAsContributor";
+        this.toastr.success("Contributor access has been provided!");
+        const adminStatusModel = {
+          id: id
+        };
+        this.fn_ProvideContributorAccessApi(this.statusUrl, adminStatusModel);
+      }
+    });
+  }
+
+  //function to save status change
+  fn_ProvideContributorAccessApi(url, data) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       this.ngxService.start();
       const rs = result;
