@@ -18,17 +18,14 @@ using PerfiEvaluation.Identity.Mongo.Helper;
 using PerftEvaluation.EmailServer.DI;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace PerftEvaluation.Identity
-{
+namespace PerftEvaluation.Identity {
     /// <summary>
     /// Project Startup file
     /// </summary>
-    public class Startup
-    {
+    public class Startup {
 
         #region Declaration 
-        public Startup(IConfiguration configuration)
-        {
+        public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
 
@@ -38,31 +35,26 @@ namespace PerftEvaluation.Identity
 
         #region Configuration Service
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        public void ConfigureServices (IServiceCollection services) {
+            services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("V1.0.0", new Info { Title = "PerftEvaluation API", Version = "V1.0.0" });
+            services.AddSwaggerGen (c => {
+                c.SwaggerDoc ("V1.0.0", new Info { Title = "PerftEvaluation API", Version = "V1.0.0" });
             });
 
             #region Mongo Provider
-            services.AddIdentityMongoDbProvider<PerfiUser, PerfiRole>(options =>
-                {
-                    options.ConnectionString = this.Configuration["ConnectionStrings:MongoConnection"];
-                });
+            services.AddIdentityMongoDbProvider<PerfiUser, PerfiRole> (options => {
+                options.ConnectionString = this.Configuration["ConnectionStrings:MongoConnection"];
+            });
             #endregion
 
             #region Add Authentication
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenAuthentication:SecretKey"]));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(config =>
-            {
+            var signingKey = new SymmetricSecurityKey (Encoding.UTF8.GetBytes (Configuration["TokenAuthentication:SecretKey"]));
+            services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme).AddJwtBearer (config => {
                 config.RequireHttpsMetadata = false;
                 config.SaveToken = true;
-                config.TokenValidationParameters = new TokenValidationParameters()
-                {
+                config.TokenValidationParameters = new TokenValidationParameters () {
                     IssuerSigningKey = signingKey,
                     ValidateAudience = true,
                     ValidAudience = this.Configuration["TokenAuthentication:Audience"],
@@ -75,17 +67,15 @@ namespace PerftEvaluation.Identity
             });
             #endregion
 
-
             //Dependency Injection Declaration
-            services.RegisterServices();
+            services.RegisterServices ();
 
             #region Add CORS
-            services.AddCors(options => options.AddPolicy("Cors", builder =>
-            {
+            services.AddCors (options => options.AddPolicy ("Cors", builder => {
                 builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
+                    .AllowAnyOrigin ()
+                    .AllowAnyMethod ()
+                    .AllowAnyHeader ();
             }));
             #endregion
         }
@@ -93,34 +83,31 @@ namespace PerftEvaluation.Identity
 
         #region Configure
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+            if (env.IsDevelopment ()) {
+                app.UseDeveloperExceptionPage ();
+            } else {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts ();
             }
 
             //app.UseHttpsRedirection ();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseSwagger ();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/V1.0.0/swagger.json", "PerftEvaluation API V1.0.0");
+            app.UseSwaggerUI (c => {
+                c.SwaggerEndpoint ("/swagger/V1.0.0/swagger.json", "PerftEvaluation API V1.0.0");
             });
 
-            app.UseAuthentication();
-            app.UseCors("Cors");
-            app.UseMvc();
-
+            app.UseAuthentication ();
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors (builder => {
+                builder.WithOrigins ("http://localhost:4200", "http://zil395:9002", "http://zil189:400", "http://zil395:9090", "http://zil395:1010/", "http://10.128.196.178:90", "http://stlscvmg96178:90", "http://zil144:9002").AllowAnyMethod ().AllowAnyHeader ();
+            });;
+            app.UseMvc ();
 
         }
         #endregion

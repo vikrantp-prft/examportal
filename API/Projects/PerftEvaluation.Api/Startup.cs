@@ -127,9 +127,8 @@ namespace PerftEvaluation.Api
             app.UseAuthentication();
 
             // Shows UseCors with CorsPolicyBuilder.
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("http://localhost:4200", "http://zil395:9002", "http://zil189:400", "http://zil395:9090", "http://zil395:1010/").AllowAnyMethod().AllowAnyHeader();
+            app.UseCors (builder => {
+                builder.WithOrigins ("http://localhost:4200", "http://zil395:9002", "http://zil189:400", "http://zil395:9090", "http://zil395:1010/", "http://10.128.196.178:90", "http://stlscvmg96178:90","http://zil144:9002").AllowAnyMethod ().AllowAnyHeader ();
             });
 
             app.UseMvc();
