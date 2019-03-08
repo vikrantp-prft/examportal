@@ -41,7 +41,7 @@
                 <th>Email</th>
                 <th>Team</th>
                 <th>Active</th>
-                <th>Action</th>
+                <th style="width:225px;">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -76,7 +76,7 @@
                     <i class="fa fa-user-plus text-danger" aria-hidden="true"></i>
                   </button>
                   <button class="btn btn-md mr-1" type="button" [hidden]="emp.isContributor" rel="tooltip" (click)="fn_ProvideContributorAccess(emp.id)" title="Make contributor">
-                      <i class="fa fa-user-edit" aria-hidden="true"></i>
+                      <i class="fa fa-user-plus text-primary" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>

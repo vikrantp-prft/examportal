@@ -15,43 +15,55 @@
                     <div style="width:30px; text-align:center;">{{i+1}}</div>
                     <div class="col">
                         <pre innerHTML="{{result.question.question}}"></pre>
-                        <ul class="ul-none">
-                            <li *ngFor="let option of result.question.options; let i=index">
-                                <span class="mx-3" *ngIf="result.question.questionType == 0">
-                                    <input type="radio" disabled="disabled" name="{{result.question.questionId}}"
-                                        [checked]="option.optionId == result.selectedOptionId">
-                                </span>
-                                <span class="mx-3" *ngIf="result.question.questionType == 1">
-                                    <!-- <span *ngIf="result.selectedOptionId !== null">
-                                            <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
-                                        </span>
-                                        <input type="checkbox" name="" id="" value="{{option.optionId}}" > -->
-                                    <ng-container *ngIf="result.selectedOptionId !== null; else elseTemplate">
-                                        <input type="checkbox" disabled="disabled" name="" id=""
-                                            value="{{option.optionId}}"
-                                            [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
-                                    </ng-container>
-                                    <ng-template #elseTemplate>
-                                        <input type="checkbox" disabled="disabled" name="" id=""
-                                            value="{{option.optionId}}">
-                                    </ng-template>
-                                </span>
-                                <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
-                            </li>
-                        </ul>
-                        <div>
-                            <ng-container *ngIf="result?.isAttempted; else elseTemplate">
-                                <ng-container *ngIf="result.isCorrect; else elseTemplate">
-                                    <i class="fa fa-check-circle text-success"> Correct answer</i>
-                                </ng-container>
-                                <ng-template #elseTemplate>
-                                    <i class="fa fa-times-circle text-danger"> Wrong answer</i>
-                                </ng-template>
-                            </ng-container>
-                            <ng-template #elseTemplate>
-                                <i class="fa fa-info-circle text-warning"> Not attempted</i>
-                            </ng-template>                  
-                        </div>
+                        <ng-container *ngIf="result.question.questionType == 2; else elseTemplate">
+                            Answer:
+                            <pre innerHTML="{{result.subjectiveAnswer}}"></pre>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                                <ul class="ul-none">
+                                        <li *ngFor="let option of result.question.options; let i=index">
+                                            <span class="mx-3" *ngIf="result.question.questionType == 0">
+                                                <input type="radio" disabled="disabled" name="{{result.question.questionId}}"
+                                                    [checked]="option.optionId == result.selectedOptionId">
+                                            </span>
+                                            <span class="mx-3" *ngIf="result.question.questionType == 1">
+                                                <!-- <span *ngIf="result.selectedOptionId !== null">
+                                                        <input type="checkbox" name="" id="" value="{{option.optionId}}" [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                                    </span>
+                                                    <input type="checkbox" name="" id="" value="{{option.optionId}}" > -->
+                                                <ng-container *ngIf="result.selectedOptionId !== null; else elseTemplate">
+                                                    <input type="checkbox" disabled="disabled" name="" id=""
+                                                        value="{{option.optionId}}"
+                                                        [checked]="result?.selectedOptionId?.indexOf(option?.optionId)!== -1">
+                                                </ng-container>
+                                                <ng-template #elseTemplate>
+                                                    <input type="checkbox" disabled="disabled" name="" id=""
+                                                        value="{{option.optionId}}">
+                                                </ng-template>
+                                            </span>
+                                            <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <ng-container *ngIf="result?.isAttempted; else elseTemplate">
+                                            <ng-container *ngIf="result.isCorrect; else elseTemplate">
+                                                <i class="fa fa-check-circle text-success"> Correct answer</i>
+                                            </ng-container>
+                                            <ng-template #elseTemplate>
+                                                <i class="fa fa-times-circle text-danger"> Wrong answer</i>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-template #elseTemplate>
+                                            <i class="fa fa-info-circle text-warning"> Not attempted</i>
+                                        </ng-template>                  
+                                    </div>
+                                    <div>
+                                        <b>Correct Answer:</b>
+                                        <div *ngFor="let option of result.question.options" >
+                                            <p *ngIf="option.isCorrect" innerHTML="{{option.option}}"></p>
+                                        </div>
+                                    </div>
+                        </ng-template>                                          
                         <hr>
                     </div>
                 </div>
