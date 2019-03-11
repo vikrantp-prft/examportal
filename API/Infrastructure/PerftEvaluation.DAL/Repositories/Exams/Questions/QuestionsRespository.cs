@@ -130,11 +130,10 @@ namespace PerftEvaluation.DAL.Repositories
                                 .Set(s => s.IsActive, questions.IsActive)
                                 .Set(s => s.Options, questions.Options)
                                 .Set(s => s.Question, questions.Question)
-                                .Set(s => s.QuestionType, questions.QuestionType);
+                                .Set(s => s.QuestionType, questions.QuestionType)
+                                .Set(s => s.SubjectiveAnswer, questions.SubjectiveAnswer);
 
             return _db.UpdateOne<Questions>(filterDef, updateQuery, Questions.CollectionName);
-        }
-
-       
+        }  
     }
 }

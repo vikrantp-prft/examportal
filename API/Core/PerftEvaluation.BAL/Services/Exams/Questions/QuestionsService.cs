@@ -58,6 +58,7 @@ namespace PerftEvaluation.BAL.Services
                 questionsDTO.Question = item.Question;
                 questionsDTO.Options = this._mapper.Map<List<OptionsDTO>>(item.Options);
                 questionsDTO.IsDeleted = item.IsDeleted;
+                questionsDTO.SubjectiveAnswer = item.SubjectiveAnswer;
                 questionsDTO.Category = _masterService.GetMasterById(item.CategoryId);
 
                 questionsJoin.Add(questionsDTO);
@@ -84,6 +85,7 @@ namespace PerftEvaluation.BAL.Services
             questionsDTO.Question = questions.Question;
             questionsDTO.Options = this._mapper.Map<List<OptionsDTO>>(questions.Options);
             questionsDTO.IsDeleted = questions.IsDeleted;
+            questionsDTO.SubjectiveAnswer = questions.SubjectiveAnswer;
             questionsDTO.Category = _masterService.GetMasterById(questions.CategoryId);
 
             return questionsDTO;
