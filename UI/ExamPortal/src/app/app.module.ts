@@ -1,3 +1,4 @@
+import { CustomAuthService } from './common/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -39,7 +40,7 @@ export const createTranslateLoader = (http: HttpClient) => {
     AppRoutingModule
   ],
   declarations: [AppComponent],
-  providers: [AuthGuard, commonService],
+  providers: [AuthGuard, commonService,CustomAuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

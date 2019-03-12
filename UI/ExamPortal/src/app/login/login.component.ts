@@ -6,6 +6,7 @@ import { NgxUiLoaderService } from "ngx-ui-loader";
 import { commonService } from "../common/services/common.service";
 import { ToastrService } from "ngx-toastr";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { CustomAuthService } from "../common/services/auth.service";
 
 @Component({
   selector: "app-login",
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private ngxService: NgxUiLoaderService,
     private CommonService: commonService,
     private toastr: ToastrService,
-    public router: Router
+    public router: Router,
+    public authservice: CustomAuthService
   ) {
     this.translate.addLangs([
       "en",
@@ -72,12 +74,10 @@ export class LoginComponent implements OnInit {
       password: data.value.password
     };
 
-    this.CommonService.fn_PostWithIdentityData(loginModel, url).subscribe(
+    this.authservice.login(loginModel, url).subscribe(
       (result: any) => {
         const rs = result;
-        console.log(rs);
-
-        if (rs.statusCode == 200) {
+        if (this.authservice.isLoggedIn == true) {
           this.onLoggedin(rs);
           if (loginModel.username == "vikrant.punwatkar@perficient.com") {
             this.router.navigate(["/dashboard"]);
@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
           this.toastr.error(responseObj.message);
         }
       }
+
     );
   }
 }

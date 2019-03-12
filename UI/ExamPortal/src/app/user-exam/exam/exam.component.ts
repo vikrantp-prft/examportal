@@ -39,7 +39,8 @@ export class ExamComponent implements OnInit {
     public optionIdArray: string[] = [];
     public currentQuestionIsAttempted: boolean;
     public currentQuestionSelectedOptions = [];
-    public searchValue: string = '';
+    public textArea: any = '';
+    // public searchValue: string = '';
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
             this.examID = params['examId'];
@@ -89,7 +90,6 @@ export class ExamComponent implements OnInit {
             if (rs.statusCode == 200) {
                 this.question = rs.data;
                 this.questionListForOption = rs.data;
-                // console.log(this.questionListForOption)
                 this.ngxService.stop();
                 this.totalQuestion = this.question.length;
                 this.currentQuestion = this.question[0].question;
@@ -100,10 +100,10 @@ export class ExamComponent implements OnInit {
                 if (this.questionListForOption[0].selectedOptionId != null) {
                     this.optionIdArray = this.questionListForOption[0].selectedOptionId;
                 }
-                else{
+                else {
                     this.optionIdArray = [];
                 }
-                this.searchValue = this.question[0].subjectiveAnswer;
+                // this.searchValue = this.question[0].subjectiveAnswer;
                 this.getAllQuestionCategory();
             }
         });
@@ -146,49 +146,48 @@ export class ExamComponent implements OnInit {
         this.currentQuestionOptionType = this.question[questionId].options;
     }
     setCurrentQuestionAndOption() {
-        if (this.currentQuestionQuestionType != 2) {
-            if (this.currentQuestionIndex < (this.question.length + 1)) {
-                this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
-                this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
-                this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
-                this.currentQuestionSelectedOptions = this.question[this.currentQuestionIndex - 1].selectedOptionId;
-            }
+        if (this.currentQuestionIndex < (this.question.length + 1)) {
+            this.currentQuestion = this.question[this.currentQuestionIndex - 1].question;
+            this.currentQuestionQuestionType = this.question[this.currentQuestionIndex - 1].questionType;
+            this.currentQuestionOptionType = this.question[this.currentQuestionIndex - 1].options;
+            this.currentQuestionSelectedOptions = this.question[this.currentQuestionIndex - 1].selectedOptionId;
         }
     }
     setCurrentQuestionQuestionId(myId) {
         this.currentQuestionQuestionId = this.question[myId].questionId;
     }
-    setCurrentSubjectAnswer(questionId) {
-        this.searchValue = this.question[questionId].subjectiveAnswer;
-    }
+    // setCurrentSubjectAnswer(questionId) {
+    //     this.searchValue = this.question[questionId].subjectiveAnswer;
+    // }
     fn_previous() {
         this.currentQuestionIndex--;
-        if (this.questionListForOption[this.currentQuestionIndex -1].selectedOptionId != null) {
-            this.optionIdArray = this.questionListForOption[this.currentQuestionIndex -1].selectedOptionId;
+        if (this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId != null) {
+            this.optionIdArray = this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId;
         }
-        else{
+        else {
             this.optionIdArray = [];
         }
+        this.textArea = '';
         this.setCurrentQuestionAndOption();
-        
-        if (this.currentQuestionQuestionType == 2 ){
-            
-            this.setCurrentSubjectAnswer(this.currentQuestionIndex);
-        }
-        else{
-            this.setCurrentQuestionAndOption();
-        }       
+
+        // if (this.currentQuestionQuestionType == 2 ){
+
+        //     this.setCurrentSubjectAnswer(this.currentQuestionIndex);
+        // }
+        // else{
+        //     this.setCurrentQuestionAndOption();
+        // }       
     }
     fn_next() {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
-        debugger;
         this.setCurrentQuestionAndOption();
         this.SaveAttemptedQuestionsById();
     }
-    fn_nextToNotSaveQuestion(){
+    fn_nextToNotSaveQuestion() {
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
+        this.textArea = '';
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
@@ -197,8 +196,14 @@ export class ExamComponent implements OnInit {
         if (this.questionListForOption[id].selectedOptionId != null) {
             this.optionIdArray = this.questionListForOption[id].selectedOptionId;
         }
-        else{
+        else {
             this.optionIdArray = [];
+        }
+        if (this.questionListForOption[id].subjectiveAnswer != null) {
+            this.textArea = this.questionListForOption[id].subjectiveAnswer;
+        }
+        else {
+            this.textArea = '';
         }
         this.currentQuestionIndex = id + 1;
     }
@@ -211,10 +216,11 @@ export class ExamComponent implements OnInit {
             "userId": "5c53e96bad3abd0eec04b09a",
             "ExamId": this.examID,
             "isAttempted": true,
-            "subjectiveAnswer": this.searchValue
+            "subjectiveAnswer": this.textArea
         }
         this.fn_SaveAttemptedQuestionsById(url, modal);
-        this.searchValue = null;
+        // Prajakta code
+        // this.searchValue = null;
     }
     fn_SaveAttemptedQuestionsById(url, modal) {
         this.ngxService.start();
@@ -224,7 +230,7 @@ export class ExamComponent implements OnInit {
                 this.ngxService.stop();
                 this.getQuestionListForOption();
                 this.optionIdArray = [];
-                //this.optionIdArray = this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId;
+                this.textArea = null;
                 if (this.endExam) {
                     this.saveResult();
                 }
@@ -249,11 +255,14 @@ export class ExamComponent implements OnInit {
                 else {
                     this.saveResult();
                 }
+                // Prajakta code
+                if (this.currentQuestionQuestionType == 2) {
+                    this.fn_next();
+                }
             }
         });
     }
     setOptionIdArray(event: any) {
-        // this.optionIdArray = this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId;
         if (event.target.type == 'checkbox') {
             if (event.target.checked == true) {
                 this.optionIdArray.push(event.target.value);
@@ -269,7 +278,6 @@ export class ExamComponent implements OnInit {
                 this.optionIdArray.pop()
             }
         }
-
     }
     saveResult() {
         const url = 'api/Results/GenerateResult';
@@ -297,8 +305,6 @@ export class ExamComponent implements OnInit {
             this.second = this.counter % 60;
             this.counter--;
             if (this.counter < 0) {
-                // The code here will run when
-                // the timer has reached zero.
                 clearInterval(interval);
                 window.location.href = "http://localhost:4200/thank-you";
             };
