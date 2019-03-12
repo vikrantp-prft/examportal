@@ -34,7 +34,6 @@ export class ExamsComponent implements OnInit {
         this.ngxService.start();
         this.CommonService.fn_PostWithData(model, url).subscribe((result: any) => {
             const rs = result;
-            console.log(rs.data);
             if (rs.statusCode === 200) {
                 this.assignedExamList = rs.data;
                 this.ngxService.stop();
@@ -42,7 +41,6 @@ export class ExamsComponent implements OnInit {
         });
     }
     fn_showResult(examId) {
-        alert("Exam id:" + examId + " User id:" + this.userID);
         this.router.navigate(['/viewResult',examId,this.userID]);
     }
     changeAttemptedStatus(){

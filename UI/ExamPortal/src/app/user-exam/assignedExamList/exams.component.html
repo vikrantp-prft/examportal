@@ -13,7 +13,6 @@
               <th> Sr.</th>
               <th> Name</th>
               <th> Description </th>
-              <th> Total Question</th>
               <th> Duration </th>
               <th> Attempted</th>
               <th> Action</th>
@@ -25,7 +24,6 @@
               <td>{{i+1}}</td>
               <td> {{ item?.exam?.title }} </td>
               <td> {{ item?.exam?.description }} </td>
-              <td> {{ item?.exam?.totalQuestions }} </td>
               <td> {{ item?.exam?.examDurationHours }}:{{ item?.exam?.examDurationMinutes }} (HR:MIN) </td>
               <td>
                 <i class="fa" [ngClass]="{'fa-check text-success': item.isAttempted, 'fa-times text-danger': !item.isAttempted}"

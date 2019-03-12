@@ -22,10 +22,10 @@ export class ViewResultComponent implements OnInit {
     }
 
     ngOnInit(): void { 
-        this.fn_getResult();
+        this.fn_getIndividualResult();
     }
 
-    fn_getResult()
+    fn_getIndividualResult()
     {
         const userModel = {
             "examId" : this.examId,
@@ -35,7 +35,7 @@ export class ViewResultComponent implements OnInit {
         this.CommonService.fn_PostWithData(userModel, url).subscribe(
             (data: any) => {
             this.resultData = data;
-            console.log(this.resultData);
+            //console.log(this.resultData);
             },
             err => console.error(err),
             () => {}
