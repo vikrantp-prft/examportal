@@ -205,12 +205,14 @@ namespace PerftEvaluation.BAL.Services
         /// Get Exam created by Contributor
         /// </summary>
         /// <returns></returns>
-        public List<ExamsDTO> GetExamsCreatedByContributor(string createdBy)
+        public ResponseModel GetExamsCreatedByContributor(RequestModel requestModel)
         {
             try
             {
                 //Filter & sort the data
-                var exams = this._examsRepository.GetExamsCreatedByContributor(createdBy);
+                var filteredExams = this._examsRepository.GetExamsCreatedByContributor(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ExamFilters);
+                //Integrate pagination
+                var exams = filteredExams.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
 
                 List<ExamsDTO> examJoin = new List<ExamsDTO>();
                 foreach (var item in exams)
@@ -240,7 +242,7 @@ namespace PerftEvaluation.BAL.Services
                 }
 
                 //return object
-                return examJoin;
+                return CommonResponse.OkResponse(requestModel, examJoin, (filteredExams.Count() < 100 ? filteredExams.Count() : 100));
             }
             catch (Exception exception)
             {

@@ -155,6 +155,7 @@ namespace PerftEvaluation.BAL.Services
 
                         }
                         userQuestionsDTO.IsAttempted = attemptedQuestions.IsAttempted;
+                        userQuestionsDTO.SubjectiveAnswer = attemptedQuestions.SubjectiveAnswer;
                     }
                     userQuestionsDTOList.Add(userQuestionsDTO);
                 }

@@ -29,7 +29,7 @@ namespace PerftEvaluation.BAL.Interfaces
         /// Get Exam created by Contributor
         /// </summary>
         /// <returns></returns>
-        List<ExamsDTO> GetExamsCreatedByContributor(string createdBy);
+        ResponseModel GetExamsCreatedByContributor(RequestModel requestModel);
 
         /// <summary>
         /// Get Exams by ID

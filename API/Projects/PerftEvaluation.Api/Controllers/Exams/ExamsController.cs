@@ -33,27 +33,17 @@ namespace PerftEvaluation.Api.Controllers {
         [HttpPost, Route ("GetExams")]
         public IActionResult Get (RequestModel requestModel) {
             try {
-                return Ok (this._examService.GetExams (requestModel));
+                if(requestModel.Id!=null && requestModel.Condition == "IsContributor"){
+                    return Ok(_examService.GetExamsCreatedByContributor(requestModel));
+                }
+                else
+                {
+                    return Ok(this._examService.GetExams (requestModel));
+                }
             } catch (Exception ex) {
                 return BadRequest (CommonResponse.ExceptionResponse (ex));
             }
         }
-
-
-        //GET api/exams
-        /// <summary>
-        /// Get list of all Exams
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost, Route ("GetExamsCreatedByContributor")]
-        public IActionResult GetExamsCreatedByContributor (RequestModel requestModel) {
-            try {
-                return Ok (this._examService.GetExamsCreatedByContributor (requestModel.Id));
-            } catch (Exception ex) {
-                return BadRequest (CommonResponse.ExceptionResponse (ex));
-            }
-        }
-
 
         // POST api/exams
         /// <summary>
