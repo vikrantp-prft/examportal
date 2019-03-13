@@ -50,7 +50,7 @@ namespace PerftEvaluation.DAL.Repositories
         /// <returns></returns>
         public IEnumerable<Masters> GetMastersByType(string masterType)
         {
-            return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.MasterType == masterType && x.IsDeleted == false).ToList();
+            return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.MasterType == masterType && x.IsActive == true && x.IsDeleted == false).ToList();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace PerftEvaluation.DAL.Repositories
             {
                 return _db.GetCollection<Masters>(Masters.CollectionName).AsQueryable().Where(x => x.Name == name).FirstOrDefault();
             }
-            catch 
+            catch
             {
                 throw;
             }

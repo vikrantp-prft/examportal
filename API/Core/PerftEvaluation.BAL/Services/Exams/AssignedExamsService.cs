@@ -42,11 +42,9 @@ namespace PerftEvaluation.BAL.Services {
         public ResponseModel GetExamsByUserId (RequestModel requestModel) {
             //Filter & sort the data
             var filteredExams = this._assignedExamsRepository.GetAssignedExamsByUserId (requestModel.Id).AsQueryable ().SortAndFilter (requestModel, DbFilters.ExamFilters);
-            //Integrate pagination
-            var exams = filteredExams.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
-
+            
             List<AssignedExamsDTO> examJoin = new List<AssignedExamsDTO> ();
-            foreach (var item in exams) {
+            foreach (var item in filteredExams) {
                 AssignedExamsDTO examsDTO = new AssignedExamsDTO ();
                 examsDTO.Id = item.Id;
                 examsDTO.UserId = item.UserId;
@@ -60,8 +58,11 @@ namespace PerftEvaluation.BAL.Services {
                 examJoin.Add (examsDTO);
             }
 
+            //Integrate pagination
+            var exams = examJoin.Where(x => x.Exam.IsActive == true && x.IsDeleted == false).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+
             //return object
-            return CommonResponse.OkResponse (requestModel, examJoin, (filteredExams.Count () < 100 ? filteredExams.Count () : 100));
+            return CommonResponse.OkResponse (requestModel, exams, (examJoin.Count () < 100 ? examJoin.Count () : 100));
         }
 
         /// <summary>
