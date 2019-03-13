@@ -66,16 +66,15 @@ export class LoginComponent implements OnInit {
         Validators
       });
     }
-    //const url = 'identity-api/Identity/LoginAdministrator';
     const url = "api/Identity/LoginAdministrator";
-
     const loginModel = {
       username: data.value.username,
       password: data.value.password
     };
-
+    this.ngxService.start();
     this.authservice.login(loginModel, url).subscribe(
       (result: any) => {
+        this.ngxService.stop();
         const rs = result;
         if (this.authservice.isLoggedIn == true) {
           this.onLoggedin(rs);

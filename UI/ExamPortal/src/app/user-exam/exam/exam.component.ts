@@ -103,7 +103,12 @@ export class ExamComponent implements OnInit {
                 else {
                     this.optionIdArray = [];
                 }
-                // this.searchValue = this.question[0].subjectiveAnswer;
+                if (this.questionListForOption[0].subjectiveAnswer != null) {
+                    this.textArea = this.questionListForOption[0].subjectiveAnswer;
+                }
+                else {
+                    this.textArea = '';
+                }
                 this.getAllQuestionCategory();
             }
         });
@@ -156,9 +161,6 @@ export class ExamComponent implements OnInit {
     setCurrentQuestionQuestionId(myId) {
         this.currentQuestionQuestionId = this.question[myId].questionId;
     }
-    // setCurrentSubjectAnswer(questionId) {
-    //     this.searchValue = this.question[questionId].subjectiveAnswer;
-    // }
     fn_previous() {
         this.currentQuestionIndex--;
         if (this.questionListForOption[this.currentQuestionIndex - 1].selectedOptionId != null) {
@@ -167,27 +169,36 @@ export class ExamComponent implements OnInit {
         else {
             this.optionIdArray = [];
         }
-        this.textArea = '';
+        if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
+            this.textArea = this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer;
+        }
+        else {
+            this.textArea = '';
+        }
         this.setCurrentQuestionAndOption();
-
-        // if (this.currentQuestionQuestionType == 2 ){
-
-        //     this.setCurrentSubjectAnswer(this.currentQuestionIndex);
-        // }
-        // else{
-        //     this.setCurrentQuestionAndOption();
-        // }       
+        
     }
     fn_next() {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
         this.SaveAttemptedQuestionsById();
+        if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
+            this.textArea = this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer;
+        }
+        else {
+            this.textArea = '';
+        }
     }
     fn_nextToNotSaveQuestion() {
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
-        this.textArea = '';
+        if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
+            this.textArea = this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer;
+        }
+        else {
+            this.textArea = '';
+        }
     }
     jumpToQuestion(id) {
         this.setCurrentQuestion(id);
@@ -209,6 +220,7 @@ export class ExamComponent implements OnInit {
     }
 
     SaveAttemptedQuestionsById() {
+        console.log(this.textArea)
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
         const modal = {
             "QuestionsId": this.currentQuestionQuestionId,
@@ -219,8 +231,6 @@ export class ExamComponent implements OnInit {
             "subjectiveAnswer": this.textArea
         }
         this.fn_SaveAttemptedQuestionsById(url, modal);
-        // Prajakta code
-        // this.searchValue = null;
     }
     fn_SaveAttemptedQuestionsById(url, modal) {
         this.ngxService.start();
@@ -230,7 +240,6 @@ export class ExamComponent implements OnInit {
                 this.ngxService.stop();
                 this.getQuestionListForOption();
                 this.optionIdArray = [];
-                this.textArea = null;
                 if (this.endExam) {
                     this.saveResult();
                 }
@@ -255,7 +264,6 @@ export class ExamComponent implements OnInit {
                 else {
                     this.saveResult();
                 }
-                // Prajakta code
                 if (this.currentQuestionQuestionType == 2) {
                     this.fn_next();
                 }
