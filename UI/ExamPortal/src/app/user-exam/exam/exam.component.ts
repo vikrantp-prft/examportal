@@ -220,7 +220,6 @@ export class ExamComponent implements OnInit {
     }
 
     SaveAttemptedQuestionsById() {
-        console.log(this.textArea)
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
         const modal = {
             "QuestionsId": this.currentQuestionQuestionId,
@@ -258,14 +257,11 @@ export class ExamComponent implements OnInit {
         }).then(x => {
             if (x.value == true) {
                 this.endExam = true;
-                if (this.optionIdArray.length != 0) {
+                if (this.optionIdArray.length != 0 || this.currentQuestionQuestionType == 2) {
                     this.fn_next();
                 }
                 else {
                     this.saveResult();
-                }
-                if (this.currentQuestionQuestionType == 2) {
-                    this.fn_next();
                 }
             }
         });
