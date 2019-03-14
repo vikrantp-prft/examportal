@@ -31,6 +31,11 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("obtainedMarks")]
         public int ObtainedMarks { get; set; }
 
+
+        [BsonElement("percentage")]
+        public double Percentage { get; set; }
+
+
         [BsonElement("duration")]
         public int Duration { get; set; }
 

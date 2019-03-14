@@ -97,6 +97,8 @@ namespace PerftEvaluation.BAL.Services
                 resultsDTO.IsDeleted = item.IsDeleted;
                 resultsDTO.IsActive = item.IsActive;
                 resultsDTO.Exam = _examsService.GetExamsById(item.ExamId);
+                resultsDTO.PassingMarks = resultsDTO.Exam.PassingMarks;
+                resultsDTO.Percentage = item.Percentage;
                 resultsDTO.Employee = _employeeService.GetEmployeeById(item.UserId);
                 resultJoin.Add(resultsDTO);
             }
@@ -128,6 +130,8 @@ namespace PerftEvaluation.BAL.Services
                     userAttemptedQuestionsDTO.Exams = _examsService.GetExamsById(item.ExamId);
                     userAttemptedQuestionsDTO.Users = _employeeService.GetEmployeeById(UserId);
                     userAttemptedQuestionsDTO.Question = _questionsService.GetQuestionById(item.Id);
+                    var percentage = _resultsRepository.GetResultsByExamsId(ExamId).FirstOrDefault();
+                    userAttemptedQuestionsDTO.Percentage = percentage.Percentage;
                     var attemptedQuestions = _attemptedQuestionsRepository.GetAttemptedQuestionsByExamsId(ExamId).Where(x => x.UserId == UserId && x.QuestionsId == item.Id).FirstOrDefault();
                     if (attemptedQuestions != null)
                     {

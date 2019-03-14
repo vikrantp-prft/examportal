@@ -23,9 +23,11 @@ namespace PerftEvaluation.DTO.Dtos
 
         public int ObtainedMarks { get; set; }
 
+        public int PassingMarks { get; set; }
 
         public int Duration { get; set; }
 
+        public double Percentage { get; set; }
 
         public int TimeConsumed { get; set; }
 

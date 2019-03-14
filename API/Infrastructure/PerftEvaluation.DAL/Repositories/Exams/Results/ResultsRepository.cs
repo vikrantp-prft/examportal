@@ -66,8 +66,8 @@ namespace PerftEvaluation.DAL.Repositories
                 {
                     return _db.GetCollection<Results>(Results.CollectionName)
                                                 .AsQueryable()
-                                                .Where(x => x.IsActive == true 
-                                                && x.UserId == userId 
+                                                .Where(x => x.IsActive == true
+                                                && x.UserId == userId
                                                 && x.ExamId == examId
                                                 && x.IsDeleted == false)
                                             .ToList();
@@ -94,6 +94,7 @@ namespace PerftEvaluation.DAL.Repositories
                 results.IsActive = true;
                 results.CreatedDate = DateTime.Now;
                 results.ModifiedDate = DateTime.Now;
+                results.Percentage = (results.ObtainedMarks * 100 / results.TotalMarks);
 
                 _db.Save<Results>(results, Results.CollectionName);
                 return true;
