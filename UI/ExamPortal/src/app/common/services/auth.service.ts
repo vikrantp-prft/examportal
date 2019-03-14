@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable, Inject } from '@angular/core';
 import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { appConfig } from '../core/app.config';
@@ -8,7 +9,6 @@ export class CustomAuthService {
     public headers: Headers;
     public token: string;
     public isLoggedIn: boolean = false;
-
     constructor(@Inject(Http) public http: Http) {
         var currentUser = JSON.parse(localStorage.getItem('loginUserdetails'));
     }
@@ -23,7 +23,6 @@ export class CustomAuthService {
                 let data = res.json();
                 let tokenString = data.data;
                 if (tokenString != null && tokenString != "") {
-                    // set token property
                     this.token = tokenString;
                     this.isLoggedIn = true;
                     localStorage.setItem("UserDetails", JSON.stringify({ token: this.token, isLoggedIn: this.isLoggedIn }))
@@ -39,9 +38,7 @@ export class CustomAuthService {
                     return Observable.throw(error.statusText);
                 }
                 if (error.status === 400) {
-
                     console.log("error : ", error);
-
                     return Observable.of(error);
                 }
             });
@@ -49,8 +46,6 @@ export class CustomAuthService {
     logout() {
         localStorage.removeItem('phCanAccessModule');
         localStorage.clear();
-        location.reload();
-        // clear token remove user from local storage to log user out
         this.token = null;
         localStorage.removeItem('UserDetails');
     }

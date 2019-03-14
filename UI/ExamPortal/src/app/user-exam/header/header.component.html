@@ -13,7 +13,7 @@
             </div>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/login']">
+            <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">
               <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
             </a>
           </li>

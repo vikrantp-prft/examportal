@@ -310,7 +310,7 @@ export class ExamComponent implements OnInit {
             this.counter--;
             if (this.counter < 0) {
                 clearInterval(interval);
-                window.location.href = "http://localhost:4200/thank-you";
+                this.router.navigate(['/thank-you']);
             };
         }, 1000);
     };
