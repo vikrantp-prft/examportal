@@ -9,6 +9,20 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ng-container *ngIf="pass; else elseTemplate">
+                    <h5 class="text-success mt-4 ml-3"><b>Pass</b></h5>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <h5 class="text-danger mt-4 ml-3"><b>Fail</b></h5>
+                </ng-template>
+            </div>
+            <div class="col-md-6">
+                <h5 class="text-right mt-4 mr-3">Percentage: {{percentage}}%</h5>
+            </div>
+        </div>
+        <hr>
         <div class="card-body">
             <div>
                 <div class="row" *ngFor="let result of resultData; let i=index">

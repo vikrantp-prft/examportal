@@ -14,7 +14,9 @@ export class ViewResultComponent implements OnInit {
     public resultData: any[] = [];
     public examId: string;
     public userResultData: any;
+    public pass: boolean;
     public percentage: any;
+    public passingMarks: any;
 
     constructor( private ngxService: NgxUiLoaderService, private route: ActivatedRoute, private CommonService: commonService ) { 
         this.route.params.subscribe(params => {
@@ -57,10 +59,9 @@ export class ViewResultComponent implements OnInit {
         this.CommonService.fn_PostWithData(examModel, url).subscribe(
           (data: any) => {
             this.userResultData = data.data;
-            console.log(this.userResultData);
-            console.log(this.userResultData[0].obtainedMarks);
-            this.percentage=(((this.userResultData[0].obtainedMarks)/(this.userResultData[0].totalMarks)*100).toFixed(2));
-            console.log(this.percentage);
+            this.percentage=this.userResultData[0].percentage;
+            this.passingMarks=this.userResultData[0].passingMarks;
+            this.fn_finalresult();
             this.ngxService.stop();
             //this.userModel.totalRecords = data.totalRecords;
           },
@@ -68,6 +69,15 @@ export class ViewResultComponent implements OnInit {
           () => {}
         );
       }
+
+    fn_finalresult() {
+        if(this.percentage >= this.passingMarks){
+            this.pass = true;
+        }
+        else{
+            this.pass = false;
+        }
+    } 
 
       
     
