@@ -13,6 +13,7 @@ using PerfiEvaluation.Identity.Mongo.Entities;
 using PerfiEvaluation.Identity.Mongo.Model;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using PerfiEvaluation.Identity.Mongo;
 
 namespace PerftEvaluation.Identity.Controllers
 {
@@ -255,8 +256,9 @@ namespace PerftEvaluation.Identity.Controllers
         }
 
         #region Private Methods
-        private String GetToken(PerfiUser user)
+        private AuthenticateModel GetToken(PerfiUser user)
         {
+            AuthenticateModel responseModel = new AuthenticateModel();
             var utcNow = DateTime.UtcNow;
 
             var claims = new List<Claim>(new[]
@@ -279,6 +281,9 @@ namespace PerftEvaluation.Identity.Controllers
                     claims.Add(roleClaim);
                 }
             }
+            responseModel.UserRole = user.Roles.ToArray();
+            responseModel.UserId = user.Id;
+            responseModel.UserName = user.UserName;
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._configuration.GetValue<String>("TokenAuthentication:SecretKey")));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
@@ -291,7 +296,9 @@ namespace PerftEvaluation.Identity.Controllers
                 issuer: this._configuration.GetValue<String>("TokenAuthentication:Issuer")
                 );
 
-            return new JwtSecurityTokenHandler().WriteToken(jwt);
+            responseModel.Token = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return responseModel;
 
         }
 
