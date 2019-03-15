@@ -1,3 +1,4 @@
+import { count } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from 'src/app/router.animations';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,7 +40,7 @@ export class ExamComponent implements OnInit {
     public optionIdArray: string[] = [];
     public currentQuestionIsAttempted: boolean;
     public currentQuestionSelectedOptions = [];
-    public textArea: any = '';
+    public textArea: string = '';
     // public searchValue: string = '';
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
@@ -176,13 +177,14 @@ export class ExamComponent implements OnInit {
             this.textArea = '';
         }
         this.setCurrentQuestionAndOption();
-        
     }
     fn_next() {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
-        this.SaveAttemptedQuestionsById();
+        if (this.optionIdArray.length != 0 || (this.currentQuestionQuestionType == 2 && this.textArea.length > 0)) {
+            this.SaveAttemptedQuestionsById();
+        }
         if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
             this.textArea = this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer;
         }
