@@ -39,7 +39,7 @@
                 <ng-template #elseTemplate>
                     <button [hidden]="item?.isAttempted" [disabled]="item?.isAttempted" [routerLink]="[ '/instruction', item?.examId]"
                     class="btn btn-md btn-primary">
-                    Start test 
+                    Start Exam 
                   </button>
                   <label [hidden]="!item?.isAttempted" class="text-success font-weight-bold">Attempted </label>
                 </ng-template>
