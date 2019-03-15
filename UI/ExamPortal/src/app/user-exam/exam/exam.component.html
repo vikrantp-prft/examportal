@@ -9,7 +9,7 @@
           <div class="row justify-content-between">
             <div class="col-2 ">
               <div class="p-3 h5 mb-0 font-weight-bold">
-                {{examName}}
+                {{ examName }}
               </div>
             </div>
             <div class="col-3 pl-0">
@@ -69,7 +69,14 @@
                       Next
                     </button>
                   <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right">
-                    End Exam
+                    <!-- <p class="p-0 m-0" *ngIf="currentQuestionIndex == totalQuestion">End Exam</p> 
+                    <p ></p> -->
+                    <ng-container *ngIf="currentQuestionIndex == totalQuestion; else elseTemplate">
+                      Save and End Exam
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                      End Exam
+                    </ng-template>
                   </button>
                 </div>
               </div>
