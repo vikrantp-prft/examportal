@@ -4,8 +4,12 @@ export const appConfig = {
   //  apiUrl: 'http://localhost:54690/', // url for local
   // apiUrl: 'http://localhost:7000/', // url for dev
   
-   apiUrl: 'http://zil189:90/', // url for dev
-   identityUrl: 'http://zil189:9050/',
+  //  Yagendra's System
+  //  apiUrl: 'http://zil189:90/', // url for dev
+  //  identityUrl: 'http://zil189:9050/',
+
+   apiUrl: 'http://zil144:90/', // url for dev
+   identityUrl: 'http://zil144:9003/',
 
   //apiUrl: 'http://zil395:8080/', // url for production,
 

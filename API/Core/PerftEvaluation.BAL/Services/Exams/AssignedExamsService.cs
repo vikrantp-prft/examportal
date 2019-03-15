@@ -59,7 +59,7 @@ namespace PerftEvaluation.BAL.Services {
             }
 
             //Integrate pagination
-            var exams = examJoin.Where(x => x.Exam.IsActive == true && x.IsDeleted == false).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var exams = examJoin.Where(x => x.Exam.IsActive == true && x.Exam.IsDeleted == false).Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
 
             //return object
             return CommonResponse.OkResponse (requestModel, exams, (examJoin.Count () < 100 ? examJoin.Count () : 100));
