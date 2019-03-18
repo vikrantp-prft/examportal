@@ -323,7 +323,8 @@ namespace PerftEvaluation.Identity.Controllers
                 {
                     //TODO: Use Automapper instaed of manual binding
                     UserName = registerModel.Username,
-                    Email = registerModel.Username
+                    Email = registerModel.Username,
+                    UserId = registerModel.UserId
                 };
 
                 var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
@@ -340,6 +341,37 @@ namespace PerftEvaluation.Identity.Controllers
             return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
         }
         #endregion
+
+        [HttpPost]
+        [Route("UserRegistration")]
+        //[Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> UserRegistration([FromBody] RegisterModel registerModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new PerfiUser
+                {
+                    //TODO: Use Automapper instaed of manual binding
+                    UserName = registerModel.Username,
+                    Email = registerModel.Username,
+                    UserId = registerModel.UserId
+
+                };
+                registerModel.Password = GeneratePassword();
+
+                var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
+                if (identityResult.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, registerModel.RoleName);
+                    return Ok(ResponseDTO.OkResponse($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'"));
+                }
+                else
+                {
+                    return BadRequest(ResponseDTO.ExceptionResponse("Registration failed, Please try again.", identityResult.Errors));
+                }
+            }
+            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+        }
 
         #region Role Related Admin Actions
         [HttpPost]

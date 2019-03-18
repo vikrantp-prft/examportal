@@ -8,12 +8,13 @@ namespace PerfiEvaluation.Identity.Mongo.Model
          [Required]
         [EmailAddress]
         public string Username { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
+        
         public string Password { get; set; }
 
         public string RoleName{get;set;}
+
+        [Required]
+        public string UserId { get; set; }
 
     }
 }

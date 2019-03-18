@@ -25,7 +25,7 @@ namespace PerftEvaluation.Test
             IMemoryCache memoryCache = new MemoryCache(options);
 
             IExamUserSessionStorage examUserSessionStorage = new ExamUserSessionCacheStore(memoryCache);
-            IExamsService examService = new ExamsService(null, null, null, null);
+            IExamsService examService = new ExamsService(null, null, null, null,null);
             //When
             IExamSessionService examSessionService = new ExamUserSessionService(examUserSessionStorage, examService);
 
