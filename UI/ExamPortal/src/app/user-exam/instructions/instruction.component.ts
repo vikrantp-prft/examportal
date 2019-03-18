@@ -16,7 +16,7 @@ export class InstructionComponent implements OnInit {
     examDurationMinutes: number;
     constructor(private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
-            this.examId = params['examId'];
+            this.examId = localStorage.getItem('examId');
         });
     }
 

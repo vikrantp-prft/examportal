@@ -15,11 +15,11 @@ export class ExamsComponent implements OnInit {
     public showResult: boolean = false;
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
-            this.userID = params['userId'];
+            this.userID = JSON.parse(localStorage.getItem('userDetails')).userId;
         });
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.getExamDetails();
     }
     getExamDetails() {
@@ -41,9 +41,12 @@ export class ExamsComponent implements OnInit {
         });
     }
     fn_showResult(examId) {
-        this.router.navigate(['/viewResult',examId,this.userID]);
+        localStorage.removeItem('examId');
+        localStorage.setItem('examId', examId);
+        this.router.navigate(['/viewResult']);
     }
-    changeAttemptedStatus(){
-
+    fn_getUserIdExamId(examId) {
+        localStorage.setItem('examId', examId);
+        this.router.navigate(['/instruction']);
     }
 }

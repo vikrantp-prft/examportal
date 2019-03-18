@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { commonService } from 'src/app/common/services/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'view-result',
@@ -18,10 +19,15 @@ export class ViewResultComponent implements OnInit {
     public percentage: any;
     public passingMarks: any;
 
-    constructor( private ngxService: NgxUiLoaderService, private route: ActivatedRoute, private CommonService: commonService ) { 
+    constructor( private ngxService: NgxUiLoaderService, 
+      private route: ActivatedRoute, 
+      private CommonService: commonService,
+      private router :  Router ) { 
+        const userDetail = JSON.parse(localStorage.getItem('userDetails'));
+        const examId = localStorage.getItem('examId');
         this.route.params.subscribe(params => {
-            this.examId = params["examId"];
-            this.userId = params["userId"];
+            this.examId = examId;
+            this.userId = userDetail.userId;
           });
         
     }
@@ -77,8 +83,10 @@ export class ViewResultComponent implements OnInit {
         else{
             this.pass = false;
         }
-    } 
+    }
 
-      
-    
+    fn_getUserIdExamId(){
+      const userDetail = JSON.parse(localStorage.getItem('userDetails'));
+      this.router.navigate(['/exams']);
+   }
 }

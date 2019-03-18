@@ -37,7 +37,7 @@
                   </button>
                 </ng-container>
                 <ng-template #elseTemplate>
-                    <button [hidden]="item?.isAttempted" [disabled]="item?.isAttempted" [routerLink]="[ '/instruction', item?.examId]"
+                    <button [hidden]="item?.isAttempted" [disabled]="item?.isAttempted" (click) = "fn_getUserIdExamId( item?.exam?.id )"
                     class="btn btn-md btn-primary">
                     Start Exam 
                   </button>

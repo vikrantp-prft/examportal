@@ -44,7 +44,7 @@ export class ExamComponent implements OnInit {
     // public searchValue: string = '';
     constructor(private router: Router, private ngxService: NgxUiLoaderService, private CommonService: commonService, private route: ActivatedRoute) {
         this.route.params.subscribe(params => {
-            this.examID = params['examId'];
+            this.examID = localStorage.getItem('examId');
         });
     }
     ngOnInit() {
@@ -53,7 +53,7 @@ export class ExamComponent implements OnInit {
     }
     getExamDetails() {
         const examDetailModel = {
-            "id": this.examID
+            "id": localStorage.getItem('examId')
         }
         const examDetailUrl = "api/Exams/GetExamById";
         this.fn_getExamDetails(examDetailModel, examDetailUrl);
@@ -77,10 +77,11 @@ export class ExamComponent implements OnInit {
     }
     getQuestionList() {
         const url = 'api/AttemptedQuestions/GetQuestionsByAssignedExam';
+        const userDetail = JSON.parse(localStorage.getItem('userDetails'));
 
         const questionModel = {
-            "examId": this.examID,
-            "userId": "5c53e96bad3abd0eec04b09a"
+            "examId": localStorage.getItem('examId'),
+            "userId": userDetail.userId
         };
         this.fn_getQuestionList(questionModel, url);
     }
@@ -116,10 +117,11 @@ export class ExamComponent implements OnInit {
     }
     getQuestionListForOption() {
         const url = 'api/AttemptedQuestions/GetQuestionsByAssignedExam';
+        const userDetail = JSON.parse(localStorage.getItem('userDetails'));
 
         const questionModel = {
-            "examId": this.examID,
-            "userId": "5c53e96bad3abd0eec04b09a"
+            "examId": localStorage.getItem('examId'),
+            "userId": userDetail.userId
         };
         this.fn_getQuestionListForOption(url, questionModel);
     }
@@ -223,11 +225,12 @@ export class ExamComponent implements OnInit {
 
     SaveAttemptedQuestionsById() {
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
+        const userDetail = JSON.parse(localStorage.getItem('userDetails'));
         const modal = {
             "QuestionsId": this.currentQuestionQuestionId,
             "selectedOptionId": this.optionIdArray,
-            "userId": "5c53e96bad3abd0eec04b09a",
-            "ExamId": this.examID,
+            "userId": userDetail.userId,
+            "ExamId": localStorage.getItem('examId'),
             "isAttempted": true,
             "subjectiveAnswer": this.textArea
         }
@@ -287,9 +290,10 @@ export class ExamComponent implements OnInit {
     }
     saveResult() {
         const url = 'api/Results/GenerateResult';
+        const userDetail = JSON.parse(localStorage.getItem('userDetails'));
         const modal = {
-            "examId": this.examID,
-            "userId": "5c53e96bad3abd0eec04b09a"
+            "examId": localStorage.getItem('examId'),
+            "userId": userDetail.userId
         };
         this.fn_saveResult(url, modal);
     }

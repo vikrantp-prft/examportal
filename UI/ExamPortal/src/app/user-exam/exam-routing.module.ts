@@ -8,19 +8,19 @@ import { ViewResultComponent } from './view-result/viewResult.component';
 
 const routes: Routes = [
     {
-        path: 'exams/:userId', component: ExamsComponent
+        path: 'exams', component: ExamsComponent
     },
     {
-        path: 'instruction/:examId', component: InstructionComponent
+        path: 'instruction', component: InstructionComponent
     },
     {
-        path: 'exam/:examId', component: ExamComponent
+        path: 'exam', component: ExamComponent
     },
     {
         path: 'thank-you', component: ThankComponent
     },
     {
-        path: 'viewResult/:examId/:userId', component: ViewResultComponent
+        path: 'viewResult', component: ViewResultComponent
     }
 ];
 @NgModule({

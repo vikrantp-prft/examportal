@@ -87,8 +87,7 @@ export class LoginComponent implements OnInit {
             userName: result.data.userName
           })
         );
-        //this.router.navigate(["/dashboard"]);
-        this.router.navigate(["/exams/" + result.data.userId]);
+        this.router.navigate(["/exams"]);
         this.ngxService.stop();
       } else {
         const responseObj = JSON.parse(result._body);
