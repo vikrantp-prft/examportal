@@ -11,6 +11,9 @@ export const appConfig = {
    apiUrl: 'http://zil144:90/', // url for dev
    identityUrl: 'http://zil144:9003/',
 
+  //   apiUrl: 'http://localhost:7000/', // url for dev
+  //  identityUrl: 'http://localhost:5000/',
+
   //apiUrl: 'http://zil395:8080/', // url for production,
 
  // apiUrl: 'http://stlscvmg96178:1000/', // url for server

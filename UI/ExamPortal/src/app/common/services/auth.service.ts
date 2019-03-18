@@ -20,17 +20,18 @@ export class CustomAuthService {
                 headers: this.headers
             })
             .map((res: Response) => {
-                let data = res.json();
-                let tokenString = data.data;
-                if (tokenString != null && tokenString != "") {
-                    this.token = tokenString;
-                    this.isLoggedIn = true;
-                    localStorage.setItem("UserDetails", JSON.stringify({ token: this.token, isLoggedIn: this.isLoggedIn }))
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                return res.json();
+                // console.log(data);
+                // let tokenString = data.data;
+                // if (tokenString != null && tokenString != "") {
+                //     this.token = tokenString;
+                //     this.isLoggedIn = true;
+                //     localStorage.setItem("UserDetails", JSON.stringify({ token: this.token, isLoggedIn: this.isLoggedIn }))
+                //     return true;
+                // }
+                // else {
+                //     return false;
+                // }
             })
             .catch((error: any) => {
                 if (error.status === 401) {

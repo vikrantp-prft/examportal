@@ -54,11 +54,11 @@ export class LoginComponent implements OnInit {
     }, 1000);
   }
 
-  onLoggedin(response) {
-    //this.fn_requestLogin();
-    localStorage.setItem("isLoggedin", "true");
-    localStorage.setItem("identityToken", response.data);
-  }
+  // onLoggedin(response) {
+  //   //this.fn_requestLogin();
+  //   localStorage.setItem("isLoggedin", "true");
+  //   localStorage.setItem("identityToken", response.data);
+  // }
 
   fn_requestLogin(data) {
     if (!this.loginForm.valid) {
@@ -66,30 +66,53 @@ export class LoginComponent implements OnInit {
         Validators
       });
     }
-    const url = "api/Identity/LoginAdministrator";
+    const url = "api/Identity/LoginUser";
     const loginModel = {
       username: data.value.username,
       password: data.value.password
     };
     this.ngxService.start();
-    this.authservice.login(loginModel, url).subscribe(
-      (result: any) => {
+    this.authservice.login(loginModel, url).subscribe((result: any) => {
+      if (
+        result.data.token !== null &&
+        result.data.userRole.length !== 0 &&
+        result.data.userId !== null
+      ) {
+        localStorage.setItem(
+          "userDetails",
+          JSON.stringify({
+            token: result.data.token,
+            userId: result.data.userId,
+            userRole: result.data.userId,
+            userName: result.data.userName
+          })
+        );
+        //this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/exams/" + result.data.userId]);
         this.ngxService.stop();
-        const rs = result;
-        if (this.authservice.isLoggedIn == true) {
-          this.onLoggedin(rs);
-          if (loginModel.username == "vikrant.punwatkar@perficient.com") {
-            this.router.navigate(["/dashboard"]);
-          } else {
-            this.router.navigate(["/exams/5c53e96bad3abd0eec04b09a"]);
-          }
-        } else {
-          var responseObj = JSON.parse(rs._body);
-          console.log(responseObj.message);
-          this.toastr.error(responseObj.message);
-        }
+      } else {
+        const responseObj = JSON.parse(result._body);
+        console.log(responseObj.message);
+        this.toastr.error(responseObj.message);
       }
+      // if (loginModel.username == "vikrant.punwatkar@perficient.com") {
 
-    );
+      // const test = JSON.parse(localStorage.getItem("userDetails"));
+
+      // } else {
+      //   this.router.navigate(["/exams/5c53e96bad3abd0eec04b09a"]);
+      // }
+
+      // if (this.authservice.isLoggedIn == true) {
+      //   this.onLoggedin(rs);
+
+      //   localStorage.setItem("UserDetails", JSON.stringify({ token: this.token, isLoggedIn: this.isLoggedIn }))
+
+      // } else {
+      //   var responseObj = JSON.parse(rs._body);
+      //   console.log(responseObj.message);
+      //   this.toastr.error(responseObj.message);
+      // }
+    });
   }
 }
