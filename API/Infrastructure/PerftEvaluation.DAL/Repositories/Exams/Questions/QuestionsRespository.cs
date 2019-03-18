@@ -10,65 +10,55 @@ using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO.Common;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.DAL.Repositories
-{
+namespace PerftEvaluation.DAL.Repositories {
     /// <summary>
     /// Questions Repository Class
     /// /// </summary>
-    public class QuestionsRepository : IQuestionsRepository
-    {
+    public class QuestionsRepository : IQuestionsRepository {
         protected readonly DBHelper _db = null;
 
-        public QuestionsRepository()
-        {
-            this._db = new DBHelper();
+        public QuestionsRepository () {
+            this._db = new DBHelper ();
         }
 
         /// <summary>
         /// Get list of active Questions
         /// </summary>
         /// <value></value>
-        public bool ActiveQuestion(string questionId)
-        {
+        public bool ActiveQuestion (string questionId) {
             var filter = Builders<Questions>.Filter;
-            var filterDef = filter.Eq(c => c.Id, questionId);
-            var UpdateQuery = Builders<Questions>.Update.Set(s => s.IsActive, true);
-            return _db.UpdateOne<Questions>(filterDef, UpdateQuery, Questions.CollectionName);
+            var filterDef = filter.Eq (c => c.Id, questionId);
+            var UpdateQuery = Builders<Questions>.Update.Set (s => s.IsActive, true);
+            return _db.UpdateOne<Questions> (filterDef, UpdateQuery, Questions.CollectionName);
         }
 
         /// <summary>
         /// Delete Questions
         /// </summary>
         /// <value></value>
-        public bool DeleteQuestion(string questionId)
-        {
+        public bool DeleteQuestion (string questionId) {
             var filter = Builders<Questions>.Filter;
-            var filterDef = filter.Eq(c => c.Id, questionId);
-            var UpdateQuery = Builders<Questions>.Update.Set(s => s.IsDeleted, true);
-            return _db.UpdateOne<Questions>(filterDef, UpdateQuery, Questions.CollectionName);
+            var filterDef = filter.Eq (c => c.Id, questionId);
+            var UpdateQuery = Builders<Questions>.Update.Set (s => s.IsDeleted, true);
+            return _db.UpdateOne<Questions> (filterDef, UpdateQuery, Questions.CollectionName);
         }
 
         /// <summary>
         /// Get list Questions
         /// </summary>
         /// <value></value>
-        public IEnumerable<Questions> GetQuestionsByExamId(string examId)
-        {
-            return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsDeleted == false && x.ExamId == examId).ToList();
+        public IEnumerable<Questions> GetQuestionsByExamId (string examId) {
+            return _db.GetCollection<Questions> (Questions.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.IsActive == true && x.ExamId == examId).ToList ();
         }
 
         /// <summary>
         /// Get Question By ID
         /// </summary>
         /// <value></value>
-        public Questions GetQuestionsById(string questionId)
-        {
-            try
-            {
-                return _db.GetCollection<Questions>(Questions.CollectionName).AsQueryable().Where(x => x.IsDeleted == false && x.Id == questionId).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
+        public Questions GetQuestionsById (string questionId) {
+            try {
+                return _db.GetCollection<Questions> (Questions.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.Id == questionId).FirstOrDefault ();
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -77,36 +67,30 @@ namespace PerftEvaluation.DAL.Repositories
         /// Get Inactive Questions
         /// </summary>
         /// <value></value>
-        public bool InactivateQuestion(string questionId)
-        {
+        public bool InactivateQuestion (string questionId) {
             var filter = Builders<Questions>.Filter;
-            var filterDef = filter.Eq(c => c.Id, questionId);
+            var filterDef = filter.Eq (c => c.Id, questionId);
             var updateQuery = Builders<Questions>.Update
-                .Set(c => c.IsActive, false);
+                .Set (c => c.IsActive, false);
 
-            return _db.UpdateOne<Questions>(filterDef, updateQuery, Questions.CollectionName);
+            return _db.UpdateOne<Questions> (filterDef, updateQuery, Questions.CollectionName);
         }
 
         /// <summary>
         /// Save Questions
         /// </summary>
         /// <value></value>
-        public bool SaveQuestions(Questions questions)
-        {
-            try
-            {
+        public bool SaveQuestions (Questions questions) {
+            try {
                 questions.CreatedDate = DateTime.UtcNow;
                 questions.ModifiedDate = DateTime.UtcNow;
-                if (questions.Options != null)
-                {
-                    questions.Options.Where(c => c.OptionId == null).ToList().ForEach(c => c.OptionId = ObjectId.GenerateNewId().ToString());
+                if (questions.Options != null) {
+                    questions.Options.Where (c => c.OptionId == null).ToList ().ForEach (c => c.OptionId = ObjectId.GenerateNewId ().ToString ());
                 }
 
-                _db.Save<Questions>(questions, Questions.CollectionName);
+                _db.Save<Questions> (questions, Questions.CollectionName);
                 return true;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -115,25 +99,23 @@ namespace PerftEvaluation.DAL.Repositories
         /// Update Questions
         /// </summary>
         /// <value></value>
-        public bool UpdateQuestions(Questions questions)
-        {
+        public bool UpdateQuestions (Questions questions) {
             var filter = Builders<Questions>.Filter;
-            var filterDef = filter.Eq(c => c.Id, questions.Id);
+            var filterDef = filter.Eq (c => c.Id, questions.Id);
 
-            if (questions.Options != null)
-            {
-                questions.Options.Where(c => c.OptionId == null).ToList().ForEach(c => c.OptionId = ObjectId.GenerateNewId().ToString());
+            if (questions.Options != null) {
+                questions.Options.Where (c => c.OptionId == null).ToList ().ForEach (c => c.OptionId = ObjectId.GenerateNewId ().ToString ());
             }
 
             var updateQuery = Builders<Questions>.Update
-                                .Set(s => s.CategoryId, questions.CategoryId)
-                                .Set(s => s.IsActive, questions.IsActive)
-                                .Set(s => s.Options, questions.Options)
-                                .Set(s => s.Question, questions.Question)
-                                .Set(s => s.QuestionType, questions.QuestionType)
-                                .Set(s => s.SubjectiveAnswer, questions.SubjectiveAnswer);
+                .Set (s => s.CategoryId, questions.CategoryId)
+                .Set (s => s.IsActive, questions.IsActive)
+                .Set (s => s.Options, questions.Options)
+                .Set (s => s.Question, questions.Question)
+                .Set (s => s.QuestionType, questions.QuestionType)
+                .Set (s => s.SubjectiveAnswer, questions.SubjectiveAnswer);
 
-            return _db.UpdateOne<Questions>(filterDef, updateQuery, Questions.CollectionName);
-        }  
+            return _db.UpdateOne<Questions> (filterDef, updateQuery, Questions.CollectionName);
+        }
     }
 }

@@ -68,5 +68,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="questionId"></param>
         /// <returns></returns>
         string[] GetCorrectOptionsByQuestionId (string questionId);
+
+        int GetQuestionsCountByExamId(string ExamId);
     }
 }

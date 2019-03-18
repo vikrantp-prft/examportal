@@ -239,5 +239,9 @@ namespace PerftEvaluation.BAL.Services
             string[] correctedOptions = this._mapper.Map<List<OptionsDTO>>(questions.Options).Where(c => c.IsCorrect == true).Select(x => x.OptionId).ToArray();
             return correctedOptions;
         }
+
+        public int GetQuestionsCountByExamId(string ExamId){
+            return this._questionsRepository.GetQuestionsByExamId(ExamId).Count();
+        }
     }
 }
