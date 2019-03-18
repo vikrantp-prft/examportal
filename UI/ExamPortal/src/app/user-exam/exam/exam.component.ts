@@ -259,7 +259,7 @@ export class ExamComponent implements OnInit {
         }).then(x => {
             if (x.value == true) {
                 this.endExam = true;
-                if (this.optionIdArray.length != 0 || this.currentQuestionQuestionType == 2) {
+                if (this.optionIdArray.length != 0 || (this.currentQuestionQuestionType == 2 && this.textArea.length > 0)) {
                     this.fn_next();
                 }
                 else {
