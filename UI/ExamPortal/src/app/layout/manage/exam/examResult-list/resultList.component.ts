@@ -53,7 +53,6 @@ export class ResultListComponent implements OnInit {
   ngOnInit() {
     this.userModel.id = this.examID;
     this.fn_GetResultList();
-    
   }
 
   // Function for  pagination

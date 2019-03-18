@@ -101,7 +101,7 @@ const routes: Routes = [
                 path: 'resultList/:examId', component: ResultListComponent
             },
             {
-                path: 'detailedResult/:userId', component:DetailedResultComponent
+                path: 'detailedResult/:userId/:examId', component:DetailedResultComponent
             }
 
         ]

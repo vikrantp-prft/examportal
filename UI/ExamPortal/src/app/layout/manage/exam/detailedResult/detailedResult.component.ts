@@ -16,10 +16,12 @@ export class DetailedResultComponent implements OnInit {
     public percentage: string;
     public pass: boolean=false;
     public passingMarks: string;
+    public examId: string;
 
     constructor( private ngxService: NgxUiLoaderService, private route: ActivatedRoute, private CommonService: commonService ) { 
         this.route.params.subscribe(params => {
             this.userId = params["userId"];
+            this.examId = params["examId"];
           });
     }
 
@@ -31,7 +33,7 @@ export class DetailedResultComponent implements OnInit {
     fn_getResult()
     {
         const userModel = {
-            "examId" : "5c4eb23a4732952c9c7fcfc3",
+            "examId" : this.examId,
             "userId": this.userId            
         }
         this.ngxService.start();
@@ -48,7 +50,7 @@ export class DetailedResultComponent implements OnInit {
 
     fn_GetResultList() {
         const examModel = {
-          "id": "5c4eb23a4732952c9c7fcfc3"
+          "id": this.examId
         }
         this.ngxService.start();
         const url = "api/Results/listResultsByExamId"; 
