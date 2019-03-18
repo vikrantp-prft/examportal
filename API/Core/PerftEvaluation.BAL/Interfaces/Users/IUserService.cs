@@ -36,7 +36,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// </summary>
         /// <param name="usersDTO"></param>
         /// <returns></returns>
-        bool SaveUsers (UsersDTO usersDTO);
+        RequestModel SaveUsers (UsersDTO usersDTO);
 
         /// <summary>
         /// Ger User Detail by Id

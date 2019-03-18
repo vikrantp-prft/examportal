@@ -93,7 +93,7 @@ namespace PerftEvaluation.DAL.Repositories
         /// </summary>
         /// <param name="users"></param>
         /// <returns>bool</returns>
-        public bool SaveAspirants(Users users)
+        public string SaveAspirants(Users users)
         {
              try {
                 users.UserType = UsersEnum.Aspirant;
@@ -107,7 +107,7 @@ namespace PerftEvaluation.DAL.Repositories
                 }
 
                 _db.Save<Users> (users, Users.CollectionName);
-                return true;
+                return users.Id;
             } catch (Exception ex) {
                 throw ex;
             }

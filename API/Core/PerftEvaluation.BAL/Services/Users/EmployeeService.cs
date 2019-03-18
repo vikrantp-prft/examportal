@@ -100,10 +100,12 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="employeesDTO"></param>
         /// <returns></returns>
-        public bool SaveEmployee (EmployeesDTO employeesDTO) {
+        public RequestModel SaveEmployee (EmployeesDTO employeesDTO) {
             Users users = new Users ();
+            RequestModel requestModel = new RequestModel();
             users = this._mapper.Map<Users> (employeesDTO);
-            return this._employeeRepository.SaveEmployee (users);
+            requestModel.Id = this._employeeRepository.SaveEmployee (users);
+            return requestModel;
         }
 
         /// <summary>

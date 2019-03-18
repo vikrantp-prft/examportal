@@ -37,7 +37,7 @@ namespace PerftEvaluation.DAL.Repositories {
         /// <param name="users"></param>
         /// <returns>bool</returns>
 
-        public bool SaveEmployee (Users users) {
+        public string SaveEmployee (Users users) {
             try {
                 users.UserType = UsersEnum.Employee;
                 users.IsActive = true;
@@ -49,7 +49,7 @@ namespace PerftEvaluation.DAL.Repositories {
                 }
 
                 _db.Save<Users> (users, Users.CollectionName);
-                return true;
+                return users.Id;
             } catch (Exception ex) {
                 throw ex;
             }

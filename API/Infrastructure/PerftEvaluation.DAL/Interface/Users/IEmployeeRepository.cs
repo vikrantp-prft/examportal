@@ -18,7 +18,7 @@ namespace PerftEvaluation.DAL.Interface {
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool SaveEmployee (Users users);
+        string SaveEmployee (Users users);
 
         /// <summary>
         /// Get Employee Detail by Id

@@ -61,14 +61,14 @@ namespace PerftEvaluation.DAL.Repositories
         /// </summary>
         /// <param name="users"></param>
         /// <returns>bool</returns>
-        public bool SaveUser(Users users)
+        public string SaveUser(Users users)
         {
             try
             {
                 users.CreatedDate = DateTime.UtcNow;
                 users.ModifiedDate = DateTime.UtcNow;
                 _db.Save<Users>(users, Users.CollectionName);
-                return true;
+                return users.Id;
             }
             catch (Exception ex)
             {

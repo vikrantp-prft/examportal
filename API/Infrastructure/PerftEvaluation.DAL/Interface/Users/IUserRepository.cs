@@ -32,7 +32,7 @@ namespace PerftEvaluation.DAL.Interface {
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool SaveUser (Users users);
+        string SaveUser (Users users);
 
         /// <summary>
         /// Get User Detail by Id

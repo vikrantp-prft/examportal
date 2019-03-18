@@ -174,11 +174,13 @@ namespace PerftEvaluation.BAL.Services
         /// </summary>
         /// <param name="aspirantsDTO"></param>
         /// <returns></returns>
-        public bool SaveAspirants(AspirantsDTO aspirantsDTO)
+        public RequestModel SaveAspirants(AspirantsDTO aspirantsDTO)
         {
             Users users = new Users();
+            RequestModel requestModel = new RequestModel();
             users = this._mapper.Map<Users>(aspirantsDTO);
-            return this._aspirantsRepository.SaveAspirants(users);    
+            requestModel.Id = this._aspirantsRepository.SaveAspirants(users);  
+            return requestModel;  
         }
 
         /// <summary>

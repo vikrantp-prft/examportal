@@ -20,7 +20,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// </summary>
         /// <param name="employeeDTO"></param>
         /// <returns></returns>
-        bool SaveEmployee (EmployeesDTO employeeDTO);
+        RequestModel SaveEmployee (EmployeesDTO employeeDTO);
 
         /// <summary>
         /// Update Employee details

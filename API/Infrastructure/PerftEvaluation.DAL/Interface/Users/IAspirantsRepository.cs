@@ -20,7 +20,7 @@ namespace PerftEvaluation.DAL.Interface
         /// </summary>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool SaveAspirants (Users users);
+        string SaveAspirants (Users users);
 
         /// <summary>
         /// Get Aspirants Details by Id
