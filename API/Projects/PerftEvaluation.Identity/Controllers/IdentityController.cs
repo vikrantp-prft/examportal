@@ -282,7 +282,7 @@ namespace PerftEvaluation.Identity.Controllers
                 }
             }
             responseModel.UserRole = user.Roles.ToArray();
-            responseModel.UserId = user.Id;
+            responseModel.UserId = user.UserId;
             responseModel.UserName = user.UserName;
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._configuration.GetValue<String>("TokenAuthentication:SecretKey")));
