@@ -116,3 +116,8 @@ textarea {
 textarea.question-textarea{
   min-height: 100px;
 }
+
+pre {
+  word-break: break-word;
+  white-space: normal;
+}

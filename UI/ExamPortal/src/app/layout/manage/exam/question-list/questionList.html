@@ -329,7 +329,7 @@
               <input class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}"
                 (change)="setOptionIdArray($event)">
               <span class="mx-3">{{i+1}}.</span>
-              <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+              <span style="white-space: normal; box-sizing: border-box;" innerHTML="{{option.option}}"></span>
             </div>
           </div>
           <div class="" *ngIf="item?.questionType == 2">
