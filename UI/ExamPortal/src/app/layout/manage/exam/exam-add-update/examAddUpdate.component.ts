@@ -53,7 +53,7 @@ export class examAddUpdateComponent implements OnInit {
           const rs = result;
           if (rs.statusCode == 200) {
             this.toastr.success('Exam details added successfully!');
-            this.router.navigate(['manage/examlist']);
+            this.router.navigate(['/admin/manage/examlist']);
           }
           else {
             this.toastr.console.error('Failed to add Exam details');

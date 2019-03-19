@@ -156,7 +156,7 @@ export class examEditUpdateComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
               this.toastr.success("Exam details Updated successfully!");
-              this.router.navigate(["manage/examlist"]);
+              this.router.navigate(["/admin/manage/examlist"]);
             } else {
               this.toastr.console.error("Failed to Update Exam details");
             }

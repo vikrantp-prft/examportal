@@ -246,7 +246,7 @@ export class EmployeeUpdateComponent implements OnInit {
       if (rs.statusCode == 200) {
         this.ngxService.stop();
         this.toastr.success('Employee details updated successfully!');
-        this.router.navigate(['user/employeelist']);
+        this.router.navigate(['/admin/user/employeelist']);
       }
       else {
         this.toastr.error('Failed to update Employee details');
