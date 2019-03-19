@@ -43,6 +43,10 @@ namespace PerftEvaluation.BAL.Services
         {
             //Filter & sort the data
             var filteredQuestions = this._questionsRepository.GetQuestionsByExamId(examId).AsQueryable().SortAndFilter(requestModel, DbFilters.QuestionFilters);
+
+            // ToDo : Shuffle questions
+            // 
+
             //Integrate pagination
             var questions = filteredQuestions.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
 

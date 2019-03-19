@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Moq;
 using PerftEvaluation.BAL.Services;
@@ -8,7 +5,9 @@ using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
+using PerftEvaluation.Helper.Common;
 using PerftEvaluation.Helper.Mapper;
+using System.Collections.Generic;
 using Xunit;
 
 namespace PerftEvaluation.Test
@@ -59,6 +58,41 @@ namespace PerftEvaluation.Test
             }
 
             Assert.True(actual);
+        }
+
+        [Fact]
+        public void ShuffleListBasedOnChar_Success()
+        {
+            ListHelper listHelper = new ListHelper();
+            List<Questions> questions = new List<Questions>();
+
+            questions.Add(new Questions()
+            {
+                CategoryId = "1",
+                Question = "asdasd asd sad"
+            });
+
+            questions.Add(new Questions()
+            {
+                CategoryId = "2",
+                Question = "Xsdfs fdfds fsdf dsYZ"
+            });
+
+            questions.Add(new Questions()
+            {
+                CategoryId = "3",
+                Question = "sdf dsf sdf dsfesf ds cd"
+            });
+
+            questions.Add(new Questions()
+            {
+                CategoryId = "4",
+                Question = "DYdfdsfdsfsdfdfsdfH"
+            });
+
+            List<Questions> results = listHelper.ShuffleListBasedOnChar(questions);
+
+            Assert.True(true);
         }
     }
 }

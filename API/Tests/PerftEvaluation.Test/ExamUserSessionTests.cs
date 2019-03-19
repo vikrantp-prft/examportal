@@ -1,14 +1,13 @@
-using System;
-using PerftEvaluation.BAL.Interfaces.ExamSession;
-using PerftEvaluation.BAL.Services.ExamSession;
-using Xunit;
-using PerftEvaluation.BAL.Interfaces.Exams.ExamSession;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using PerftEvaluation.BAL.Interfaces;
+using PerftEvaluation.BAL.Interfaces.Exams.ExamSession;
+using PerftEvaluation.BAL.Interfaces.ExamSession;
+using PerftEvaluation.BAL.Services;
+using PerftEvaluation.BAL.Services.ExamSession;
 using PerftEvaluation.DTO.Dtos.ExamSession;
 using System.Threading;
-using PerftEvaluation.BAL.Interfaces;
-using PerftEvaluation.BAL.Services;
+using Xunit;
 
 namespace PerftEvaluation.Test
 {
@@ -25,7 +24,7 @@ namespace PerftEvaluation.Test
             IMemoryCache memoryCache = new MemoryCache(options);
 
             IExamUserSessionStorage examUserSessionStorage = new ExamUserSessionCacheStore(memoryCache);
-            IExamsService examService = new ExamsService(null, null, null, null,null);
+            IExamsService examService = new ExamsService(null, null, null, null, null, null);
             //When
             IExamSessionService examSessionService = new ExamUserSessionService(examUserSessionStorage, examService);
 
