@@ -184,7 +184,7 @@ export class ExamComponent implements OnInit {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
-        if (this.optionIdArray.length != 0 || (this.currentQuestionQuestionType == 2 && this.textArea.length > 0)) {
+        if (this.optionIdArray.length != 0 || ( this.textArea.length > 0)) {
             this.SaveAttemptedQuestionsById();
         }
         if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
@@ -224,6 +224,7 @@ export class ExamComponent implements OnInit {
     }
 
     SaveAttemptedQuestionsById() {
+        console.log(this.textArea);
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
         const userDetail = JSON.parse(localStorage.getItem('userDetails'));
         const modal = {
@@ -262,7 +263,7 @@ export class ExamComponent implements OnInit {
         }).then(x => {
             if (x.value == true) {
                 this.endExam = true;
-                if (this.optionIdArray.length != 0 || (this.currentQuestionQuestionType == 2 && this.textArea.length > 0)) {
+                if (this.optionIdArray.length != 0 || (this.textArea.length > 0)) {
                     this.fn_next();
                 }
                 else {
