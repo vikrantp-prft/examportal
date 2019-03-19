@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           JSON.stringify({
             token: result.data.token,
             userId: result.data.userId,
-            userRole: result.data.userId,
+            userRole: result.data.userRole,
             userName: result.data.userName
           })
         );

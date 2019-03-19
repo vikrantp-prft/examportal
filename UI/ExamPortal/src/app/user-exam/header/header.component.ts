@@ -1,17 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomAuthService } from 'src/app/common/services/auth.service';
+import { Component, OnInit } from "@angular/core";
+import { CustomAuthService } from "src/app/common/services/auth.service";
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnInit {
-    constructor(public authservice: CustomAuthService) { }
+  public userName: string;
+  public isAdmin: boolean;
+  constructor(public authservice: CustomAuthService) {}
 
-    ngOnInit(): void { }
+  ngOnInit() {
+    const user = JSON.parse(localStorage.getItem("userDetails"));
+    this.userName = user.userName;
+    debugger;
+    this.isAdmin = user.userRole.includes("ADMINISTRATOR");
+  }
 
-    onLogout(){
-        this.authservice.logout();
-    }
+  onLogout() {
+    this.authservice.logout();
+  }
 }
