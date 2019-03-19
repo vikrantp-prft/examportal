@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class="col">
-              <button [routerLink]="['/user/addemployee']" class="btn btn-md btn-primary" title="Add Employee">
+              <button [routerLink]="['/admin/user/addemployee']" class="btn btn-md btn-primary" title="Add Employee">
                 Add
               </button>
             </div>
@@ -47,10 +47,10 @@
             <tbody>
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let emp of employeeList; let i = index">
-                <td [routerLink]="['/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">{{emp.email}}</td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">
+                <td [routerLink]="['/admin/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
+                <td [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
+                <td [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.email}}</td>
+                <td [routerLink]="['/admin/user/updateemployee', emp.id]">
                   <div *ngIf="emp.team!=null">
                     {{emp.team.name}}
                   </div>
