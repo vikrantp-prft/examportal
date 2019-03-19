@@ -111,7 +111,7 @@ export class ExamComponent implements OnInit {
                 else {
                     this.textArea = '';
                 }
-                this.getAllQuestionCategory();
+                // this.getAllQuestionCategory();
             }
         });
     }
@@ -135,15 +135,15 @@ export class ExamComponent implements OnInit {
             }
         });
     }
-    getAllQuestionCategory() {
-        const distinct = (value, index, self) => {
-            return self.indexOf(value) === index;
-        }
-        for (let i = 0; i < this.question.length; i++) {
-            this.questionCategory[i] = this.question[i].category.name;
-        }
-        this.questionCategory = this.questionCategory.filter(distinct);
-    }
+    // getAllQuestionCategory() {
+    //     const distinct = (value, index, self) => {
+    //         return self.indexOf(value) === index;
+    //     }
+    //     for (let i = 0; i < this.question.length; i++) {
+    //         this.questionCategory[i] = this.question[i].category.name;
+    //     }
+    //     this.questionCategory = this.questionCategory.filter(distinct);
+    // }
     setCurrentQuestion(questionId) {
         this.currentQuestion = this.question[questionId].question;
     }

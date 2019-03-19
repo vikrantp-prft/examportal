@@ -48,7 +48,7 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
       middleName: new FormControl(''),
-      lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.NAME), Validators.maxLength(50)]],
+      lastName: [null, [Validators.required, Validators.pattern(appConfig.pattern.LASTNAME), Validators.maxLength(50)]],
       dob: [null, [Validators.required]],
       mobile: [null, [Validators.required, Validators.pattern(appConfig.pattern.PHONE_NO), Validators.maxLength(10)]],
       address1: [null, [Validators.required, Validators.maxLength(100)]],
