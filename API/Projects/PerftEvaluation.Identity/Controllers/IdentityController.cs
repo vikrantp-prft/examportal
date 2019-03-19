@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -7,450 +8,388 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using PerfiEvaluation.Identity.Mongo;
 using PerfiEvaluation.Identity.Mongo.Entities;
 using PerfiEvaluation.Identity.Mongo.Model;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using PerfiEvaluation.Identity.Mongo;
+using PerftEvaluation.EmailServer;
+using PerftEvaluation.EmailServer.Interfaces;
 
-namespace PerftEvaluation.Identity.Controllers
-{
-    [Produces("application/json")]
-    [Route("api/[controller]")]
+namespace PerftEvaluation.Identity.Controllers {
+    [Produces ("application/json")]
+    [Route ("api/[controller]")]
     [ApiController]
     // For testing purpose only - To execute below actions without any restriction, uncomment below line
     //[AllowAnonymous]
-    public class IdentityController : ControllerBase
-    {
+    public class IdentityController : ControllerBase {
         readonly UserManager<PerfiUser> _userManager;
         readonly SignInManager<PerfiUser> _signInManager;
         private readonly RoleManager<PerfiRole> _roleManager;
+        protected readonly IEmailService _emailService;
         readonly IConfiguration _configuration;
         readonly private string[] examRoles;
         readonly private string[] adminRoles;
 
-        public IdentityController(
-           UserManager<PerfiUser> userManager,
-           SignInManager<PerfiUser> signInManager,
-           RoleManager<PerfiRole> roleManager,
-           IConfiguration configuration)
-        {
+        public IdentityController (
+            UserManager<PerfiUser> userManager,
+            SignInManager<PerfiUser> signInManager,
+            RoleManager<PerfiRole> roleManager,
+            IConfiguration configuration, IEmailService emailService) {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._roleManager = roleManager;
             this._configuration = configuration;
+            this._emailService = emailService;
 
-            this.examRoles = GetConfigArray("AllowedRoles:ExamRoles");
-            this.adminRoles = GetConfigArray("AllowedRoles:AdminRoles");
+            this.examRoles = GetConfigArray ("AllowedRoles:ExamRoles");
+            this.adminRoles = GetConfigArray ("AllowedRoles:AdminRoles");
         }
 
         #region - Currently no in use but may need in future, Make it 'Public' to use -
         [AllowAnonymous]
         [HttpPost]
-        [Route("getidentitytoken")]
-        private async Task<IActionResult> CreateToken([FromBody] LoginModel loginModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var loginResult = await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, isPersistent: false, lockoutOnFailure: false);
+        [Route ("getidentitytoken")]
+        private async Task<IActionResult> CreateToken ([FromBody] LoginModel loginModel) {
+            if (ModelState.IsValid) {
+                var loginResult = await _signInManager.PasswordSignInAsync (loginModel.Username, loginModel.Password, isPersistent : false, lockoutOnFailure : false);
 
-                if (!loginResult.Succeeded)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Login failed. Please check your credentials."));
+                if (!loginResult.Succeeded) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Login failed. Please check your credentials."));
                 }
 
-                var user = await _userManager.FindByNameAsync(loginModel.Username);
+                var user = await _userManager.FindByNameAsync (loginModel.Username);
 
-                return Ok(ResponseDTO.OkResponse(GetToken(user)));
+                return Ok (ResponseDTO.OkResponse (GetToken (user)));
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
 
         }
 
         // Reset password directly
         [AllowAnonymous]
         [HttpPost]
-        [Route("resetpassword")]
-        private async Task<IActionResult> ResetPassword([FromBody] LoginModel resetPasswordModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(resetPasswordModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User doest not exist."));
+        [Route ("resetpassword")]
+        private async Task<IActionResult> ResetPassword ([FromBody] LoginModel resetPasswordModel) {
+            if (ModelState.IsValid) {
+                var user = await _userManager.FindByEmailAsync (resetPasswordModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User doest not exist."));
                 }
 
-                string token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordModel.Password);
-                if (result.Succeeded)
-                {
-                    return Ok(ResponseDTO.OkResponse($"Password reset to '{resetPasswordModel.Password}'"));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Password reset failed. Please try again.", result.Errors));
+                string token = await _userManager.GeneratePasswordResetTokenAsync (user);
+                var result = await _userManager.ResetPasswordAsync (user, token, resetPasswordModel.Password);
+                if (result.Succeeded) {
+                    return Ok (ResponseDTO.OkResponse ($"Password reset to '{resetPasswordModel.Password}'"));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Password reset failed. Please try again.", result.Errors));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
 
         }
         #endregion
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("LoginUser")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginModel loginModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByNameAsync(loginModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User doese not exist. Please contact system administrator."));
+        [Route ("LoginUser")]
+        public async Task<IActionResult> LoginUser ([FromBody] LoginModel loginModel) {
+            if (ModelState.IsValid) {
+                var user = await _userManager.FindByNameAsync (loginModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User doese not exist. Please contact system administrator."));
                 }
 
                 var isEligible = false;
-                foreach (var item in this.examRoles)
-                {
-                    var result = await _userManager.IsInRoleAsync(user, item);
+                foreach (var item in this.examRoles) {
+                    var result = await _userManager.IsInRoleAsync (user, item);
                     if (result) { isEligible = true; break; }
 
                 }
 
-                if (isEligible)
-                {
-                    var loginResult = await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, isPersistent: false, lockoutOnFailure: false);
+                if (isEligible) {
+                    var loginResult = await _signInManager.PasswordSignInAsync (loginModel.Username, loginModel.Password, isPersistent : false, lockoutOnFailure : false);
 
-                    if (!loginResult.Succeeded)
-                    {
-                        return BadRequest(ResponseDTO.ExceptionResponse("Login failed. Please check your credentials."));
+                    if (!loginResult.Succeeded) {
+                        return BadRequest (ResponseDTO.ExceptionResponse ("Login failed. Please check your credentials."));
                     }
 
-                    return Ok(ResponseDTO.OkResponse(GetToken(user)));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Sorry, You are not allowed to access this portal."));
+                    return Ok (ResponseDTO.OkResponse (GetToken (user)));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Sorry, You are not allowed to access this portal."));
                 }
 
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
 
         }
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("LoginAdministrator")]
-        public async Task<IActionResult> LoginAdministrator([FromBody] LoginModel loginModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByNameAsync(loginModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User doese not exist. Please contact system administrator."));
+        [Route ("LoginAdministrator")]
+        public async Task<IActionResult> LoginAdministrator ([FromBody] LoginModel loginModel) {
+            if (ModelState.IsValid) {
+                var user = await _userManager.FindByNameAsync (loginModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User doese not exist. Please contact system administrator."));
                 }
 
                 var isEligible = false;
-                foreach (var item in this.adminRoles)
-                {
-                    var result = await _userManager.IsInRoleAsync(user, item);
+                foreach (var item in this.adminRoles) {
+                    var result = await _userManager.IsInRoleAsync (user, item);
                     if (result) { isEligible = true; break; }
 
                 }
 
-                if (isEligible)
-                {
-                    var loginResult = await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, isPersistent: false, lockoutOnFailure: false);
+                if (isEligible) {
+                    var loginResult = await _signInManager.PasswordSignInAsync (loginModel.Username, loginModel.Password, isPersistent : false, lockoutOnFailure : false);
 
-                    if (!loginResult.Succeeded)
-                    {
-                        return BadRequest(ResponseDTO.ExceptionResponse("Login failed. Please check your credentials."));
+                    if (!loginResult.Succeeded) {
+                        return BadRequest (ResponseDTO.ExceptionResponse ("Login failed. Please check your credentials."));
                     }
 
-                    return Ok(ResponseDTO.OkResponse(GetToken(user)));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Sorry, You are not allowed to access this portal."));
+                    return Ok (ResponseDTO.OkResponse (GetToken (user)));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Sorry, You are not allowed to access this portal."));
                 }
 
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
 
         }
 
         [Authorize]
         [HttpGet]
-        [Route("refreshidentitytoken")]
-        public async Task<IActionResult> RefreshIdentityToken()
-        {
-            var user = await _userManager.FindByNameAsync(
+        [Route ("refreshidentitytoken")]
+        public async Task<IActionResult> RefreshIdentityToken () {
+            var user = await _userManager.FindByNameAsync (
                 User.Identity.Name ??
-                User.Claims.Where(c => c.Properties.ContainsKey("unique_name")).Select(c => c.Value).FirstOrDefault()
-                );
-            return Ok(ResponseDTO.OkResponse(GetToken(user)));
+                User.Claims.Where (c => c.Properties.ContainsKey ("unique_name")).Select (c => c.Value).FirstOrDefault ()
+            );
+            return Ok (ResponseDTO.OkResponse (GetToken (user)));
 
         }
 
         [Authorize]
         [HttpGet]
-        [Route("destroyidentitytoken")]
-        public async Task<IActionResult> DestroyIdentityToken()
-        {
-            await _signInManager.SignOutAsync();
-            return Ok(ResponseDTO.OkResponse("Token destroyed."));
+        [Route ("destroyidentitytoken")]
+        public async Task<IActionResult> DestroyIdentityToken () {
+            await _signInManager.SignOutAsync ();
+            return Ok (ResponseDTO.OkResponse ("Token destroyed."));
 
         }
 
         // Reset password with reset code
         [AllowAnonymous]
         [HttpPost]
-        [Route("resetpasswordwithtoken")]
-        public async Task<IActionResult> ResetPasswordWithToken([FromBody] ResetPasswordModel resetPasswordModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(resetPasswordModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User doest not exist."));
+        [Route ("resetpasswordwithtoken")]
+        public async Task<IActionResult> ResetPasswordWithToken ([FromBody] ResetPasswordModel resetPasswordModel) {
+            if (ModelState.IsValid) {
+                var user = await _userManager.FindByEmailAsync (resetPasswordModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User doest not exist."));
                 }
 
-                var result = await _userManager.ResetPasswordAsync(user, resetPasswordModel.ResetCode, resetPasswordModel.Password);
-                if (result.Succeeded)
-                {
-                    return Ok(ResponseDTO.OkResponse($"Password reset to '{resetPasswordModel.Password}'"));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Password reset failed. Please try again.", result.Errors));
+                var result = await _userManager.ResetPasswordAsync (user, resetPasswordModel.ResetCode, resetPasswordModel.Password);
+                if (result.Succeeded) {
+                    return Ok (ResponseDTO.OkResponse ($"Password reset to '{resetPasswordModel.Password}'"));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Password reset failed. Please try again.", result.Errors));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
 
         }
 
         // Reset password request
         [AllowAnonymous]
         [HttpPost]
-        [Route("RequestResetPassword")]
-        public async Task<IActionResult> RequestResetPassword([FromBody] UsernameModel usernameModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(usernameModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User doest not exist."));
+        [Route ("RequestResetPassword")]
+        public async Task<IActionResult> RequestResetPassword ([FromBody] UsernameModel usernameModel) {
+            if (ModelState.IsValid) {
+                var user = await _userManager.FindByEmailAsync (usernameModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User doest not exist."));
                 }
 
                 // TODO: Send Email with reset link
-                return Ok(ResponseDTO.OkResponse(await _userManager.GeneratePasswordResetTokenAsync(user)));
+                return Ok (ResponseDTO.OkResponse (await _userManager.GeneratePasswordResetTokenAsync (user)));
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
 
         }
 
         #region Private Methods
-        private AuthenticateModel GetToken(PerfiUser user)
-        {
-            AuthenticateModel responseModel = new AuthenticateModel();
+        private AuthenticateModel GetToken (PerfiUser user) {
+            AuthenticateModel responseModel = new AuthenticateModel ();
             var utcNow = DateTime.UtcNow;
 
-            var claims = new List<Claim>(new[]
-            {
-                        new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(JwtRegisteredClaimNames.Iat, utcNow.ToString())
+            var claims = new List<Claim> (new [] {
+                new Claim (JwtRegisteredClaimNames.Sub, user.Id),
+                    new Claim (JwtRegisteredClaimNames.UniqueName, user.UserName),
+                    new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid ().ToString ()),
+                    new Claim (JwtRegisteredClaimNames.Iat, utcNow.ToString ())
             });
 
             // Add user role, they are converted to claims
-            foreach (var roleName in user.Roles)
-            {
+            foreach (var roleName in user.Roles) {
                 // Find IdentityRole by name
-                var role = _roleManager.FindByNameAsync(roleName);
-                if (role != null)
-                {
+                var role = _roleManager.FindByNameAsync (roleName);
+                if (role != null) {
                     // Convert Identity to claim and add 
-                    var roleClaim = new Claim("Roles", role.Result.Name);
-                    claims.Add(roleClaim);
+                    var roleClaim = new Claim ("Roles", role.Result.Name);
+                    claims.Add (roleClaim);
                 }
             }
-            responseModel.UserRole = user.Roles.ToArray();
+            responseModel.UserRole = user.Roles.ToArray ();
             responseModel.UserId = user.UserId;
             responseModel.UserName = user.UserName;
 
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._configuration.GetValue<String>("TokenAuthentication:SecretKey")));
-            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            var jwt = new JwtSecurityToken(
+            var signingKey = new SymmetricSecurityKey (Encoding.UTF8.GetBytes (this._configuration.GetValue<String> ("TokenAuthentication:SecretKey")));
+            var signingCredentials = new SigningCredentials (signingKey, SecurityAlgorithms.HmacSha256);
+            var jwt = new JwtSecurityToken (
                 signingCredentials: signingCredentials,
                 claims: claims,
                 notBefore: utcNow,
-                expires: utcNow.AddSeconds(this._configuration.GetValue<int>("TokenAuthentication:Lifetime")),
-                audience: this._configuration.GetValue<String>("TokenAuthentication:Audience"),
-                issuer: this._configuration.GetValue<String>("TokenAuthentication:Issuer")
-                );
+                expires: utcNow.AddSeconds (this._configuration.GetValue<int> ("TokenAuthentication:Lifetime")),
+                audience : this._configuration.GetValue<String> ("TokenAuthentication:Audience"),
+                issuer : this._configuration.GetValue<String> ("TokenAuthentication:Issuer")
+            );
 
-            responseModel.Token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            responseModel.Token = new JwtSecurityTokenHandler ().WriteToken (jwt);
 
             return responseModel;
 
         }
 
-        private string[] GetConfigArray(string configName)
-        {
-            var examRoleSection = this._configuration.GetSection(configName);
-            IEnumerable<IConfigurationSection> examRoleMembers = examRoleSection.GetChildren();
+        private string[] GetConfigArray (string configName) {
+            var examRoleSection = this._configuration.GetSection (configName);
+            IEnumerable<IConfigurationSection> examRoleMembers = examRoleSection.GetChildren ();
 
-            return (from c in examRoleMembers select c.Value).ToArray();
+            return (from c in examRoleMembers select c.Value).ToArray ();
         }
         #endregion
 
         #region User Related Admin Actions
         [HttpPost]
-        [Route("registeruser")]
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new PerfiUser
-                {
-                    //TODO: Use Automapper instaed of manual binding
-                    UserName = registerModel.Username,
-                    Email = registerModel.Username,
-                    UserId = registerModel.UserId
+        [Route ("registeruser")]
+        [Authorize (Roles = "Administrator")]
+        public async Task<IActionResult> Register ([FromBody] RegisterModel registerModel) {
+            if (ModelState.IsValid) {
+            var user = new PerfiUser {
+            //TODO: Use Automapper instaed of manual binding
+            UserName = registerModel.Username,
+            Email = registerModel.Username,
+            UserId = registerModel.UserId
                 };
 
-                var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
-                if (identityResult.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, registerModel.RoleName);
-                    return Ok(ResponseDTO.OkResponse($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'"));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Registration failed, Please try again.", identityResult.Errors));
+                var identityResult = await this._userManager.CreateAsync (user, registerModel.Password);
+                if (identityResult.Succeeded) {
+                    await _userManager.AddToRoleAsync (user, registerModel.RoleName);
+                    return Ok (ResponseDTO.OkResponse ($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'"));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Registration failed, Please try again.", identityResult.Errors));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
         }
         #endregion
 
         [HttpPost]
-        [Route("UserRegistration")]
+        [Route ("UserRegistration")]
         //[Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> UserRegistration([FromBody] RegisterModel registerModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new PerfiUser
-                {
+        public async Task<IActionResult> UserRegistration ([FromBody] RegisterModel registerModel) {
+            if (ModelState.IsValid) {
+                var user = new PerfiUser {
                     //TODO: Use Automapper instaed of manual binding
                     UserName = registerModel.Username,
                     Email = registerModel.Username,
                     UserId = registerModel.UserId
 
                 };
-                registerModel.Password = GeneratePassword();
+                registerModel.Password = GeneratePassword ();
 
-                var identityResult = await this._userManager.CreateAsync(user, registerModel.Password);
-                if (identityResult.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, registerModel.RoleName);
-                    return Ok(ResponseDTO.OkResponse($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'"));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Registration failed, Please try again.", identityResult.Errors));
+                var identityResult = await this._userManager.CreateAsync (user, registerModel.Password);
+                if (identityResult.Succeeded) {
+                    await _userManager.AddToRoleAsync (user, registerModel.RoleName);
+                    EmailDTO email = new EmailDTO ();
+                    email.Subject = "[Perficient][Exam-Portal]: System Generated Password";
+                    List<string> emailList = new List<string> ();
+                    emailList.Add (registerModel.Username);
+                    email.ToEmails = emailList;
+                    email.IsHtmlBody = true;
+                    email.Body = "Your current password : " + registerModel.Password;
+
+                    this._emailService.Send (email);
+                    return Ok (ResponseDTO.OkResponse ($"User '{registerModel.Username}' created with Password '{registerModel.Password}' and assigned Role '{registerModel.RoleName}'"));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Registration failed, Please try again.", identityResult.Errors));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
         }
 
         #region Role Related Admin Actions
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
-        [Route("createrole")]
-        public async Task<IActionResult> CreateRole([FromBody] RoleModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        [Authorize (Roles = "Administrator")]
+        [Route ("createrole")]
+        public async Task<IActionResult> CreateRole ([FromBody] RoleModel model) {
+            if (ModelState.IsValid) {
                 var role = new PerfiRole { Name = model.RoleName };
-                var result = await _roleManager.CreateAsync(role);
-                if (result.Succeeded)
-                {
-                    return Ok(ResponseDTO.OkResponse($"'{model.RoleName}' Role created."));
-                }
-                else
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("Role creation failed, Please try again.", result.Errors));
+                var result = await _roleManager.CreateAsync (role);
+                if (result.Succeeded) {
+                    return Ok (ResponseDTO.OkResponse ($"'{model.RoleName}' Role created."));
+                } else {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("Role creation failed, Please try again.", result.Errors));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
-        [Route("assignrole")]
-        public async Task<IActionResult> AssignRole([FromBody] UserRoleModel userRoleModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await this._userManager.FindByEmailAsync(userRoleModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User does not exist."));
+        [Authorize (Roles = "Administrator")]
+        [Route ("assignrole")]
+        public async Task<IActionResult> AssignRole ([FromBody] UserRoleModel userRoleModel) {
+            if (ModelState.IsValid) {
+                var user = await this._userManager.FindByEmailAsync (userRoleModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User does not exist."));
 
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, userRoleModel.RoleName);
-                    return Ok(ResponseDTO.OkResponse($"'{userRoleModel.RoleName}' role assigned to user '{userRoleModel.Username}'"));
+                } else {
+                    await _userManager.AddToRoleAsync (user, userRoleModel.RoleName);
+                    return Ok (ResponseDTO.OkResponse ($"'{userRoleModel.RoleName}' role assigned to user '{userRoleModel.Username}'"));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
-        [Route("removerole")]
-        public async Task<IActionResult> RemoveRole([FromBody] UserRoleModel userRoleModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await this._userManager.FindByEmailAsync(userRoleModel.Username);
-                if (user == null)
-                {
-                    return BadRequest(ResponseDTO.ExceptionResponse("User does not exist."));
+        [Authorize (Roles = "Administrator")]
+        [Route ("removerole")]
+        public async Task<IActionResult> RemoveRole ([FromBody] UserRoleModel userRoleModel) {
+            if (ModelState.IsValid) {
+                var user = await this._userManager.FindByEmailAsync (userRoleModel.Username);
+                if (user == null) {
+                    return BadRequest (ResponseDTO.ExceptionResponse ("User does not exist."));
 
-                }
-                else
-                {
-                    await _userManager.RemoveFromRoleAsync(user, userRoleModel.RoleName);
-                    return Ok(ResponseDTO.OkResponse($"'{userRoleModel.RoleName}' role removed from user '{userRoleModel.Username}'"));
+                } else {
+                    await _userManager.RemoveFromRoleAsync (user, userRoleModel.RoleName);
+                    return Ok (ResponseDTO.OkResponse ($"'{userRoleModel.RoleName}' role removed from user '{userRoleModel.Username}'"));
                 }
             }
-            return BadRequest(ResponseDTO.ExceptionResponse("Entered data does not satisfy validations.", ModelState));
+            return BadRequest (ResponseDTO.ExceptionResponse ("Entered data does not satisfy validations.", ModelState));
         }
         #endregion 
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
+        private void AddErrors (IdentityResult result) {
+            foreach (var error in result.Errors) {
+                ModelState.AddModelError (string.Empty, error.Description);
             }
         }
 
         [HttpGet]
-        [Route("GeneratePassword")]
-        public string GeneratePassword()
-        {
+        [Route ("GeneratePassword")]
+        public string GeneratePassword () {
             var options = _userManager.Options.Password;
 
             int length = 10;
@@ -460,36 +399,53 @@ namespace PerftEvaluation.Identity.Controllers
             bool lowercase = options.RequireLowercase;
             bool uppercase = options.RequireUppercase;
 
-            StringBuilder password = new StringBuilder();
-            Random random = new Random();
+            StringBuilder password = new StringBuilder ();
+            Random random = new Random ();
 
-            while (password.Length < length)
-            {
-                char c = (char)random.Next(32, 126);
+            while (password.Length < length) {
+                char c = (char) random.Next (32, 126);
 
-                password.Append(c);
+                password.Append (c);
 
-                if (char.IsDigit(c))
+                if (char.IsDigit (c))
                     digit = false;
-                else if (char.IsLower(c))
+                else if (char.IsLower (c))
                     lowercase = false;
-                else if (char.IsUpper(c))
+                else if (char.IsUpper (c))
                     uppercase = false;
-                else if (!char.IsLetterOrDigit(c))
+                else if (!char.IsLetterOrDigit (c))
                     nonAlphanumeric = false;
             }
 
             if (nonAlphanumeric)
-                password.Append((char)random.Next(33, 48));
+                password.Append ((char) random.Next (33, 48));
             if (digit)
-                password.Append((char)random.Next(48, 58));
+                password.Append ((char) random.Next (48, 58));
             if (lowercase)
-                password.Append((char)random.Next(97, 123));
+                password.Append ((char) random.Next (97, 123));
             if (uppercase)
-                password.Append((char)random.Next(65, 91));
+                password.Append ((char) random.Next (65, 91));
 
-            return password.ToString();
+            return password.ToString ();
         }
+
+        // [HttpGet]
+        // [Route ("TestEmail")]
+        // public bool TestEmail () {
+        //     try {
+        //         EmailDTO email = new EmailDTO ();
+        //         email.Subject = "[Perficient][Exam-Portal]: System Generated Password";
+        //         List<string> testList = new List<string> ();
+        //         testList.Add ("sumit123@yopmail.com");
+        //         email.ToEmails = testList;
+        //         email.IsHtmlBody = false;
+        //         email.Body = "Your current password : " + GeneratePassword ();
+
+        //         return this._emailService.Send (email);
+        //     } catch (Exception ex) {
+        //         throw ex;
+        //     }
+        // }
 
     }
 }

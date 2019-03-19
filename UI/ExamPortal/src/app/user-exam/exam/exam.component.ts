@@ -111,7 +111,7 @@ export class ExamComponent implements OnInit {
                 else {
                     this.textArea = '';
                 }
-                this.getAllQuestionCategory();
+                // this.getAllQuestionCategory();
             }
         });
     }
@@ -135,15 +135,15 @@ export class ExamComponent implements OnInit {
             }
         });
     }
-    getAllQuestionCategory() {
-        const distinct = (value, index, self) => {
-            return self.indexOf(value) === index;
-        }
-        for (let i = 0; i < this.question.length; i++) {
-            this.questionCategory[i] = this.question[i].category.name;
-        }
-        this.questionCategory = this.questionCategory.filter(distinct);
-    }
+    // getAllQuestionCategory() {
+    //     const distinct = (value, index, self) => {
+    //         return self.indexOf(value) === index;
+    //     }
+    //     for (let i = 0; i < this.question.length; i++) {
+    //         this.questionCategory[i] = this.question[i].category.name;
+    //     }
+    //     this.questionCategory = this.questionCategory.filter(distinct);
+    // }
     setCurrentQuestion(questionId) {
         this.currentQuestion = this.question[questionId].question;
     }
@@ -184,7 +184,7 @@ export class ExamComponent implements OnInit {
         this.setCurrentQuestionQuestionId(this.currentQuestionIndex - 1);
         this.currentQuestionIndex++;
         this.setCurrentQuestionAndOption();
-        if (this.optionIdArray.length != 0 || (this.currentQuestionQuestionType == 2 && this.textArea.length > 0)) {
+        if (this.optionIdArray.length != 0 || ( this.textArea.length > 0)) {
             this.SaveAttemptedQuestionsById();
         }
         if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
@@ -262,7 +262,7 @@ export class ExamComponent implements OnInit {
         }).then(x => {
             if (x.value == true) {
                 this.endExam = true;
-                if (this.optionIdArray.length != 0 || (this.currentQuestionQuestionType == 2 && this.textArea.length > 0)) {
+                if (this.optionIdArray.length != 0 || (this.textArea.length > 0)) {
                     this.fn_next();
                 }
                 else {

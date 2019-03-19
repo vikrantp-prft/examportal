@@ -21,7 +21,7 @@
                 <input type="text" class="form-control" id="firstName" placeholder="First Name"
                   formControlName="firstName">
                 <app-field-error-display [displayError]="isFieldValid(employeeForm, 'firstName')"
-                  errorMsg="Enter first name">
+                  errorMsg="Enter valid first name">
                 </app-field-error-display>
               </div>
             </div>
@@ -38,7 +38,7 @@
                 <input type="text" class="form-control" id="lastName" placeholder="Last Name"
                   formControlName="lastName">
                 <app-field-error-display [displayError]="isFieldValid(employeeForm, 'lastName')"
-                  errorMsg="Enter last name">
+                  errorMsg="Enter valid last name">
                 </app-field-error-display>
               </div>
             </div>
@@ -114,7 +114,7 @@
                 <input type="text" class="form-control" id="city" placeholder="City" formControlName="city"
                   placeholder="City">
                 <app-field-error-display [displayError]="isFieldValid(employeeForm, 'city')"
-                  errorMsg="Enter permanent city">
+                  errorMsg="Enter city">
                 </app-field-error-display>
               </div>
               <div class="form-group">
@@ -163,7 +163,7 @@
                 <input type="text" class="form-control" id="currentCity" placeholder="City"
                   formControlName="currentCity">
                 <app-field-error-display [displayError]="isFieldValid(employeeForm, 'currentCity')"
-                  errorMsg="Enter current city">
+                  errorMsg="Enter city">
                 </app-field-error-display>
               </div>
               <div class="form-group">

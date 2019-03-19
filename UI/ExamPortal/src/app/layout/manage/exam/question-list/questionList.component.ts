@@ -50,7 +50,7 @@ export class questionListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 10;
   public questionList = [];
-  public previewQuestionList?: any[] = [];
+  public previewQuestionList = [];
   public questionDetail: any;
   public questionListUrl = "api/Questions/listQuestionsByExamId";
   public questionDetailUrl = "api/Questions/GetQuestionById";
@@ -127,7 +127,6 @@ export class questionListComponent implements OnInit {
       pageNumber: 1
     };
     this.getQuestionsList();
-    this.getPreviewQuestionLsit();
     this.disbleAllFlag();
     this.multipleSelectEdit = false;
     this.singleSelectEdit = false;
@@ -197,10 +196,11 @@ export class questionListComponent implements OnInit {
       }
     });
   }
-  getPreviewQuestionLsit() {
+  getPreviewQuestionList() {
     const url = 'api/Questions/ListQuestionsByExamId';
     const questionModel = {
-      "id": this.examID
+      "id": this.examID,
+      "pageSize": 300
     };
     this.fn_getPreviewQuestionLsit(questionModel, url);
   }
@@ -574,7 +574,6 @@ export class questionListComponent implements OnInit {
       this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(
         (result: any) => {
           const rs = result;
-          // console.log(rs)
           if (rs == true) {
             this.toastr.success('Questions imported successfully!');
             this.getQuestionsList();
