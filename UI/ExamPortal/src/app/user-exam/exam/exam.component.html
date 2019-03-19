@@ -7,7 +7,7 @@
       <div class="card">
         <div class="card-header p-0 m-0">
           <div class="row justify-content-between">
-            <div class="col-2 ">
+            <div class="col-2">
               <div class="p-3 h5 mb-0 font-weight-bold">
                 {{ examName }}
               </div>
@@ -31,28 +31,54 @@
                   </ul>
                 </div> -->
                 <div class="card-body">
-                  <pre class="core-pre  Merriweather" innerHTML="{{currentQuestionIndex + '. ' +
+                  <pre class="core-pre Merriweather" innerHTML="{{currentQuestionIndex + '. ' +
                     currentQuestion}}">
                   </pre>
                   <hr>
                   <div class="text-primary" *ngIf="currentQuestionQuestionType == 0">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input [checked]="questionListForOption[currentQuestionIndex-1]?.selectedOptionId == option?.optionId" (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""  value="{{option?.optionId}}">
+                      <!-- <input
+                        [checked]="questionListForOption[currentQuestionIndex-1]?.selectedOptionId
+                        == option?.optionId" (change)="setOptionIdArray($event)" type="radio"
+                        name="{{currentQuestionQuestionId}}" id="" value="{{option?.optionId}}">
                       <span class="mx-3">{{i+1}}.</span>
-                      <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+                      <span style="display:inline-flex" innerHTML="{{option.option}}"></span> -->
+                      <div class="row no-gutters">
+                        <div class="col-1">
+                          <input [checked]="questionListForOption[currentQuestionIndex-1]?.selectedOptionId == option?.optionId"
+                            (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""
+                            value="{{option?.optionId}}">
+                          <span class="margin-left-1">{{i+1}}.</span>
+                        </div>
+                        <div class="col-11">
+                          <span innerHTML="{{option.option}}"></span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="text-primary" *ngIf="currentQuestionQuestionType == 1">
                     <div class="" *ngFor="let option of currentQuestionOptionType; let i=index">
-                      <input [checked]="questionListForOption[currentQuestionIndex-1].options[i].isSelected" class="ml-3" type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
+                      <!-- <input [checked]="questionListForOption[currentQuestionIndex-1].options[i].isSelected" type="checkbox"
+                        value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
                       <span class="mx-3">{{i+1}}.</span>
-                      <span style="display:inline-flex" innerHTML="{{option?.option}}"></span>
+                      <span style="display:inline-flex" innerHTML="{{option?.option}}"></span> -->
+                      <div class="row no-gutters">
+                        <div class="col-1">
+                          <input [checked]="questionListForOption[currentQuestionIndex-1].options[i].isSelected" type="checkbox"
+                            value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)">
+                          <span class="margin-left-1">{{i+1}}.</span>
+                        </div>
+                        <div class="col-11">
+                          <span innerHTML="{{option?.option}}"></span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="" *ngIf="currentQuestionQuestionType == 2">
                     <div class="form-group">
-                      <label >Ans.</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" name="exampleFormControlTextarea1" rows="8" placeholder="Enter Your Answer" [(ngModel)]="textArea">
+                      <label>Ans.</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" name="exampleFormControlTextarea1"
+                        rows="8" placeholder="Enter Your Answer" [(ngModel)]="textArea">
                       </textarea>
                     </div>
                   </div>
@@ -65,8 +91,8 @@
                     Save & Next
                   </button>
                   <button class="ml-1 btn btn-primary" (click)="fn_nextToNotSaveQuestion()" [hidden]="currentQuestionIndex == totalQuestion">
-                      Next
-                    </button>
+                    Next
+                  </button>
                   <button (click)="fn_endExam()" class="ml-2 btn btn-danger pull-right">
                     <!-- <p class="p-0 m-0" *ngIf="currentQuestionIndex == totalQuestion">End Exam</p> 
                     <p ></p> -->
@@ -90,7 +116,10 @@
                     <!-- <div class="col-md-2 m-1" *ngFor="let q of questionListForOption; let i=index">
                       <button class="btn btn-md" [ngClass]="{'btn-success': q.isAttempted, 'btn-danger': !q.isAttempted}" (click)="jumpToQuestion(i)" >{{i+1}}</button>
                     </div> -->
-                    <button class="btn btn-md m-1 col-md-2" [ngClass]="{'btn-success': q?.isAttempted, 'btn-danger': !q?.isAttempted}" *ngFor="let q of questionListForOption; let i=index" (click)="jumpToQuestion(i)" >{{i+1}}</button>
+                    <button class="btn btn-md m-1 col-md-2" [ngClass]="{'btn-success':
+                      q?.isAttempted, 'btn-danger': !q?.isAttempted}"
+                      *ngFor="let q of
+                      questionListForOption; let i=index" (click)="jumpToQuestion(i)">{{i+1}}</button>
                   </div>
                 </div>
               </div>
@@ -113,10 +142,10 @@
           <ol>
             <li *ngFor="let op of item.options; let i=index">
               <span class="mx-3" *ngIf="item?.questionType == 0">
-                <input  type="checkbox" name="" id="" value="{{op.optionId}}">
+                <input type="checkbox" name="" id="" value="{{op.optionId}}">
               </span>
               <span class="mx-3" *ngIf="item?.questionType == 1">
-                <input  type="radio" name="{{item.questionId}}" >
+                <input type="radio" name="{{item.questionId}}">
               </span>
               <span style="display:inline-flex" innerHTML="{{op.option}}"></span>
             </li>

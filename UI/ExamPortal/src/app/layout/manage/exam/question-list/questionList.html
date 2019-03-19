@@ -10,7 +10,8 @@
             <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
               Add
             </button>
-            <button class="btn btn-primary btn-md mr-2" (click)=" getPreviewQuestionList()" title="Preview All Questions" data-toggle="modal" data-target="#previewAllModal">Preview</button>
+            <button class="btn btn-primary btn-md mr-2" (click)=" getPreviewQuestionList()" title="Preview All Questions"
+              data-toggle="modal" data-target="#previewAllModal">Preview</button>
             <div class="upload-btn-wrapper">
               <button class="btn btn-primary " title="Import Question">Import</button>
               <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:72px;" />
@@ -113,7 +114,7 @@
             <div class="form-group">
               <label for="lastName">Question</label>
               <!-- <ejs-richtexteditor formControlName="questionText"></ejs-richtexteditor> -->
-              <textarea formControlName="questionText"  class="question-textarea"></textarea>
+              <textarea formControlName="questionText" class="question-textarea"></textarea>
               <!-- <input type="textarea" formControlName="questionText" class="form-control"> -->
               <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Please enter Question">
               </app-field-error-display>
@@ -240,7 +241,7 @@
       </div>
       <div class="modal-body">
         <pre class="core-pre  Merriweather" innerHTML="{{questionForm.controls.questionText.value}}">
-          
+
         </pre>
         <hr>
         <div class="text-primary" *ngIf="singleSelectFlag">
@@ -282,17 +283,37 @@
           </pre>
           <div class="text-primary" *ngIf="item?.questionType == 0">
             <div class="" *ngFor="let option of item?.options; let i=index">
-              <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id="" value="{{option?.optionId}}">
+              <!-- <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id="" value="{{option?.optionId}}">
               <span class="mx-3">{{i+1}}.</span>
-              <span style="display:inline-flex" innerHTML="{{option.option}}"></span>
+              <span style="display:inline-flex" innerHTML="{{option.option}}"></span> -->
+              <div class="row no-gutters">
+                <div class="col-1">
+                  <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""
+                    value="{{option?.optionId}}">
+                  <span class="margin-left-1">{{i+1}}.</span>
+                </div>
+                <div class="col-11">
+                  <span innerHTML="{{option?.option}}"></span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="text-primary" *ngIf="item?.questionType == 1">
             <div class="" *ngFor="let option of item?.options; let i=index">
-              <input type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}"
-                (change)="setOptionIdArray($event)" disabled>
+              <!-- <input type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)"
+                disabled>
               <span class="mx-3">{{i+1}}.</span>
-              <span style="white-space: normal; box-sizing: border-box;display:inline-flex" innerHTML="{{option.option}}"></span>
+              <span style="white-space: normal; box-sizing: border-box;display:inline-flex" innerHTML="{{option.option}}"></span> -->
+              <div class="row no-gutters">
+                <div class="col-1">
+                  <input type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)"
+                    disabled>
+                  <span class="margin-left-1">{{i+1}}.</span>
+                </div>
+                <div class="col-11">
+                  <span innerHTML="{{option.option}}"></span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="" *ngIf="item?.questionType == 2">
