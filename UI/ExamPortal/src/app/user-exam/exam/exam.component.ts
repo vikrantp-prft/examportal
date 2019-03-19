@@ -224,7 +224,6 @@ export class ExamComponent implements OnInit {
     }
 
     SaveAttemptedQuestionsById() {
-        console.log(this.textArea);
         const url = 'api/AttemptedQuestions/SaveAttemptedQuestionsById';
         const userDetail = JSON.parse(localStorage.getItem('userDetails'));
         const modal = {
