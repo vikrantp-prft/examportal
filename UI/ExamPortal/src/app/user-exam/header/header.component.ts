@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem("userDetails"));
     this.userName = user.userName;
-    debugger;
     this.isAdmin = user.userRole.includes("ADMINISTRATOR");
   }
 
