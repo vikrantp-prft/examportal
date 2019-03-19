@@ -121,3 +121,8 @@ pre {
   word-break: break-word;
   white-space: normal;
 }
+
+.card-body .exam-questions-list{
+  max-height: 350px;
+   overflow-y: scroll;
+}
