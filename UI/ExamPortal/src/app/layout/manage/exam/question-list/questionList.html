@@ -240,24 +240,52 @@
         </button>
       </div>
       <div class="modal-body">
-        <pre class="core-pre  Merriweather" innerHTML="{{questionForm.controls.questionText.value}}">
+        <pre class="core-pre" innerHTML="{{questionForm.controls.questionText.value}}">
 
         </pre>
         <hr>
-        <div class="text-primary" *ngIf="singleSelectFlag">
-          <div class="" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i=index">
-            <input class="ml-3" type="radio">
-            <span class="mx-3">{{i+1}}.</span>
-            <span style="display:inline-flex" innerHTML="{{option.controls.singleSelectOptions.value}}"></span>
-          </div>
-        </div>
-        <div class="text-primary" *ngIf="multipleSelectFlag">
-          <div class="" *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i=index">
-            <input class="ml-3" type="checkbox">
-            <span class="mx-3">{{i+1}}.</span>
-            <span style="display:inline-flex" innerHTML="{{option.controls.multipleSelectOptions.value}}"></span>
-          </div>
-        </div>
+          <ng-container *ngIf="singleSelectFlag || multipleSelectFlag; else elseTemplate">
+            <div class="text-primary" *ngIf="singleSelectFlag">
+              <div class="" *ngFor="let option of questionForm.controls.obj_singleSelectOptions.controls; let i=index">
+                <!-- <input class="ml-3" type="radio" disabled="disabled">
+                <span class="mx-3">{{i+1}}.</span>
+                <span style="display:inline-flex" innerHTML="{{option.controls.singleSelectOptions.value}}"></span> -->
+                <div class="row no-gutters">
+                  <div class="col-1">
+                    <input type="radio" disabled="disabled">
+                    <span class="margin-left-1">{{i+1}}.</span>
+                  </div>
+                  <div class="col-11">
+                    <span innerHTML="{{option.controls.singleSelectOptions.value}}"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-primary" *ngIf="multipleSelectFlag">
+              <div class="" *ngFor="let option of questionForm.controls.obj_multiSelectOptions.controls; let i=index">
+                <!-- <input class="ml-3" type="checkbox" disabled="disabled">
+                <span class="mx-3">{{i+1}}.</span>
+                <span style="display:inline-flex" innerHTML="{{option.controls.multipleSelectOptions.value}}"></span> -->
+                <div class="row no-gutters">
+                  <div class="col-1">
+                    <input type="checkbox" disabled="disabled">
+                    <span class="margin-left-1">{{i+1}}.</span>
+                  </div>
+                  <div class="col-11">
+                    <span innerHTML="{{option.controls.multipleSelectOptions.value}}"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Ans.</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"
+                disabled="disabled">
+              </textarea>
+            </div>
+          </ng-template>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -283,13 +311,10 @@
           </pre>
           <div class="text-primary" *ngIf="item?.questionType == 0">
             <div class="" *ngFor="let option of item?.options; let i=index">
-              <!-- <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id="" value="{{option?.optionId}}">
-              <span class="mx-3">{{i+1}}.</span>
-              <span style="display:inline-flex" innerHTML="{{option.option}}"></span> -->
               <div class="row no-gutters">
                 <div class="col-1">
                   <input (change)="setOptionIdArray($event)" type="radio" name="{{currentQuestionQuestionId}}" id=""
-                    value="{{option?.optionId}}">
+                    value="{{option?.optionId}}" disabled="disabled">
                   <span class="margin-left-1">{{i+1}}.</span>
                 </div>
                 <div class="col-11">
@@ -300,14 +325,10 @@
           </div>
           <div class="text-primary" *ngIf="item?.questionType == 1">
             <div class="" *ngFor="let option of item?.options; let i=index">
-              <!-- <input type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)"
-                disabled>
-              <span class="mx-3">{{i+1}}.</span>
-              <span style="white-space: normal; box-sizing: border-box;display:inline-flex" innerHTML="{{option.option}}"></span> -->
               <div class="row no-gutters">
                 <div class="col-1">
                   <input type="checkbox" value="{{option?.optionId}}" name="{{currentQuestionQuestionId}}" (change)="setOptionIdArray($event)"
-                    disabled>
+                    disabled="disabled">
                   <span class="margin-left-1">{{i+1}}.</span>
                 </div>
                 <div class="col-11">
@@ -319,7 +340,8 @@
           <div class="" *ngIf="item?.questionType == 2">
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Ans.</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Enter your answer"
+                disabled="disabled"></textarea>
             </div>
           </div>
           <hr>
