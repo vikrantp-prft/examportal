@@ -113,8 +113,8 @@
             </div>
             <div class="form-group">
               <label for="lastName">Question</label>
-              <!-- <ejs-richtexteditor formControlName="questionText"></ejs-richtexteditor> -->
-              <textarea formControlName="questionText" class="question-textarea"></textarea>
+              <ejs-richtexteditor formControlName="questionText"></ejs-richtexteditor>
+              <!-- <textarea formControlName="questionText" class="question-textarea"></textarea> -->
               <!-- <input type="textarea" formControlName="questionText" class="form-control"> -->
               <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Minimum length should be 10 charecters">
               </app-field-error-display>
@@ -147,8 +147,8 @@
                     </div>
                     <div class="col-12">
                       <!-- <input type="text" formControlName="multipleSelectOptions" class="form-control form-control-sm"> -->
-                      <!-- <ejs-richtexteditor formControlName="multipleSelectOptions" class="mt-1"></ejs-richtexteditor> -->
-                      <textarea formControlName="multipleSelectOptions" class="mt-1"></textarea>
+                      <ejs-richtexteditor formControlName="multipleSelectOptions" class="mt-1"></ejs-richtexteditor>
+                      <!-- <textarea formControlName="multipleSelectOptions" class="mt-1"></textarea> -->
                     </div>
                     <!-- <div class="col-1">
                       <input type="checkbox" formControlName="multipleSelectOptionsCorrectAns" class="form-control">
@@ -189,8 +189,8 @@
                     <div class="col-12" [formGroupName]="i">
                       <div class="col-12">
                         <!-- <input type="text" formControlName="singleSelectOptions" class="form-control form-control-sm"> -->
-                        <!-- <ejs-richtexteditor formControlName="singleSelectOptions" class="mt-1"></ejs-richtexteditor> -->
-                        <textarea formControlName="singleSelectOptions" class="mt-1"></textarea>
+                        <ejs-richtexteditor formControlName="singleSelectOptions" class="mt-1"></ejs-richtexteditor>
+                        <!-- <textarea formControlName="singleSelectOptions" class="mt-1"></textarea> -->
                       </div>
                     </div>
                   </div>
