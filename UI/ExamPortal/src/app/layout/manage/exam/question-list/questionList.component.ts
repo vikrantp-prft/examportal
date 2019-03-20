@@ -93,7 +93,7 @@ export class questionListComponent implements OnInit {
       id: new FormControl(null),
       questionCategory: ["", [Validators.required]],
       questionType: ["", [Validators.required]],
-      questionText: [null, [Validators.required]],
+      questionText: [null, [Validators.required, Validators.minLength(10)]],
       examID: new FormControl(this.examID),
       singleSelectOptionsCorrectAns: new FormControl(null),
       obj_multiSelectOptions: this.fb.array([

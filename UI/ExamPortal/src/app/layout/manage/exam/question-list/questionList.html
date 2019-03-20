@@ -116,7 +116,7 @@
               <!-- <ejs-richtexteditor formControlName="questionText"></ejs-richtexteditor> -->
               <textarea formControlName="questionText" class="question-textarea"></textarea>
               <!-- <input type="textarea" formControlName="questionText" class="form-control"> -->
-              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Please enter Question">
+              <app-field-error-display [displayError]="isFieldValid(questionForm, 'questionText')" errorMsg="Minimum length should be 10 charecters">
               </app-field-error-display>
             </div>
             <label *ngIf="multipleSelectFlag || singleSelectFlag">Options</label>
