@@ -155,7 +155,7 @@ export class AddTraineeUserComponent implements OnInit {
       if (rs.statusCode === 200) {
         this.ngxService.stop();
         this.toastr.success('Trainee details added successfully!');
-        this.router.navigate(['user/traineelist']);
+        this.router.navigate(['/admin/user/traineelist']);
       } else {
         this.toastr.error('Failed to add Trainee details' + rs);
       }
