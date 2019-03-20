@@ -15,6 +15,7 @@ interface paginationModel {
 @Component({
   selector: "employee-list",
   templateUrl: "./employeelist.html",
+  styleUrls: ['./employeelist.component.scss'],
   providers: [commonService]
 })
 export class EmployeeListComponent implements OnInit {
@@ -31,6 +32,9 @@ export class EmployeeListComponent implements OnInit {
   public employeeList = [];
   public statusUrl: any;
   employeeData: any = { totalRecords: "" };
+
+  // for import file
+  filedata: string;
 
   // Constructor
 
@@ -235,5 +239,33 @@ export class EmployeeListComponent implements OnInit {
       } else {
       }
     });
+  }
+
+  fn_fileChange(event) {
+    const fileList: FileList = event.target.files;
+    this.filedata = event.target.files[0].name;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData = new FormData();
+
+      alert ('Inside fn_fileChange');
+      formData.append('uploadFile', file, file.name);
+      console.log(formData);
+      const apiUrl = 'api/Employee/ImportEmployees';
+      debugger;
+      this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(
+        (result: any) => {
+          const rs = result;
+           console.log(rs);
+          if (rs == true) {
+            this.toastr.success('Employees imported successfully!');
+            this.fn_GetEmployeeList();
+          }
+          else {
+            this.toastr.success('Failed to import Employees!');
+          }
+        }
+      );
+    }
   }
 }

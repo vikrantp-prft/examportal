@@ -1,6 +1,10 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
@@ -160,6 +164,56 @@ namespace PerftEvaluation.Api.Controllers.Users {
                 _logger.LogInformation ($"MESSAGE: {exception.Message}");
                 return BadRequest (CommonResponse.ExceptionResponse (exception));
             }
+        }
+
+
+                // POST api/Questions/ImportCsv
+        /// <summary>
+        /// Import CSV
+        /// </summary>
+        /// <param name="requestModel"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+
+        [Route("ImportEmployees")]
+        //[Consumes("multipart/form-data")]
+        public async Task<IActionResult> Post()
+        {
+            bool isSuccess = false;
+            StringValues formValues;
+            
+            try
+            {
+                #region Validate Model
+
+                if (Request.Form.Files.Count < 0 && Request.Form.Files[0] == null)
+                {
+                    return NoContent();
+                }
+
+                IFormFile file = Request.Form.Files[0];
+
+                if (!file.FileName.Contains(".xlsx"))
+                {
+                    return new UnsupportedMediaTypeResult();
+                }
+
+                #endregion Validate Model
+
+                using (Stream fileStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(fileStream);
+                    isSuccess = _employeeService.ExcelUpload(fileStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                // _logger.LogInformation($"MESSAGE: {ex.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(ex));
+            }
+
+            return Ok(isSuccess);
         }
 
         #endregion

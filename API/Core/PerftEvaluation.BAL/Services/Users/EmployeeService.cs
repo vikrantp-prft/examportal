@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using PerftEvaluation.BAL.Interfaces;
@@ -7,16 +10,20 @@ using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
+using static PerftEvaluation.DTO.Common.CommonEnums;
 
-namespace PerftEvaluation.BAL.Services {
+namespace PerftEvaluation.BAL.Services
+{
     /// <summary>
     /// Service for Users
     /// </summary>
-    public class EmployeeService : IEmployeeService {
+    public class EmployeeService : IEmployeeService
+    {
         #region Declaration
         protected readonly IEmployeeRepository _employeeRepository;
         protected readonly IMasterRepository _masterRepository;
         protected readonly IMasterService _masterService;
+        private readonly IQuestionsImportExport _importExportUtil;
 
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
@@ -25,11 +32,17 @@ namespace PerftEvaluation.BAL.Services {
         /// Class Constructor
         /// </summary>
         /// <param name="EmployeeRepository"></param>
-        public EmployeeService (IEmployeeRepository EmployeeRepository, IMasterService masterService, IMasterRepository masterRepository, IMapper mapper) {
+        public EmployeeService(IEmployeeRepository EmployeeRepository, 
+                               IMasterService masterService, 
+                               IMasterRepository masterRepository, 
+                               IMapper mapper,
+                               IQuestionsImportExport importExportUtil)
+        {
             this._employeeRepository = EmployeeRepository;
             this._mapper = mapper;
             this._masterRepository = masterRepository;
             this._masterService = masterService;
+            this._importExportUtil = importExportUtil;
         }
         #endregion
 
@@ -38,17 +51,19 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Employees List
         /// </summary>
         /// <value></value>
-        public ResponseModel GetEmployees (RequestModel requestModel) {
+        public ResponseModel GetEmployees(RequestModel requestModel)
+        {
 
             //Add filter query
-            var filteredEmployees = this._employeeRepository.GetEmployees ().AsQueryable ().SortAndFilter (requestModel, DbFilters.UserFilters);
+            var filteredEmployees = this._employeeRepository.GetEmployees().AsQueryable().SortAndFilter(requestModel, DbFilters.UserFilters);
             //Manage the pagnation & joins 
 
-            var pagedEmployees = filteredEmployees.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var pagedEmployees = filteredEmployees.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
 
-            List<EmployeesDTO> employeeJoin = new List<EmployeesDTO> ();
-            foreach (var item in pagedEmployees) {
-                EmployeesDTO employeesDTO = new EmployeesDTO ();
+            List<EmployeesDTO> employeeJoin = new List<EmployeesDTO>();
+            foreach (var item in pagedEmployees)
+            {
+                EmployeesDTO employeesDTO = new EmployeesDTO();
                 employeesDTO.Id = item.Id;
                 employeesDTO.FirstName = item.FirstName;
                 employeesDTO.MiddleName = item.MiddleName;
@@ -70,7 +85,7 @@ namespace PerftEvaluation.BAL.Services {
                 employeesDTO.CurrentStateId = item.CurrentStateId;
                 employeesDTO.Mobile = item.Mobile;
                 employeesDTO.TeamId = item.TeamId;
-                employeesDTO.Team = item.TeamId != null ? _masterService.GetMasterById (item.TeamId) : null;
+                employeesDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
                 employeesDTO.Note = item.Note;
                 employeesDTO.IsDeleted = item.IsDeleted;
                 //employeesDTO.IsEmployee = item.IsEmployee;
@@ -79,20 +94,21 @@ namespace PerftEvaluation.BAL.Services {
                 employeesDTO.IsAdmin = item.IsAdmin;
                 employeesDTO.IsContributor = item.IsContributor;
                 employeesDTO.UserType = item.UserType;
-                employeesDTO.EducationDetails = item.EducationDetails.Select (x => new EducationDetailsDTO () {
+                employeesDTO.EducationDetails = item.EducationDetails.Select(x => new EducationDetailsDTO()
+                {
                     EducationDetailsId = x.EducationDetailsId,
-                        CourseId = x.CourseId,
-                        Course = x.CourseId != null ? _masterService.GetMasterById (x.CourseId) : null,
-                        Institution = x.Institution,
-                        YearOfPassing = x.YearOfPassing,
-                        Percentage = x.Percentage
-                }).ToList ();
+                    CourseId = x.CourseId,
+                    Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
+                    Institution = x.Institution,
+                    YearOfPassing = x.YearOfPassing,
+                    Percentage = x.Percentage
+                }).ToList();
 
-                employeeJoin.Add (employeesDTO);
+                employeeJoin.Add(employeesDTO);
             }
 
             //return object
-            return CommonResponse.OkResponse (requestModel, employeeJoin, (filteredEmployees.Count () < 100 ? filteredEmployees.Count () : 100));
+            return CommonResponse.OkResponse(requestModel, employeeJoin, (filteredEmployees.Count() < 100 ? filteredEmployees.Count() : 100));
         }
 
         /// <summary>
@@ -100,11 +116,12 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="employeesDTO"></param>
         /// <returns></returns>
-        public RequestModel SaveEmployee (EmployeesDTO employeesDTO) {
-            Users users = new Users ();
+        public RequestModel SaveEmployee(EmployeesDTO employeesDTO)
+        {
+            Users users = new Users();
             RequestModel requestModel = new RequestModel();
-            users = this._mapper.Map<Users> (employeesDTO);
-            requestModel.Id = this._employeeRepository.SaveEmployee (users);
+            users = this._mapper.Map<Users>(employeesDTO);
+            requestModel.Id = this._employeeRepository.SaveEmployee(users);
             return requestModel;
         }
 
@@ -113,10 +130,11 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public EmployeesDTO GetEmployeeById (string Id) {
-            var employee = this._employeeRepository.GetEmployeeById (Id);
+        public EmployeesDTO GetEmployeeById(string Id)
+        {
+            var employee = this._employeeRepository.GetEmployeeById(Id);
 
-            EmployeesDTO employeesDTO = new EmployeesDTO ();
+            EmployeesDTO employeesDTO = new EmployeesDTO();
             employeesDTO.Id = employee.Id;
             employeesDTO.FirstName = employee.FirstName;
             employeesDTO.MiddleName = employee.MiddleName;
@@ -138,7 +156,7 @@ namespace PerftEvaluation.BAL.Services {
             employeesDTO.CurrentStateId = employee.CurrentStateId;
             employeesDTO.Mobile = employee.Mobile;
             employeesDTO.TeamId = employee.TeamId;
-            employeesDTO.Team = employee.TeamId != null ? _masterService.GetMasterById (employee.TeamId) : null;
+            employeesDTO.Team = employee.TeamId != null ? _masterService.GetMasterById(employee.TeamId) : null;
             employeesDTO.Note = employee.Note;
             employeesDTO.IsDeleted = employee.IsDeleted;
             employeesDTO.IsAdmin = employee.IsAdmin;
@@ -147,14 +165,15 @@ namespace PerftEvaluation.BAL.Services {
             //employeesDTO.IsEmployee = employee.IsEmployee;
             employeesDTO.CreatedDate = employee.CreatedDate;
             employeesDTO.ModifiedDate = employee.ModifiedDate;
-            employeesDTO.EducationDetails = employee.EducationDetails.Select (x => new EducationDetailsDTO () {
+            employeesDTO.EducationDetails = employee.EducationDetails.Select(x => new EducationDetailsDTO()
+            {
                 EducationDetailsId = x.EducationDetailsId,
-                    CourseId = x.CourseId,
-                    Course = x.CourseId != null ? _masterService.GetMasterById (x.CourseId) : null,
-                    Institution = x.Institution,
-                    YearOfPassing = x.YearOfPassing,
-                    Percentage = x.Percentage
-            }).ToList ();
+                CourseId = x.CourseId,
+                Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
+                Institution = x.Institution,
+                YearOfPassing = x.YearOfPassing,
+                Percentage = x.Percentage
+            }).ToList();
 
             return employeesDTO;
         }
@@ -164,8 +183,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool ActivateEmployee (string employeeId) {
-            return this._employeeRepository.ActiveEmployee (employeeId);
+        public bool ActivateEmployee(string employeeId)
+        {
+            return this._employeeRepository.ActiveEmployee(employeeId);
         }
 
         /// <summary>
@@ -173,8 +193,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool InactivateEmployee (string employeeId) {
-            return this._employeeRepository.InactivateEmployee (employeeId);
+        public bool InactivateEmployee(string employeeId)
+        {
+            return this._employeeRepository.InactivateEmployee(employeeId);
         }
 
         /// <summary>
@@ -182,16 +203,109 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public bool DeleteEmployee (string employeeId) {
-            return this._employeeRepository.DeleteEmployee (employeeId);
+        public bool DeleteEmployee(string employeeId)
+        {
+            return this._employeeRepository.DeleteEmployee(employeeId);
         }
 
         /// <summary>
         /// Update Employee record
         /// </summary>
         /// <returns></returns>
-        public bool UpdateEmployee (EmployeesDTO employeesDTO) {
-            return this._employeeRepository.UpdateEmployee (this._mapper.Map<Users> (employeesDTO));
+        public bool UpdateEmployee(EmployeesDTO employeesDTO)
+        {
+            return this._employeeRepository.UpdateEmployee(this._mapper.Map<Users>(employeesDTO));
+        }
+
+
+        /// <summary>
+        /// Uploads bulk questions to database.
+        /// </summary>
+        /// <param name="fileStream">stream of questions file.</param>
+        /// <param name="examId">Exam agains which all the questions should be uploaded.</param>
+        /// <returns></returns>
+        public bool ExcelUpload(Stream fileStream)
+        {
+            bool isSuccess = false;
+            DataSet ds = _importExportUtil.ReadExcel(fileStream, false);
+
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    ImportEmployeesDTO importEmployeesDTO = new ImportEmployeesDTO();
+                    importEmployeesDTO.FirstName = row["FirstName"].ToString();
+                    importEmployeesDTO.MiddleName = row["MiddleName"].ToString();
+                    importEmployeesDTO.LastName = row["LastName"].ToString();
+                    importEmployeesDTO.Email = row["Email"].ToString();
+                    importEmployeesDTO.Address1 = row["Address 1"].ToString();
+                    importEmployeesDTO.Address2 = row["Address 2"].ToString();
+                    importEmployeesDTO.City = row["City"].ToString();
+                    importEmployeesDTO.StateId = GetStateIdFromStringValue(row["State"].ToString());
+                    importEmployeesDTO.Pincode = row["Pincode"].ToString();
+                    importEmployeesDTO.Mobile = row["Mobile"].ToString();
+                    importEmployeesDTO.TeamId = GetStateIdFromStringValue(row["Team"].ToString());
+                    importEmployeesDTO.IsActive = true;
+                    importEmployeesDTO.IsDeleted = false;
+
+                    
+
+                    // ToDO : Move validation code to some generic method. 
+
+                    // Validate the model explicitly before storing question to database
+                    var context = new System.ComponentModel.DataAnnotations.ValidationContext(importEmployeesDTO);
+                    var results = new List<ValidationResult>();
+
+                    var isValid = Validator.TryValidateObject(importEmployeesDTO, context, results);
+
+                    if (!isValid)
+                    {
+                        string failedResult = String.Empty;
+
+                        // Iterate through all the validation errors from model based on data annotations.
+                        foreach (var item in results)
+                        {
+                            failedResult = failedResult + item.ErrorMessage + "\n";
+                        }
+
+                        throw new DataException("Failed to validate model annotations for : " + failedResult);
+                    }
+                    
+                    var importEmployee = SaveImportedEmployee(importEmployeesDTO);
+                    if(importEmployee != null){
+                        isSuccess = true;
+                    }    
+                }
+            }
+
+            return isSuccess;
+        }
+
+        private string GetStateIdFromStringValue(string value)
+        {
+            MastersDTO stateMaster = value != null ? _masterService.GetMasterByName(value) : null;
+
+            // throw exception if the category from excel does not exist in database. 
+            if (stateMaster == null)
+            {
+                throw new KeyNotFoundException($"Category with Id \"{value}\" not found.");
+            }
+            return stateMaster.Id;
+        }
+
+
+        /// <summary>
+        /// Save Employee Detail
+        /// </summary>
+        /// <param name="employeesDTO"></param>
+        /// <returns></returns>
+        public RequestModel SaveImportedEmployee(ImportEmployeesDTO importEmployees)
+        {
+            Users users = new Users();
+            RequestModel requestModel = new RequestModel();
+            users = this._mapper.Map<Users>(importEmployees);
+            requestModel.Id = this._employeeRepository.SaveEmployee(users);
+            return requestModel;
         }
         #endregion
 

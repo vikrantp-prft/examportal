@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
@@ -56,5 +57,13 @@ namespace PerftEvaluation.BAL.Interfaces {
         /// <param name="userId"></param>
         /// <returns></returns>
         bool DeleteEmployee (string employeeId);
+
+        /// <summary>
+        /// Uploads the bulk of questions information from file to database for the mentioned exam 
+        /// </summary>
+        /// <param name="fileStream">Binary stream of xlsx file with the redefined template.</param>
+        /// <param name="examId">Id of exam record against which these questions will be uploaded.</param>
+        /// <returns></returns>
+        bool ExcelUpload(Stream fileStream);
     }
 }

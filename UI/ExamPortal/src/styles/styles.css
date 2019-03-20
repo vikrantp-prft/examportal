@@ -126,3 +126,7 @@ pre {
   max-height: 350px;
    overflow-y: scroll;
 }
+
+.col-md-2 {
+  text-align: center;
+}
