@@ -8,6 +8,7 @@ const routes: Routes = [
     { path: 'admin', loadChildren: './layout/layout.module#LayoutModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
     { path: '', loadChildren: './user-exam/exam.module#ExamModule' },
+    //{ path: '', loadChildren: './contributor-user/contributor-user.module#ContributorModule'},
     { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
     { path: 'error', loadChildren: './server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: './access-denied/access-denied.module#AccessDeniedModule' },

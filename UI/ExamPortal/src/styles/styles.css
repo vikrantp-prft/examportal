@@ -122,10 +122,11 @@ pre {
   white-space: pre-wrap;
 }
 
-.card-body .exam-questions-list{
+/* .card-body .exam-questions-list{
   max-height: 350px;
    overflow-y: scroll;
 }
+*/
 
 .col-md-2 {
   text-align: center;
