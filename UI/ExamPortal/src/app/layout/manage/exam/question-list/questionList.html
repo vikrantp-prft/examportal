@@ -7,22 +7,34 @@
             Questions
           </h1>
           <div class="back-btn">
-            <button type="reset" class="btn btn-sm btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
-              Add
+            <button type="reset" class="btn btn-md btn-primary mr-2" title="Add new question" (click)="loadQuestionForm()">
+              <!-- Add -->
+              <i class="fa fa-plus"></i>
             </button>
-            <button class="btn btn-primary btn-sm mr-2" (click)=" getPreviewQuestionList()" title="Preview All Questions"
-              data-toggle="modal" data-target="#previewAllModal">Preview</button>
-            <div class="upload-btn-wrapper">
-              <button class="btn btn-sm btn-primary " title="Import Question">Import</button>
-              <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:72px;" />
+            <button class="btn btn-primary btn-md mr-2" (click)=" getPreviewQuestionList()" title="Preview All Questions"
+              data-toggle="modal" data-target="#previewAllModal">
+              <!-- Preview -->
+              <i class="fa fa-eye"></i>
+            </button>
+            <div class="upload-btn-wrapper" title="Import Question">
+              <button class="btn btn-md btn-primary " title="Import Question">
+                <i class="fa fa-upload"></i>
+              </button>
+              <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:41px;" />
             </div>
-            <button [routerLink]="['/admin/manage/examlist']" class="btn btn-sm btn-primary ml-2"><span><i class="fa fa-arrow-left"></i></span>
-              Back
+            <button title="Back" [routerLink]="['/admin/manage/examlist']" class="btn btn-md btn-primary ml-2">
+              <span>
+                <i class="fa fa-arrow-left"></i>
+              </span>
+              <!-- Back -->
             </button>
             <!-- <button class="btn btn-sm btn-primary ml-2" title="Download Template">
               
             </button> -->
-            <a class="btn btn-sm btn-primary ml-2" href="../../../../../assets/Question-template/QuestionFormat.xlsx" download>Download</a>
+            <a title="Download Template" class="btn btn-md btn-primary ml-2" href="../../../../../assets/Question-template/QuestionFormat.xlsx" download>
+              <!-- Download -->
+              <i class="fa fa-download"></i>
+            </a>
           </div>
         </div>
         <div class="card-body">
