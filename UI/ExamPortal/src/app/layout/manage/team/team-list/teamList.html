@@ -39,10 +39,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let team of teamList; let i = index">
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{(teamModel.pageNumber-1)*10 + i +1 }}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{team.name}}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{team.description}}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{(teamModel.pageNumber-1)*10 + i +1 }}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{team.name}}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">{{team.description}}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetTeamById(team.id)">
               <i class="fa" [ngClass]="{'fa-check text-success': team.isActive, 'fa-times text-danger': !team.isActive}"
                 aria-hidden="true">
               </i>

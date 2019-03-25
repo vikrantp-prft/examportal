@@ -41,10 +41,10 @@
         <tbody>
           <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let exam of examList; let i = index">
-            <td [routerLink]="['/admin/manage/editExam', exam.id]">{{(params.pageNumber-1)*10 + i +1 }}</td>
-            <td [routerLink]="['/admin/manage/editExam', exam.id]">{{exam.title | slice:0:35}}</td>
-            <td [routerLink]="['/admin/manage/editExam', exam.id]">{{exam.team==null? 'All':exam.team.name}}</td>
-            <td [routerLink]="['/admin/manage/editExam', exam.id]">{{exam.examDurationHours}} : {{exam.examDurationMinutes}} </td>
+            <td class="td-cursor" [routerLink]="['/admin/manage/editExam', exam.id]">{{(params.pageNumber-1)*10 + i +1 }}</td>
+            <td class="td-cursor" [routerLink]="['/admin/manage/editExam', exam.id]">{{exam.title | slice:0:35}}</td>
+            <td class="td-cursor" [routerLink]="['/admin/manage/editExam', exam.id]">{{exam.team==null? 'All':exam.team.name}}</td>
+            <td class="td-cursor" [routerLink]="['/admin/manage/editExam', exam.id]">{{exam.examDurationHours}} : {{exam.examDurationMinutes}} </td>
             <td>
               <button class="btn btn-md " title="View Questions" [routerLink]="['/admin/manage/questionList', exam.id]"
                 [routerLinkActive]="['router-link-active']" type="button" rel="tooltip">
