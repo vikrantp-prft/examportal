@@ -44,10 +44,10 @@
         <tbody>
           <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let degree of degreeList; let i = index">
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{(degreeModel.pageNumber-1)*10 + i +1 }}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.name | slice:0:20}}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.description | slice:0:25}}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{(degreeModel.pageNumber-1)*10 + i +1 }}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.name | slice:0:20}}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">{{degree.description | slice:0:25}}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDegreeById(degree.id)">
               <i class="fa" [ngClass]="{'fa-check text-success': degree.isActive, 'fa-times text-danger': !degree.isActive}"
                 aria-hidden="true">
               </i>

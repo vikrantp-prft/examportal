@@ -16,6 +16,7 @@ interface paginationModel {
 @Component({
   selector: 'degree-list',
   templateUrl: './degreeList.html',
+  styleUrls: ['./degreeList.component.css'],
   providers: [commonService]
 })
 export class DegreeListComponent implements OnInit {

@@ -45,21 +45,18 @@
                 <tbody>
                     <ngx-ui-loader></ngx-ui-loader>
                     <tr *ngFor="let designation of designationList; let i = index">
-                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{(designationModel.pageNumber-1)*10
+                        <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{(designationModel.pageNumber-1)*10
                             + i +1 }}</td>
-                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{
+                        <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{
                             designation.name }}</td>
-                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{
+                        <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">{{
                             designation.description}}</td>
-                        <td data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">
+                        <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetDesignationById(designation.id)">
                             <i class="fa" [ngClass]="{'fa-check text-success': designation.isActive, 'fa-times text-danger': !designation.isActive}"
                                 aria-hidden="true">
                             </i>
                         </td>
                         <td>
-                            <!-- <button title="Edit" type="button" class="btn btn-md" rel="tooltip" [routerLink]="[ '/manage/editDesignation', designation.id ]">
-                                <i class="fa fa-pencil-square-o text-dark" aria-hidden="true"></i>
-                            </button> -->
                             <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(designation.id, designation.isActive)">
                                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': designation.isActive, 'fa-toggle-off text-danger': !designation.isActive}"
                                     aria-hidden="true"></i>
