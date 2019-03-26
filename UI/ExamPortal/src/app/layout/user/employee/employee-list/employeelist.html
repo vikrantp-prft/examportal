@@ -56,15 +56,15 @@
             <tbody>
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let emp of employeeList; let i = index">
-                <td [routerLink]="['/admin/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
-                <td [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
-                <td [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.email}}</td>
-                <td [routerLink]="['/admin/user/updateemployee', emp.id]">
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.email}}</td>
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">
                   <div *ngIf="emp.team!=null">
                     {{emp.team.name}}
                   </div>
                 </td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">
+                <td class="td-cursor" [routerLink]="['/user/updateemployee', emp.id]">
                   <i class="fa" [ngClass]="{'fa-check text-success': emp.isActive, 'fa-times text-danger': !emp.isActive}"
                     aria-hidden="true">
                   </i>
