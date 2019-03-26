@@ -22,12 +22,6 @@
               </button>
               <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:41px;" />
             </div>
-            <button title="Back" [routerLink]="['/admin/manage/examlist']" class="btn btn-md btn-primary ml-2">
-              <span>
-                <i class="fa fa-arrow-left"></i>
-              </span>
-              <!-- Back -->
-            </button>
             <!-- <button class="btn btn-sm btn-primary ml-2" title="Download Template">
               
             </button> -->
@@ -35,6 +29,12 @@
               <!-- Download -->
               <i class="fa fa-download"></i>
             </a>
+            <button title="Back" [routerLink]="['/admin/manage/examlist']" class="btn btn-md btn-primary ml-2">
+              <span>
+                <i class="fa fa-arrow-left"></i>
+              </span>
+              <!-- Back -->
+            </button>
           </div>
         </div>
         <div class="card-body">

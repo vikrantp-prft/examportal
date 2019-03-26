@@ -190,6 +190,7 @@ export class questionListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionList = rs.data;
+        console.log(this.questionList);
         this.ngxService.stop();
         this.totalItems = rs.totalRecords;
       } else {
