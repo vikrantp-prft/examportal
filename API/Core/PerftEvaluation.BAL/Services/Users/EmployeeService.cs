@@ -32,9 +32,9 @@ namespace PerftEvaluation.BAL.Services
         /// Class Constructor
         /// </summary>
         /// <param name="EmployeeRepository"></param>
-        public EmployeeService(IEmployeeRepository EmployeeRepository, 
-                               IMasterService masterService, 
-                               IMasterRepository masterRepository, 
+        public EmployeeService(IEmployeeRepository EmployeeRepository,
+                               IMasterService masterService,
+                               IMasterRepository masterRepository,
                                IMapper mapper,
                                IQuestionsImportExport importExportUtil)
         {
@@ -94,16 +94,7 @@ namespace PerftEvaluation.BAL.Services
                 employeesDTO.IsAdmin = item.IsAdmin;
                 employeesDTO.IsContributor = item.IsContributor;
                 employeesDTO.UserType = item.UserType;
-                employeesDTO.EducationDetails = item.EducationDetails.Select(x => new EducationDetailsDTO()
-                {
-                    EducationDetailsId = x.EducationDetailsId,
-                    CourseId = x.CourseId,
-                    Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
-                    Institution = x.Institution,
-                    YearOfPassing = x.YearOfPassing,
-                    Percentage = x.Percentage
-                }).ToList();
-
+                employeesDTO.EducationDetails = GetEducationDetails(item.Id);
                 employeeJoin.Add(employeesDTO);
             }
 
@@ -165,15 +156,7 @@ namespace PerftEvaluation.BAL.Services
             //employeesDTO.IsEmployee = employee.IsEmployee;
             employeesDTO.CreatedDate = employee.CreatedDate;
             employeesDTO.ModifiedDate = employee.ModifiedDate;
-            employeesDTO.EducationDetails = employee.EducationDetails.Select(x => new EducationDetailsDTO()
-            {
-                EducationDetailsId = x.EducationDetailsId,
-                CourseId = x.CourseId,
-                Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
-                Institution = x.Institution,
-                YearOfPassing = x.YearOfPassing,
-                Percentage = x.Percentage
-            }).ToList();
+            employeesDTO.EducationDetails = GetEducationDetails(employee.Id);
 
             return employeesDTO;
         }
@@ -219,93 +202,32 @@ namespace PerftEvaluation.BAL.Services
 
 
         /// <summary>
-        /// Uploads bulk questions to database.
+        /// Get Education Details of Employees
         /// </summary>
-        /// <param name="fileStream">stream of questions file.</param>
-        /// <param name="examId">Exam agains which all the questions should be uploaded.</param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        public bool ExcelUpload(Stream fileStream)
+        public List<EducationDetailsDTO> GetEducationDetails(string userId)
         {
-            bool isSuccess = false;
-            DataSet ds = _importExportUtil.ReadExcel(fileStream, false);
+            var employees = this._employeeRepository.GetEmployeeById(userId);
 
-            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            EmployeesDTO employeeDTO = new EmployeesDTO();
+
+            var employeesEducations = employees.EducationDetails;
+
+            if (employeesEducations != null)
             {
-                foreach (DataRow row in ds.Tables[0].Rows)
+                return employeeDTO.EducationDetails = employeesEducations.Select(x => new EducationDetailsDTO()
                 {
-                    ImportEmployeesDTO importEmployeesDTO = new ImportEmployeesDTO();
-                    importEmployeesDTO.FirstName = row["FirstName"].ToString();
-                    importEmployeesDTO.MiddleName = row["MiddleName"].ToString();
-                    importEmployeesDTO.LastName = row["LastName"].ToString();
-                    importEmployeesDTO.Email = row["Email"].ToString();
-                    importEmployeesDTO.Address1 = row["Address 1"].ToString();
-                    importEmployeesDTO.Address2 = row["Address 2"].ToString();
-                    importEmployeesDTO.City = row["City"].ToString();
-                    importEmployeesDTO.StateId = GetStateIdFromStringValue(row["State"].ToString());
-                    importEmployeesDTO.Pincode = row["Pincode"].ToString();
-                    importEmployeesDTO.Mobile = row["Mobile"].ToString();
-                    importEmployeesDTO.TeamId = GetStateIdFromStringValue(row["Team"].ToString());
-                    importEmployeesDTO.IsActive = true;
-                    importEmployeesDTO.IsDeleted = false;
-
-                    
-
-                    // ToDO : Move validation code to some generic method. 
-
-                    // Validate the model explicitly before storing question to database
-                    var context = new System.ComponentModel.DataAnnotations.ValidationContext(importEmployeesDTO);
-                    var results = new List<ValidationResult>();
-
-                    var isValid = Validator.TryValidateObject(importEmployeesDTO, context, results);
-
-                    if (!isValid)
-                    {
-                        string failedResult = String.Empty;
-
-                        // Iterate through all the validation errors from model based on data annotations.
-                        foreach (var item in results)
-                        {
-                            failedResult = failedResult + item.ErrorMessage + "\n";
-                        }
-
-                        throw new DataException("Failed to validate model annotations for : " + failedResult);
-                    }
-                    
-                    var importEmployee = SaveImportedEmployee(importEmployeesDTO);
-                    if(importEmployee != null){
-                        isSuccess = true;
-                    }    
-                }
+                    EducationDetailsId = x.EducationDetailsId,
+                    CourseId = x.CourseId,
+                    Course = x.CourseId != null ? _masterService.GetMasterById(x.CourseId) : null,
+                    Institution = x.Institution,
+                    YearOfPassing = x.YearOfPassing,
+                    Percentage = x.Percentage
+                }).ToList();
             }
+            else return null;
 
-            return isSuccess;
-        }
-
-        private string GetStateIdFromStringValue(string value)
-        {
-            MastersDTO stateMaster = value != null ? _masterService.GetMasterByName(value) : null;
-
-            // throw exception if the category from excel does not exist in database. 
-            if (stateMaster == null)
-            {
-                throw new KeyNotFoundException($"Category with Id \"{value}\" not found.");
-            }
-            return stateMaster.Id;
-        }
-
-
-        /// <summary>
-        /// Save Employee Detail
-        /// </summary>
-        /// <param name="employeesDTO"></param>
-        /// <returns></returns>
-        public RequestModel SaveImportedEmployee(ImportEmployeesDTO importEmployees)
-        {
-            Users users = new Users();
-            RequestModel requestModel = new RequestModel();
-            users = this._mapper.Map<Users>(importEmployees);
-            requestModel.Id = this._employeeRepository.SaveEmployee(users);
-            return requestModel;
         }
         #endregion
 

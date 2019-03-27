@@ -37,9 +37,18 @@ namespace PerftEvaluation.DTO.Dtos
         [Required]
         public string Pincode { get; set; }
 
+        public string CurrentAddress1 { get; set; }
+        public string CurrentAddress2 { get; set; }
+        public string CurrentCity { get; set; }
+        public string CurrentStateId { get; set; }
+        public string CurrentPincode { get; set; }
 
         [Required]
         public string Mobile { get; set; }
+
+        public string Note { get; set; }
+
+         public string[] Interest { get; set; }
 
 
         [Required]
@@ -48,7 +57,5 @@ namespace PerftEvaluation.DTO.Dtos
 
         public bool IsDeleted { get; set; }
 
-        // [Required]
-        // public UsersEnum UserType { get; set; }
     }
 }

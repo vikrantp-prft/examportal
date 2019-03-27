@@ -55,13 +55,13 @@ namespace PerftEvaluation.DTO.Dtos
 
         public List<EducationsDetailsDTO> EducationDetails;
 
-        public List<JobExperienceDTO> JobExperiences;
+        //public List<JobExperienceDTO> JobExperiences;
 
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        [Required]
+        //[Required]
         public UsersEnum UserType { get; set; }
     }
 
@@ -79,16 +79,16 @@ namespace PerftEvaluation.DTO.Dtos
         public double Percentage { get; set; }
     }
 
-    public class JobExperienceDTO
-    {
-        public string JobsExperienceId { get; set; }
+    // public class JobExperienceDTO
+    // {
+    //     public string JobsExperienceId { get; set; }
 
-        public int YearsOfExperience { get; set; }
+    //     public int YearsOfExperience { get; set; }
 
-        public string CompanyName { get; set; }
+    //     public string CompanyName { get; set; }
 
-        public DateTime StartDate { get; set; }
+    //     public DateTime StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
-    }
+    //     public DateTime EndDate { get; set; }
+    // }
 }

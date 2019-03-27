@@ -15,7 +15,8 @@ interface paginationModel {
 
 @Component({
   selector: 'trainee-list',
-  templateUrl: './traineeList.html',
+  templateUrl: './traineeList.html', 
+  styleUrls: ['./trainee-list.component.scss'],
   providers: [commonService]
 
 })
@@ -39,6 +40,9 @@ export class TraineeListComponent implements OnInit {
   public totalItems = 0;
   public traineeList = [];
   public statusUrl: any;
+
+  // for import file
+  filedata: string;
 
   constructor(private ngxService: NgxUiLoaderService,
     public router: Router,
@@ -158,5 +162,29 @@ export class TraineeListComponent implements OnInit {
         this.toastr.error("Failed to delete aspirant details");
       }
     });
+  }
+
+  //function to import employees
+  fn_fileChange(event) {
+    const fileList: FileList = event.target.files;
+    this.filedata = event.target.files[0].name;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData = new FormData();
+      formData.append('uploadFile', file, file.name);
+      const apiUrl = 'api/Aspirants/ImportAspirants';
+      this.CommonService.fn_UploadImage(apiUrl, formData).subscribe(
+        (result: any) => {
+          const rs = result;
+          if (rs == true) {
+            this.toastr.success('Aspirants imported successfully!');
+            this.fn_GetTraineeList();
+          }
+          else {
+            this.toastr.success('Failed to import Aspirants!');
+          }
+        }
+      );
+    }
   }
 }
