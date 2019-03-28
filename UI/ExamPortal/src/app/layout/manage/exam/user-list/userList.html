@@ -23,15 +23,22 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-md btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <div class="col-md-3">
+                        <!-- <button type="button" class="btn btn-md btn-primary dropdown-toggle" data-toggle="dropdown">
                             Check List
                         </button>
                         <div class="dropdown-menu">
                             <button class="dropdown-item" type="button">Checked all</button>
                             <button class="dropdown-item" type="button">Unchecked all</button>
-                        </div>
+                        </div> -->                     
+                                <select class="custom-select" (change)="searchTeam($event)">
+                                  <option value="" disabled selected>Team</option>
+                                  <option *ngFor="let team of teamArray" value={{team.id}}>
+                                    {{team.name}}
+                                  </option>
+                                </select>
                     </div>
+                    <div class="col-md-4"></div>
                     <div class="col-md-3">
                         <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach"
                             placeholder="Search" class="form-control" />
@@ -45,7 +52,8 @@
                 <table class="table table-hover table-striped  table-bordered">
                     <thead>
                         <tr>
-                            <th style="width:125px;">Assign Exam</th>
+                            <th style="width:140px;">Assign Exam
+                            <input type="checkbox" name="selectAll" (change)="fn_isSelect($event)"></th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Team</th>
@@ -57,7 +65,7 @@
                         <tr *ngFor="let user of userList; let i = index">
                             <td style="text-align:center;">
                                 <div>
-                                    <input type="checkbox" value="isAssign" [checked]="user.isExamAssigned" (change)="fn_isAssign($event,user.id)">
+                                    <input type="checkbox" value="isAssign" [checked]="((user.isExamAssigned)||(selectAll))" (change)="fn_isAssign($event,user.id)">
                                 </div>
                             </td>
                             <td>{{user.firstName}} {{user.lastName}}</td>

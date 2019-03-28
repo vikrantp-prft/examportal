@@ -22,7 +22,7 @@ export class examAddUpdateComponent implements OnInit {
   public teamUrl = 'api/Dropdown/Teams';
   constructor(public router: Router, private fb: FormBuilder, private commonService: commonService, private toastr: ToastrService) {
     this.createForm();
-
+   
   }
 
   createForm() {
@@ -35,6 +35,8 @@ export class examAddUpdateComponent implements OnInit {
       passingMarks: [null, [Validators.required, Validators.pattern(appConfig.pattern.IVR_NUMBER)]],
       fromDate: [null, [Validators.required]],
       toDate: [null, [Validators.required]],
+      startTime: new FormControl(),
+      endTime: new FormControl(),
       isActive: new FormControl(true),
       showResultInFront: new FormControl(false),
       shuffleQuestions: new FormControl(false),
@@ -47,6 +49,8 @@ export class examAddUpdateComponent implements OnInit {
 
 
   onSubmit = function (formData) {
+    //console.log(formData);
+
     if (this.fn_validateDuration()) {
       if (this.addExamForm.valid) {
         this.commonService.fn_PostWithData(formData, this.url).subscribe((result: any) => {

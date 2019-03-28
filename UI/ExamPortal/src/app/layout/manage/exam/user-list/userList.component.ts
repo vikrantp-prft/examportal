@@ -20,6 +20,8 @@ export class UserListComponent implements OnInit {
   };
   public userList: any[];
   public examID: any;
+  public selectAll: boolean;
+  public index: any;
 
   // Declaration
   public params: any = {
@@ -34,6 +36,7 @@ export class UserListComponent implements OnInit {
   public recordno = 0;
   public totalItems = 0;
   public examList = [];
+  public teamArray: any;
 
   // Constructor
   constructor(
@@ -53,6 +56,7 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.userModel.id = this.examID;
     this.fn_GetUserList();
+    this.fn_getTeam();
   }
 
   // Function for  pagination
@@ -67,6 +71,39 @@ export class UserListComponent implements OnInit {
     this.userModel.pageNumber = parseInt(event.page);
     this.userModel.pageSize = parseInt(event.itemsPerPage);
     this.fn_GetUserList();
+  }
+
+   // Searching
+   searchRecord(event: any): void {
+    if (event.keyCode == 13) {
+      this.userModel.pageNumber = 1;
+      this.userModel.pageSize = 10;
+      this.userModel.filter = event.target.value;
+      this.fn_GetUserList();
+    }
+  }
+
+  searchTeam(event: any): void {
+      this.userModel.pageNumber = 1;
+      this.userModel.pageSize = 10;
+      this.userModel.filter = event.target.value;
+      console.log(event.target.value);
+      this.fn_GetUserList();
+  }
+
+   // function to get teams
+   fn_getTeam() {
+    const teamUrl = "api/Dropdown/Teams";
+    this.ngxService.start();
+    this.CommonService.fn_Get(teamUrl).subscribe((result: any) => {
+      const teamResult = result;
+      if (teamResult.statusCode === 200) {
+        this.teamArray = teamResult.data;
+        this.ngxService.stop();
+      } else {
+        this.teamArray = null;
+      }
+    });
   }
 
   // Function to get list of users
@@ -112,6 +149,7 @@ export class UserListComponent implements OnInit {
   fn_examAssignment(data, url) {
     this.CommonService.fn_PostWithData(data, url).subscribe((result: any) => {
       const rs = result;
+      console.log(rs)
       if (rs.statusCode == 200) {
         if (data[0].isActive) this.toastr.success("Exam assigned successfully!");
         else this.toastr.success("Exam unassigned successfully!");
@@ -119,5 +157,42 @@ export class UserListComponent implements OnInit {
         this.toastr.error("Failed to assign exam");
       }
     });
+  }
+ 
+  // assign exam to all users (selected users)
+  fn_isSelect(event)
+  {
+    const examAssignedUrl = "api/AssignedExams/ExamAssignment";
+    if (event.target.checked) {
+      console.log(this.userList);
+      this.selectAll = true;
+      const assignExam = [];
+      for (const user of this.userList) {
+        console.log(user);
+        assignExam.push({
+          examId: this.examID,
+          userId: user.id,
+          isAttempted: false,
+          isActive: true
+        });
+      }
+      console.log(assignExam);
+      this.fn_examAssignment(assignExam, examAssignedUrl);
+    }
+    else {
+      this.selectAll = false;
+      const unassignExam = [];
+      for (const user of this.userList) {
+        console.log(user);
+        unassignExam.push({
+          examId: this.examID,
+          userId: user.id,
+          isAttempted: false,
+          isActive: false
+        });
+      }
+      console.log(unassignExam);
+      this.fn_examAssignment(unassignExam, examAssignedUrl);
+    }
   }
 }
