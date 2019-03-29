@@ -9,6 +9,9 @@ using PerftEvaluation.DTO.Dtos;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace PerftEvaluation.Api.Controllers
 {
@@ -254,6 +257,15 @@ namespace PerftEvaluation.Api.Controllers
             }
 
             return Ok(isSuccess);
+        }
+
+        [HttpPost]
+        [Route("ExportQuestions")]
+        public IActionResult ExportQuestions(string examId)
+        {
+            Stream allQuestionsStream = _questionService.ExportQuestions(examId);
+
+            return File(allQuestionsStream, "application/octet-stream","AllQuestions.xlsx");
         }
     }
 }

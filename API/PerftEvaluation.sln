@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.Api", "Projects\PerftEvaluation.Api\PerftEvaluation.Api.csproj", "{F828F3B1-75BF-4198-8F90-522398E390A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.Api", "Projects\PerftEvaluation.Api\PerftEvaluation.Api.csproj", "{F828F3B1-75BF-4198-8F90-522398E390A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{10BE4810-188A-11E9-81C1-091B403C5783}"
 EndProject
@@ -11,37 +11,39 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{244843E0-188A-11E9-81C1-091B403C5783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.Identity", "Projects\PerftEvaluation.Identity\PerftEvaluation.Identity.csproj", "{D9ACFEAC-4927-4F30-8CE4-BBEFF3811474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.Identity", "Projects\PerftEvaluation.Identity\PerftEvaluation.Identity.csproj", "{D9ACFEAC-4927-4F30-8CE4-BBEFF3811474}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BC056F7E-B06C-4CA1-A4F9-DA253175AA5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.Test", "Tests\PerftEvaluation.Test\PerftEvaluation.Test.csproj", "{819E8662-C88E-435C-A8A2-53DA3459236A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.Test", "Tests\PerftEvaluation.Test\PerftEvaluation.Test.csproj", "{819E8662-C88E-435C-A8A2-53DA3459236A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.BAL", "Core\PerftEvaluation.BAL\PerftEvaluation.BAL.csproj", "{D1B39F07-18A1-4E65-91F6-7A95EA73A500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.BAL", "Core\PerftEvaluation.BAL\PerftEvaluation.BAL.csproj", "{D1B39F07-18A1-4E65-91F6-7A95EA73A500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.Entities", "Core\PerftEvaluation.Entities\PerftEvaluation.Entities.csproj", "{34EAB0D2-5A46-4B8D-B8A7-01F13EC95F75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.Entities", "Core\PerftEvaluation.Entities\PerftEvaluation.Entities.csproj", "{34EAB0D2-5A46-4B8D-B8A7-01F13EC95F75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.DAL", "Infrastructure\PerftEvaluation.DAL\PerftEvaluation.DAL.csproj", "{51BCCF64-A463-44F2-B04A-D1C8ACF2B0A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.DAL", "Infrastructure\PerftEvaluation.DAL\PerftEvaluation.DAL.csproj", "{51BCCF64-A463-44F2-B04A-D1C8ACF2B0A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.Helper", "Infrastructure\PerftEvaluation.Helper\PerftEvaluation.Helper.csproj", "{7A71151E-F6DA-4FC7-AF5F-E7AB4CDC338F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.Helper", "Infrastructure\PerftEvaluation.Helper\PerftEvaluation.Helper.csproj", "{7A71151E-F6DA-4FC7-AF5F-E7AB4CDC338F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.DTO", "Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj", "{FEB6AF60-3692-4765-8234-D853D045C232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.DTO", "Infrastructure\PerftEvaluation.DTO\PerftEvaluation.DTO.csproj", "{FEB6AF60-3692-4765-8234-D853D045C232}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{47D5E9F0-1E27-11E9-9482-D34970154766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.OcelotApiGw", "Projects\PerftEvaluation.OcelotApiGw\PerftEvaluation.OcelotApiGw.csproj", "{F7DEB340-D6FD-41C9-BF50-D583A1E0A817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.OcelotApiGw", "Projects\PerftEvaluation.OcelotApiGw\PerftEvaluation.OcelotApiGw.csproj", "{F7DEB340-D6FD-41C9-BF50-D583A1E0A817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfiEvaluation.Identity.Mongo", "Infrastructure\PerfiEvaluation.Identity.Mongo\PerfiEvaluation.Identity.Mongo.csproj", "{69955811-797C-4766-A1C3-EAAAB8918761}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerfiEvaluation.Identity.Mongo", "Infrastructure\PerfiEvaluation.Identity.Mongo\PerfiEvaluation.Identity.Mongo.csproj", "{69955811-797C-4766-A1C3-EAAAB8918761}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.UserRegisteration", "Projects\PerftEvaluation.UserRegisteration\PerftEvaluation.UserRegisteration.csproj", "{6F7926A6-DA53-45EC-AFDE-44A5B904AC89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.UserRegisteration", "Projects\PerftEvaluation.UserRegisteration\PerftEvaluation.UserRegisteration.csproj", "{6F7926A6-DA53-45EC-AFDE-44A5B904AC89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.EmailServer", "Infrastructure\PerftEvaluation.EmailServer\PerftEvaluation.EmailServer.csproj", "{4AADFA85-25E1-4C53-9F06-1705173BD12E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.EmailServer", "Infrastructure\PerftEvaluation.EmailServer\PerftEvaluation.EmailServer.csproj", "{4AADFA85-25E1-4C53-9F06-1705173BD12E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.ExcelUtility", "Infrastructure\Perft.Evaluation.ExcelUtility\PerftEvaluation.ExcelUtility.csproj", "{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerftEvaluation.ExcelUtility", "Infrastructure\Perft.Evaluation.ExcelUtility\PerftEvaluation.ExcelUtility.csproj", "{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Tests\IntegrationTests\IntegrationTests.csproj", "{7803C865-E258-45F0-8FE1-AFEE8B78584F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "Tests\IntegrationTests\IntegrationTests.csproj", "{7803C865-E258-45F0-8FE1-AFEE8B78584F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{DEE93550-3370-11E9-A246-033B637CE419}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerftEvaluation.Interfaces", "PerftEvaluation.Interfaces\PerftEvaluation.Interfaces.csproj", "{850EBA22-5233-45C4-B80E-66BE8D02BF30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,9 +53,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F828F3B1-75BF-4198-8F90-522398E390A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -224,10 +223,23 @@ Global
 		{7803C865-E258-45F0-8FE1-AFEE8B78584F}.Release|x64.Build.0 = Release|Any CPU
 		{7803C865-E258-45F0-8FE1-AFEE8B78584F}.Release|x86.ActiveCfg = Release|Any CPU
 		{7803C865-E258-45F0-8FE1-AFEE8B78584F}.Release|x86.Build.0 = Release|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Debug|x64.Build.0 = Debug|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Debug|x86.Build.0 = Debug|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Release|x64.ActiveCfg = Release|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Release|x64.Build.0 = Release|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Release|x86.ActiveCfg = Release|Any CPU
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DEE93550-3370-11E9-A246-033B637CE419} = {BC056F7E-B06C-4CA1-A4F9-DA253175AA5E}
-		{47D5E9F0-1E27-11E9-9482-D34970154766} = {BC056F7E-B06C-4CA1-A4F9-DA253175AA5E}
 		{F828F3B1-75BF-4198-8F90-522398E390A0} = {244843E0-188A-11E9-81C1-091B403C5783}
 		{D9ACFEAC-4927-4F30-8CE4-BBEFF3811474} = {244843E0-188A-11E9-81C1-091B403C5783}
 		{819E8662-C88E-435C-A8A2-53DA3459236A} = {47D5E9F0-1E27-11E9-9482-D34970154766}
@@ -236,11 +248,17 @@ Global
 		{51BCCF64-A463-44F2-B04A-D1C8ACF2B0A3} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 		{7A71151E-F6DA-4FC7-AF5F-E7AB4CDC338F} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 		{FEB6AF60-3692-4765-8234-D853D045C232} = {1FDAB090-188A-11E9-81C1-091B403C5783}
+		{47D5E9F0-1E27-11E9-9482-D34970154766} = {BC056F7E-B06C-4CA1-A4F9-DA253175AA5E}
 		{F7DEB340-D6FD-41C9-BF50-D583A1E0A817} = {244843E0-188A-11E9-81C1-091B403C5783}
 		{69955811-797C-4766-A1C3-EAAAB8918761} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 		{6F7926A6-DA53-45EC-AFDE-44A5B904AC89} = {244843E0-188A-11E9-81C1-091B403C5783}
 		{4AADFA85-25E1-4C53-9F06-1705173BD12E} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 		{E36ECC4C-A2AA-488D-B50F-F6D349F1EE35} = {1FDAB090-188A-11E9-81C1-091B403C5783}
 		{7803C865-E258-45F0-8FE1-AFEE8B78584F} = {DEE93550-3370-11E9-A246-033B637CE419}
+		{DEE93550-3370-11E9-A246-033B637CE419} = {BC056F7E-B06C-4CA1-A4F9-DA253175AA5E}
+		{850EBA22-5233-45C4-B80E-66BE8D02BF30} = {10BE4810-188A-11E9-81C1-091B403C5783}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95A9E05A-7617-4812-9DCF-1539283E1E37}
 	EndGlobalSection
 EndGlobal

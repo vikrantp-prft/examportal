@@ -1,5 +1,5 @@
 ﻿using System;
-using PerftEvaluation.BAL.Interfaces;
+using PerftEvaluation.Interfaces;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml;

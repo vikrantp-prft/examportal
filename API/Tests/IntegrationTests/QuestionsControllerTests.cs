@@ -1,13 +1,13 @@
-using System;
-using Xunit;
+using AutoMapper;
+using PerftEvaluation.Api.Controllers;
+using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.BAL.Services;
 using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DAL.Repositories;
-using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.ExcelUtility;
-using System.IO;
-using AutoMapper;
 using PerftEvaluation.Helper.Mapper;
+using System.IO;
+using Xunit;
 
 namespace IntegrationTests
 {
@@ -17,7 +17,7 @@ namespace IntegrationTests
         public void QuestionController_ImportQuestions_Success()
         {
             IQuestionsRepository questionsRepository = new QuestionsRepository();
-            IQuestionsImportExport questionsImportExport = new ExcelOperations();
+            PerftEvaluation.Interfaces.IQuestionsImportExport questionsImportExport = new ExcelOperations();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -38,6 +38,27 @@ namespace IntegrationTests
             bool actual = questionsService.ExcelUpload(stream, "5c4eb23a4732952c9c7fcfc3");
 
             Assert.True(actual);
+        }
+
+        [Fact]
+        public void ExportQuestions()
+        {
+            IQuestionsRepository questionsRepository = new QuestionsRepository();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            IMasterRepository masterRepository = new MasterRepository();
+
+            IMasterService masterService = new MasterService(masterRepository, mapper);
+
+            IQuestionsService questionsService = new QuestionsService(questionsRepository, mapper, new MasterRepository(), new MasterService(masterRepository, mapper), new ExcelOperations());
+
+            //QuestionsController questionsController = new QuestionsController(questionsService, null);
+
         }
     }
 }

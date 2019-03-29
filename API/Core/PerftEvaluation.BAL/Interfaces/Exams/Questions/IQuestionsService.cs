@@ -70,5 +70,7 @@ namespace PerftEvaluation.BAL.Interfaces {
         string[] GetCorrectOptionsByQuestionId (string questionId);
 
         int GetQuestionsCountByExamId(string ExamId);
+
+        Stream ExportQuestions(string examId);
     }
 }

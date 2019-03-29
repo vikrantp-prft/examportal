@@ -1,15 +1,16 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using PerftEvaluation.BAL.Interfaces;
+using PerftEvaluation.DAL.Interface;
+using PerftEvaluation.DTO;
+using PerftEvaluation.DTO.Dtos;
+using PerftEvaluation.Entities.POCOEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
-using AutoMapper;
-using PerftEvaluation.BAL.Interfaces;
-using PerftEvaluation.DAL.Interface;
-using PerftEvaluation.DTO;
-using PerftEvaluation.DTO.Dtos;
-using PerftEvaluation.Entities.POCOEntities;
 using static PerftEvaluation.DTO.Common.CommonEnums;
 
 namespace PerftEvaluation.BAL.Services
@@ -25,19 +26,22 @@ namespace PerftEvaluation.BAL.Services
         private readonly IMapper _mapper;
         protected readonly IMasterRepository _masterRepository;
         protected readonly IMasterService _masterService;
-        private readonly IQuestionsImportExport _importExportUtil;
+        private readonly PerftEvaluation.Interfaces.IQuestionsImportExport _importExportUtil;
+        private IHostingEnvironment _env;
 
         public QuestionsService(IQuestionsRepository questionsRepository,
                                 IMapper mapper,
                                 IMasterRepository masterRepository,
                                 IMasterService masterService,
-                                IQuestionsImportExport importExportUtil)
+                                PerftEvaluation.Interfaces.IQuestionsImportExport importExportUtil,
+            IHostingEnvironment env)
         {
             this._questionsRepository = questionsRepository;
             this._mapper = mapper;
             this._masterRepository = masterRepository;
             this._masterService = masterService;
             this._importExportUtil = importExportUtil;
+            this._env = env;
         }
         public ResponseModel GetQuestionsByExamId(string examId, RequestModel requestModel)
         {
@@ -244,8 +248,67 @@ namespace PerftEvaluation.BAL.Services
             return correctedOptions;
         }
 
-        public int GetQuestionsCountByExamId(string ExamId){
+        public int GetQuestionsCountByExamId(string ExamId)
+        {
             return this._questionsRepository.GetQuestionsByExamId(ExamId).Count();
+        }
+
+        /// <summary>
+        /// Exports all the questions of a exam.
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        public Stream ExportQuestions(string examId)
+        {
+            // Get all the questions from database.
+
+            IEnumerable<Questions> questions = _questionsRepository.GetQuestionsByExamId(examId);
+
+            // Read empty excel template
+            DataSet ds;
+            using (Stream stream = new MemoryStream())
+            {
+                using (StreamReader reader = new StreamReader(_env.ContentRootPath + "\\Contents\\Question.xlsx"))
+                {
+                    reader.BaseStream.CopyToAsync(stream);
+
+                    reader.Close();
+                }
+
+                ds = _importExportUtil.ReadExcel(stream, false);
+
+                stream.Close();
+            }
+
+            if (ds == null && ds.Tables.Count < 1)
+            {
+                throw new FileLoadException("Failed to read template file for exporting excel file.");
+            }
+
+            DataTable tb = ds.Tables[0];
+
+            foreach (Questions question in questions)
+            {
+                DataRow dr = tb.NewRow();
+
+                dr["Category"] = question.CategoryId;
+                dr["Question"] = question.Question;
+                dr["Question Type"] = question.Question;
+                dr["Correct"] = question.Question;
+                dr["Option1"] = question.Question;
+                dr["Option2"] = question.Question;
+                dr["Option3"] = question.Question;
+                dr["Option4"] = question.Question;
+                dr["Option5"] = question.Question;
+
+                tb.Rows.Add(dr);
+            }
+
+            // Excel Export Operations 
+
+            Stream allQuestions = _importExportUtil.ExportDataSet(ds);
+
+            return allQuestions;
         }
     }
 }

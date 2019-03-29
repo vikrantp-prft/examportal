@@ -1,9 +1,7 @@
+using PerftEvaluation.ExcelUtility;
 using System;
 using System.Data;
 using System.IO;
-using PerftEvaluation.Api.Controllers;
-using PerftEvaluation.BAL.Interfaces;
-using PerftEvaluation.ExcelUtility;
 using Xunit;
 
 namespace PerftEvaluation.Test
@@ -15,7 +13,7 @@ namespace PerftEvaluation.Test
         {
             bool result = false;
             string expected = Guid.NewGuid().ToString();
-            IQuestionsImportExport excelOperations = new ExcelOperations();
+            PerftEvaluation.Interfaces.IQuestionsImportExport excelOperations = new ExcelOperations();
 
             DataSet ds = new DataSet();
             DataTable tb = new DataTable();

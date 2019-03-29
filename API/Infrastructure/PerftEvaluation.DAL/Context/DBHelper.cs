@@ -62,8 +62,8 @@ namespace PerftEvaluation.DAL.Context
 
             MongoServerAddress address = new MongoServerAddress(mongoHost);
             settings.Server = address;
-            // _client = new MongoClient("mongodb://localhost:27017");
-            _client = new MongoClient(settings);
+             _client = new MongoClient("mongodb://localhost:27017");
+            //_client = new MongoClient(settings);
             _db = _client.GetDatabase(dbName);
 
         }
