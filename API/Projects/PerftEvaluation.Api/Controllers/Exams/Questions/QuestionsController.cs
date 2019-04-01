@@ -1,17 +1,14 @@
-using System;
-using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
-using Microsoft.AspNetCore.Hosting;
+using System;
+using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Primitives;
-using System.Net.Http;
-using System.Net;
-using System.Net.Http.Headers;
 
 namespace PerftEvaluation.Api.Controllers
 {
@@ -214,7 +211,7 @@ namespace PerftEvaluation.Api.Controllers
             bool isSuccess = false;
             StringValues formValues;
             string examId = String.Empty;
-            
+
             try
             {
                 #region Validate Model
@@ -261,11 +258,25 @@ namespace PerftEvaluation.Api.Controllers
 
         [HttpPost]
         [Route("ExportQuestions")]
+        // Exports all the questions of specified exam id. 
         public IActionResult ExportQuestions(string examId)
         {
-            Stream allQuestionsStream = _questionService.ExportQuestions(examId);
+            try
+            {
+                Stream allQuestionsStream = _questionService.ExportQuestions(examId);
 
-            return File(allQuestionsStream, "application/octet-stream","AllQuestions.xlsx");
+                if (allQuestionsStream == null)
+                {
+                    BadRequest(allQuestionsStream);
+                }
+
+                return File(allQuestionsStream, "application/octet-stream", "AllQuestions.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(CommonResponse.ExceptionResponse(ex));
+            }
+            
         }
     }
 }

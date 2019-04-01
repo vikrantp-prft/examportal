@@ -261,7 +261,6 @@ namespace PerftEvaluation.BAL.Services
         public Stream ExportQuestions(string examId)
         {
             // Get all the questions from database.
-
             IEnumerable<Questions> questions = _questionsRepository.GetQuestionsByExamId(examId);
 
             // Read empty excel template
@@ -270,11 +269,13 @@ namespace PerftEvaluation.BAL.Services
             {
                 using (StreamReader reader = new StreamReader(_env.ContentRootPath + "\\Contents\\Question.xlsx"))
                 {
+                    // Create a copy of stream so new file reference can be created instread of modifing the existing file. 
                     reader.BaseStream.CopyToAsync(stream);
 
                     reader.Close();
                 }
 
+                // Convert template file in DataSet so it can be modified further. 
                 ds = _importExportUtil.ReadExcel(stream, false);
 
                 stream.Close();
@@ -282,11 +283,13 @@ namespace PerftEvaluation.BAL.Services
 
             if (ds == null && ds.Tables.Count < 1)
             {
-                throw new FileLoadException("Failed to read template file for exporting excel file.");
+                throw new FileLoadException("Failed to read/convert template file for exporting questions excel file.");
             }
 
+            // Only first sheet from excel is of use. No need to read any other sheet from excel. 
             DataTable tb = ds.Tables[0];
 
+            //Copy all questions to data set. 
             foreach (Questions question in questions)
             {
                 DataRow dr = tb.NewRow();
@@ -304,8 +307,7 @@ namespace PerftEvaluation.BAL.Services
                 tb.Rows.Add(dr);
             }
 
-            // Excel Export Operations 
-
+            // Excel Export Operations. 
             Stream allQuestions = _importExportUtil.ExportDataSet(ds);
 
             return allQuestions;

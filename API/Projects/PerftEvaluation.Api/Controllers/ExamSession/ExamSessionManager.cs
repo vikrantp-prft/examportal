@@ -1,9 +1,8 @@
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PerftEvaluation.BAL.Interfaces.ExamSession;
 using PerftEvaluation.DTO.Dtos.ExamSession;
+using System.Security.Claims;
 
 namespace PerftEvaluation.Api.Controllers.ExamSession
 {
@@ -16,11 +15,11 @@ namespace PerftEvaluation.Api.Controllers.ExamSession
 
         Claim claim;
 
-        public ExamSessionManager(IExamSessionService examSessionService) //, IHttpContextAccessor httpContextAccessor)
+        public ExamSessionManager(IExamSessionService examSessionService, IHttpContextAccessor httpContextAccessor)
         {
             _examSessionService = examSessionService;
-            // _httpContextAccessor = httpContextAccessor;
-            // claim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            _httpContextAccessor = httpContextAccessor;
+            claim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
         }
 
         [HttpGet, Route("InitiateNewExamSession")]
