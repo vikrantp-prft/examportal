@@ -1,6 +1,6 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-white  bg-white">
-    <img src="assets/images/prft.png" class="logo" alt="">
+      <a class="navbar-brand" [routerLink]="['/exams']"><img _ngcontent-c1="" class="prft-logo ml-3 ng-tns-c1-0" src="assets/images/prft.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,17 +8,17 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active" *ngIf="isAdmin">
-          <a class="nav-link" [routerLink]="['/dashboard']">
+          <a class="nav-link" [routerLink]="['/admin']">
             <i class="fa fa-user-plus"></i>Admin
           </a>
         </li>
         <li class="nav-item active">
-          <div class="nav-link">
-            <i class="fa fa-user"></i> {{userName}} <b class="caret"></b>
+          <div class="nav-link capitalize">
+            <i class="fa fa-user"></i> {{ userName.split(".")[0] + ' ' + userName.split(".")[1].split("@")[0] }} <b class="caret"></b>
           </div>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">
+          <a class="nav-link" [routerLink]="['/']" (click)="onLogout()">
             <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
           </a>
         </li>

@@ -187,12 +187,16 @@ export class ExamComponent implements OnInit {
         if (this.optionIdArray.length != 0 || ( this.textArea.length > 0)) {
             this.SaveAttemptedQuestionsById();
         }
-        if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) {
-            this.textArea = this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer;
+        if (this.currentQuestionIndex < this.totalQuestion + 1) {
+            if (this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer != null) 
+            {
+                this.textArea = this.questionListForOption[this.currentQuestionIndex - 1].subjectiveAnswer;
+            }
+            else {
+                this.textArea = '';
+            }
         }
-        else {
-            this.textArea = '';
-        }
+   
     }
     fn_nextToNotSaveQuestion() {
         this.currentQuestionIndex++;

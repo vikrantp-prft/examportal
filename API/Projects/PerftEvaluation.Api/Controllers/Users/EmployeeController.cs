@@ -1,26 +1,34 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
-namespace PerftEvaluation.Api.Controllers.Users {
-    [Route ("api/[controller]")]
+namespace PerftEvaluation.Api.Controllers.Users
+{
+    [Route("api/[controller]")]
     [ApiController]
     /// <summary>
     /// Employee API Controller
     /// </summary>
-    public class EmployeeController : ControllerBase {
+    public class EmployeeController : ControllerBase
+    {
         #region Declaration
         protected readonly IEmployeeService _employeeService;
         private ResponseModel responseModel = null;
         protected readonly ILogger<EmployeeController> _logger;
 
-        public EmployeeController (IEmployeeService EmployeeService, ILogger<EmployeeController> logger = null) {
+        public EmployeeController(IEmployeeService EmployeeService, ILogger<EmployeeController> logger = null)
+        {
             this._employeeService = EmployeeService;
-            this.responseModel = new ResponseModel ();
-            if (null != logger) {
+            this.responseModel = new ResponseModel();
+            if (null != logger)
+            {
                 this._logger = logger;
             }
         }
@@ -32,13 +40,17 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// Get list of all employees
         /// </summary>
         /// <returns></returns>
-        [HttpPost, Route ("GetEmployees")]
-        public IActionResult Get (RequestModel requestModel) {
-            try {
-                return Ok (this._employeeService.GetEmployees (requestModel));
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+        [HttpPost, Route("GetEmployees")]
+        public IActionResult Get(RequestModel requestModel)
+        {
+            try
+            {
+                return Ok(this._employeeService.GetEmployees(requestModel));
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 
@@ -49,16 +61,20 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// <param name="employeeDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post (EmployeesDTO employeeDTO) {
-            try {
+        public IActionResult Post(EmployeesDTO employeeDTO)
+        {
+            try
+            {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.SaveEmployee (employeeDTO);
+                responseModel.Data = this._employeeService.SaveEmployee(employeeDTO);
 
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 
@@ -68,17 +84,21 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("ActivateEmployee")]
-        public IActionResult ActivateEmployee (RequestModel requestModel) {
-            try {
+        [HttpPost, Route("ActivateEmployee")]
+        public IActionResult ActivateEmployee(RequestModel requestModel)
+        {
+            try
+            {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.ActivateEmployee (requestModel.Id);
+                responseModel.Data = this._employeeService.ActivateEmployee(requestModel.Id);
 
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 
@@ -88,17 +108,21 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("InactivateEmployee")]
-        public IActionResult InactivateEmployee (RequestModel requestModel) {
-            try {
+        [HttpPost, Route("InactivateEmployee")]
+        public IActionResult InactivateEmployee(RequestModel requestModel)
+        {
+            try
+            {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.InactivateEmployee (requestModel.Id);
+                responseModel.Data = this._employeeService.InactivateEmployee(requestModel.Id);
 
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 
@@ -108,17 +132,21 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("GetEmployeeById")]
-        public IActionResult GetEmployeeById (RequestModel requestModel) {
-            try {
+        [HttpPost, Route("GetEmployeeById")]
+        public IActionResult GetEmployeeById(RequestModel requestModel)
+        {
+            try
+            {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.GetEmployeeById (requestModel.Id);
+                responseModel.Data = this._employeeService.GetEmployeeById(requestModel.Id);
 
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 
@@ -128,17 +156,21 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("DeleteEmployee")]
-        public IActionResult DeleteEmployee (RequestModel requestModel) {
-            try {
+        [HttpPost, Route("DeleteEmployee")]
+        public IActionResult DeleteEmployee(RequestModel requestModel)
+        {
+            try
+            {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.DeleteEmployee (requestModel.Id);
+                responseModel.Data = this._employeeService.DeleteEmployee(requestModel.Id);
 
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
 
@@ -148,20 +180,23 @@ namespace PerftEvaluation.Api.Controllers.Users {
         /// </summary>
         /// <param name="requestModel"></param>
         /// <returns></returns>
-        [HttpPost, Route ("UpdateEmployee")]
-        public IActionResult UpdateEmployee (EmployeesDTO employeesDTO) {
-            try {
+        [HttpPost, Route("UpdateEmployee")]
+        public IActionResult UpdateEmployee(EmployeesDTO employeesDTO)
+        {
+            try
+            {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._employeeService.UpdateEmployee (employeesDTO);
+                responseModel.Data = this._employeeService.UpdateEmployee(employeesDTO);
 
-                return Ok (responseModel);
-            } catch (Exception exception) {
-                _logger.LogInformation ($"MESSAGE: {exception.Message}");
-                return BadRequest (CommonResponse.ExceptionResponse (exception));
+                return Ok(responseModel);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"MESSAGE: {exception.Message}");
+                return BadRequest(CommonResponse.ExceptionResponse(exception));
             }
         }
-
         #endregion
     }
 }

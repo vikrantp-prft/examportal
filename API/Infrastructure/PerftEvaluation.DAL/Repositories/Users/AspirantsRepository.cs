@@ -54,7 +54,12 @@ namespace PerftEvaluation.DAL.Repositories
         public Users GetAspirantById(string Id)
         {
             try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.Id == Id).FirstOrDefault ();
+                return _db.GetCollection<Users> (Users.CollectionName)
+                                                .AsQueryable ()
+                                                .Where (x => x.Id == Id 
+                                                        && x.IsActive == true 
+                                                        &&  x.UserType == UsersEnum.Aspirant)
+                                                .FirstOrDefault ();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -67,7 +72,12 @@ namespace PerftEvaluation.DAL.Repositories
         public IEnumerable<Users> GetAspirants()
         {
            try {
-                return _db.GetCollection<Users> (Users.CollectionName).AsQueryable ().Where (x => x.IsDeleted == false && x.UserType == UsersEnum.Aspirant).ToList ();
+                return _db.GetCollection<Users> (Users.CollectionName)
+                                                .AsQueryable ()
+                                                .Where (x => x.IsDeleted == false 
+                                                        && x.IsActive == true 
+                                                        &&  x.UserType == UsersEnum.Aspirant)
+                                                .ToList ();
             } catch (Exception ex) {
                 throw ex;
             }

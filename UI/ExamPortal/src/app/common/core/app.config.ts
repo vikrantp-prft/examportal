@@ -8,11 +8,11 @@ export const appConfig = {
   //  apiUrl: 'http://zil189:90/', // url for dev
   //  identityUrl: 'http://zil189:9050/',
 
-   apiUrl: 'http://zil144:90/', // url for dev
-   identityUrl: 'http://zil144:9003/',
+  apiUrl: 'http://zil144:90/', // url for dev
+  identityUrl: 'http://zil144:9003/',
 
-  //   apiUrl: 'http://localhost:7000/', // url for dev
-  //  identityUrl: 'http://localhost:5000/',
+    //  apiUrl: 'http://localhost:7000/', // url for dev
+    // identityUrl: 'http://localhost:5000/',
 
   //apiUrl: 'http://zil395:8080/', // url for production,
 

@@ -19,9 +19,14 @@
               </div>
             </div>
             <div class="col">
-              <button [routerLink]="['/user/addemployee']" class="btn btn-md btn-primary" title="Add Employee">
+              <button [routerLink]="['/admin/user/addemployee']" class="btn btn-md btn-primary" title="Add Employee">
                 Add
               </button>
+            </div>
+            <div>
+              <a class="btn btn-md btn-primary" href="../../../../../assets/user-template/userTemplate.xlsx" title="Download Template" download>
+                <i class="fa fa-download" aria-hidden="true"></i>
+              </a>
             </div>
             <div class="col-md-3">
               <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
@@ -47,15 +52,15 @@
             <tbody>
               <ngx-ui-loader></ngx-ui-loader>
               <tr *ngFor="let emp of employeeList; let i = index">
-                <td [routerLink]="['/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">{{emp.email}}</td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">{{(employeeModel.pageNumber-1)*10 + i +1 }}</td>
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.firstName}} {{emp.lastName}}</td>
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">{{emp.email}}</td>
+                <td class="td-cursor" [routerLink]="['/admin/user/updateemployee', emp.id]">
                   <div *ngIf="emp.team!=null">
                     {{emp.team.name}}
                   </div>
                 </td>
-                <td [routerLink]="['/user/updateemployee', emp.id]">
+                <td class="td-cursor" [routerLink]="['/user/updateemployee', emp.id]">
                   <i class="fa" [ngClass]="{'fa-check text-success': emp.isActive, 'fa-times text-danger': !emp.isActive}"
                     aria-hidden="true">
                   </i>

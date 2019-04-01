@@ -4,7 +4,7 @@
       <div class="card-header">
         <h1 class="h3 font-weight-bold mb-0">Add Exam</h1>
         <div class="back-btn">
-          <button [routerLink]="['/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
+          <button [routerLink]="['/admin/manage/examlist']" class="btn btn-primary"><span><i class="fa fa-arrow-left"></i></span>
             Back </button>
         </div>
       </div>
@@ -97,7 +97,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-6">
+              <div class="col-3">
                 <div class="form-group">
                   <label for="Exam Active From">Active From (MM/DD/YYYY)</label>
                   <span class="text-danger">*</span>
@@ -106,13 +106,27 @@
                   </app-field-error-display>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-3">
                 <div class="form-group">
                   <label for="Exam Active Till">To (MM/DD/YYYY)</label>
                   <span class="text-danger">*</span>
                   <input type="date" class="form-control" formControlName="toDate" #toDate>
                   <app-field-error-display [displayError]="isFieldValid(addExamForm, 'toDate')" errorMsg="Enter valid date">
                   </app-field-error-display>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label for="Exam Active From">Start time (HH:MM)</label>
+                  <input class="form-control" formControlName="startTime" placeholder="Start time" aria-label="24hr format" [ngxTimepicker]="startTime" [format]="24" >
+                  <ngx-material-timepicker #startTime></ngx-material-timepicker>
+                </div>               
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                    <label for="Exam Active Till">End time (HH:MM)</label>
+                    <input class="form-control" formControlName="endTime" placeholder="End time" aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" >
+                    <ngx-material-timepicker #endTime></ngx-material-timepicker>
                 </div>
               </div>
             </div>
@@ -144,12 +158,12 @@
                   <label for="Shuffle Options" class="form-check-label">Shuffle Options</label>
                 </div>
               </div>
-              <div class="col">
+              <!-- <div class="col">
                 <div class="form-check">
                   <input type="checkbox" class="form-check-input" formControlName="isPaperPublic" #isPaperPublic>
                   <label for="Is Paper Public" class="form-check-label">Is Paper Public</label>
                 </div>
-              </div>
+              </div> -->
               <div class="col">
                 <div class="form-check">
                   <input type="checkbox" class="form-check-input" formControlName="isFeedback" #isFeedback>

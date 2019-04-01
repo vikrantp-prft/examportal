@@ -64,6 +64,7 @@ export class examEditUpdateComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.examDetail = rs.data;
+        console.log(this.examDetail);
         this.fn_setEditValues();
         this.ngxService.stop();
       }
@@ -83,6 +84,8 @@ export class examEditUpdateComponent implements OnInit {
       ],
       fromDate: [null, [Validators.required]],
       toDate: [null, [Validators.required]],
+      startTime: new FormControl(),
+      endTime: new FormControl(),
       isActive: new FormControl(true),
       showResultInFront: new FormControl(false),
       shuffleQuestions: new FormControl(false),
@@ -114,6 +117,9 @@ export class examEditUpdateComponent implements OnInit {
     this.editExamForm.controls.toDate.setValue(
       this.fn_getDate(this.examDetail.toDate)
     );
+    // this.editExamForm.controls.startTime.setValue(
+    //   this.examDetail.startTime
+    // );
     this.editExamForm.controls.isActive.setValue(this.examDetail.isActive);
     this.editExamForm.controls.showResultInFront.setValue(
       this.examDetail.showResultInFront
@@ -156,7 +162,7 @@ export class examEditUpdateComponent implements OnInit {
             const rs = result;
             if (rs.statusCode == 200) {
               this.toastr.success("Exam details Updated successfully!");
-              this.router.navigate(["manage/examlist"]);
+              this.router.navigate(["/admin/manage/examlist"]);
             } else {
               this.toastr.console.error("Failed to Update Exam details");
             }

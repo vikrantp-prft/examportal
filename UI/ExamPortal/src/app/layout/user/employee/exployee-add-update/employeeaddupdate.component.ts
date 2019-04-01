@@ -220,7 +220,7 @@ export class AddEmployeeComponent implements OnInit {
 
         this.ngxService.stop();
         this.toastr.success("Employee details added successfully!");
-        this.router.navigate(["user/employeelist"]);
+        this.router.navigate(["/admin/user/employeelist"]);
       } else {
         this.toastr.error("Failed to add Employee details" + rs);
       }

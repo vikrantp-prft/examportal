@@ -1,5 +1,5 @@
 <nav class="header-border-bottom navbar navbar-expand-lg bg-white pt-3">
-  <a class="navbar-brand" href="#"><img _ngcontent-c1="" class="prft-logo ml-3 ng-tns-c1-0" src="assets/images/prft.png"></a>
+  <a class="navbar-brand" [routerLink]="['/admin']"><img _ngcontent-c1="" class="prft-logo ml-3 ng-tns-c1-0" src="assets/images/prft.png"></a>
   <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
     <!-- <span class="navbar-toggler-icon"></span> -->
     <i class="fa fa-bars text-muted" aria-hidden="true"></i>
@@ -33,12 +33,12 @@
         </a>
       </li>
       <li class="nav-item active">
-        <a href="javascript:void(0)" class="nav-link">
-          <i class="fa fa-user"></i> {{userName}}
+        <a href="javascript:void(0)" class="nav-link capitalize">
+          <i class="fa fa-user"></i> {{userName.split(".")[0] + ' ' + userName.split(".")[1].split("@")[0]}}
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/login']" (click)="onLoggedout()">
+        <a class="nav-link" [routerLink]="['/']" (click)="onLoggedout()">
           <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
         </a>
       </li>

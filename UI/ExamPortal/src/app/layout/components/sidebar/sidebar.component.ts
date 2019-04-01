@@ -14,6 +14,8 @@ export class SidebarComponent implements OnInit {
     pushRightClass: string;
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
+    public isAdmin: boolean;
+    public isEmployee: boolean;
 
     constructor(private translate: TranslateService, public router: Router) {
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
@@ -37,6 +39,23 @@ export class SidebarComponent implements OnInit {
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
+        const user = JSON.parse(localStorage.getItem("userDetails"));
+        if (user != null) {
+          this.isAdmin = user.userRole.includes("ADMINISTRATOR");
+          this.isEmployee = user.userRole.includes("EMPLOYEE");
+    
+          if (!this.isAdmin) {
+            if (this.isEmployee) {
+              this.router.navigate(["/exams"]);
+            } else {
+              localStorage.removeItem("userDetails");
+              this.router.navigate(["/"]);
+            }
+          }
+        } else {
+          localStorage.removeItem("userDetails");
+          this.router.navigate(["/"]);
+        }
     }
 
 

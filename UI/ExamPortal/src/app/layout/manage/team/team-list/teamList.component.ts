@@ -15,6 +15,7 @@ interface paginationModel {
 @Component({
   selector: 'team-list',
   templateUrl: './teamList.html',
+  styleUrls: ['./teamList.component.css'],
   providers: [commonService]
 })
 export class TeamListComponent implements OnInit {

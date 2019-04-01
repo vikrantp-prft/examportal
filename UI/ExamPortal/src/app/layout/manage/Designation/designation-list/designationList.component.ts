@@ -15,6 +15,7 @@ interface paginationModel {
 @Component({
   selector: 'designation-list',
   templateUrl: './designationList.html',
+  styleUrls: ['./designationList.component.css'],
   providers: [commonService]
 })
 export class DesignationListComponent implements OnInit {

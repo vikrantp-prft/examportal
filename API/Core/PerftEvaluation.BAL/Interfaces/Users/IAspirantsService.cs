@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 
@@ -18,6 +19,13 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <param name="aspirantsDTO"></param>
         /// <returns></returns>
         RequestModel SaveAspirants (AspirantsDTO aspirantsDTO);
+
+        /// <summary>
+        /// Save Aspirants Details
+        /// </summary>
+        /// <param name="ImportEmployeesDTO"></param>
+        /// <returns></returns>
+        RequestModel SaveImportedAspirants(ImportEmployeesDTO importAspirants);
 
         /// <summary>
         /// Update Aspirants details
@@ -53,5 +61,12 @@ namespace PerftEvaluation.BAL.Interfaces
         /// <param name="aspirantsId"></param>
         /// <returns></returns>
         bool DeleteAspirant (string aspirantsId);
+
+        /// <summary>
+        /// Uploads the bulk of Aspirants information from file to database
+        /// </summary>
+        /// <param name="fileStream">Binary stream of xlsx file with the redefined template.</param>
+        /// <returns></returns>
+        bool ExcelUpload(Stream fileStream);
     }
 }

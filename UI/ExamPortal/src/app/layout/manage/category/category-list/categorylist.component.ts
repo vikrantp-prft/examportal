@@ -15,6 +15,7 @@ interface paginationModel {
 @Component({
   selector: 'category-list',
   templateUrl: './categorylist.html',
+  styleUrls: ['./categorylist.component.scss'],
   providers: [commonService]
 })
 export class CategoryListComponent implements OnInit {

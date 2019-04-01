@@ -15,6 +15,7 @@ interface paginationModel {
 @Component({
   selector: "employee-list",
   templateUrl: "./employeelist.html",
+  styleUrls: ['./employeelist.component.scss'],
   providers: [commonService]
 })
 export class EmployeeListComponent implements OnInit {

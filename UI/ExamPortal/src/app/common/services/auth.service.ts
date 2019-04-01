@@ -32,6 +32,6 @@ export class CustomAuthService {
       });
   }
   logout() {
-    localStorage.removeItem("UserDetails");
+    localStorage.removeItem("userDetails");
   }
 }

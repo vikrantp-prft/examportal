@@ -42,18 +42,15 @@
         <tbody>
           <ngx-ui-loader></ngx-ui-loader>
           <tr *ngFor="let state of stateList; let i = index">
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{(stateModel.pageNumber-1)*10 + i +1 }}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.name}}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.description}}</td>
-            <td data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{(stateModel.pageNumber-1)*10 + i +1 }}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.name}}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">{{state.description}}</td>
+            <td class="td-cursor" data-toggle="modal" data-target="#editModal" (click)="fn_GetStateById(state.id)">
               <i class="fa" [ngClass]="{'fa-check text-success': state.isActive, 'fa-times text-danger': !state.isActive}"
                 aria-hidden="true">
               </i>
             </td>
             <td>
-              <!-- <button title="Edit" class="btn btn-md" type="button" rel="tooltip" [routerLink]="['/manage/editDegree', state.id]">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </button> -->
               <button title="Change Status" class="btn btn-md mx-1" type="button" rel="tooltip" (click)="fn_ChangeStatus(state.id, state.isActive)">
                 <i class="fa" [ngClass]="{'fa-toggle-on text-success': state.isActive, 'fa-toggle-off text-danger': !state.isActive}"
                   aria-hidden="true"></i>

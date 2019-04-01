@@ -9,6 +9,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'exam-list',
   templateUrl: './examList.html',
+  styleUrls: ['./examList.component.css'],
   providers: [commonService]
 })
 export class ExamListComponent implements OnInit {

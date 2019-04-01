@@ -1,5 +1,6 @@
 @import url('https://cdn.syncfusion.com/ej2/material.css');
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans|Quicksand|Roboto|Raleway|Muli");
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 body{
   font-family: 'Muli', sans-serif;
@@ -119,10 +120,15 @@ textarea.question-textarea{
 
 pre {
   word-break: break-word;
-  white-space: normal;
+  white-space: pre-wrap;
 }
 
-.card-body .exam-questions-list{
+/* .card-body .exam-questions-list{
   max-height: 350px;
    overflow-y: scroll;
+}
+*/
+
+.col-md-2 {
+  text-align: center;
 }

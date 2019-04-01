@@ -18,13 +18,22 @@
                 </select>
               </div>
             </div>
-          
+
             <div class="col">
-              <button type="button" class="btn btn-md btn-primary" [routerLink]="['/user/addtraineeuser']">
+              <button type="button" class="btn btn-md btn-primary" [routerLink]="['/admin/user/addtraineeuser']">
                 Add
               </button>
             </div>
-
+            <div>
+              <a class="btn btn-md btn-primary" href="../../../../../assets/user-template/userTemplate.xlsx"
+                title="Download Template" download>
+                <i class="fa fa-download" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="col-md-2 upload-btn-wrapper">
+              <button class="btn btn-primary " title="Import Aspirants">Import Aspirants</button>
+              <input (change)="fn_fileChange($event)" type="file" name="myfile" style="width:72px;" />
+            </div>
             <div class="col-md-3">
               <input (keyup)="searchRecord($event)" type="text" ng-model="search" id="serach" placeholder="Search"
                 class="form-control" />

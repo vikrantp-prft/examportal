@@ -33,6 +33,8 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { UserListComponent } from './exam/user-list/userList.component';
 import { ResultListComponent } from './exam/examResult-list/resultList.component';
 import { DetailedResultComponent } from './exam/detailedResult/detailedResult.component';
+//import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
     imports: [
@@ -43,6 +45,9 @@ import { DetailedResultComponent } from './exam/detailedResult/detailedResult.co
         ErrorHandlingModule,
         RichTextEditorAllModule,
         NgxUiLoaderModule,
+        //OwlDateTimeModule, 
+        //OwlNativeDateTimeModule,
+        NgxMaterialTimepickerModule,
         PaginationModule.forRoot()],
     declarations: [
         FileSelectDirective,

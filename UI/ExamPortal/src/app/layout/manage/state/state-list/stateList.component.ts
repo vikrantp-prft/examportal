@@ -15,6 +15,7 @@ interface paginationModel {
 @Component({
   selector: 'state-list',
   templateUrl: './stateList.html',
+  styleUrls: ['./stateList.component.css'],
   providers: [commonService]
 })
 export class StateListComponent implements OnInit {

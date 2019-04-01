@@ -14,13 +14,15 @@ import {
 } from "@angular/forms";
 import { NgxUiLoaderService } from "ngx-ui-loader";
 import { FileUploader } from "ng2-file-upload";
+import { ExcelService } from "src/app/common/services/excel.service";
+import { instantiateRendererFactory } from "@angular/platform-browser/animations/src/providers";
 // const URL = '';
 
 @Component({
   selector: "question-list",
   templateUrl: "./questionList.html",
   styleUrls: ['./questionList.component.css'],
-  providers: [commonService]
+  providers: [commonService, ExcelService]
 })
 export class questionListComponent implements OnInit {
   public examID = "";
@@ -31,6 +33,7 @@ export class questionListComponent implements OnInit {
   public formTitle: string = "Add";
   public singleSelectFlag: boolean;
   public singleSelectEdit: boolean;
+  public exportData = [];
   public multipleSelectFlag: boolean;
   public multipleSelectEdit: boolean;
   public subjectiveFlag: boolean;
@@ -84,7 +87,8 @@ export class questionListComponent implements OnInit {
     public router: Router,
     private CommonService: commonService,
     public http: Http,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private excelService: ExcelService
   ) {
     this.route.params.subscribe(params1 => {
       this.examID = params1["id"];
@@ -93,7 +97,7 @@ export class questionListComponent implements OnInit {
       id: new FormControl(null),
       questionCategory: ["", [Validators.required]],
       questionType: ["", [Validators.required]],
-      questionText: [null, [Validators.required]],
+      questionText: [null, [Validators.required, Validators.minLength(10)]],
       examID: new FormControl(this.examID),
       singleSelectOptionsCorrectAns: new FormControl(null),
       obj_multiSelectOptions: this.fb.array([
@@ -103,7 +107,7 @@ export class questionListComponent implements OnInit {
         this.addSubSingleSelectOption(null, false, null)
       ])
     });
-    
+
   }
   addSubMultipleSelectOption(param, flag, optionID) {
     return this.fb.group({
@@ -190,11 +194,24 @@ export class questionListComponent implements OnInit {
       const rs = result;
       if (rs.statusCode == 200) {
         this.questionList = rs.data;
+        console.log(this.questionList);
+        this.getExportArray();
         this.ngxService.stop();
         this.totalItems = rs.totalRecords;
       } else {
       }
     });
+  }
+  getExportArray() {
+    for (const iterator of this.questionList) {
+      // const exportModel = ;
+      this.exportData.push({
+        Category: iterator.category.name,
+        Question: iterator.question,
+        'Question Type': iterator.questionType
+      });
+    }
+    console.log(this.exportData);
   }
   getPreviewQuestionList() {
     const url = 'api/Questions/ListQuestionsByExamId';
@@ -204,14 +221,17 @@ export class questionListComponent implements OnInit {
     };
     this.fn_getPreviewQuestionLsit(questionModel, url);
   }
+  exportAsXLSX(): void {
+    this.excelService.exportAsExcelFile(this.exportData, 'sample');
+  }
   fn_getPreviewQuestionLsit(modal, url) {
     this.ngxService.start();
     this.CommonService.fn_PostWithData(modal, url).subscribe((result: any) => {
-        const rs = result;
-        if (rs.statusCode == 200) {
-            this.previewQuestionList = rs.data;
-            this.ngxService.stop();
-        }
+      const rs = result;
+      if (rs.statusCode == 200) {
+        this.previewQuestionList = rs.data;
+        this.ngxService.stop();
+      }
     });
   }
   loadQuestionForm() {

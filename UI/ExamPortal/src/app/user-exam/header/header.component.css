@@ -2,3 +2,7 @@
     max-width: 16%;
     height: auto;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}

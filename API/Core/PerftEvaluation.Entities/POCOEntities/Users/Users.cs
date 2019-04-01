@@ -106,7 +106,7 @@ namespace PerftEvaluation.Entities.POCOEntities
 
 
         [BsonElement("userType")]
-        [Required]
+        //[Required]
         public UsersEnum UserType { get; set; }
 
 
@@ -121,14 +121,14 @@ namespace PerftEvaluation.Entities.POCOEntities
         [BsonElement("educationDetailsId"), BsonRepresentation(BsonType.ObjectId)]
         public string EducationDetailsId { get; set; }
 
-        [Required]
+        //[Required]
         [BsonElement("courseId"), BsonRepresentation(BsonType.ObjectId)]
         public string CourseId { get; set; }
 
         [BsonElement("yearOfPassing")]
         public int YearOfPassing { get; set; }
 
-        [Required]
+        //[Required]
         [BsonElement("institution")]
         public string Institution { get; set; }
 

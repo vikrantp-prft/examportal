@@ -29,7 +29,14 @@ div {
     background-color: #f8f8f8;
 } */
 
+.margin-left-1 {
+    margin-left: 1.5rem !important;
+}
 .padding-left-4{
     padding-left: 4rem !important;
+}
+
+.font-weight-700 {
+    font-weight: 700;
 }
 
