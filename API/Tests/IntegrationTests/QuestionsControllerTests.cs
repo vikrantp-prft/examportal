@@ -29,7 +29,7 @@ namespace IntegrationTests
 
             IMasterService masterService = new MasterService(masterRepository, mapper);
 
-            QuestionsService questionsService = new QuestionsService(questionsRepository, mapper, masterRepository, masterService, questionsImportExport);
+            QuestionsService questionsService = null;// new QuestionsService(questionsRepository, mapper, masterRepository, masterService, questionsImportExport);
 
             byte[] fileBytes = File.ReadAllBytes(@"D:\All Projects\Exam Portal\Question Template\QueFormat.xlsx");
 
@@ -55,7 +55,7 @@ namespace IntegrationTests
 
             IMasterService masterService = new MasterService(masterRepository, mapper);
 
-            IQuestionsService questionsService = new QuestionsService(questionsRepository, mapper, new MasterRepository(), new MasterService(masterRepository, mapper), new ExcelOperations());
+            IQuestionsService questionsService = null;//new QuestionsService(questionsRepository, mapper, new MasterRepository(), new MasterService(masterRepository, mapper), new ExcelOperations());
 
             //QuestionsController questionsController = new QuestionsController(questionsService, null);
 

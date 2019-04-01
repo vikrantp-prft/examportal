@@ -10,6 +10,7 @@ using PerftEvaluation.DAL.Interface;
 using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
+using PerftEvaluation.Interfaces;
 
 namespace PerftEvaluation.BAL.Services
 {
