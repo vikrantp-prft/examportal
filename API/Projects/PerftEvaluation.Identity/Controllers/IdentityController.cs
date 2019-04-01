@@ -228,6 +228,7 @@ namespace PerftEvaluation.Identity.Controllers {
             var claims = new List<Claim> (new [] {
                 new Claim (JwtRegisteredClaimNames.Sub, user.Id),
                     new Claim (JwtRegisteredClaimNames.UniqueName, user.UserName),
+                    new Claim("UserId",user.UserId),
                     new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid ().ToString ()),
                     new Claim (JwtRegisteredClaimNames.Iat, utcNow.ToString ())
             });

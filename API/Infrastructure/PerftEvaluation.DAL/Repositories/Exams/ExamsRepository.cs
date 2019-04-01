@@ -99,6 +99,8 @@ namespace PerftEvaluation.DAL.Repositories
         {
             try
             {
+                exams.CreatedDate = DateTime.Now;
+                exams.ModifiedDate = DateTime.Now;
                 _db.Save<Exams>(exams, Exams.CollectionName);
                 return true;
             }
@@ -127,6 +129,7 @@ namespace PerftEvaluation.DAL.Repositories
                 .Set(c => c.ShuffleQuestions, exams.ShuffleQuestions)
                 .Set(c => c.TeamId, exams.TeamId)
                 .Set(c => c.Title, exams.Title)
+                .Set(c => c.ModifiedDate, DateTime.Now)
                 .Set(c => c.ModifiedBy, exams.ModifiedBy)
                 .Set(c => c.TotalQuestions, exams.TotalQuestions);
 

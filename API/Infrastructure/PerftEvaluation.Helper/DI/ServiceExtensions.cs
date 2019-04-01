@@ -1,3 +1,5 @@
+using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using PerftEvaluation.BAL.Interfaces;
 using PerftEvaluation.BAL.Interfaces.Exams.ExamSession;
@@ -25,6 +27,7 @@ namespace PerftEvaluation.Helper.DI
         public static IServiceCollection RegisterServices(
             this IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //Projects Services 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterService, MasterService>();

@@ -8,8 +8,10 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services {
-    public class ExamsService : IExamsService {
+namespace PerftEvaluation.BAL.Services
+{
+    public class ExamsService : IExamsService
+    {
         /// <summary>
         /// Exam Service class
         /// </summary>
@@ -24,12 +26,13 @@ namespace PerftEvaluation.BAL.Services {
         protected readonly IUserService _userService;
         protected readonly IQuestionsService _questionService;
 
-        public ExamsService (IExamsRepository ExamsRepository,
+        public ExamsService(IExamsRepository ExamsRepository,
             IMapper mapper,
             IMasterService masterService,
             IMasterRepository masterRepository,
             IUserService userService,
-            IQuestionsService questionsService) {
+            IQuestionsService questionsService)
+        {
             this._examsRepository = ExamsRepository;
             this._mapper = mapper;
             this._masterService = masterService;
@@ -42,17 +45,19 @@ namespace PerftEvaluation.BAL.Services {
         /// Get list Exams
         /// </summary>
         /// <value></value>
-        public ResponseModel GetExams (RequestModel requestModel) {
+        public ResponseModel GetExams(RequestModel requestModel)
+        {
             //Filter & sort the data
-            var filteredExams = this._examsRepository.GetExams ().AsQueryable ().SortAndFilter (requestModel, DbFilters.ExamFilters);
+            var filteredExams = this._examsRepository.GetExams().AsQueryable().SortAndFilter(requestModel, DbFilters.ExamFilters);
             //Integrate pagination
-            var exams = filteredExams.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
-            List<ExamsDTO> examJoin = new List<ExamsDTO> ();
-            foreach (var item in exams) {
-                ExamsDTO examsDTO = new ExamsDTO ();
+            var exams = filteredExams.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+            List<ExamsDTO> examJoin = new List<ExamsDTO>();
+            foreach (var item in exams)
+            {
+                ExamsDTO examsDTO = new ExamsDTO();
                 examsDTO.Id = item.Id;
                 examsDTO.Title = item.Title;
-                examsDTO.TotalQuestions = _questionService.GetQuestionsCountByExamId (item.Id);
+                examsDTO.TotalQuestions = _questionService.GetQuestionsCountByExamId(item.Id);
                 examsDTO.TeamId = item.TeamId;
                 examsDTO.Description = item.Description;
                 examsDTO.ExamDurationHours = item.ExamDurationHours;
@@ -68,21 +73,24 @@ namespace PerftEvaluation.BAL.Services {
                 examsDTO.TotalQuestions = item.TotalQuestions;
                 examsDTO.IsActive = item.IsActive;
                 examsDTO.CreatedBy = item.CreatedBy;
+                examsDTO.CreatedByUser = item.CreatedBy != null ? _userService.GetUserById(item.CreatedBy) : null;
                 examsDTO.ModifiedBy = item.ModifiedBy;
-                examsDTO.Team = item.TeamId != null ? _masterService.GetMasterById (item.TeamId) : null;
-                examJoin.Add (examsDTO);
+                examsDTO.ModifiedByUser = item.ModifiedBy != null ? _userService.GetUserById(item.ModifiedBy) : null;
+                examsDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
+                examJoin.Add(examsDTO);
             }
 
             //return object
-            return CommonResponse.OkResponse (requestModel, examJoin, (filteredExams.Count () < 100 ? filteredExams.Count () : 100));
+            return CommonResponse.OkResponse(requestModel, examJoin, (filteredExams.Count() < 100 ? filteredExams.Count() : 100));
         }
 
         /// <summary>
         /// Get Active Exams
         /// </summary>
         /// <value></value>
-        public bool ActiveExams (string examId) {
-            return this._examsRepository.ActiveExams (examId);
+        public bool ActiveExams(string examId)
+        {
+            return this._examsRepository.ActiveExams(examId);
         }
 
         /// <summary>
@@ -90,18 +98,20 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="examId"></param>
         /// <returns></returns>
-        public bool DeleteExams (string examId) {
-            return this._examsRepository.DeleteExam (examId);
+        public bool DeleteExams(string examId)
+        {
+            return this._examsRepository.DeleteExam(examId);
         }
 
         /// <summary>
         /// Get User By ID
         /// </summary>
         /// <value></value>
-        public ExamsDTO GetExamsById (string examId) {
-            var exam = this._examsRepository.GetExamsById (examId);
+        public ExamsDTO GetExamsById(string examId)
+        {
+            var exam = this._examsRepository.GetExamsById(examId);
 
-            ExamsDTO examsDTO = new ExamsDTO ();
+            ExamsDTO examsDTO = new ExamsDTO();
             examsDTO.Id = exam.Id;
             examsDTO.Title = exam.Title;
             examsDTO.TeamId = exam.TeamId;
@@ -116,12 +126,14 @@ namespace PerftEvaluation.BAL.Services {
             examsDTO.ShuffleQuestions = exam.ShuffleQuestions;
             examsDTO.IsPaperPublic = exam.IsPaperPublic;
             examsDTO.IsFeedback = exam.IsFeedback;
-            examsDTO.TotalQuestions = _questionService.GetQuestionsCountByExamId (exam.Id);
+            examsDTO.TotalQuestions = _questionService.GetQuestionsCountByExamId(exam.Id);
             examsDTO.IsActive = exam.IsActive;
             examsDTO.IsDeleted = exam.IsDeleted;
             examsDTO.CreatedBy = exam.CreatedBy;
+            examsDTO.CreatedByUser = exam.CreatedBy != null ? _userService.GetUserById(exam.CreatedBy) : null;
             examsDTO.ModifiedBy = exam.ModifiedBy;
-            examsDTO.Team = exam.TeamId != null ? _masterService.GetMasterById (exam.TeamId) : null;
+            examsDTO.ModifiedByUser = exam.ModifiedBy != null ? _userService.GetUserById(exam.ModifiedBy) : null;
+            examsDTO.Team = exam.TeamId != null ? _masterService.GetMasterById(exam.TeamId) : null;
             return examsDTO;
         }
 
@@ -129,24 +141,27 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Inactive Exams
         /// </summary>
         /// <value></value>
-        public bool InactiveExams (string examId) {
-            return this._examsRepository.InactivateExams (examId);
+        public bool InactiveExams(string examId)
+        {
+            return this._examsRepository.InactivateExams(examId);
         }
 
         /// <summary>
         /// Save Exams
         /// </summary>
         /// <value></value>
-        public bool SaveExams (ExamsDTO examsDTO) {
-            return this._examsRepository.SaveExams (this._mapper.Map<Exams> (examsDTO));
+        public bool SaveExams(ExamsDTO examsDTO)
+        {
+            return this._examsRepository.SaveExams(this._mapper.Map<Exams>(examsDTO));
         }
 
         /// <summary>
         /// Update Exams
         /// </summary>
         /// <value></value>
-        public bool UpdateExam (ExamsDTO examsDTO) {
-            return this._examsRepository.UpdateExams (this._mapper.Map<Exams> (examsDTO));
+        public bool UpdateExam(ExamsDTO examsDTO)
+        {
+            return this._examsRepository.UpdateExams(this._mapper.Map<Exams>(examsDTO));
         }
 
         /// <summary>
@@ -154,30 +169,41 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="examDTO"></param>
         /// <returns></returns>
-        public bool SetActiveInactive (ExamsDTO examsDTO) {
+        public bool SetActiveInactive(ExamsDTO examsDTO)
+        {
             DateTime start = examsDTO.FromDate.Value;
             DateTime current = DateTime.Now;
             DateTime end = examsDTO.ToDate.Value;
 
-            int activeExam = DateTime.Compare (start, current);
-            int inactiveExam = DateTime.Compare (start, end);
+            int activeExam = DateTime.Compare(start, current);
+            int inactiveExam = DateTime.Compare(start, end);
 
-            if (activeExam < 0) {
-                this.InactiveExams (examsDTO.Id);
+            if (activeExam < 0)
+            {
+                this.InactiveExams(examsDTO.Id);
                 return false;
-            } else if (activeExam == 0) {
-                if (inactiveExam < 0) {
-                    this.ActiveExams (examsDTO.Id);
+            }
+            else if (activeExam == 0)
+            {
+                if (inactiveExam < 0)
+                {
+                    this.ActiveExams(examsDTO.Id);
                     return true;
-                } else if (inactiveExam == 0) {
-                    this.InactiveExams (examsDTO.Id);
-                    return false;
-                } else {
-                    this.InactiveExams (examsDTO.Id);
+                }
+                else if (inactiveExam == 0)
+                {
+                    this.InactiveExams(examsDTO.Id);
                     return false;
                 }
-            } else {
-                this.InactiveExams (examsDTO.Id);
+                else
+                {
+                    this.InactiveExams(examsDTO.Id);
+                    return false;
+                }
+            }
+            else
+            {
+                this.InactiveExams(examsDTO.Id);
                 return false;
             }
         }
@@ -186,16 +212,19 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Exam created by Contributor
         /// </summary>
         /// <returns></returns>
-        public ResponseModel GetExamsCreatedByContributor (RequestModel requestModel) {
-            try {
+        public ResponseModel GetExamsCreatedByContributor(RequestModel requestModel)
+        {
+            try
+            {
                 //Filter & sort the data
-                var filteredExams = this._examsRepository.GetExamsCreatedByContributor (requestModel.Id).AsQueryable ().SortAndFilter (requestModel, DbFilters.ExamFilters);
+                var filteredExams = this._examsRepository.GetExamsCreatedByContributor(requestModel.Id).AsQueryable().SortAndFilter(requestModel, DbFilters.ExamFilters);
                 //Integrate pagination
-                var exams = filteredExams.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+                var exams = filteredExams.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
 
-                List<ExamsDTO> examJoin = new List<ExamsDTO> ();
-                foreach (var item in exams) {
-                    ExamsDTO examsDTO = new ExamsDTO ();
+                List<ExamsDTO> examJoin = new List<ExamsDTO>();
+                foreach (var item in exams)
+                {
+                    ExamsDTO examsDTO = new ExamsDTO();
                     examsDTO.Id = item.Id;
                     examsDTO.Title = item.Title;
                     examsDTO.TeamId = item.TeamId;
@@ -210,18 +239,22 @@ namespace PerftEvaluation.BAL.Services {
                     examsDTO.ShuffleQuestions = item.ShuffleQuestions;
                     examsDTO.IsPaperPublic = item.IsPaperPublic;
                     examsDTO.IsFeedback = item.IsFeedback;
-                    examsDTO.TotalQuestions = _questionService.GetQuestionsCountByExamId (item.Id);
+                    examsDTO.TotalQuestions = _questionService.GetQuestionsCountByExamId(item.Id);
                     examsDTO.IsActive = item.IsActive;
                     examsDTO.CreatedBy = item.CreatedBy;
-                    examsDTO.ModifiedBy = item.CreatedBy;
-                    examsDTO.Team = item.TeamId != null ? _masterService.GetMasterById (item.TeamId) : null;
+                    examsDTO.CreatedByUser = item.CreatedBy != null ? _userService.GetUserById(item.CreatedBy) : null;
+                    examsDTO.ModifiedBy = item.ModifiedBy;
+                    examsDTO.ModifiedByUser = item.ModifiedBy != null ? _userService.GetUserById(item.ModifiedBy) : null;
+                    examsDTO.Team = item.TeamId != null ? _masterService.GetMasterById(item.TeamId) : null;
 
-                    examJoin.Add (examsDTO);
+                    examJoin.Add(examsDTO);
                 }
 
                 //return object
-                return CommonResponse.OkResponse (requestModel, examJoin, (filteredExams.Count () < 100 ? filteredExams.Count () : 100));
-            } catch (Exception exception) {
+                return CommonResponse.OkResponse(requestModel, examJoin, (filteredExams.Count() < 100 ? filteredExams.Count() : 100));
+            }
+            catch (Exception exception)
+            {
                 throw exception;
             }
         }

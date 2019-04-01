@@ -40,7 +40,15 @@ namespace PerftEvaluation.DTO.Dtos
 
         public string CreatedBy { get; set; }
 
+        public UsersDTO CreatedByUser { get; set; }
+
         public string ModifiedBy { get; set; }
+
+        public UsersDTO ModifiedByUser { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
 
         public MastersDTO Team { get; set; }
     }
