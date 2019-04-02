@@ -37,6 +37,7 @@ export class examEditUpdateComponent implements OnInit {
   public year: any;
   public month: any;
   public day: any;
+  public time: any;
   constructor(
     private ngxService: NgxUiLoaderService,
     private route: ActivatedRoute,
@@ -84,8 +85,8 @@ export class examEditUpdateComponent implements OnInit {
       ],
       fromDate: [null, [Validators.required]],
       toDate: [null, [Validators.required]],
-      startTime: new FormControl(),
-      endTime: new FormControl(),
+      // startTime: new FormControl(),
+      // endTime: new FormControl(),
       isActive: new FormControl(true),
       showResultInFront: new FormControl(false),
       shuffleQuestions: new FormControl(false),
@@ -112,10 +113,10 @@ export class examEditUpdateComponent implements OnInit {
       this.examDetail.passingMarks
     );
     this.editExamForm.controls.fromDate.setValue(
-      this.fn_getDate(this.examDetail.fromDate)
+     this.examDetail.fromDate
     );
     this.editExamForm.controls.toDate.setValue(
-      this.fn_getDate(this.examDetail.toDate)
+      this.examDetail.toDate
     );
     // this.editExamForm.controls.startTime.setValue(
     //   this.examDetail.startTime
@@ -141,17 +142,23 @@ export class examEditUpdateComponent implements OnInit {
     );
   }
   fn_getDate(inputDate) {
+    console.log(inputDate);
     var date = new Date(inputDate);
+    console.log(date);
     this.year = date.getFullYear();
     this.month = date.getMonth() + 1;
     this.day = date.getDate();
+    this.time = date.getHours() + ':' + date.getMinutes();
+    console.log(this.time);
+    const time1 = date.getTime();
+    console.log(time1);
     if (this.day < 10) {
       this.day = "0" + this.day;
     }
     if (this.month < 10) {
       this.month = "0" + this.month;
     }
-    return this.year + "-" + this.month + "-" + this.day;
+    return this.year + "-" + this.month + "-" + this.day + "," + this.time;
   }
   onSubmit = function (formData) {
     if (this.fn_validateDuration()) {

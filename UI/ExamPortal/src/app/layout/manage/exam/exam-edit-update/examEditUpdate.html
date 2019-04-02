@@ -98,25 +98,27 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-3">
-                <div class="form-group">
-                  <label for="Exam Active From">Active From (DD/MM/YYYY)</label>
-                  <span class="text-danger">*</span>
-                  <input type="date" class="form-control" formControlName="fromDate" #fromDate>
-                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'fromDate')" errorMsg="Enter valid date">
-                  </app-field-error-display>
-                </div>
+              <div class="col-6">
+                  <div class="form-group">
+                      <label for="Exam Active From">Active From (MM/DD/YYYY)</label>
+                      <span class="text-danger">*</span>
+                      <input class="form-control" formControlName="fromDate" [owlDateTime]="dtstart" [owlDateTimeTrigger]="dtstart" placeholder="Active from">
+                      <owl-date-time #dtstart></owl-date-time>
+                      <app-field-error-display [displayError]="isFieldValid(editExamForm, 'fromDate')" errorMsg="Enter valid date">
+                      </app-field-error-display>
+                  </div>
               </div>
-              <div class="col-3">
-                <div class="form-group">
-                  <label for="Exam Active Till">To (DD/MM/YYYY)</label>
-                  <span class="text-danger">*</span>
-                  <input type="date" class="form-control" formControlName="toDate" #toDate>
-                  <app-field-error-display [displayError]="isFieldValid(editExamForm, 'toDate')" errorMsg="Enter valid date">
-                  </app-field-error-display>
-                </div>
+              <div class="col-6">
+                  <div class="form-group">
+                      <label for="Exam Active Till">To (MM/DD/YYYY)</label>
+                      <span class="text-danger">*</span>
+                      <input class="form-control" formControlName="toDate" [owlDateTime]="dtend" [owlDateTimeTrigger]="dtend" placeholder="Active till">
+                      <owl-date-time #dtend></owl-date-time>
+                      <app-field-error-display [displayError]="isFieldValid(editExamForm, 'toDate')" errorMsg="Enter valid date">
+                      </app-field-error-display>
+                  </div>
               </div>
-              <div class="col-3">
+              <!-- <div class="col-3">
                 <div class="form-group">
                     <label for="Exam Active From">Start time (HH:MM)</label>
                     <input class="form-control" formControlName="startTime" placeholder="Start time" aria-label="24hr format" [ngxTimepicker]="startTime" [format]="24" >
@@ -129,7 +131,7 @@
                     <input class="form-control" formControlName="endTime" placeholder="End time" aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" >
                     <ngx-material-timepicker #endTime></ngx-material-timepicker>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="row">
               <div class="col">
