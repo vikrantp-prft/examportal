@@ -20,16 +20,18 @@ namespace PerftEvaluation.BAL.Services
         public readonly IAttemptedQuestionsRepository _attemptedQuestionsRepository;
         public readonly IQuestionsService _questionsService;
         public readonly IQuestionsRepository _questionsRepository;
+        protected readonly IExamsRepository _examsRepository;
         public readonly IMasterService _masterService;
         public readonly IMapper _mapper;
         public AttemptedQuestionsService(IAttemptedQuestionsRepository attemptedQuestionsRepository,
-            IMapper mapper, IQuestionsRepository questionsRepository, IMasterService masterService, IQuestionsService questionsService)
+            IMapper mapper, IQuestionsRepository questionsRepository, IMasterService masterService, IQuestionsService questionsService, IExamsRepository examsRepository)
         {
             this._attemptedQuestionsRepository = attemptedQuestionsRepository;
             this._questionsRepository = questionsRepository;
             this._masterService = masterService;
             this._mapper = mapper;
             this._questionsService = questionsService;
+            this._examsRepository = examsRepository;
         }
 
         /// <summary>
@@ -129,6 +131,8 @@ namespace PerftEvaluation.BAL.Services
             try
             {
                 List<UserQuestionsDTO> userQuestionsDTOList = new List<UserQuestionsDTO>();
+                var exam = _examsRepository.GetExamsById(ExamId);
+
                 var questions = _questionsRepository.GetQuestionsByExamId(ExamId);
 
                 foreach (var item in questions)
@@ -142,6 +146,11 @@ namespace PerftEvaluation.BAL.Services
                     userQuestionsDTO.Question = item.Question;
                     userQuestionsDTO.Category = _masterService.GetMasterById(item.CategoryId);
                     userQuestionsDTO.Options = this._mapper.Map<List<UserOptionsDTO>>(item.Options);
+                    if (exam.ShuffleOptions)
+                    {
+                        Random random = new Random();
+                        userQuestionsDTO.Options = userQuestionsDTO.Options.OrderBy(x => random.Next()).ToList();
+                    }
                     var attemptedQuestions = _attemptedQuestionsRepository.GetAttemptedQuestionsByExamsId(ExamId).Where(x => x.UserId == UserId && x.QuestionsId == item.Id).FirstOrDefault();
                     if (attemptedQuestions != null)
                     {
@@ -158,6 +167,12 @@ namespace PerftEvaluation.BAL.Services
                         userQuestionsDTO.SubjectiveAnswer = attemptedQuestions.SubjectiveAnswer;
                     }
                     userQuestionsDTOList.Add(userQuestionsDTO);
+                }
+
+                if(exam.ShuffleQuestions)
+                {
+                    Random random = new Random();
+                    userQuestionsDTOList = userQuestionsDTOList.OrderBy(x => random.Next()).ToList();
                 }
 
                 return userQuestionsDTOList;
