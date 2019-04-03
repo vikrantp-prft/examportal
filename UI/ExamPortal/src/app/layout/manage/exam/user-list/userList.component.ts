@@ -84,11 +84,22 @@ export class UserListComponent implements OnInit {
   }
 
   searchTeam(event: any): void {
+    console.log(event.target.value);
       this.userModel.pageNumber = 1;
       this.userModel.pageSize = 10;
       this.userModel.filter = event.target.value;
-      console.log(event.target.value);
       this.fn_GetUserList();
+     
+      // const filterTeam = event.target.value;
+      // console.log(filterTeam);
+      // console.log(this.userList);
+    
+      // const a = this.userList.filter(function(user) {
+      //   console.log(user);
+      //   return filterTeam === user.team.name
+      // });
+      // console.log(a);
+      // //console.log(this.userList);
   }
 
    // function to get teams
