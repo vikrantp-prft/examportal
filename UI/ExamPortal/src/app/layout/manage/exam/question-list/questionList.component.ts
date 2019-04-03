@@ -605,4 +605,28 @@ export class questionListComponent implements OnInit {
       );
     }
   }
+
+  exportAllQuestions() {
+    const url = 'api/Questions/ExportQuestions';
+    const questionModel = {
+      'examId': this.examID
+    };
+    this.fn_exportAllQuestions(questionModel, url);
+  }
+
+  fn_exportAllQuestions(model, url) {
+    this.ngxService.start();
+    console.log(model);
+    console.log(url);
+    this.CommonService.fn_PostWithData(model, url).subscribe(
+      (data: any) => {
+      //  // console.log(data);
+      //  debugger;
+      //  return this.http.get(data, { responseType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      //   this.ngxService.stop();
+      },
+      err => console.error(err),
+      () => { }
+    );
+  }
 }

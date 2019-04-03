@@ -49,7 +49,11 @@ export class ExamComponent implements OnInit {
     }
     ngOnInit() {
         this.getExamDetails();
-        this.getQuestionList();
+    }
+    ngDoCheck(): void {
+        //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+        //Add 'implements DoCheck' to the class.
+       
     }
     getExamDetails() {
         const examDetailModel = {
@@ -57,6 +61,7 @@ export class ExamComponent implements OnInit {
         }
         const examDetailUrl = "api/Exams/GetExamById";
         this.fn_getExamDetails(examDetailModel, examDetailUrl);
+        this.getQuestionList();
     }
     fn_getExamDetails(model, url) {
         this.ngxService.start();
@@ -320,6 +325,7 @@ export class ExamComponent implements OnInit {
             this.counter--;
             if (this.counter < 0) {
                 clearInterval(interval);
+                this.saveResult();
                 this.router.navigate(['/thank-you']);
             };
         }, 1000);

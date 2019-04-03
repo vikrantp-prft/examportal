@@ -256,7 +256,7 @@ namespace PerftEvaluation.Api.Controllers
             return Ok(isSuccess);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("ExportQuestions")]
         // Exports all the questions of specified exam id. 
         public IActionResult ExportQuestions(string examId)
@@ -269,14 +269,19 @@ namespace PerftEvaluation.Api.Controllers
                 {
                     BadRequest(allQuestionsStream);
                 }
+                byte[] bites = new byte[allQuestionsStream.Length];
 
-                return File(allQuestionsStream, "application/octet-stream", "AllQuestions.xlsx");
+                allQuestionsStream.Read(bites, 0, (int)allQuestionsStream.Length);
+
+
+                return File(allQuestionsStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AllQuestions.xlsx");
+                //return new FileContentResult(bites, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }
             catch (Exception ex)
             {
                 return BadRequest(CommonResponse.ExceptionResponse(ex));
             }
-            
+
         }
     }
 }
