@@ -11,6 +11,7 @@ using PerftEvaluation.DAL.Repositories;
 using PerftEvaluation.ExcelUtility;
 using PerftEvaluation.Helper.Common;
 using PerftEvaluation.Helper.Interfaces;
+using PerftEvaluation.Interfaces;
 
 namespace PerftEvaluation.Helper.DI
 {
@@ -27,7 +28,6 @@ namespace PerftEvaluation.Helper.DI
         public static IServiceCollection RegisterServices(
             this IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //Projects Services 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterService, MasterService>();
@@ -37,7 +37,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IQuestionsService, QuestionsService>();
             services.AddTransient<IResultsService, ResultsService>();
             services.AddTransient<IAssignedExamsService, AssignedExamsService>();
-            services.AddScoped<PerftEvaluation.Interfaces.IQuestionsImportExport, ExcelOperations>();
+            services.AddScoped<IQuestionsImportExport, ExcelOperations>();
             services.AddScoped<IAttemptedQuestionsService, AttemptedQuestionsService>();
             services.AddTransient<IAspirantsService, AspirantsService>();
             services.AddTransient<IExamUserSessionStorage, ExamUserSessionCacheStore>();
@@ -55,6 +55,7 @@ namespace PerftEvaluation.Helper.DI
             services.AddTransient<IAspirantsRepository, AspirantsRepository>();
             //Cache helpers
             services.AddTransient<ICache, Cache>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddTransient<IFilterExtensions, FilterExtensions>();
 
             // Add all other services here.

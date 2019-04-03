@@ -49,7 +49,7 @@ namespace PerftEvaluation.Test
 
             masterDal.Setup(r => r.GetAllMasters()).Returns(mastersExpected);
 
-            MasterService masterServiceBal = new MasterService(masterDal.Object, mapper);
+            MasterService masterServiceBal = null;//new MasterService(masterDal.Object, mapper,null);
             List<MastersDTO> masterActual = new List<MastersDTO>();
 
             if (Utility.CompareToObjectProperties<Masters, MastersDTO>(mastersExpected[0], masterActual[0]))

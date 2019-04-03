@@ -1,4 +1,6 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PerftEvaluation.BAL.Interfaces;
@@ -16,9 +18,13 @@ namespace PerftEvaluation.Api.Controllers {
         protected readonly IMasterService _masterService;
         private ResponseModel responseModel = null;
         protected readonly ILogger<MasterController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MasterController (IMasterService MasterService, ILogger<MasterController> logger = null) {
+        public MasterController (IMasterService MasterService,
+                                 IHttpContextAccessor httpContextAccessor,
+                                 ILogger<MasterController> logger = null) {
             this._masterService = MasterService;
+            this._httpContextAccessor = httpContextAccessor;
             this.responseModel = new ResponseModel ();
             if (null != logger) {
                 this._logger = logger;
@@ -49,11 +55,14 @@ namespace PerftEvaluation.Api.Controllers {
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         public IActionResult Post (MastersDTO mastersDTO) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._masterService.SaveMaster (mastersDTO);
+                mastersDTO.CreatedBy = _httpContextAccessor.HttpContext.User.FindFirst("UserId").Value;
+                mastersDTO.ModifiedBy = _httpContextAccessor.HttpContext.User.FindFirst("UserId").Value;
+                responseModel.Data = _masterService.SaveMaster (mastersDTO);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
@@ -69,11 +78,13 @@ namespace PerftEvaluation.Api.Controllers {
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
         [HttpPost, Route ("Update")]
+        [Authorize]
         public IActionResult UpdateMaster (MastersDTO mastersDTO) {
             try {
                 responseModel.StatusCode = 200;
                 responseModel.Message = "Success";
-                responseModel.Data = this._masterService.UpdateMaster (mastersDTO);
+                mastersDTO.ModifiedBy = _httpContextAccessor.HttpContext.User.FindFirst("UserId").Value;
+                responseModel.Data = _masterService.UpdateMaster (mastersDTO);
 
                 return Ok (responseModel);
             } catch (Exception exception) {
