@@ -27,7 +27,7 @@ namespace IntegrationTests
             IMapper mapper = mappingConfig.CreateMapper();
             IMasterRepository masterRepository = new MasterRepository();
 
-            IMasterService masterService = new MasterService(masterRepository, mapper);
+            IMasterService masterService = null;// new MasterService(masterRepository, mapper, null);
 
             QuestionsService questionsService = null;// new QuestionsService(questionsRepository, mapper, masterRepository, masterService, questionsImportExport);
 
@@ -53,9 +53,9 @@ namespace IntegrationTests
             IMapper mapper = mappingConfig.CreateMapper();
             IMasterRepository masterRepository = new MasterRepository();
 
-            IMasterService masterService = new MasterService(masterRepository, mapper);
+           // IMasterService masterService = new MasterService(masterRepository, mapper,null);
 
-            IQuestionsService questionsService = null;//new QuestionsService(questionsRepository, mapper, new MasterRepository(), new MasterService(masterRepository, mapper), new ExcelOperations());
+            //IQuestionsService questionsService = null;//new QuestionsService(questionsRepository, mapper, new MasterRepository(), new MasterService(masterRepository, mapper), new ExcelOperations());
 
             //QuestionsController questionsController = new QuestionsController(questionsService, null);
 

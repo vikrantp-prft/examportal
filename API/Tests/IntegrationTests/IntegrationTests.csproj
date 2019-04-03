@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\PerftEvaluation.Helper\PerftEvaluation.Helper.csproj" />
     <ProjectReference Include="..\..\PerftEvaluation.Interfaces\PerftEvaluation.Interfaces.csproj" />
     <ProjectReference Include="..\..\Projects\PerftEvaluation.Api\PerftEvaluation.Api.csproj" />
     <ProjectReference Include="..\..\Core\PerftEvaluation.BAL\PerftEvaluation.BAL.csproj" />
