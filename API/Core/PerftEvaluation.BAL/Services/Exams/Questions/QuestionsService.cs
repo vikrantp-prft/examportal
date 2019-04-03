@@ -265,21 +265,23 @@ namespace PerftEvaluation.BAL.Services
 
             // Read empty excel template
             DataSet ds;
-            using (Stream stream = new MemoryStream())
-            {
+            //using (Stream stream = new MemoryStream())
+            //{
                 using (StreamReader reader = new StreamReader(_env.ContentRootPath + "\\Contents\\Question.xlsx"))
                 {
                     // Create a copy of stream so new file reference can be created instread of modifing the existing file. 
-                    reader.BaseStream.CopyToAsync(stream);
+                    // reader.BaseStream.CopyToAsync(stream);
+
+                    ds = _importExportUtil.ReadExcel(reader.BaseStream, false);
 
                     reader.Close();
                 }
 
                 // Convert template file in DataSet so it can be modified further. 
-                ds = _importExportUtil.ReadExcel(stream, false);
+                //ds = _importExportUtil.ReadExcel(stream, false);
 
-                stream.Close();
-            }
+                //stream.Close();
+            //}
 
             if (ds == null && ds.Tables.Count < 1)
             {

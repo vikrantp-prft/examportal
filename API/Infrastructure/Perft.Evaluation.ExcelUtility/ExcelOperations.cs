@@ -28,7 +28,7 @@ namespace PerftEvaluation.ExcelUtility
 
             try
             {
-                using (SpreadsheetDocument spreadSheetDocument = SpreadsheetDocument.Open(fileStream, true))
+                using (SpreadsheetDocument spreadSheetDocument = SpreadsheetDocument.Open(fileStream, false))
                 {
 
                     WorkbookPart workbookPart = spreadSheetDocument.WorkbookPart;
