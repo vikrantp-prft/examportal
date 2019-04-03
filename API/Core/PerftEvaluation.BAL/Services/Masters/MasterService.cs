@@ -8,13 +8,17 @@ using PerftEvaluation.DTO;
 using PerftEvaluation.DTO.Dtos;
 using PerftEvaluation.Entities.POCOEntities;
 
-namespace PerftEvaluation.BAL.Services {
+namespace PerftEvaluation.BAL.Services
+{
     /// <summary>
     /// Master Service Class
     /// </summary>
-    public class MasterService : IMasterService {
+    public class MasterService : IMasterService
+    {
         #region Declaration
         protected readonly IMasterRepository _masterRepository;
+
+        protected readonly IUserRepository _userRepository;
 
         // Create a field to store the mapper object
         private readonly IMapper _mapper;
@@ -23,9 +27,11 @@ namespace PerftEvaluation.BAL.Services {
         /// Class Constructor
         /// </summary>
         /// <param name="UserRepository"></param>
-        public MasterService (IMasterRepository MasterRepository, IMapper mapper) {
+        public MasterService(IMasterRepository MasterRepository, IMapper mapper, IUserRepository userRepository)
+        {
             this._masterRepository = MasterRepository;
             this._mapper = mapper;
+            this._userRepository = userRepository;
         }
         #endregion
 
@@ -34,13 +40,31 @@ namespace PerftEvaluation.BAL.Services {
         /// Get Masters List
         /// </summary>
         /// <value></value>
-        public ResponseModel GetMasters (RequestModel requestModel) {
+        public ResponseModel GetMasters(RequestModel requestModel)
+        {
             //Filter & sort the data
-            var filteredMasters = this._masterRepository.GetAllMasters ().AsQueryable ().SortAndFilter (requestModel, DbFilters.MasterFilters);
+            var filteredMasters = this._masterRepository.GetAllMasters().AsQueryable().SortAndFilter(requestModel, DbFilters.MasterFilters);
             //Integrate pagination
-            var masters = filteredMasters.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var masters = filteredMasters.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+
+            List<MastersDTO> mastersJoin = new List<MastersDTO>();
+            foreach (var item in masters)
+            {
+                MastersDTO mastersDTO = new MastersDTO();
+                mastersDTO.Id = item.Id;
+                mastersDTO.Name = item.Name;
+                mastersDTO.Description = item.Description;
+                mastersDTO.MasterType = item.MasterType;
+                mastersDTO.IsActive = item.IsActive;
+                mastersDTO.IsDeleted = item.IsDeleted;
+                mastersDTO.CreatedBy = item.CreatedBy;
+                mastersDTO.CreatedByUser = item.CreatedBy != null ? this._mapper.Map<UsersDTO>(_userRepository.GetUserById(item.CreatedBy)) : null;
+                mastersDTO.ModifiedBy = item.ModifiedBy;
+                mastersDTO.ModifiedByUser = item.ModifiedBy != null ? this._mapper.Map<UsersDTO>(_userRepository.GetUserById(item.ModifiedBy)) : null;
+                mastersJoin.Add(mastersDTO);
+            }
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<MastersDTO>>(masters), (filteredMasters.Count () < 100 ? filteredMasters.Count () : 100));
+            return CommonResponse.OkResponse(requestModel, mastersJoin, (filteredMasters.Count() < 100 ? filteredMasters.Count() : 100));
         }
 
         /// <summary>
@@ -48,8 +72,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
-        public bool SaveMaster (MastersDTO mastersDTO) {
-            return this._masterRepository.SaveMaster (this._mapper.Map<Masters> (mastersDTO));
+        public bool SaveMaster(MastersDTO mastersDTO)
+        {
+            return this._masterRepository.SaveMaster(this._mapper.Map<Masters>(mastersDTO));
         }
 
         /// <summary>
@@ -57,15 +82,33 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterType"></param>
         /// <returns></returns>
-        public ResponseModel GetMasterByType (RequestModel requestModel) {
-            
+        public ResponseModel GetMasterByType(RequestModel requestModel)
+        {
+
             //Filter & sort the data
-            var filteredMasters = this._masterRepository.GetMastersByType (requestModel.Condition).AsQueryable ().SortAndFilter (requestModel, DbFilters.MasterFilters);
+            var filteredMasters = this._masterRepository.GetMastersByType(requestModel.Condition).AsQueryable().SortAndFilter(requestModel, DbFilters.MasterFilters);
             //Integrate pagination
-            var masters = filteredMasters.Skip (requestModel.Skip).Take (requestModel.PageSize).AsQueryable ();
+            var masters = filteredMasters.Skip(requestModel.Skip).Take(requestModel.PageSize).AsQueryable();
+
+            List<MastersDTO> mastersJoin = new List<MastersDTO>();
+            foreach (var item in masters)
+            {
+                MastersDTO mastersDTO = new MastersDTO();
+                mastersDTO.Id = item.Id;
+                mastersDTO.Name = item.Name;
+                mastersDTO.Description = item.Description;
+                mastersDTO.MasterType = item.MasterType;
+                mastersDTO.IsActive = item.IsActive;
+                mastersDTO.IsDeleted = item.IsDeleted;
+                mastersDTO.CreatedBy = item.CreatedBy;
+                mastersDTO.CreatedByUser = item.CreatedBy != null ? this._mapper.Map<UsersDTO>(_userRepository.GetUserById(item.CreatedBy)) : null;
+                mastersDTO.ModifiedBy = item.ModifiedBy;
+                mastersDTO.ModifiedByUser = item.ModifiedBy != null ? this._mapper.Map<UsersDTO>(_userRepository.GetUserById(item.ModifiedBy)) : null;
+                mastersJoin.Add(mastersDTO);
+            }
             //return object
-            return CommonResponse.OkResponse (requestModel, this._mapper.Map<IEnumerable<MastersDTO>>(masters), (filteredMasters.Count () < 100 ? filteredMasters.Count () : 100));
-            //return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetMastersByType (masterType));
+            return CommonResponse.OkResponse(requestModel, mastersJoin, (filteredMasters.Count() < 100 ? filteredMasters.Count() : 100));
+
         }
 
         /// <summary>
@@ -73,18 +116,20 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterType"></param>
         /// <returns></returns>
-        public IEnumerable<MastersDTO> GetMasterByTypeForCache (string masterType) {
-            return this._mapper.Map<IEnumerable<MastersDTO>> (this._masterRepository.GetMastersByType (masterType));
+        public IEnumerable<MastersDTO> GetMasterByTypeForCache(string masterType)
+        {
+            return this._mapper.Map<IEnumerable<MastersDTO>>(this._masterRepository.GetMastersByType(masterType));
         }
 
-        
+
         /// <summary>
         /// Update master detail
         /// </summary>
         /// <param name="mastersDTO"></param>
         /// <returns></returns>
-        public bool UpdateMaster (MastersDTO mastersDTO) {
-            return this._masterRepository.UpdateMaster (this._mapper.Map<Masters> (mastersDTO));
+        public bool UpdateMaster(MastersDTO mastersDTO)
+        {
+            return this._masterRepository.UpdateMaster(this._mapper.Map<Masters>(mastersDTO));
         }
 
         /// <summary>
@@ -92,8 +137,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool ActivateMaster (string masterId) {
-            return this._masterRepository.ActivateMaster (masterId);
+        public bool ActivateMaster(string masterId)
+        {
+            return this._masterRepository.ActivateMaster(masterId);
         }
 
         /// <summary>
@@ -101,8 +147,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool InactivateMaster (string masterId) {
-            return this._masterRepository.InactivateMaster (masterId);
+        public bool InactivateMaster(string masterId)
+        {
+            return this._masterRepository.InactivateMaster(masterId);
         }
 
         /// <summary>
@@ -110,8 +157,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public bool DeleteMaster (string masterId) {
-            return this._masterRepository.DeleteMaster (masterId);
+        public bool DeleteMaster(string masterId)
+        {
+            return this._masterRepository.DeleteMaster(masterId);
         }
 
         /// <summary>
@@ -119,8 +167,26 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="masterId"></param>
         /// <returns></returns>
-        public MastersDTO GetMasterById (string masterId) {
-            return this._mapper.Map<MastersDTO> (this._masterRepository.GetMasterById (masterId));
+        public MastersDTO GetMasterById(string masterId)
+        {
+
+            var masters = this._masterRepository.GetMasterById(masterId);
+
+
+            MastersDTO mastersDTO = new MastersDTO();
+            mastersDTO.Id = masters.Id;
+            mastersDTO.Name = masters.Name;
+            mastersDTO.Description = masters.Description;
+            mastersDTO.MasterType = masters.MasterType;
+            mastersDTO.IsActive = masters.IsActive;
+            mastersDTO.IsDeleted = masters.IsDeleted;
+            mastersDTO.CreatedBy = masters.CreatedBy;
+            mastersDTO.CreatedByUser = masters.CreatedBy != null ? this._mapper.Map<UsersDTO>(_userRepository.GetUserById(masters.CreatedBy)) : null;
+            mastersDTO.ModifiedBy = masters.ModifiedBy;
+            mastersDTO.ModifiedByUser = masters.ModifiedBy != null ? this._mapper.Map<UsersDTO>(_userRepository.GetUserById(masters.ModifiedBy)) : null;
+
+
+            return mastersDTO;
         }
 
         /// <summary>
@@ -128,8 +194,9 @@ namespace PerftEvaluation.BAL.Services {
         /// </summary>
         /// <param name="name">Name of record that need to search.</param>
         /// <returns></returns>
-        public MastersDTO GetMasterByName (string name) {
-            return this._mapper.Map<MastersDTO> (this._masterRepository.GetMasterByName (name));
+        public MastersDTO GetMasterByName(string name)
+        {
+            return this._mapper.Map<MastersDTO>(this._masterRepository.GetMasterByName(name));
         }
         #endregion
     }

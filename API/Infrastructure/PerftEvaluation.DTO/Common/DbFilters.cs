@@ -6,7 +6,8 @@ namespace PerftEvaluation.DTO {
         public static List<string> UserFilters = new List<string> () {
             "FirstName",
             "LastName",
-            "Email"
+            "Email",
+            "TeamId"
         };
 
         public static List<string> MasterFilters = new List<string> () {
