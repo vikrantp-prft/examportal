@@ -2,12 +2,12 @@
 <app-header></app-header>
 <hr class="my-0">
 <div *ngIf="isFeedback == false">
-  <div class="container-fluid mt-4">
+  <div class="container-fluid my-4">
     <section id="main" class="">
       <div class="card">
         <div class="card-header p-0 m-0">
           <div class="row justify-content-between">
-            <div class="col-2">
+            <div class="col-8">
               <div class="p-3 h5 mb-0 font-weight-bold">
                 {{ examName }}
               </div>
@@ -19,8 +19,19 @@
             </div>
           </div>
         </div>
-        <div class="card-body lead">
-          <div class="row">
+        <div class="m-2">
+          <div class="row no-gutters">
+            <div class="mb-2 col-12">
+            <!-- <div class="card mb-2 col-12" style="overflow-y: scroll;"> -->
+                <div class="pr-0">
+                    <button  class="btn-width btn btn-sm mb-1 mr-1" [ngClass]="{'btn-success':
+                    q?.isAttempted, 'btn-danger': !q?.isAttempted}"
+                    *ngFor="let q of
+                    questionListForOption; let i=index" (click)="jumpToQuestion(i)">{{i+1}}
+                    </button>
+                </div>
+            </div>
+            
             <div class="col-md-9">
               <div class="card">
                 <!-- <div class="card-header p-0">
@@ -107,22 +118,19 @@
               </div>
             </div>
             <div class="col-md-3">
-              <div class="card">
+              <!-- <div class="card">
                 <div class="card-header">
                   <h4 class="mb-0">Jump to Question</h4>
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <!-- <div class="col-md-2 m-1" *ngFor="let q of questionListForOption; let i=index">
-                      <button class="btn btn-md" [ngClass]="{'btn-success': q.isAttempted, 'btn-danger': !q.isAttempted}" (click)="jumpToQuestion(i)" >{{i+1}}</button>
-                    </div> -->
                     <button class="btn btn-md m-1 col-md-2" [ngClass]="{'btn-success':
                       q?.isAttempted, 'btn-danger': !q?.isAttempted}"
                       *ngFor="let q of
                       questionListForOption; let i=index" (click)="jumpToQuestion(i)">{{i+1}}</button>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
